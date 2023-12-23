@@ -1,0 +1,52 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro'
+import { getCollection } from 'astro:content'
+import FormattedDate from '../../components/FormattedDate.astro'
+
+// Filter out content entries with draft: true
+const publishedProjectEntries = await getCollection('projects', ({ data }) => {
+	return data.draft !== true
+})
+
+const projects = publishedProjectEntries.sort(
+	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
+)
+---
+
+<MainLayout>
+	<h1 class="text-2xl md:text-4xl font-bold mb-4 text-center font-primary">sl [infinity] projects [🔨].</h1>
+	<p class="text-lg text-center mb-8 font-secondary">Here are some of the projects I've worked on.
+		<br/><a href="https://twitter.com/kashurgeek" target="_blank" class="text-primary">Follow me on twitter</a> to get notified when I post something new.
+		<br/> showing [{projects.length}] projects.
+	</p>
+	<main>
+		<section class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 mx-8">
+			{
+				projects.map((project) => (
+						<a href={`/projects/${project.slug}/`}>
+							<div class='card card-compact w-full bg-base-500 shadow-xl border-2 border-primary'>
+								<figure>
+									<img
+										src={project.data.heroImage}
+										alt='{project.data.heroImage}'
+									/>
+								</figure>
+								<div class='card-body'>
+									<h2 class='card-title font-primary'>{project.data.title}</h2>
+									<FormattedDate date={project.data.pubDate} />
+									<p class="font-secondary">{project.data.description}</p>
+									<div class='card-actions justify-end'>
+										{
+											project.data.tags && project.data.tags.map(tag => (
+												<div class='badge badge-outline'>{tag}</div>
+											))
+										}
+									</div>
+								</div>
+							</div>
+						</a>
+				))
+			}
+		</section>
+	</main>
+</MainLayout>
