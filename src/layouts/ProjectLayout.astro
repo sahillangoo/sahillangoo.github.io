@@ -1,0 +1,57 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION, SITE_IMAGE } from '../consts'
+import type { CollectionEntry } from 'astro:content'
+import MainHead from '../components/MainHeader.astro'
+import MainNav from '../components/MainNav.astro'
+import FormattedDate from '../components/FormattedDate.astro'
+import BreadcrumbsNav from '../components/BreadcrumbsNav.astro'
+import MainFooter from '../components/MainFooter.astro'
+
+import '../styles/global.css'
+
+type Props = CollectionEntry<'projects'>['data']
+
+const { title, description, category, tags, pubDate, updatedDate, heroImage } = Astro.props
+---
+
+<html lang='en'>
+	<head>
+		<MainHead title={SITE_TITLE} description={SITE_DESCRIPTION} image={SITE_IMAGE} />
+	</head>
+
+	<body transition:animate="initial">
+		<MainNav />
+		<BreadcrumbsNav />
+
+		<main class='container'>
+			<article class='rounded-lg shadow p-6'>
+				<header>
+					<div class='hero-image mb-4'>
+						{heroImage && <img class='rounded-lg' src={heroImage} alt={title} />}
+					</div>
+					<h1 class='text-3xl font-bold mb-2'>{title}</h1>
+					<p class='mb-4'>{description}</p>
+					<div class='text-sm mb-4'>
+						<span>Category: {category}</span>
+						<div class='tags flex space-x-2 mb-2'>
+							{tags?.map((tag) => <span class='tag rounded-full px-2 py-1'>{tag}</span>)}
+						</div>
+						<span>Published: <FormattedDate date={pubDate} /></span>
+						{
+							updatedDate && (
+								<span>
+									Last updated: <FormattedDate date={updatedDate} />
+								</span>
+							)
+						}
+					</div>
+				</header>
+				<section class='prose'>
+					<slot />
+				</section>
+			</article>
+
+			<MainFooter />
+		</main>
+	</body>
+</html>
