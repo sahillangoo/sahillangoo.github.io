@@ -8,10 +8,8 @@ import BreadcrumbsNav from '../components/BreadcrumbsNav.astro'
 import MainFooter from '../components/MainFooter.astro'
 import '../styles/global.css'
 
-type Props = CollectionEntry<'blog'>['data']
-// const { minutesRead } = Astro.props.frontmatter;
-// const { frontmatter } = Astro.props;
-const { title, description, category, tags, pubDate, updatedDate, heroImage } = Astro.props
+type Props = CollectionEntry<'blog'>['data'] & { timetoread: number }
+const { title, description, category, tags, pubDate, updatedDate, heroImage, timetoread } = Astro.props
 
 ---
 
@@ -23,13 +21,7 @@ const { title, description, category, tags, pubDate, updatedDate, heroImage } = 
 	<body transition:animate="initial">
 		<MainNav />
 		<BreadcrumbsNav />
-		<!-- <p>{frontmatter.minutesRead}</p> -->
-		<!-- <p>{ minutesRead }</p> -->
-
-
-
-
-
+		<span>Time to read: {timetoread} minutes</span>
 		<main class='container'>
 			<article class='rounded-lg shadow p-6'>
 				<header>
@@ -44,6 +36,7 @@ const { title, description, category, tags, pubDate, updatedDate, heroImage } = 
 							{tags?.map((tag) => <span class='tag rounded-full px-2 py-1'>{tag}</span>)}
 						</div>
 						<span>Published: <FormattedDate date={pubDate} /></span>
+
 						{
 							updatedDate && (
 								<span>
