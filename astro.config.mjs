@@ -1,24 +1,40 @@
 import { defineConfig } from 'astro/config'
-import { remarkReadingTime } from './remark-reading-time.mjs'
+import { remarkReadingTime } from './src/remark-reading-time.mjs'
+import tailwind from '@astrojs/tailwind'
 import mdx from '@astrojs/mdx'
 import rehypeExternalLinks from 'rehype-external-links'
-import tailwind from '@astrojs/tailwind'
 import sitemap from '@astrojs/sitemap'
-import compress from 'astro-compress'
-import lighthouse from 'astro-lighthouse'
+import partytown from '@astrojs/partytown'
 
 const repo = 'https://github.com/sahillangoo/sahillangoo.github.io'
 const site = 'https://sahillangoo.com'
 const author = 'Sahil Langoo'
 
+// https://astro.build/config
 export default defineConfig({
 	repo,
 	site,
 	author,
-	prefetch: { prefetchAll: true },
-	integrations: [mdx({ optimize: true }), tailwind(), sitemap(), compress(), lighthouse()],
+	integrations: [
+		mdx({
+			optimize: true,
+		}),
+		tailwind(),
+		partytown(),
+		sitemap(),
+	],
 	markdown: {
 		remarkPlugins: [remarkReadingTime],
-		rehypePlugins: [[rehypeExternalLinks, { content: { type: 'text', value: ' 🔗' } }]],
+		rehypePlugins: [
+			[
+				rehypeExternalLinks,
+				{
+					content: {
+						type: 'text',
+						value: ' 🔗',
+					},
+				},
+			],
+		],
 	},
 })
