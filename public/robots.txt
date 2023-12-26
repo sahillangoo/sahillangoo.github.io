@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sahillangoo.com/sitemap-index.xml
