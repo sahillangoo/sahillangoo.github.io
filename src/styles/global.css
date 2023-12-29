@@ -1,8 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Body */
 body:before {
-  content: "";
+  content: '';
   display: block;
-  background-image: url("/images/noise.webp");
+  background-image: url('/images/noise.webp');
   /* background-image: url('/images/grain.svg'); */
   opacity: 0.5;
   background-repeat: repeat;
@@ -18,29 +22,29 @@ body:before {
 }
 /* Fonts */
 @font-face {
-  font-family: "Playfair";
-  src: url("/fonts/PlayfairDisplay-VariableFont_wght.ttf") format("ttf");
+  font-family: 'Playfair';
+  src: url('/fonts/PlayfairDisplay-VariableFont_wght.ttf') format('ttf');
   font-weight: 100 900;
   font-stretch: 25% 150%;
   display: swap;
 }
 @font-face {
-  font-family: "Gabarito";
-  src: url("/fonts/Gabarito-VariableFont_wght.ttf") format("ttf");
+  font-family: 'Gabarito';
+  src: url('/fonts/Gabarito-VariableFont_wght.ttf') format('ttf');
   font-weight: 100 900;
   font-stretch: 25% 150%;
   display: swap;
 }
 @font-face {
-  font-family: "Outfit";
-  src: url("/fonts/Outfit-VariableFont_wght.ttf") format("ttf");
+  font-family: 'Outfit';
+  src: url('/fonts/Outfit-VariableFont_wght.ttf') format('ttf');
   font-weight: 100 900;
   font-stretch: 25% 150%;
   display: swap;
 }
 @font-face {
-  font-family: "SpaceMono";
-  src: url("/fonts/SpaceMono-Regular.ttf") format("ttf");
+  font-family: 'SpaceMono';
+  src: url('/fonts/SpaceMono-Regular.ttf') format('ttf');
   font-weight: 400;
   display: swap;
 }

@@ -1,15 +1,14 @@
 import { defineConfig } from 'astro/config'
-import { remarkReadingTime } from './src/remark-reading-time.mjs'
+import { SITE } from '/src/consts.ts'
+import { remarkReadingTime } from './src/utils/remark-reading-time.mjs'
 import tailwind from '@astrojs/tailwind'
 import mdx from '@astrojs/mdx'
 import rehypeExternalLinks from 'rehype-external-links'
 import sitemap from '@astrojs/sitemap'
-import partytown from '@astrojs/partytown'
 
-const repo = 'https://github.com/sahillangoo/sahillangoo.github.io'
-const site = 'https://sahillangoo.com'
-const author = 'Sahil Langoo'
-
+const repo = SITE.REPO
+const site = SITE.URL
+const author = SITE.AUTHOR
 // https://astro.build/config
 export default defineConfig({
 	repo,
@@ -20,7 +19,6 @@ export default defineConfig({
 			optimize: true,
 		}),
 		tailwind(),
-		partytown(),
 		sitemap(),
 	],
 	markdown: {

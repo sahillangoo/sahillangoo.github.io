@@ -1,8 +1,20 @@
 {
   // Note: No change needed if you use "astro/tsconfigs/strict" or "astro/tsconfigs/strictest"
-  "extends": "astro/tsconfigs/base",
+  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
+    "baseUrl": "src", // base path for imports
     "strictNullChecks": true, // enable strict null checks
-    "allowJs": true // allow JS files to be imported
+    "allowJs": true, // allow JS files to be imported
+    "paths": {
+      "@consts": ["consts.ts"],
+      "@assets/*": ["assets/*"],
+      "@images/*": ["assets/images/*"],
+      "@components/*": ["components/*"],
+      "@content/*": ["content/*"],
+      "@layouts/*": ["layouts/*"],
+      "@pages/*": ["pages/*"],
+      "@styles/*": ["styles/*"],
+      "@utils/*": ["utils/*"]
+    }
   }
 }

@@ -1,17 +1,17 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content'
-import BlogPost from '../../layouts/BlogPostLayout.astro'
+import { type CollectionEntry, getCollection } from 'astro:content';
+import BlogPost from '@layouts/BlogPostLayout.astro';
 
 export async function getStaticPaths() {
-	const posts = await getCollection('blog')
-	return posts.map(({ slug, ...props }) => ({ params: { slug }, props }))
+  const posts = await getCollection('blog');
+  return posts.map(({ slug, ...props }) => ({ params: { slug }, props }));
 }
 
-type Props = CollectionEntry<'blog'>
-const { data, render } = Astro.props
-const { Content, remarkPluginFrontmatter } = await render()
+type Props = CollectionEntry<'blog'>;
+const { data, render } = Astro.props;
+const { Content, remarkPluginFrontmatter } = await render();
 ---
 
 <BlogPost {...data} timetoread={remarkPluginFrontmatter.minutesRead}>
-	<Content />
+  <Content />
 </BlogPost>

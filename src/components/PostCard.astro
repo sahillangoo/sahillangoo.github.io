@@ -1,22 +1,19 @@
 ---
-import FormattedDate from './FormattedDate.astro'
-const { slug, title, description, heroImage, updatedDate, tags } = Astro.props
+import FormattedDate from '@components/FormattedDate.astro';
+const { slug, title, description, heroImage, updatedDate, tags } = Astro.props;
 ---
 
 <a href={`/blog/${slug}/`}>
-  <div class='card card-compact w-full bg-base-500 shadow-xl border-2 border-primary'>
+  <div class="bg-base-500 card card-compact w-full border-2 border-primary shadow-xl">
     <figure>
-      <img src={heroImage} alt='{heroImage}' />
+      <img src={heroImage} alt="{heroImage}" />
     </figure>
-    <div class='card-body'>
-      <h2 class='card-title font-primary'>{title}</h2>
+    <div class="card-body">
+      <h2 class="card-title font-primary">{title}</h2>
       <FormattedDate date={updatedDate} />
-      <p class='font-secondary'>{description}</p>
-      <div class='card-actions justify-end'>
-        {
-          tags &&
-            tags.map((tag) => <div class='badge badge-outline'>{tag}</div>)
-        }
+      <p class="font-secondary">{description}</p>
+      <div class="card-actions justify-end">
+        {tags && tags.map((tag) => <div class="badge badge-outline">{tag}</div>)}
       </div>
     </div>
   </div>
