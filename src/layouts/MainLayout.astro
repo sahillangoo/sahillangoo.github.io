@@ -1,32 +1,29 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION, SITE_IMAGE } from '../consts'
-import MainHead from '../components/MainHeader.astro'
-import MainNav from '../components/MainNav.astro'
-import PreFooter from '../components/MainPreFooter.astro'
-import MainFooter from '../components/MainFooter.astro'
-import MobileNav from '../components/MobileNav.astro'
-import '../styles/global.css'
+import { SITE } from '@consts';
+import MainHead from '@components/MainHeader.astro';
+import MainNav from '@components/MainNav.astro';
+import MainFooter from '@components/MainFooter.astro';
+import '@styles/global.css';
+
+const { TITLE, DESCRIPTION, IMAGE } = SITE;
 ---
 
 <!doctype html>
-<html lang='en'>
-	<head>
-		<MainHead title={SITE_TITLE} description={SITE_DESCRIPTION} image={SITE_IMAGE} />
-	</head>
+<html lang="en">
+  <head>
+    <MainHead title={TITLE} description={DESCRIPTION} image={IMAGE} />
+  </head>
 
-	<body transition:animate="initial" class='flex flex-col min-h-screen grainy-overlay'>
-		<noscript>
-			<p class="text-center font-medium italic text-primary m-2">
-				Please enable JavaScript for the best experience on this site.
-			</p>
-		</noscript>
-		<MainNav title={SITE_TITLE} />
-
-		<main class='flex-grow'>
-			<slot />
-		</main>
-		<!-- <PreFooter /> -->
-		<MainFooter />
-		<!-- <MobileNav /> -->
-	</body>
+  <body transition:animate="initial" class="grainy-overlay flex min-h-screen flex-col">
+    <noscript>
+      <p class="m-2 text-center font-medium italic text-primary">
+        Please enable JavaScript for the best experience on this site.
+      </p>
+    </noscript>
+    <MainNav title={TITLE} />
+    <main class="flex-grow">
+      <slot />
+    </main>
+    <MainFooter />
+  </body>
 </html>
