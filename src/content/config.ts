@@ -1,7 +1,7 @@
-import { z, defineCollection, reference } from 'astro:content';
+import { z, defineCollection } from 'astro:content';
 
 // Define common schema properties
-const commonSchema = (collectionName: string) =>
+const commonSchema = (_collectionName: string) =>
   z.object({
     title: z.string(),
     description: z.string().optional(),
