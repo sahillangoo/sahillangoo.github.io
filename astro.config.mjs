@@ -18,7 +18,9 @@ export default defineConfig({
 		mdx({
 			optimize: true,
 		}),
-		tailwind(),
+		tailwind({
+      applyBaseStyles: false,
+    }),
 		sitemap(),
 	],
 	markdown: {
