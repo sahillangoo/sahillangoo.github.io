@@ -10,15 +10,13 @@ import { ViewTransitions } from 'astro:transitions';
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const { title, description, image } = Astro.props;
 ---
-
-<ViewTransitions />
-
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
+<ViewTransitions />
 <meta name="title" content={title} />
 <meta name="description" property="og:description" content={description} />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
