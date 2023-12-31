@@ -13,8 +13,8 @@ const config = {
     },
   },
   plugins: [
-    require("@tailwindcss/typography"),
-    require("@tailwindcss/forms"),
+    // require("@tailwindcss/typography"),
+    // require("@tailwindcss/forms"),
     require("daisyui"),
   ],
   daisyui: {
@@ -59,8 +59,12 @@ const config = {
         },
       },
     ],
+    darkTheme: "InfinityDark", // name of one of the included themes for dark mode
     base: true, // applies background color and foreground color for root element by default
+    styled: true, // include daisyUI colors and design decisions for all components
+    utils: true, // adds responsive and modifier utility classes
     logs: false, // Shows info about daisyUI version and used config in the console when building your CSS
+    themeRoot: ":root", // The element that receives theme color CSS variables
   },
 };
 
