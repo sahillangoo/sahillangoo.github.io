@@ -8,6 +8,7 @@
     "paths": {
       "@consts": ["consts.ts"],
       "@assets/*": ["assets/*"],
+      "@svgs/*": ["assets/svgs/*"],
       "@images/*": ["assets/images/*"],
       "@components/*": ["components/*"],
       "@content/*": ["content/*"],
