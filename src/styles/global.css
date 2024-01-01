@@ -6,7 +6,7 @@
   html {
     /* playfair-regular - latin */
     @font-face {
-      font-display: optional; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+      font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
       font-family: 'Playfair';
       font-style: normal;
       font-weight: 400;
@@ -20,7 +20,7 @@
     }
     /* playfair-600 - latin */
     @font-face {
-      font-display: optional; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+      font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
       font-family: 'Playfair';
       font-style: normal;
       font-weight: 600;
@@ -34,7 +34,7 @@
     }
     /* playfair-800 - latin */
     @font-face {
-      font-display: optional; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+      font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
       font-family: 'Playfair';
       font-style: normal;
       font-weight: 800;
@@ -48,7 +48,7 @@
     }
     /* figtree-regular - latin */
     @font-face {
-      font-display: optional; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+      font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
       font-family: 'Figtree';
       font-style: normal;
       font-weight: 400;
@@ -56,7 +56,7 @@
     }
     /* figtree-italic - latin */
     @font-face {
-      font-display: optional; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+      font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
       font-family: 'Figtree';
       font-style: italic;
       font-weight: 400;
@@ -64,7 +64,7 @@
     }
     /* figtree-600 - latin */
     @font-face {
-      font-display: optional; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+      font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
       font-family: 'Figtree';
       font-style: normal;
       font-weight: 600;
@@ -72,7 +72,7 @@
     }
     /* space-mono-regular - latin */
     @font-face {
-      font-display: optional; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+      font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
       font-family: 'Space Mono';
       font-style: normal;
       font-weight: 400;
