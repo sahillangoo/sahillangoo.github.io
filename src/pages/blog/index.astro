@@ -17,7 +17,7 @@ const posts = publishedBlogEntries.sort(
   <h1 class="mb-4 text-center font-primary text-2xl font-bold md:text-4xl">
     sl [infinity] blog [✒️].
   </h1>
-  <p class="mb-8 text-center font-secondary text-lg">
+  <p class="mb-8 text-center font-main text-lg">
     My thoughts here, I write about random stuff, tech, and life in general.
     <br /><a href="https://twitter.com/kashurgeek" target="_blank" class="text-primary"
       >Follow me on twitter</a
@@ -34,9 +34,9 @@ const posts = publishedBlogEntries.sort(
                 <img src={post.data.heroImage} alt="{post.data.heroImage}" />
               </figure>
               <div class="card-body">
-                <h2 class="card-title font-primary">{post.data.title}</h2>
+                <h2 class="card-title font-primary font-bold ">{post.data.title}</h2>
                 <FormattedDate date={post.data.pubDate} />
-                <p class="font-secondary">{post.data.description}</p>
+                <p class="font-main">{post.data.description}</p>
                 <div class="card-actions justify-end">
                   {post.data.tags &&
                     post.data.tags.map((tag) => <div class="badge badge-outline">{tag}</div>)}
