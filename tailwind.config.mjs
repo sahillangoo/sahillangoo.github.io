@@ -4,9 +4,8 @@ const config = {
   theme: {
     extend: {
       fontFamily: {
-        primary: ["Playfair Display", "serif"],
-        secondary: ["Gabarito", "sans-serif"],
-        main: ["Outfit", "sans-serif"],
+        primary: ["Playfair", "serif"],
+        main: ["Figtree", "sans-serif"],
         mono: ["Space Mono", "monospace"],
       },
       variants: {},

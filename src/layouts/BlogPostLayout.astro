@@ -1,12 +1,11 @@
 ---
 import { SITE, BLOG } from '@consts';
 import type { CollectionEntry } from 'astro:content';
-import MainHead from '@components/MainHeader.astro';
+import MainHead from '@components/head/MainHeader.astro';
 import MainNav from '@components/MainNav.astro';
 import FormattedDate from '@components/FormattedDate.astro';
 import BreadcrumbsNav from '@components/BreadcrumbsNav.astro';
 import MainFooter from '@components/MainFooter.astro';
-import '@styles/global.css';
 
 type Props = CollectionEntry<'blog'>['data'] & { timetoread: number };
 const { title, description, category, tags, pubDate, updatedDate, heroImage, timetoread } =

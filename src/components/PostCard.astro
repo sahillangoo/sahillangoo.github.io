@@ -11,7 +11,7 @@ const { slug, title, description, heroImage, updatedDate, tags } = Astro.props;
     <div class="card-body">
       <h2 class="card-title font-primary">{title}</h2>
       <FormattedDate date={updatedDate} />
-      <p class="font-secondary">{description}</p>
+      <p class="font-main">{description}</p>
       <div class="card-actions justify-end">
         {tags && tags.map((tag) => <div class="badge badge-outline">{tag}</div>)}
       </div>
