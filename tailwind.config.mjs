@@ -4,9 +4,10 @@ const config = {
   theme: {
     extend: {
       fontFamily: {
-        primary: ["Playfair", "serif"],
-        main: ["Figtree", "sans-serif"],
-        mono: ["Space Mono", "monospace"],
+        display: ["Playfair Display", "serif"],
+        secondary: ["Kumbh Sans", "sans-serif"],
+        body: ["Figtree", "sans-serif"],
+        mono: ["JetBrains Mono", "monospace"],
       },
       variants: {},
     },
@@ -18,16 +19,6 @@ const config = {
   ],
   daisyui: {
     themes: [
-      {
-        InfinityLight: {
-          ...require("daisyui/src/theming/themes")["light"],
-          primary: "#2e6b55",
-          secondary: "#e0a256",
-          accent: "#d7574b",
-          neutral: "#51a0bc",
-          "base-100": "#e0e0df",
-        },
-      },
       {
         InfinityDark: {
           ...require("daisyui/src/theming/themes")["night"],
@@ -55,6 +46,16 @@ const config = {
           secondary: "#e0a256",
           accent: "#d7574b",
           neutral: "#51a0bc",
+        },
+      },
+      {
+        InfinityLight: {
+          ...require("daisyui/src/theming/themes")["light"],
+          primary: "#2e6b55",
+          secondary: "#e0a256",
+          accent: "#d7574b",
+          neutral: "#51a0bc",
+          "base-100": "#e0e0df",
         },
       },
     ],

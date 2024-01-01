@@ -4,47 +4,68 @@
 
 @layer base {
   html {
-    /* playfair-regular - latin */
+    /* playfair-display-regular - latin */
     @font-face {
       font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-      font-family: 'Playfair';
+      font-family: 'Playfair Display';
       font-style: normal;
       font-weight: 400;
-      src: url('/fonts/playfair-v2-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-      ascent-override: 80%;
-      descent-override: 20%;
-      line-gap-override: 0%;
-       unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
-    U+FEFF, U+FFFD;
+      src: url('/fonts/playfair-display-v36-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+      unicode-range: U+0000-00FF U+2000-206F;
     }
-    /* playfair-600 - latin */
+    /* playfair-display-italic - latin */
     @font-face {
       font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-      font-family: 'Playfair';
+      font-family: 'Playfair Display';
+      font-style: italic;
+      font-weight: 400;
+      src: url('/fonts/playfair-display-v36-latin-italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+      unicode-range: U+0000-00FF U+2000-206F;
+    }
+    /* playfair-display-600 - latin */
+    @font-face {
+      font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+      font-family: 'Playfair Display';
       font-style: normal;
       font-weight: 600;
-      src: url('/fonts/playfair-v2-latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-      ascent-override: 80%;
-      descent-override: 20%;
-      line-gap-override: 0%;
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-      U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
-      U+FEFF, U+FFFD;
+      src: url('/fonts/playfair-display-v36-latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+      unicode-range: U+0000-00FF U+2000-206F;
     }
-    /* playfair-800 - latin */
+    /* playfair-display-700 - latin */
     @font-face {
       font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-      font-family: 'Playfair';
+      font-family: 'Playfair Display';
+      font-style: normal;
+      font-weight: 700;
+      src: url('/fonts/playfair-display-v36-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+      unicode-range: U+0000-00FF U+2000-206F;
+    }
+    /* playfair-display-800 - latin */
+    @font-face {
+      font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+      font-family: 'Playfair Display';
       font-style: normal;
       font-weight: 800;
-      src: url('/fonts/playfair-v2-latin-800.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-      ascent-override: 80%;
-      descent-override: 20%;
-      line-gap-override: 0%;
-      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-      U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
-      U+FEFF, U+FFFD;
+      src: url('/fonts/playfair-display-v36-latin-800.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+      unicode-range: U+0000-00FF U+2000-206F;
+    }
+    /* kumbh-sans-regular - latin */
+    @font-face {
+      font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+      font-family: 'Kumbh Sans';
+      font-style: normal;
+      font-weight: 400;
+      src: url('/fonts/kumbh-sans-v20-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+      unicode-range: U+0000-00FF U+2000-206F;
+    }
+    /* kumbh-sans-600 - latin */
+    @font-face {
+      font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+      font-family: 'Kumbh Sans';
+      font-style: normal;
+      font-weight: 600;
+      src: url('/fonts/kumbh-sans-v20-latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+      unicode-range: U+0000-00FF U+2000-206F;
     }
     /* figtree-regular - latin */
     @font-face {
@@ -53,6 +74,7 @@
       font-style: normal;
       font-weight: 400;
       src: url('/fonts/figtree-v5-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+      unicode-range: U+0000-00FF U+2000-206F;
     }
     /* figtree-italic - latin */
     @font-face {
@@ -61,6 +83,7 @@
       font-style: italic;
       font-weight: 400;
       src: url('/fonts/figtree-v5-latin-italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+      unicode-range: U+0000-00FF U+2000-206F;
     }
     /* figtree-600 - latin */
     @font-face {
@@ -69,14 +92,26 @@
       font-style: normal;
       font-weight: 600;
       src: url('/fonts/figtree-v5-latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+      unicode-range: U+0000-00FF U+2000-206F;
     }
-    /* space-mono-regular - latin */
+    /* jetbrains-mono-regular - latin */
     @font-face {
       font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-      font-family: 'Space Mono';
+      font-family: 'JetBrains Mono';
       font-style: normal;
       font-weight: 400;
-      src: url('/fonts/space-mono-v13-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+      src: url('/fonts/jetbrains-mono-v18-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    }
+    /* gulzar-regular - arabic */
+    @font-face {
+      font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+      font-family: 'Gulzar';
+      font-style: normal;
+      font-weight: 400;
+      src: url('../fonts/gulzar-v12-arabic-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+      font-feature-settings: 'locl' on;
+      font-variation-settings: 'wght' 400;
+      unicode-range: U+0600-06FF;
     }
   }
 
