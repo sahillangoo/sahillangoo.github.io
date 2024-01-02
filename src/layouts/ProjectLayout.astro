@@ -12,7 +12,8 @@ type Props = CollectionEntry<'projects'>['data'];
 const { title, description, category, tags, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 
-<html lang="en">
+<!doctype html>
+<html lang="en" data-theme="InfinityDark">
   <head>
     <MainHead title={PROJECT.TITLE} description={PROJECT.DESCRIPTION} image={SITE.IMAGE} />
   </head>

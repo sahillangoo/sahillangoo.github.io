@@ -49,24 +49,6 @@
       src: url('/fonts/playfair-display-v36-latin-800.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
       unicode-range: U+0000-00FF U+2000-206F;
     }
-    /* kumbh-sans-regular - latin */
-    @font-face {
-      font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-      font-family: 'Kumbh Sans';
-      font-style: normal;
-      font-weight: 400;
-      src: url('/fonts/kumbh-sans-v20-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-      unicode-range: U+0000-00FF U+2000-206F;
-    }
-    /* kumbh-sans-600 - latin */
-    @font-face {
-      font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-      font-family: 'Kumbh Sans';
-      font-style: normal;
-      font-weight: 600;
-      src: url('/fonts/kumbh-sans-v20-latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-      unicode-range: U+0000-00FF U+2000-206F;
-    }
     /* figtree-regular - latin */
     @font-face {
       font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
@@ -109,7 +91,7 @@
     display: block;
     background-image: url('/images/noise.webp');
     /* background-image: url('/images/grain.svg'); */
-    opacity: 0.3;
+    opacity: 0.2;
     background-repeat: repeat;
     background-position: center;
     background-size: 257px auto;
