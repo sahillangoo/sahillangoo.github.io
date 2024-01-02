@@ -8,6 +8,8 @@ const config = {
         secondary: ["Kumbh Sans", "sans-serif"],
         body: ["Figtree", "sans-serif"],
         mono: ["JetBrains Mono", "monospace"],
+        urdu:["Gulzar", "sans-serif"],
+        logo: ["Quitman", "sans-serif"],
       },
       variants: {},
     },

@@ -4,6 +4,15 @@
 
 @layer base {
   html {
+    /* Quitman- latin */
+    @font-face {
+      font-display: swap;
+      font-family: 'Quitman';
+      font-style: normal;
+      font-weight: 400;
+      src: url('/fonts/Quitman.woff') format('woff');
+      unicode-range: U+0041, U+0044, U+0048, U+004C, U+004D, U+004E, U+004F, U+0053, U+0061, U+0064, U+0065, U+0067, U+0068, U+0069, U+006C, U+006D, U+006F, U+0072, U+0073, U+0020;
+    }
     /* playfair-display-regular - latin */
     @font-face {
       font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
