@@ -2,7 +2,7 @@ export const SITE = {
   TITLE: 'Sahil Langoo | Portfolio',
   DESCRIPTION: 'Hello World!',
   PRIMARY_COLOR: '#2e6b55',
-  AUTHOR: 'Sahil Langoo',
+  AUTHOR: 'Sahil Ahmad Langoo',
   URL: 'https://sahillangoo.com',
   REPO: 'https://github.com/sahillangoo/sahillangoo.github.io',
   IMAGE: 'https://sahillangoo.com/images/og.png',

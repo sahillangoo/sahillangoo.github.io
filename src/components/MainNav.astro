@@ -13,10 +13,10 @@ import light from '@assets/svgs/light.svg';
 import dark from '@assets/svgs/dark.svg';
 ---
 
-<header class="navbar border-b-4 border-primary/50 lg:px-16" transition:persist>
+<header class="navbar mt-3" transition:persist>
   <div class="navbar-start">
-    <div class="dropdown">
-      <div tabindex="0" role="button" class="btn btn-ghost lg:hidden" aria-label="Menu">|||</div>
+    <div class="dropdown lg:hidden">
+      <div tabindex="0" role="button" class="btn btn-ghost" aria-label="Menu">|||</div>
       <ul
         tabindex="0"
         class="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow lg:hidden"
@@ -25,9 +25,9 @@ import dark from '@assets/svgs/dark.svg';
       </ul>
     </div>
 
-    <a class="btn btn-ghost text-xl" href="/">
+    <a class="font-logo mt-5 text-3xl lg:ml-16" href="/">
       <span>
-        {SITE.TITLE}
+        {SITE.AUTHOR}.
       </span>
     </a>
   </div>
