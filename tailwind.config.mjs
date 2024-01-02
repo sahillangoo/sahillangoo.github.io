@@ -5,10 +5,8 @@ const config = {
 extend: {
   fontFamily: {
     display: ["Playfair Display", "Georgia", "serif"],
-    secondary: ["Kumbh Sans", "Arial", "sans-serif"],
     body: ["Figtree", "Arial", "sans-serif"],
     mono: ["JetBrains Mono", "Courier New", "monospace"],
-    urdu: ["Gulzar", "Arial", "sans-serif"],
   },
   variants: {},
 },
@@ -23,40 +21,34 @@ extend: {
       {
         InfinityDark: {
           ...require("daisyui/src/theming/themes")["night"],
-          primary: "#2e6b55",
-          secondary: "#e0a256",
-          accent: "#d7574b",
-          neutral: "#51a0bc",
-          "base-100": "#0d151c",
+          "primary": "#2e6b55",
+          "primary-content": "#fefdfc",
+          "secondary": "#e0a256",
+          "secondary-content": "#fefdfc",
+          "accent": "#d7574b",
+          "accent-content": "#fefdfc",
+          "tertiary": "#51a0bc",
+          "tertiary-content": "#fefdfc",
+          "base-100": "#040c0b",
+          "base-200": "#0d1f1c",
+          "base-300": "#162f2b",
 
-          "--rounded-box": "1rem", // border radius rounded-box utility class, used in card and other large boxes
-          "--rounded-btn": "0.5rem", // border radius rounded-btn utility class, used in buttons and similar element
-          "--rounded-badge": "1.9rem", // border radius rounded-badge utility class, used in badges and similar
-          "--animation-btn": "0.25s", // duration of animation when you click on button
-          "--animation-input": "0.2s", // duration of animation for inputs like checkbox, toggle, radio, etc
-          "--btn-focus-scale": "0.95", // scale transform of button when you focus on it
-          "--border-btn": "1px", // border width of buttons
-          "--tab-border": "1px", // border width of tabs
-          "--tab-radius": "0.5rem", // border radius of tabs
-        },
-      },
-      {
-        InfinityReading: {
-          ...require("daisyui/src/theming/themes")["retro"],
-          primary: "#2e6b55",
-          secondary: "#e0a256",
-          accent: "#d7574b",
-          neutral: "#51a0bc",
         },
       },
       {
         InfinityLight: {
-          ...require("daisyui/src/theming/themes")["light"],
-          primary: "#2e6b55",
-          secondary: "#e0a256",
-          accent: "#d7574b",
-          neutral: "#51a0bc",
-          "base-100": "#e0e0df",
+          ...require("daisyui/src/theming/themes")["autumn"],
+          "primary": "#2e6b55",
+          "primary-content": "#fefdfc",
+          "secondary": "#e0a256",
+          "secondary-content": "#fefdfc",
+          "accent": "#d7574b",
+          "accent-content": "#fefdfc",
+          "tertiary": "#51a0bc",
+          "tertiary-content": "#fefdfc",
+          "base-100": "#fefdfc",
+          "base-200": "#f9f9f9",
+          "base-300": "#f3f3f3",
         },
       },
     ],
