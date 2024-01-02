@@ -2,17 +2,16 @@
 const config = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
-    extend: {
-      fontFamily: {
-        display: ["Playfair Display", "serif"],
-        secondary: ["Kumbh Sans", "sans-serif"],
-        body: ["Figtree", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
-        urdu:["Gulzar", "sans-serif"],
-        logo: ["Quitman", "sans-serif"],
-      },
-      variants: {},
-    },
+extend: {
+  fontFamily: {
+    display: ["Playfair Display", "Georgia", "serif"],
+    secondary: ["Kumbh Sans", "Arial", "sans-serif"],
+    body: ["Figtree", "Arial", "sans-serif"],
+    mono: ["JetBrains Mono", "Courier New", "monospace"],
+    urdu: ["Gulzar", "Arial", "sans-serif"],
+  },
+  variants: {},
+},
   },
   plugins: [
     // require("@tailwindcss/typography"),
