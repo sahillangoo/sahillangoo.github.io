@@ -4,6 +4,9 @@ const config = {
   theme: {
 extend: {
   fontFamily: {
+    spacing: {
+      '1/5': '20%',
+    },
     display: ["Playfair Display", "Georgia", "serif"],
     body: ["Figtree", "Arial", "sans-serif"],
     mono: ["JetBrains Mono", "Courier New", "monospace"],
