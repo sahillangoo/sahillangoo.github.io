@@ -91,7 +91,7 @@
     display: block;
     background-image: url('/images/noise.webp');
     /* background-image: url('/images/grain.svg'); */
-    opacity: 0.2;
+    opacity: 0.3;
     background-repeat: repeat;
     background-position: center;
     background-size: 257px auto;

@@ -9,39 +9,53 @@ const links = [
   { href: '/blog', text: 'Blog' },
 ];
 // icons
-import light from '@assets/svgs/light.svg';
 import dark from '@assets/svgs/dark.svg';
+import light from '@assets/svgs/light.svg';
 ---
 
-<header class="navbar mt-3" transition:persist>
+<header class="navbar mx-auto bg-primary px-28 text-primary-content" transition:persist>
+  <!-- Small Screen Nav -->
   <div class="navbar-start">
-    <div class="dropdown lg:hidden">
-      <div tabindex="0" role="button" class="btn btn-ghost" aria-label="Menu">|||</div>
+    <div class="dropdown md:hidden">
+      <div tabindex="0" role="button" class="btn btn-circle btn-ghost">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          ><path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h7"></path></svg
+        >
+      </div>
       <ul
         tabindex="0"
-        class="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow lg:hidden"
+        class="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
       >
         {links.map((link) => <NavLink href={link.href}>{link.text}</NavLink>)}
       </ul>
     </div>
-
-    <a class="mt-5 font-display text-xl font-medium italic lg:ml-16 lg:text-3xl" href="/">
-      <span>
-        {SITE.AUTHOR}.
-      </span>
-    </a>
+    <!-- Logo -->
+    <span class="font-display text-xl italic hover:underline hover:underline-offset-4 lg:text-2xl">
+      <a href="/">{SITE.AUTHOR}.</a>
+    </span>
   </div>
 
-  <div class="navbar-end lg:flex">
-    <ul class="menu menu-horizontal hidden px-1 md:flex">
+  <div class="navbar-center"></div>
+
+  <div class="navbar-end">
+    <!-- Large Screen Nav -->
+    <ul class="menu menu-horizontal hidden px-1 lg:flex">
       {links.map((link) => <NavLink href={link.href}>{link.text}</NavLink>)}
     </ul>
-
+    <!-- Theme Switcher -->
     <label class="swap swap-rotate">
-      <!-- this hidden checkbox controls the state -->
       <input name="theme" type="checkbox" class="theme-controller" value="InfinityLight" />
-      <Image class="swap-on mr-5 h-6 w-6 fill-current" src={light} alt="light" />
-      <Image class="swap-off mr-5 h-6 w-6 fill-current" src={dark} alt="dark" />
+      <Image class="swap-on h-6 w-6 fill-current" src={light} alt="light" />
+      <Image class="swap-off h-6 w-6 fill-current" src={dark} alt="dark" />
     </label>
   </div>
 </header>
