@@ -104,3 +104,13 @@
     z-index: 99999998;
   }
 }
+
+@layer components {
+  .container {
+    @apply mx-auto px-4;
+  }
+
+  .container-fluid {
+    @apply container;
+  }
+}
