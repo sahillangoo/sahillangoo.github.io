@@ -1,6 +1,6 @@
 export const SITE = {
-  TITLE: 'Sahil Langoo | Portfolio',
-  DESCRIPTION: 'Hello World!',
+  TITLE: 'Sahil Langoo Online',
+  DESCRIPTION: 'The personal website of Sahil Langoo. Developer, and Designer.',
   PRIMARY_COLOR: '#2e6b55',
   AUTHOR: 'Sahil Langoo',
   URL: 'https://sahillangoo.com',

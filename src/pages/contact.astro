@@ -4,17 +4,15 @@ import MainLayout from '@layouts/MainLayout.astro';
 
 <MainLayout>
   <section class="my-12">
-    <div class="container">
-      <div class="space-y-2">
+    <div class="container flex">
+      <div class="flex-1 space-y-2">
         <h1 class="text-center font-display text-3xl font-bold text-primary">Contact Form</h1>
-        <p class="text-center font-body text-lg text-white">
-          Fill out the details below and hit send! 🚀
-        </p>
-        <form action="" method="post" onsubmit="event.preventDefault()" class="container">
+        <p class="text-center font-body text-lg">Fill out the details below and hit send! 🚀</p>
+        <form action="" method="post" onsubmit="event.preventDefault()">
           <div class="space-y-1">
             <label for="name" class="text-md block font-body font-semibold">Name</label>
             <input
-              class="block w-full rounded-md border-2 border-primary p-2 focus:border-primary-content focus-visible:border-primary-content disabled:border-l-neutral-600"
+              class="block w-full rounded-md border-2 border-primary-content p-2 caret-primary-content outline-none placeholder:text-primary-content/30 focus:border-primary focus:ring-4 focus:ring-primary/30 focus-visible:border-primary disabled:pointer-events-none disabled:border-neutral-800 disabled:bg-neutral-800/50"
               type="text"
               name="name"
               id="name"
@@ -24,7 +22,7 @@ import MainLayout from '@layouts/MainLayout.astro';
             <div class="space-y-1">
               <label for="email" class="text-md block font-body font-semibold">Email</label>
               <input
-                class="block w-full rounded-md border-2 border-primary p-2 focus:border-primary-content focus-visible:border-primary-content disabled:border-l-neutral-600"
+                class="block w-full rounded-md border-2 border-primary-content p-2 caret-primary-content outline-none placeholder:text-primary-content/30 invalid:border-accent focus:border-primary focus:ring-4 focus:ring-primary/30 focus-visible:border-primary disabled:cursor-not-allowed disabled:border-neutral-800 disabled:bg-neutral-800/50"
                 type="email"
                 name="email"
                 id="email"
@@ -35,7 +33,7 @@ import MainLayout from '@layouts/MainLayout.astro';
             <div class="space-y-1">
               <label for="message" class="text-md block font-body font-semibold">Message</label>
               <textarea
-                class="block w-full rounded-md border-2 border-primary p-2 focus:border-primary-content focus-visible:border-primary-content disabled:border-l-neutral-600"
+                class="block w-full rounded-md border-2 border-primary-content p-2 caret-primary-content outline-none placeholder:text-primary-content/30 focus:border-primary focus:ring-4 focus:ring-primary/30 focus-visible:border-primary disabled:pointer-events-none disabled:border-neutral-800 disabled:bg-neutral-800/50"
                 name="message"
                 id="message"
                 placeholder="Your message"
@@ -52,7 +50,9 @@ import MainLayout from '@layouts/MainLayout.astro';
         </form>
       </div>
 
-      <div></div>
+      <div class="container flex-1">
+        <p class="font-body text-lg">This is a placeholder for the second column.</p>
+      </div>
     </div>
   </section>
 </MainLayout>
