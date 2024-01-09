@@ -2,7 +2,10 @@
 const config = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
-extend: {
+    extend: {
+  backgroundImage: {
+    'hero-wave': "url('/images/bg_wave.svg')",
+  },
   fontFamily: {
     display: ["Playfair Display", "Georgia", "serif"],
     body: ["Figtree", "Arial", "sans-serif"],
