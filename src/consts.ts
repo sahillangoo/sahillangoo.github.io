@@ -7,7 +7,7 @@ export const SITE = {
   REPO: 'https://github.com/sahillangoo/sahillangoo.github.io',
   IMAGE: 'https://sahillangoo.com/images/og.png',
   IMAGES: 'https://sahillangoo.com/images/',
-  MAIL: 'sahilahmed3066@gmail.com',
+  MAIL: 'hello@sahillangoo.com',
 };
 
 export const SOCIAL = {
