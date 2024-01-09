@@ -2,16 +2,6 @@
 const config = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
-    container: {
-      center: true,
-      padding: {
-        DEFAULT: '1rem',
-        sm: '2rem',
-        lg: '4rem',
-        xl: '5rem',
-        '2xl': '6rem',
-      },
-    },
 extend: {
   fontFamily: {
     display: ["Playfair Display", "Georgia", "serif"],
@@ -22,8 +12,10 @@ extend: {
 },
   },
   plugins: [
-    // require("@tailwindcss/typography"),
-    // require("@tailwindcss/forms"),
+    require('@tailwindcss/typography'),
+    // require('@tailwindcss/forms'),
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/container-queries'),
     require("daisyui"),
   ],
   daisyui: {

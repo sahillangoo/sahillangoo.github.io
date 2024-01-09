@@ -1,10 +1,10 @@
-import { defineConfig } from 'astro/config'
-import { SITE } from '/src/consts.ts'
-import { remarkReadingTime } from './src/utils/remark-reading-time.mjs'
-import tailwind from '@astrojs/tailwind'
 import mdx from '@astrojs/mdx'
-import rehypeExternalLinks from 'rehype-external-links'
 import sitemap from '@astrojs/sitemap'
+import tailwind from '@astrojs/tailwind'
+import { defineConfig } from 'astro/config'
+import rehypeExternalLinks from 'rehype-external-links'
+import { remarkReadingTime } from './src/utils/remark-reading-time.mjs'
+import { SITE } from '/src/consts.ts'
 
 const repo = SITE.REPO
 const site = SITE.URL
