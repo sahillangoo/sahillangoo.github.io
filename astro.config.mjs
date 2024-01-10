@@ -19,6 +19,7 @@ export default defineConfig({
 			optimize: true,
 		}),
 		tailwind({
+			nesting: false, //  Enable nesting, like Sass
       applyBaseStyles: false,
     }),
 		sitemap(),

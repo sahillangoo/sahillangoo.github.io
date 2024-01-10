@@ -2,7 +2,8 @@
 import Social from '@components/Social.astro';
 import { SITE } from '@consts';
 import myImage from '@images/lucas-k-wQLAGv4_OYs-unsplash.jpg';
-import { Picture } from 'astro:assets';
+import waveIcon from '@svgs/waveform-lines.svg';
+import { Image, Picture } from 'astro:assets';
 ---
 
 <style>
@@ -40,36 +41,53 @@ import { Picture } from 'astro:assets';
   }
 </style>
 
-<section class="hero min-h-screen sm:space-y-4">
+<section class="hero mt-6 min-h-screen selection:bg-primary sm:space-y-4 lg:mt-14">
   <div class="fade-in hero-content flex-col lg:flex-row">
     <figure>
       <Picture
         class="max-w-sm transform rounded rounded-t-3xl object-cover object-center shadow-2xl shadow-primary transition-all duration-700 hover:scale-110 hover:grayscale sm:max-w-sm"
         src={myImage}
         formats={['avif', 'webp']}
-        alt="water smoke"
+        alt="Image of water smoke"
         loading="eager"
       />
-      <figcaption class="sr-only">water smoke</figcaption>
+      <figcaption class="sr-only">Image of water smoke</figcaption>
     </figure>
 
-    <div class="space-y-4 lg:ml-8">
+    <div class="space-y-4 font-body lg:ml-8">
       <p class="font-mono text-xl">Hello World,</p>
-      <h1 class="font-display text-4xl font-medium lg:text-6xl lg:font-bold">
-        My Name is Sahil <sup class="">🔉</sup>
+      <h1 class="font-display text-4xl font-bold lg:text-6xl">
+        My Name is <span class="hover:underline hover:decoration-primary">Sahil</span>
+        <Image
+          class="inline-block size-8 cursor-pointer"
+          src={waveIcon}
+          alt="Waveform lines icon"
+          aria-label="Listen to my name"
+          style="vertical-align: top;"
+        />
       </h1>
-      <h2 class="font-body text-2xl sm:text-4xl">A Multifaceted Developer & Designer</h2>
+      <h2 class="text-2xl sm:text-4xl">A Multifaceted Developer & Designer</h2>
 
-      <p class="font-body text-xl leading-relaxed">
+      <p class="text-xl leading-relaxed">
         I'm a professional freelancer and I craft unique brand identities, compelling websites, and
         innovative software solutions<span class="typing"></span>.
       </p>
-      <div class="flex justify-start">
-        <Social />
-      </div>
-      <a class="btn btn-primary" href={`mailto:${SITE.MAIL}`} aria-label="Contact Me">Contact Me</a>
-      <a class="btn btn-secondary ml-4" href="/resume/Sahil_Resume_W_2024.pdf" download
-        >Download Resume</a
+      <!-- Social Links -->
+      <Social />
+      <a
+        class="btn btn-primary btn-sm"
+        href={`mailto:${SITE.MAIL}?subject=Hello There!&amp;body=Hi Sahil, so I was looking at your blog and...`}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Contact me via email">Contact Me</a
+      >
+      <a
+        class="btn btn-secondary btn-sm ml-4"
+        href="/resume/Sahil_Resume_W_2024.pdf"
+        rel="noopener noreferrer"
+        target="_blank"
+        download
+        aria-label="Download my resume">Download Resume</a
       >
     </div>
   </div>
