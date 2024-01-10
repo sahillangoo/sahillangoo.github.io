@@ -9,53 +9,78 @@ const links = [
   { href: '/blog', text: 'Blog' },
 ];
 // icons
+import menu from '@svgs/bars-sort.svg';
 import dark from '@svgs/dark.svg';
 import light from '@svgs/light.svg';
+import close from '@svgs/xmark.svg';
 ---
 
-<header class="navbar bg-primary text-primary-content lg:px-28" transition:persist>
+<header class="navbar bg-primary text-primary-content lg:px-12" transition:persist>
   <!-- Small Screen Nav -->
   <div class="navbar-start">
-    <div class="dropdown md:hidden">
-      <div tabindex="0" role="button" class="btn btn-circle btn-ghost">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          ><path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h7"></path></svg
-        >
+    <!-- Mobile Menu -->
+    <div class="drawer z-20 lg:hidden">
+      <input
+        id="mobile-menu"
+        type="checkbox"
+        class="drawer-toggle"
+        aria-label="Mobile menu toggle"
+      />
+      <div class="drawer-content">
+        <label for="mobile-menu" class="btn btn-primary drawer-button">
+          <Image class="size-8" src={menu} alt="Menu icon" />
+        </label>
       </div>
-      <ul
-        tabindex="0"
-        class="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
-      >
-        {links.map((link) => <NavLink href={link.href}>{link.text}</NavLink>)}
-      </ul>
+      <div class="drawer-side">
+        <nav class="menu min-h-full w-80 bg-base-100 p-4 text-3xl shadow-sm shadow-primary text-base-content font-body font-medium">
+          <ul>
+            <li>
+              <label for="mobile-menu" aria-label="Close sidebar" class="drawer-overlay text-sm">
+                <Image class="size-8" src={close} alt="Close icon" /> Close
+              </label>
+            </li>
+            <li><a href="/">Home.</a></li>
+            {links.map((link) => <NavLink href={link.href}>{link.text}.</NavLink>)}
+          </ul>
+        </nav>
+      </div>
     </div>
+
     <!-- Logo -->
-    <span class="font-display text-xl italic hover:underline hover:underline-offset-4 lg:text-2xl">
-      <a href="/">{SITE.AUTHOR}.</a>
+    <span
+      class="hidden font-display font-medium text-3xl italic hover:underline hover:underline-offset-4 lg:inline-block lg:text-3xl"
+    >
+      <a href="/" aria-label="Home">{SITE.AUTHOR}.</a>
     </span>
   </div>
 
-  <div class="navbar-center"></div>
-
-  <div class="navbar-end">
+  <div class="navbar-center">
+    <!-- Logo -->
+    <span
+      class="font-display text-2xl italic hover:underline hover:underline-offset-4 md:hidden lg:text-2xl"
+    >
+      <a href="/" aria-label="Home">{SITE.AUTHOR}.</a>
+    </span>
     <!-- Large Screen Nav -->
-    <ul class="menu menu-horizontal hidden px-1 lg:flex">
+    <ul class="menu menu-horizontal hidden px-1 lg:flex font-body font-medium text-lg">
       {links.map((link) => <NavLink href={link.href}>{link.text}</NavLink>)}
     </ul>
+  </div>
+
+  <div class="navbar-end">
     <!-- Theme Switcher -->
-    <label class="swap swap-rotate">
-      <input name="theme" type="checkbox" class="theme-controller" value="InfinityLight" />
-      <Image class="swap-on size-8" src={light} alt="light" />
-      <Image class="swap-off size-8" src={dark} alt="dark" />
-    </label>
+    <span>
+      <label class="swap swap-rotate">
+        <input
+          name="theme"
+          type="checkbox"
+          class="theme-controller"
+          value="InfinityLight"
+          aria-label="Theme switcher"
+        />
+        <Image class="swap-on size-8" src={light} alt="Light theme icon" />
+        <Image class="swap-off size-8" src={dark} alt="Dark theme icon" />
+      </label>
+    </span>
   </div>
 </header>
