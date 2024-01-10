@@ -9,8 +9,8 @@ const links = [
   { href: '/blog', text: 'Blog' },
 ];
 // icons
-import dark from '@assets/svgs/dark.svg';
-import light from '@assets/svgs/light.svg';
+import dark from '@svgs/dark.svg';
+import light from '@svgs/light.svg';
 ---
 
 <header class="navbar bg-primary text-primary-content lg:px-28" transition:persist>
@@ -54,8 +54,8 @@ import light from '@assets/svgs/light.svg';
     <!-- Theme Switcher -->
     <label class="swap swap-rotate">
       <input name="theme" type="checkbox" class="theme-controller" value="InfinityLight" />
-      <Image class="swap-on h-6 w-6 fill-current" src={light} alt="light" />
-      <Image class="swap-off h-6 w-6 fill-current" src={dark} alt="dark" />
+      <Image class="swap-on size-8" src={light} alt="light" />
+      <Image class="swap-off size-8" src={dark} alt="dark" />
     </label>
   </div>
 </header>
