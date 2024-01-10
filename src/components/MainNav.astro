@@ -12,75 +12,57 @@ const links = [
 import menu from '@svgs/bars-sort.svg';
 import dark from '@svgs/dark.svg';
 import light from '@svgs/light.svg';
-import close from '@svgs/xmark.svg';
 ---
 
-<header class="navbar bg-primary text-primary-content lg:px-12" transition:persist>
-  <!-- Small Screen Nav -->
-  <div class="navbar-start">
-    <!-- Mobile Menu -->
-    <div class="drawer z-20 lg:hidden">
-      <input
-        id="mobile-menu"
-        type="checkbox"
-        class="drawer-toggle"
-        aria-label="Mobile menu toggle"
-      />
-      <div class="drawer-content">
-        <label for="mobile-menu" class="btn btn-primary drawer-button">
-          <Image class="size-8" src={menu} alt="Menu icon" />
+<div class="drawer font-body text-primary-content" transition:persist>
+  <input id="mobile-menu" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content flex flex-col">
+    <!-- Navbar -->
+    <div class="navbar w-full bg-primary lg:px-12">
+      <div class="flex-none lg:hidden">
+        <label for="mobile-menu" aria-label="open sidebar" class="btn btn-square btn-ghost">
+          <Image class="size-6" src={menu} alt="Menu icon" />
         </label>
       </div>
-      <div class="drawer-side">
-        <nav class="menu min-h-full w-80 bg-base-100 p-4 text-3xl shadow-sm shadow-primary text-base-content font-body font-medium">
-          <ul>
-            <li>
-              <label for="mobile-menu" aria-label="Close sidebar" class="drawer-overlay text-sm">
-                <Image class="size-8" src={close} alt="Close icon" /> Close
-              </label>
-            </li>
-            <li><a href="/">Home.</a></li>
-            {links.map((link) => <NavLink href={link.href}>{link.text}.</NavLink>)}
-          </ul>
-        </nav>
+      <div
+        class="mx-2 flex-1 px-2 font-display text-2xl font-semibold italic hover:underline lg:text-3xl"
+      >
+        <a href="/" aria-label="Home">{SITE.AUTHOR}.</a>
       </div>
-    </div>
 
-    <!-- Logo -->
-    <span
-      class="hidden font-display font-medium text-3xl italic hover:underline hover:underline-offset-4 lg:inline-block lg:text-3xl"
-    >
-      <a href="/" aria-label="Home">{SITE.AUTHOR}.</a>
-    </span>
+      <div class="hidden flex-none lg:block">
+        <ul class="menu menu-horizontal text-lg font-medium">
+          <!-- Navbar menu content here -->
+          {links.map((link) => <NavLink href={link.href}>{link.text}</NavLink>)}
+        </ul>
+      </div>
+
+      <!-- Theme Switcher -->
+      <span class="sm:mr-2">
+        <label class="swap swap-rotate">
+          <input
+            name="theme"
+            type="checkbox"
+            class="theme-controller"
+            value="InfinityLight"
+            aria-label="Theme switcher"
+          />
+          <Image class="swap-on size-8" src={light} alt="Light theme icon" />
+          <Image class="swap-off size-8" src={dark} alt="Dark theme icon" />
+        </label>
+      </span>
+    </div>
   </div>
 
-  <div class="navbar-center">
-    <!-- Logo -->
-    <span
-      class="font-display text-2xl italic hover:underline hover:underline-offset-4 md:hidden lg:text-2xl"
+  <div class="drawer-side z-10">
+    <label for="mobile-menu" aria-label="close sidebar" class="drawer-overlay"></label>
+    <ul
+      class="menu flex min-h-full w-60 flex-col items-center bg-base-200 p-4 pt-12 text-3xl font-medium text-base-content"
     >
-      <a href="/" aria-label="Home">{SITE.AUTHOR}.</a>
-    </span>
-    <!-- Large Screen Nav -->
-    <ul class="menu menu-horizontal hidden px-1 lg:flex font-body font-medium text-lg">
-      {links.map((link) => <NavLink href={link.href}>{link.text}</NavLink>)}
+      <!-- Sidebar content here -->
+      <li class="pb-4 font-bold">Main Menu</li>
+      <li><a href="/">Home.</a></li>
+      {links.map((link) => <NavLink href={link.href}>{link.text}.</NavLink>)}
     </ul>
   </div>
-
-  <div class="navbar-end">
-    <!-- Theme Switcher -->
-    <span>
-      <label class="swap swap-rotate">
-        <input
-          name="theme"
-          type="checkbox"
-          class="theme-controller"
-          value="InfinityLight"
-          aria-label="Theme switcher"
-        />
-        <Image class="swap-on size-8" src={light} alt="Light theme icon" />
-        <Image class="swap-off size-8" src={dark} alt="Dark theme icon" />
-      </label>
-    </span>
-  </div>
-</header>
+</div>
