@@ -4,14 +4,19 @@ import { Image } from 'astro:assets';
 
 import { SITE } from '@consts';
 const links = [
-  { href: '/projects', text: 'Projects' },
-  { href: '/contact', text: 'Contact' },
-  { href: '/blog', text: 'Blog' },
+  { href: '/projects', text: 'Projects', icon: project },
+  { href: '/contact', text: 'Contact', icon: contact },
+  { href: '/blog', text: 'Blog', icon: blog },
 ];
 // icons
-import menu from '@svgs/bars-sort.svg';
+import blog from '@svgs/blog.svg';
 import dark from '@svgs/dark.svg';
+import home from '@svgs/home.svg';
 import light from '@svgs/light.svg';
+import menu from '@svgs/menu.svg';
+import project from '@svgs/project.svg';
+import contact from '@svgs/contact.svg';
+import rss from '@svgs/rss.svg';
 ---
 
 <div class="drawer font-body text-primary-content" transition:persist>
@@ -21,7 +26,7 @@ import light from '@svgs/light.svg';
     <div class="navbar w-full bg-primary lg:px-12">
       <div class="flex-none lg:hidden">
         <label for="mobile-menu" aria-label="open sidebar" class="btn btn-square btn-ghost">
-          <Image class="size-6" src={menu} alt="Menu icon" />
+          <Image class="size-8" src={menu} alt="Menu icon" />
         </label>
       </div>
       <div
@@ -54,15 +59,37 @@ import light from '@svgs/light.svg';
     </div>
   </div>
 
+  <!-- Rest of the code remains the same -->
+
   <div class="drawer-side z-10">
     <label for="mobile-menu" aria-label="close sidebar" class="drawer-overlay"></label>
     <ul
-      class="menu flex min-h-full w-60 flex-col items-center bg-base-200 p-4 pt-12 text-3xl font-medium text-base-content"
+      class="menu flex min-h-full w-80 flex-col items-center bg-base-100 p-4 pt-12 text-2xl font-medium text-base-content"
     >
       <!-- Sidebar content here -->
-      <li class="pb-4 font-bold">Main Menu</li>
-      <li><a href="/">Home.</a></li>
-      {links.map((link) => <NavLink href={link.href}>{link.text}.</NavLink>)}
+      <li class="border-b-2 border-base-300 pb-4 font-bold">Main Menu</li>
+      <li>
+        <a href="/">
+          <Image class="size-8" src={home} alt="Home icon" />
+          Home.
+        </a>
+      </li>
+      {
+        links.map((link) => (
+          <li>
+            <a href={link.href}>
+              <Image class="size-8" src={link.icon} alt={`${link.text} icon`} />
+              {link.text}.
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a href="/rss.xml">
+          <Image class="size-8" src={rss} alt="rss icon" />
+          RSS.
+        </a>
+      </li>
     </ul>
   </div>
 </div>
