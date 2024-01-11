@@ -41,7 +41,7 @@ import { Image, Picture } from 'astro:assets';
   }
 </style>
 
-<section class="hero mt-6 min-h-screen selection:bg-primary sm:space-y-4 lg:mt-14">
+<section class="hero mt-6 min-h-screen selection:bg-primary sm:space-y-6 lg:mt-14">
   <div class="fade-in hero-content flex-col lg:flex-row">
     <figure>
       <Picture
@@ -54,17 +54,19 @@ import { Image, Picture } from 'astro:assets';
       <figcaption class="sr-only">Image of water smoke</figcaption>
     </figure>
 
-    <div class="space-y-4 font-body lg:ml-8">
+    <div class="space-y-6 font-body lg:ml-8">
       <p class="font-mono text-xl">Hello World,</p>
       <h1 class="font-display text-4xl font-bold lg:text-6xl">
         My Name is <span class="hover:underline hover:decoration-primary">Sahil</span>
-        <Image
-          class="inline-block size-8 cursor-pointer"
-          src={waveIcon}
-          alt="Waveform lines icon"
-          aria-label="Listen to my name"
-          style="vertical-align: top;"
-        />
+        <button id="play-name">
+          <Image
+            class="inline-block size-8 cursor-pointer"
+            src={waveIcon}
+            alt="Waveform lines icon"
+            aria-label="Listen to my name"
+            style="vertical-align: top;"
+          />
+        </button>
       </h1>
       <h2 class="text-2xl font-medium sm:text-4xl">A Multifaceted Developer & Designer</h2>
 
@@ -92,3 +94,12 @@ import { Image, Picture } from 'astro:assets';
     </div>
   </div>
 </section>
+<script>
+  const nameSound = new Audio('./audio/sahil-name.mp3');
+  const playButton = document.getElementById('play-name') as HTMLElement | null;
+  if (playButton) {
+    playButton.addEventListener('click', function () {
+      nameSound.play();
+    });
+  }
+</script>
