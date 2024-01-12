@@ -34,7 +34,7 @@ const links = [
       </div>
 
       <!-- Theme Switcher -->
-      <span class="sm:mr-2">
+      <span class="mr-2">
         <label class="swap swap-rotate">
           <input
             name="theme"
@@ -45,6 +45,7 @@ const links = [
           />
           <Icon name="light" class="swap-on size-8" />
           <Icon name="dark" class="swap-off size-8" />
+          <span class="sr-only">Theme switcher</span>
         </label>
       </span>
     </div>
@@ -55,10 +56,10 @@ const links = [
   <div class="drawer-side z-10">
     <label for="mobile-menu" aria-label="close sidebar" class="drawer-overlay"></label>
     <ul
-      class="menu flex min-h-full w-80 flex-col items-center bg-base-100 p-4 pt-12 text-2xl font-medium text-base-content"
+      class="menu flex min-h-full w-80 flex-col items-center space-y-4 bg-base-100 p-4 pt-12 text-2xl font-medium text-base-content"
     >
       <!-- Sidebar content here -->
-      <li class="border-b-2 border-base-300 pb-4 font-bold">Main Menu</li>
+      <li class="pb-4 font-bold">Main Menu</li>
       <li>
         <a href="/">
           <Icon name="home" class="size-8" />
