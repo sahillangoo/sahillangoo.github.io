@@ -2,9 +2,9 @@
 import { SITE, BLOG } from '@consts';
 import type { CollectionEntry } from 'astro:content';
 import MainHead from '@components/head/MainHeader.astro';
-import MainNav from '@components/MainNav.astro';
+import MainNav from '@components/navigation/MainNav.astro';
 import FormattedDate from '@components/FormattedDate.astro';
-import BreadcrumbsNav from '@components/BreadcrumbsNav.astro';
+import BreadcrumbsNav from '@components/navigation/BreadcrumbsNav.astro';
 import MainFooter from '@components/MainFooter.astro';
 
 type Props = CollectionEntry<'blog'>['data'] & { timetoread: number };
