@@ -1,9 +1,9 @@
 ---
-import Social from '@components/Social.astro';
 import { SITE } from '@consts';
+import { Picture } from 'astro:assets';
+import Social from '@components/Social.astro';
+import { Icon } from 'astro-icon/components';
 import myImage from '@images/lucas-k-wQLAGv4_OYs-unsplash.jpg';
-import waveIcon from '@svgs/waveform-lines.svg';
-import { Image, Picture } from 'astro:assets';
 ---
 
 <style>
@@ -59,10 +59,9 @@ import { Image, Picture } from 'astro:assets';
       <h1 class="font-display text-4xl font-bold lg:text-6xl">
         My Name is <span class="hover:underline hover:decoration-primary">Sahil</span>
         <button id="play-name">
-          <Image
+          <Icon
+            name="waveform"
             class="inline-block size-8 cursor-pointer"
-            src={waveIcon}
-            alt="Waveform lines icon"
             aria-label="Listen to my name"
             style="vertical-align: top;"
           />

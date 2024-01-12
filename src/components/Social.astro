@@ -1,12 +1,6 @@
 ---
 import { SOCIAL } from '@consts';
-import { Image } from 'astro:assets';
-// Social Icons
-import dribbleIcon from '@svgs/icons8_dribbble.svg';
-import githubIcon from '@svgs/icons8_github.svg';
-import instagramIcon from '@svgs/icons8_instagram.svg';
-import linkedInIcon from '@svgs/icons8_linkedin.svg';
-import twitterIcon from '@svgs/icons8_twitter.svg';
+import { Icon } from 'astro-icon/components';
 ---
 
 <div class="flex items-center justify-start space-x-2 font-body lg:space-x-8">
@@ -19,7 +13,7 @@ import twitterIcon from '@svgs/icons8_twitter.svg';
     rel="noopener noreferrer"
     aria-label="Visit my LinkedIn profile"
   >
-    <Image class="size-10" src={linkedInIcon} alt="LinkedIn logo" />
+    <Icon class="size-10" name="linkedin" />
   </a>
   <a
     class="tooltip tooltip-bottom"
@@ -29,7 +23,7 @@ import twitterIcon from '@svgs/icons8_twitter.svg';
     rel="noopener noreferrer"
     aria-label="Visit my Twitter profile"
   >
-    <Image class="size-10" src={twitterIcon} alt="Twitter logo" />
+    <Icon class="size-10" name="twitter" />
   </a>
   <a
     class="tooltip tooltip-bottom"
@@ -39,7 +33,7 @@ import twitterIcon from '@svgs/icons8_twitter.svg';
     rel="noopener noreferrer"
     aria-label="Visit my GitHub profile"
   >
-    <Image class="size-10" src={githubIcon} alt="GitHub logo" />
+    <Icon class="size-10" name="github" />
   </a>
   <a
     class="tooltip tooltip-bottom"
@@ -49,7 +43,7 @@ import twitterIcon from '@svgs/icons8_twitter.svg';
     rel="noopener noreferrer"
     aria-label="Visit my Dribble profile"
   >
-    <Image class="size-10" src={dribbleIcon} alt="Dribble logo" />
+    <Icon class="size-10" name="dribble" />
   </a>
   <a
     class="tooltip tooltip-bottom"
@@ -59,6 +53,6 @@ import twitterIcon from '@svgs/icons8_twitter.svg';
     rel="noopener noreferrer"
     aria-label="Visit my Instagram profile"
   >
-    <Image class="size-10" src={instagramIcon} alt="Instagram logo" />
+    <Icon name="instagram" class="size-10" />
   </a>
 </div>
