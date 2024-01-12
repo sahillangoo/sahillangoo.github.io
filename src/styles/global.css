@@ -4,6 +4,12 @@
 
 @layer base {
   html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+    text-size-adjust: 100%;
+
     /* playfair-display-regular - latin */
     @font-face {
       font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
@@ -11,7 +17,7 @@
       font-style: normal;
       font-weight: 400;
       src: url('/fonts/playfair-display-v36-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-      unicode-range: U+0000-00FF U+2000-206F;
+      /* unicode-range: U+0000-00FF U+2000-206F; */
     }
     /* playfair-display-italic - latin */
     @font-face {
@@ -20,7 +26,7 @@
       font-style: italic;
       font-weight: 400;
       src: url('/fonts/playfair-display-v36-latin-italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-      unicode-range: U+0000-00FF U+2000-206F;
+      /* unicode-range: U+0000-00FF U+2000-206F; */
     }
     /* playfair-display-600 - latin */
     @font-face {
@@ -29,7 +35,7 @@
       font-style: normal;
       font-weight: 600;
       src: url('/fonts/playfair-display-v36-latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-      unicode-range: U+0000-00FF U+2000-206F;
+      /* unicode-range: U+0000-00FF U+2000-206F; */
     }
     /* playfair-display-700 - latin */
     @font-face {
@@ -38,7 +44,7 @@
       font-style: normal;
       font-weight: 700;
       src: url('/fonts/playfair-display-v36-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-      unicode-range: U+0000-00FF U+2000-206F;
+      /* unicode-range: U+0000-00FF U+2000-206F; */
     }
     /* playfair-display-800 - latin */
     @font-face {
@@ -47,7 +53,7 @@
       font-style: normal;
       font-weight: 800;
       src: url('/fonts/playfair-display-v36-latin-800.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-      unicode-range: U+0000-00FF U+2000-206F;
+      /* unicode-range: U+0000-00FF U+2000-206F; */
     }
     /* figtree-regular - latin */
     @font-face {
@@ -56,7 +62,7 @@
       font-style: normal;
       font-weight: 400;
       src: url('/fonts/figtree-v5-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-      unicode-range: U+0000-00FF U+2000-206F;
+      /* unicode-range: U+0000-00FF U+2000-206F; */
     }
     /* figtree-italic - latin */
     @font-face {
@@ -65,7 +71,7 @@
       font-style: italic;
       font-weight: 400;
       src: url('/fonts/figtree-v5-latin-italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-      unicode-range: U+0000-00FF U+2000-206F;
+      /* unicode-range: U+0000-00FF U+2000-206F; */
     }
     /* figtree-600 - latin */
     @font-face {
@@ -74,7 +80,7 @@
       font-style: normal;
       font-weight: 600;
       src: url('/fonts/figtree-v5-latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-      unicode-range: U+0000-00FF U+2000-206F;
+      /* unicode-range: U+0000-00FF U+2000-206F; */
     }
     /* jetbrains-mono-regular - latin */
     @font-face {

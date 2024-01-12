@@ -1,22 +1,13 @@
 ---
-import NavLink from '@components/NavLinks.astro';
-import { Image } from 'astro:assets';
+import NavLink from '@components/navigation/NavLinks.astro';
+import { Icon } from 'astro-icon/components';
 
 import { SITE } from '@consts';
 const links = [
-  { href: '/projects', text: 'Projects', icon: project },
-  { href: '/contact', text: 'Contact', icon: contact },
-  { href: '/blog', text: 'Blog', icon: blog },
+  { href: '/projects', text: 'Projects', icon: 'project' },
+  { href: '/contact', text: 'Contact', icon: 'contact' },
+  { href: '/blog', text: 'Blog', icon: 'blog' },
 ];
-// icons
-import blog from '@svgs/blog.svg';
-import dark from '@svgs/dark.svg';
-import home from '@svgs/home.svg';
-import light from '@svgs/light.svg';
-import menu from '@svgs/menu.svg';
-import project from '@svgs/project.svg';
-import contact from '@svgs/contact.svg';
-import rss from '@svgs/rss.svg';
 ---
 
 <div class="drawer font-body text-primary-content" transition:persist>
@@ -26,7 +17,7 @@ import rss from '@svgs/rss.svg';
     <div class="navbar w-full bg-primary lg:px-12">
       <div class="flex-none lg:hidden">
         <label for="mobile-menu" aria-label="open sidebar" class="btn btn-square btn-ghost">
-          <Image class="size-8" src={menu} alt="Menu icon" />
+          <Icon name="menu" class="size-8" />
         </label>
       </div>
       <div
@@ -52,8 +43,8 @@ import rss from '@svgs/rss.svg';
             value="InfinityLight"
             aria-label="Theme switcher"
           />
-          <Image class="swap-on size-8" src={light} alt="Light theme icon" />
-          <Image class="swap-off size-8" src={dark} alt="Dark theme icon" />
+          <Icon name="light" class="swap-on size-8" />
+          <Icon name="dark" class="swap-off size-8" />
         </label>
       </span>
     </div>
@@ -70,7 +61,7 @@ import rss from '@svgs/rss.svg';
       <li class="border-b-2 border-base-300 pb-4 font-bold">Main Menu</li>
       <li>
         <a href="/">
-          <Image class="size-8" src={home} alt="Home icon" />
+          <Icon name="home" class="size-8" />
           Home.
         </a>
       </li>
@@ -78,7 +69,7 @@ import rss from '@svgs/rss.svg';
         links.map((link) => (
           <li>
             <a href={link.href}>
-              <Image class="size-8" src={link.icon} alt={`${link.text} icon`} />
+              <Icon name={link.icon} class="size-8" />
               {link.text}.
             </a>
           </li>
@@ -86,7 +77,7 @@ import rss from '@svgs/rss.svg';
       }
       <li>
         <a href="/rss.xml">
-          <Image class="size-8" src={rss} alt="rss icon" />
+          <Icon name="rss" class="size-8" />
           RSS.
         </a>
       </li>

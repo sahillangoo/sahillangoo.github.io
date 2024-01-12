@@ -40,6 +40,7 @@
     "astro-breadcrumbs": "^1.8.1",
     "astro-eslint-parser": "^0.15.0",
     "astro-favicons": "^2.0.2",
+    "astro-icon": "^1.0.2",
     "astro-integration-lottie": "^0.2.3",
     "astro-webmanifest": "^1.0.0",
     "autoprefixer": "^10.4.16",
