@@ -23,7 +23,8 @@ const socialLinks = [
         rel="noopener noreferrer"
         aria-label={`Visit my ${tip} profile`}
       >
-        <Icon class="size-10" name={name} />
+        <Icon class="size-10 " name={name} />
+        <span class="sr-only">{`Visit my ${tip} profile`}</span>
       </a>
     ))
   }

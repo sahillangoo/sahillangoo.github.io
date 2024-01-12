@@ -6,7 +6,7 @@ import { Icon } from 'astro-icon/components';
 import myImage from '@images/lucas-k-wQLAGv4_OYs-unsplash.jpg';
 ---
 
-<style>
+<style is:inline>
   .typing::after {
     content: '|';
     white-space: pre;
@@ -41,7 +41,7 @@ import myImage from '@images/lucas-k-wQLAGv4_OYs-unsplash.jpg';
   }
 </style>
 
-<section class="hero mt-6 min-h-screen selection:bg-primary sm:space-y-6 lg:mt-14">
+<section class="hero mt-6 min-h-screen selection:bg-primary sm:space-y-6 lg:mt-12">
   <div class="fade-in hero-content flex-col lg:flex-row">
     <figure>
       <Picture

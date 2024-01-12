@@ -21,7 +21,9 @@ export default defineConfig({
     nesting: false,
     //  Enable nesting, like Sass
     applyBaseStyles: false
-  }), sitemap(), icon()],
+  }), sitemap(), icon({
+    iconDir: "src/assets/icons",
+  })],
   markdown: {
     remarkPlugins: [remarkReadingTime],
     rehypePlugins: [[rehypeExternalLinks, {
