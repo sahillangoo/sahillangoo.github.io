@@ -14,7 +14,8 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build && jampack ./dist",
+    "build": "astro build && jampack ./dist --nocache --cleancache",
+    "tbuild": "astro build && jampack ./dist --fast --nowrite --cleancache",
     "preview": "astro preview",
     "astro": "astro",
     "format:check": "prettier --plugin-search-dir=. --check .",
