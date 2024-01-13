@@ -1,20 +1,21 @@
 ---
 import FormattedDate from '@components/FormattedDate.astro';
 import { getCollection } from 'astro:content';
+import { Icon } from 'astro-icon/components';
 
 // Fetch the blog posts
 let posts = await getCollection('projects');
 posts = posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()).slice(0, 4);
 ---
 
-<section class="container mx-auto pb-12 text-primary-content">
+<section class="container mx-auto py-20 text-base-content">
   <div class="relative mb-12 flex items-center justify-center text-center">
     <div
       class="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-transparent bg-gradient-to-r from-transparent via-primary to-transparent opacity-75"
     >
     </div>
     <h2 class="relative z-10 bg-base-100 px-6 font-display text-2xl font-bold italic lg:text-4xl">
-      Latest projects from the portfolio
+      Latest projects from the portfolio <Icon name="project" class="inline-block ml-2 size-8" />
     </h2>
   </div>
   <div class="mx-8 grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4">
@@ -38,5 +39,13 @@ posts = posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
         </a>
       ))
     }
+  </div>
+  <div class="mt-12 text-center group">
+    <a
+      href="/projects"
+      class="font-display text-2xl font-medium text-base-content transition-all duration-200 ease-in-out transform group-hover:text-primary"
+    >
+      View More <Icon name="forward_button" class="ml-2 inline-block size-8 group-hover:animate-spin" />
+    </a>
   </div>
 </section>
