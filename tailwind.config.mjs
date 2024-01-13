@@ -37,7 +37,6 @@ const config = {
           "base-100": "#040c0b",
           "base-200": "#0d1f1c",
           "base-300": "#162f2b",
-
         },
       },
       {

@@ -5,7 +5,7 @@ description: 'This is my first project.'
 heroImage: '/images/first-post-hero.jpg'
 draft: false
 category: 'web'
-tags: ['first', 'peoject']
+tags: ['first', 'project']
 pubDate: 'Dec 2 2023'
 updatedDate: 'Dec 2 2023'
 ---

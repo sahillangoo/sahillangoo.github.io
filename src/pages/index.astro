@@ -1,45 +1,15 @@
 ---
-import FormattedDate from '@components/FormattedDate.astro';
 import Hero from '@components/home/Hero.astro';
+import RecentPosts from '@components/home/RecentPosts.astro';
+import RecentProjects from '@components/home/RecentProjects.astro';
 import MainLayout from '@layouts/MainLayout.astro';
-import { getCollection } from 'astro:content';
-
-// Fetch the blog posts
-let posts = await getCollection('blog');
-posts = posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()).slice(0, 4);
 ---
 
 <MainLayout>
   <!-- hero -->
   <Hero />
   <!-- blog section -->
-  <section class="container mx-auto min-h-screen pb-12">
-    <div class="mb-12 text-center">
-      <h2 class="font-display text-4xl font-bold">Recent Posts</h2>
-      <p class="mt-2 font-body text-xl italic">latest posts from the blog</p>
-    </div>
-
-    <div class="mx-8 grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4">
-      {
-        posts.map((post) => (
-          <a href={`/blog/${post.slug}/`} class="flex flex-col">
-            <div class="card card-compact w-full flex-grow border-2 border-base-300 bg-base-200 shadow-lg shadow-primary/80 transition-colors hover:bg-base-300">
-              <figure>
-                <img src={post.data.heroImage} alt="{post.data.heroImage}" />
-              </figure>
-              <div class="card-body">
-                <h2 class="card-title font-display font-bold ">{post.data.title}</h2>
-                <FormattedDate date={post.data.pubDate} />
-                <p class="line-clamp-2 font-body">{post.data.description}</p>
-                <div class="card-actions justify-end">
-                  {post.data.tags &&
-                    post.data.tags.map((tag) => <div class="badge badge-outline">{tag}</div>)}
-                </div>
-              </div>
-            </div>
-          </a>
-        ))
-      }
-    </div>
-  </section>
+  <RecentPosts />
+  <!-- projects section -->
+  <RecentProjects />
 </MainLayout>
