@@ -23,7 +23,10 @@ const socialLinks = [
         rel="noopener noreferrer"
         aria-label={`Visit my ${tip} profile`}
       >
-        <Icon class="size-10 " name={name} />
+        <Icon
+          class="size-10  hover:scale-125  hover:transition hover:delay-100 hover:duration-500 hover:ease-in-out"
+          name={name}
+        />
         <span class="sr-only">{`Visit my ${tip} profile`}</span>
       </a>
     ))

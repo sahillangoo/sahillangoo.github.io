@@ -41,7 +41,7 @@ import myImage from '@images/lucas-k-wQLAGv4_OYs-unsplash.jpg';
   }
 </style>
 
-<section class="hero mt-6 min-h-screen selection:bg-primary sm:space-y-6 lg:mt-12">
+<section class="hero my-8 text-base-content selection:bg-primary sm:space-y-6 lg:my-12">
   <div class="fade-in hero-content flex-col lg:flex-row">
     <figure>
       <Picture
@@ -55,19 +55,22 @@ import myImage from '@images/lucas-k-wQLAGv4_OYs-unsplash.jpg';
     </figure>
 
     <div class="space-y-6 font-body lg:ml-8">
-      <p class="font-mono text-xl">Hello World,</p>
-      <h1 class="font-display text-4xl font-bold lg:text-6xl">
-        My Name is <span class="hover:underline hover:decoration-primary">Sahil</span>
+      <p class="font-mono text-xl lowercase">Hello World,</p>
+      <h1 class="font-display text-4xl font-bold lowercase italic lg:text-6xl">
+        My Name is <span
+          class="hover:bg-primary hover:transition-all hover:delay-75 hover:duration-500 hover:ease-in-out"
+          >Sahil</span
+        >
         <button id="play-name">
           <Icon
             name="waveform"
-            class="inline-block size-8 cursor-pointer"
+            class="inline-block size-8 cursor-pointer hover:animate-spin hover:transition hover:delay-100 hover:duration-500 hover:ease-in-out"
             aria-label="Listen to my name"
             style="vertical-align: top;"
           />
         </button>
       </h1>
-      <h2 class="text-2xl font-medium sm:text-4xl">A Multifaceted Developer & Designer</h2>
+      <h2 class="text-2xl font-medium sm:text-4xl">A multifaceted developer & designer</h2>
 
       <p class="text-xl leading-relaxed">
         I'm a professional freelancer and I craft unique brand identities, compelling websites, and
@@ -76,20 +79,22 @@ import myImage from '@images/lucas-k-wQLAGv4_OYs-unsplash.jpg';
       <!-- Social Links -->
       <Social />
       <a
-        class="btn btn-primary btn-sm"
+        class="btn btn-primary btn-md hover:scale-110 hover:shadow-2xl hover:shadow-primary hover:transition hover:delay-100 hover:duration-500 hover:ease-in-out active:scale-90"
         href={`mailto:${SITE.MAIL}?subject=Hello There!&amp;body=Hi Sahil, so I was looking at your blog and...`}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Contact me">Contact Me</a
-      >
+        aria-label="Contact me"
+        >Contact Me
+      </a>
       <a
-        class="btn btn-secondary btn-sm ml-4"
+        class="btn btn-secondary btn-md ml-4 hover:scale-110 hover:shadow-2xl hover:shadow-secondary hover:transition hover:delay-100 hover:duration-500 hover:ease-in-out active:scale-90"
         href="/resume/Sahil_Resume_W_2024.pdf"
         rel="noopener noreferrer"
         target="_blank"
         download
-        aria-label="Download Resume">Download Resume</a
-      >
+        aria-label="Download Resume"
+        >Download Resume
+      </a>
     </div>
   </div>
 </section>
