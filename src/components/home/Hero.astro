@@ -6,42 +6,7 @@ import { Icon } from 'astro-icon/components';
 import myImage from '@images/lucas-k-wQLAGv4_OYs-unsplash.jpg';
 ---
 
-<style is:inline>
-  .typing::after {
-    content: '|';
-    white-space: pre;
-    animation: blink 1s infinite;
-  }
-
-  @keyframes blink {
-    0%,
-    100% {
-      opacity: 0;
-    }
-    50% {
-      opacity: 1;
-    }
-  }
-
-  .fade-in {
-    animation: fadeIn ease 3s;
-    -webkit-animation: fadeIn ease 3s;
-    -moz-animation: fadeIn ease 3s;
-    -o-animation: fadeIn ease 3s;
-    -ms-animation: fadeIn ease 3s;
-  }
-
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-</style>
-
-<section class="hero my-8 text-base-content selection:bg-primary sm:space-y-6 lg:my-12">
+<section class="hero my-8 text-base-content sm:space-y-6 lg:my-14">
   <div class="fade-in hero-content flex-col lg:flex-row">
     <figure>
       <Picture
@@ -50,6 +15,9 @@ import myImage from '@images/lucas-k-wQLAGv4_OYs-unsplash.jpg';
         formats={['avif', 'webp']}
         alt="Image of water smoke"
         loading="eager"
+        quality={75}
+        width={500}
+        height={500}
       />
       <figcaption class="sr-only">Image of water smoke</figcaption>
     </figure>

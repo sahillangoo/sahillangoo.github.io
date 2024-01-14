@@ -10,7 +10,10 @@ const links = [
 ];
 ---
 
-<div class="drawer font-display text-primary-content" transition:persist>
+<div
+  class="drawer mx-auto font-display text-primary-content shadow-lg shadow-black/20"
+  transition:persist
+>
   <input id="mobile-menu" type="checkbox" class="drawer-toggle" />
   <div class="drawer-content flex flex-col">
     <!-- Navbar -->
@@ -92,3 +95,20 @@ const links = [
     </ul>
   </div>
 </div>
+
+<!-- Themes -->
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
+    function initTheme() {
+      let theme = localStorage.getItem('theme') || 'InfinityDark';
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+    }
+    initTheme();
+    document.addEventListener('astro:after-swap', initTheme);
+  });
+</script>
+<script>
+  import { themeChange } from 'theme-change';
+  themeChange();
+</script>
