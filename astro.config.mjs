@@ -18,9 +18,10 @@ export default defineConfig({
   integrations: [mdx({
     optimize: true
   }), tailwind({
-    nesting: false,
-    //  Enable nesting, like Sass
-    applyBaseStyles: false
+     // Example: Allow writing nested CSS declarations
+      // alongside Tailwind's syntax
+    nesting: true,     //  Enable nesting, like Sass
+    applyBaseStyles: false //  Apply Tailwind's base styles
   }), sitemap(), icon({
     iconDir: "src/assets/icons",
   })],

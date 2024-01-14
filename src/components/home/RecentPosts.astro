@@ -15,7 +15,7 @@ posts = posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
     >
     </div>
     <h2 class="relative z-10 bg-base-100 px-6 font-display text-2xl font-bold italic lg:text-4xl">
-      Latest posts from the blog <Icon name="blog" class="inline-block ml-2 size-8" />
+      Latest posts from the blog <Icon name="blog" class="ml-2 inline-block size-8" />
     </h2>
   </div>
 
@@ -41,12 +41,15 @@ posts = posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
       ))
     }
   </div>
-  <div class="mt-12 text-center group">
+  <div class="group mt-12 text-center">
     <a
       href="/blog"
-      class="font-display text-2xl font-medium text-base-content transition-all duration-200 ease-in-out transform group-hover:text-primary"
+      class="transform font-display text-2xl font-medium text-base-content transition-all duration-200 ease-in-out group-hover:text-primary"
     >
-      View More <Icon name="forward_button" class="ml-2 inline-block size-8 group-hover:animate-spin" />
+      View More <Icon
+        name="forward_button"
+        class="ml-2 inline-block size-8 group-hover:animate-spin"
+      />
     </a>
   </div>
 </section>
