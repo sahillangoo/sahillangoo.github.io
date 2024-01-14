@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const defaultTheme = require("tailwindcss/defaultTheme");
 const config = {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue,svg}"],
   theme: {
@@ -7,9 +8,9 @@ const config = {
     'hero-wave': "url('/images/bg_wave.svg')",
   },
   fontFamily: {
-    display: ["Playfair Display", "Georgia", "serif"],
-    body: ["Figtree", "Arial", "sans-serif"],
-    mono: ["JetBrains Mono", "Courier New", "monospace"],
+    display: ["Playfair Display", "Georgia", "serif" , ...defaultTheme.fontFamily.serif],
+    body: ["Figtree", "Arial", "sans-serif", ...defaultTheme.fontFamily.sans],
+    mono: ["JetBrains Mono", "Courier New", "monospace" , ...defaultTheme.fontFamily.mono],
   },
   variants: {},
 },
