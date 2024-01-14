@@ -2,6 +2,47 @@
 @tailwind components; /* This injects component classes, like button and input, into the document. */
 @tailwind utilities; /* This injects utility classes, like .bg-red-500 and .rounded, into the document. */
 
+@layer components {
+  .hero {
+    @apply items-start;
+  }
+}
+
+@layer utilities {
+  .typing::after {
+    content: '|';
+    white-space: pre;
+    animation: blink 1s infinite;
+  }
+
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  .fade-in {
+    animation: fadeIn ease 3s;
+    -webkit-animation: fadeIn ease 3s;
+    -moz-animation: fadeIn ease 3s;
+    -o-animation: fadeIn ease 3s;
+    -ms-animation: fadeIn ease 3s;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
 @layer base {
   html {
     -webkit-font-smoothing: antialiased;
@@ -212,14 +253,6 @@
       font-weight: 700;
       src: url('/fonts/jetbrains-mono-v18-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
     }
-    /* gulzar-regular - arabic */
-    @font-face {
-      font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-      font-family: 'Gulzar';
-      font-style: normal;
-      font-weight: 400;
-      src: url('/fonts/gulzar-v12-arabic-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-    }
   }
 
   /* Adds a Grainy Filter to the website */
@@ -236,10 +269,27 @@
     pointer-events: none;
     z-index: 99999998;
   }
-}
 
-@layer components {
-  .hero {
-    @apply items-start;
+  /* scroll bar styles  */
+  body {
+    --sb-track-color: #232e33;
+    --sb-thumb-color: #2e6b55;
+    --sb-size: 10px;
+
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
+
+  body::-webkit-scrollbar {
+    width: var(--sb-size);
+  }
+
+  body::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 10px;
+  }
+
+  body::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 10px;
   }
 }

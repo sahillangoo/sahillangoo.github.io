@@ -5,10 +5,10 @@ interface Props {
   image?: string | undefined;
 }
 
+import { SITE, SOCIAL } from '@consts';
 import { ViewTransitions } from 'astro:transitions';
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const { title, description, image } = Astro.props;
-import { SITE, SOCIAL } from '@consts';
 
 // Styles
 import '@styles/global.css';
@@ -53,20 +53,3 @@ import '@styles/global.css';
 
 <!-- RSS -->
 <link rel="alternate" type="application/rss+xml" title="Blog RSS" href="/rss.xml" />
-
-<!-- Themes -->
-<script is:inline>
-  document.addEventListener('astro:page-load', () => {
-    function initTheme() {
-      let theme = localStorage.getItem('theme') || 'InfinityDark';
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-    }
-    initTheme();
-    document.addEventListener('astro:after-swap', initTheme);
-  });
-</script>
-<script>
-  import { themeChange } from 'theme-change';
-  themeChange();
-</script>

@@ -1,8 +1,8 @@
 ---
-import { SITE } from '@consts';
+import MainFooter from '@components/MainFooter.astro';
 import MainHead from '@components/head/MainHeader.astro';
 import MainNav from '@components/navigation/MainNav.astro';
-import MainFooter from '@components/MainFooter.astro';
+import { SITE } from '@consts';
 
 const { TITLE, DESCRIPTION, IMAGE } = SITE;
 ---
@@ -13,14 +13,14 @@ const { TITLE, DESCRIPTION, IMAGE } = SITE;
     <MainHead title={TITLE} description={DESCRIPTION} image={IMAGE} />
   </head>
 
-  <body transition:animate="slide" class="grainy-overlay flex min-h-screen flex-col">
+  <body transition:animate="slide" class="m-h-screen selection:bg-primary">
     <noscript>
       <p class="m-2 text-center font-medium italic text-primary">
         Please enable JavaScript for the best experience on this site.
       </p>
     </noscript>
-    <MainNav title={TITLE} />
-    <main class="flex-grow">
+    <MainNav />
+    <main>
       <slot />
     </main>
     <MainFooter />
