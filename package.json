@@ -22,7 +22,7 @@
     "lint": "eslint --ext .astro,.js,.ts ."
   },
   "devDependencies": {
-    "@astrojs/check": "^0.3.4",
+    "@astrojs/check": "^0.4.1",
     "@astrojs/mdx": "^2.0.4",
     "@astrojs/partytown": "^2.0.3",
     "@astrojs/rss": "^4.0.2",
@@ -37,7 +37,7 @@
     "@typescript-eslint/parser": "^6.18.1",
     "astro": "^4.1.2",
     "astro-breadcrumbs": "^1.8.1",
-    "astro-eslint-parser": "^0.15.0",
+    "astro-eslint-parser": "^0.16.1",
     "astro-favicons": "^2.0.2",
     "astro-icon": "^1.0.2",
     "astro-integration-lottie": "^0.2.3",
@@ -45,7 +45,7 @@
     "autoprefixer": "^10.4.16",
     "daisyui": "^4.6.0",
     "eslint": "^8.56.0",
-    "eslint-plugin-astro": "^0.30.0",
+    "eslint-plugin-astro": "^0.31.0",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
     "lottie-web": "^5.12.2",
