@@ -3,21 +3,20 @@ import { SITE } from '@consts';
 import { Picture } from 'astro:assets';
 import Social from '@components/Social.astro';
 import { Icon } from 'astro-icon/components';
-import myImage from '@images/lucas-k-wQLAGv4_OYs-unsplash.jpg';
+import sahil from '@images/sahil-og.jpg';
 ---
 
 <section class="hero py-8 text-base-content sm:space-y-6 lg:py-14">
   <div class="fade-in hero-content flex-col lg:flex-row">
     <figure>
       <Picture
-        class="max-w-sm transform rounded rounded-t-3xl object-cover object-center shadow-2xl shadow-primary transition-all duration-700 hover:scale-110 hover:grayscale sm:max-w-sm"
-        src={myImage}
+        class="max-w-sm transform rounded rounded-t-3xl object-cover object-center shadow-2xl shadow-primary grayscale transition-all duration-700 hover:scale-x-[-1] hover:grayscale-0 sm:max-w-sm"
+        src={sahil}
         formats={['avif', 'webp']}
         alt="Image of water smoke"
         loading="eager"
-        quality={75}
-        width={500}
-        height={500}
+        quality={78}
+        height={800}
       />
       <figcaption class="sr-only">Image of water smoke</figcaption>
     </figure>

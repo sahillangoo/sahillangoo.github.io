@@ -295,7 +295,7 @@
 
   /* Adds a background to the body */
   .doted {
-    opacity: 0.8;
+    /* opacity: 0.8; */
     background-image: radial-gradient(rgba(225, 225, 225, 0.2) 1.2px, transparent 1.2px);
     background-size: 24px 24px;
     position: relative;
