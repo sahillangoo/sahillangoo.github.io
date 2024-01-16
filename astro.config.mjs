@@ -15,6 +15,12 @@ export default defineConfig({
   repo,
   site,
   author,
+  vite:{
+    build:{
+      // assetsInlineLimit: 1024,
+      // inlineStylesheets: 'never',
+    }
+  },
   integrations: [mdx({
     optimize: true
   }), tailwind({
