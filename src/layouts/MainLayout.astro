@@ -8,12 +8,12 @@ const { TITLE, DESCRIPTION, IMAGE } = SITE;
 ---
 
 <!doctype html>
-<html lang="en" data-theme="InfinityDark">
+<html lang="en" data-theme="InfinityDark" class="scroll-smooth antialiased">
   <head>
     <MainHead title={TITLE} description={DESCRIPTION} image={IMAGE} />
   </head>
 
-  <body transition:animate="slide" class="m-h-screen selection:bg-primary">
+  <body transition:animate="initial" class="h-full selection:bg-primary">
     <noscript>
       <p class="m-2 text-center font-medium italic text-primary">
         Please enable JavaScript for the best experience on this site.

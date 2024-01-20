@@ -6,17 +6,20 @@ import rehypeExternalLinks from 'rehype-external-links';
 import { remarkReadingTime } from './src/utils/remark-reading-time.mjs';
 import { SITE } from '/src/consts.ts';
 import icon from "astro-icon";
+import metaTags from "astro-meta-tags";
+import minify from 'astro-min';
 const repo = SITE.REPO;
 const site = SITE.URL;
 const author = SITE.AUTHOR;
+
 
 // https://astro.build/config
 export default defineConfig({
   repo,
   site,
   author,
-  vite:{
-    build:{
+  vite: {
+    build: {
       // assetsInlineLimit: 1024,
       // inlineStylesheets: 'never',
     }
@@ -24,13 +27,14 @@ export default defineConfig({
   integrations: [mdx({
     optimize: true
   }), tailwind({
-     // Example: Allow writing nested CSS declarations
-      // alongside Tailwind's syntax
-    nesting: true,     //  Enable nesting, like Sass
+    // Example: Allow writing nested CSS declarations
+    // alongside Tailwind's syntax
+    nesting: true,
+    //  Enable nesting, like Sass
     applyBaseStyles: false //  Apply Tailwind's base styles
   }), sitemap(), icon({
-    iconDir: "src/assets/icons",
-  })],
+    iconDir: "src/assets/icons"
+  }), metaTags(),minify()],
   markdown: {
     remarkPlugins: [remarkReadingTime],
     rehypePlugins: [[rehypeExternalLinks, {

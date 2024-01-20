@@ -2,12 +2,18 @@
 /*
 
 # Except these files & folders
-!/src
-!/public
+!.eslintrc.cjs
+!.gitignore
+!.markdownlint.json
+!.prettierrc.mjs
+!.prettierignore
 !/.github
-!tsconfig.json
+!LICENSE
+!README.md
 !astro.config.ts
 !package.json
-!.prettierrc
-!.eslintrc.js
-!README.md
+!pnpm-workspace.yaml
+!src
+!tailwind.config.mjs
+!tsconfig.json
+!eslintignore

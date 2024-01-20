@@ -1,21 +1,26 @@
 ---
 import FormattedDate from '@components/FormattedDate.astro';
-import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
+import { getCollection } from 'astro:content';
 
 // Fetch the blog posts
 let posts = await getCollection('blog');
-posts = posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()).slice(0, 4);
+posts = posts
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 4);
 ---
 
 <section class="container mx-auto pb-12 text-base-content">
   <div class="relative my-20 flex items-center justify-center text-center">
     <div
-      class="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-transparent bg-gradient-to-r from-transparent via-primary to-transparent opacity-75"
-    >
+      class="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-transparent bg-gradient-to-r from-transparent via-primary to-transparent opacity-75">
     </div>
-    <h2 class="relative z-10 bg-base-100 px-6 font-display text-2xl font-bold italic lg:text-4xl">
-      Latest posts from the blog <Icon name="blog" class="ml-2 inline-block size-8" />
+    <h2
+      class="relative z-10 bg-base-100 px-6 font-display text-2xl font-bold italic lg:text-4xl">
+      Latest posts from the blog <Icon
+        name="blog"
+        class="ml-2 inline-block size-8"
+      />
     </h2>
   </div>
 
@@ -28,12 +33,16 @@ posts = posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
               <img src={post.data.heroImage} alt="{post.data.heroImage}" />
             </figure>
             <div class="card-body">
-              <h2 class="card-title font-display font-bold ">{post.data.title}</h2>
+              <h2 class="card-title font-display font-bold ">
+                {post.data.title}
+              </h2>
               <FormattedDate date={post.data.pubDate} />
               <p class="line-clamp-2 font-body">{post.data.description}</p>
               <div class="card-actions justify-end">
                 {post.data.tags &&
-                  post.data.tags.map((tag) => <div class="badge badge-outline">{tag}</div>)}
+                  post.data.tags.map((tag) => (
+                    <div class="badge badge-outline">{tag}</div>
+                  ))}
               </div>
             </div>
           </div>
@@ -44,8 +53,7 @@ posts = posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
   <div class="group mt-12 text-center">
     <a
       href="/blog"
-      class="transform font-display text-2xl font-medium text-base-content transition-all duration-200 ease-in-out group-hover:text-primary"
-    >
+      class="transform font-display text-2xl font-medium text-base-content transition-all duration-200 ease-in-out group-hover:text-primary">
       View More <Icon
         name="forward_button"
         class="ml-2 inline-block size-8 group-hover:animate-spin"

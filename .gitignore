@@ -36,3 +36,12 @@ pnpm-debug.log*
 # IDE-specific files
 .vscode/
 .idea/
+
+# pnpm specific files
+.pnpm
+pnpm-workspace.yaml
+pnpm-lock.yaml
+
+
+# husky cache
+.husky/

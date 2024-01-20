@@ -3,7 +3,7 @@
     <feTurbulence type='fractalNoise' baseFrequency='20' numOctaves='10' stitchTiles='stitch'
       result='noise' />
     <feComponentTransfer>
-      <feFuncA type='table' tableValues='0 0.125' />
+      <feFuncA type='table' tableValues='0 0.08' />
     </feComponentTransfer>
   </filter>
   <rect width='100%' height='100%' filter='url(#noiseFilter)' />

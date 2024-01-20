@@ -16,14 +16,17 @@ import '@styles/global.css';
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, shrink-to-fit=no"
+/>
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
 <ViewTransitions />
 <link rel="dns-prefetch" href="//sahillangoo.com/" />
-<link rel="preconnect" href="https://sahillangoo.com/" />
-<link rel="prefetch" href="https://sahillangoo.com/" />
+<link rel="preconnect" href={SITE.URL} />
+<link rel="prefetch" href={SITE.URL} />
 <meta name="title" content={title} />
 <meta name="description" property="og:description" content={description} />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -52,4 +55,9 @@ import '@styles/global.css';
 <meta property="twitter:image" content={new URL(image ?? '', Astro.url)} />
 
 <!-- RSS -->
-<link rel="alternate" type="application/rss+xml" title="Blog RSS" href="/rss.xml" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title="Blog RSS"
+  href="/rss.xml"
+/>

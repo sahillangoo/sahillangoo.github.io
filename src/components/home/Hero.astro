@@ -1,9 +1,9 @@
 ---
-import { SITE } from '@consts';
-import { Picture } from 'astro:assets';
 import Social from '@components/Social.astro';
-import { Icon } from 'astro-icon/components';
+import { SITE } from '@consts';
 import sahil from '@images/sahil-og.jpg';
+import { Icon } from 'astro-icon/components';
+import { Picture } from 'astro:assets';
 ---
 
 <section class="hero py-8 text-base-content sm:space-y-6 lg:py-14">
@@ -25,9 +25,9 @@ import sahil from '@images/sahil-og.jpg';
       <p class="font-mono text-xl lowercase">Hello World,</p>
       <h1 class="font-display text-4xl font-bold italic lg:text-6xl">
         My name is <span
-          class="hover:bg-primary hover:transition-all hover:delay-75 hover:duration-500 hover:ease-in-out"
-          >Sahil</span
-        >
+          class="hover:bg-primary hover:transition-all hover:delay-75 hover:duration-500 hover:ease-in-out">
+          Sahil
+        </span>
         <button id="play-name">
           <Icon
             name="waveform"
@@ -42,8 +42,10 @@ import sahil from '@images/sahil-og.jpg';
       </h2>
 
       <p class="text-xl leading-relaxed">
-        I'm a professional freelancer and I craft unique brand identities, compelling websites, and
-        innovative software solutions<span class="typing"></span>.
+        I'm a professional freelancer and I craft unique brand identities,
+        compelling websites, and innovative software solutions<span
+          class="typing">
+        </span>.
       </p>
       <!-- Social Links -->
       <Social />
@@ -52,8 +54,8 @@ import sahil from '@images/sahil-og.jpg';
         href={`mailto:${SITE.MAIL}?subject=Hello There!&amp;body=Hi Sahil, so I was looking at your blog and...`}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Contact me"
-        >Contact Me
+        aria-label="Contact me">
+        Contact Me
       </a>
       <a
         class="btn btn-secondary btn-md ml-4 font-display hover:scale-110 hover:shadow-2xl hover:shadow-secondary hover:transition hover:delay-100 hover:duration-500 hover:ease-in-out active:scale-90"
@@ -61,8 +63,8 @@ import sahil from '@images/sahil-og.jpg';
         rel="noopener noreferrer"
         target="_blank"
         download
-        aria-label="Download Resume"
-        >Download Resume
+        aria-label="Download Resume">
+        Download Resume
       </a>
     </div>
   </div>
