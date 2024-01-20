@@ -25,7 +25,11 @@ module.exports = {
         extraFileExtensions: ['.astro'],
       },
       rules: {
+        // override/add rules settings here, such as:
+        'astro/no-set-html-directive': 'error',
         'no-mixed-spaces-and-tabs': ['error', 'smart-tabs'],
+        'astro/no-conflict-set-directives': 'error',
+        'astro/no-unused-define-vars-in-style': 'error',
       },
     },
     {
@@ -46,4 +50,4 @@ module.exports = {
       parser: '@typescript-eslint/parser',
     },
   ],
-}
+};
