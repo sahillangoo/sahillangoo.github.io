@@ -17,9 +17,8 @@
   ],
   "packageManager": "pnpm@8.14.1",
   "engines": {
-    "node": ">=18.0.0",
-    "pnpm": ">=8.10.0",
-    "npm": ">=10.0.0"
+    "node": ">=18.17.1",
+    "npm": ">=9.6.7"
   },
   "scripts": {
     "dev": "astro dev",

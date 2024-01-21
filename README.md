@@ -75,7 +75,7 @@ Jampack,
 
 ## Screenshots
 
-![App Screenshot](https://sahillangoo.com/public/images/sahillangoo.com.jpg)
+![App Screenshot](https://github.com/sahillangoo/sahillangoo.github.io/blob/main/public/images/sahillangoo.com.jpg?raw=true)
 
 
 ## Feedback
