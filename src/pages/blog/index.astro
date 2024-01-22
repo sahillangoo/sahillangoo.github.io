@@ -9,7 +9,7 @@ const publishedBlogEntries = await getCollection('blog', ({ data }) => {
 });
 
 const posts = publishedBlogEntries.sort(
-  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
+  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
 );
 ---
 

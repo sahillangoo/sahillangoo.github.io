@@ -34,7 +34,8 @@
   },
   "lint-staged": {
     "*.{astro,html,js,jsx,svelte,ts,tsx,vue}": [
-      "prettier --write ."
+      "prettier --write .",
+      "git add"
     ]
   },
   "devDependencies": {
@@ -49,13 +50,15 @@
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
-    "@typescript-eslint/eslint-plugin": "^6.19.0",
-    "@typescript-eslint/parser": "^6.19.0",
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/parser": "^6.19.1",
     "astro": "^4.2.1",
     "astro-breadcrumbs": "^1.8.1",
     "astro-eslint-parser": "^0.16.2",
     "astro-favicons": "^2.0.2",
     "astro-icon": "^1.0.2",
+    "astro-meta-tags": "^0.2.1",
+    "astro-min": "^1.0.0",
     "astro-webmanifest": "^1.0.0",
     "autoprefixer": "^10.4.17",
     "daisyui": "^4.6.0",
@@ -67,6 +70,8 @@
     "postcss": "^8.4.33",
     "prettier": "^3.2.4",
     "prettier-plugin-astro": "^0.12.3",
+    "prettier-plugin-astro-organize-imports": "^0.3.3",
+    "prettier-plugin-css-order": "^2.0.1",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "reading-time": "^1.5.0",
     "rehype-external-links": "^3.0.0",
@@ -74,9 +79,7 @@
     "tailwindcss": "^3.4.1",
     "theme-change": "^2.5.0",
     "typescript": "^5.3.3",
-    "astro-meta-tags": "^0.2.1",
-    "astro-min": "^1.0.0",
-    "prettier-plugin-astro-organize-imports": "^0.3.3",
-    "prettier-plugin-css-order": "^2.0.1"
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3"
   }
 }

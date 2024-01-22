@@ -14,9 +14,10 @@ export default {
       },
     },
   ],
-  // defaults that apply to all files unless overridden above
   singleQuote: true,
   bracketSameLine: true,
   htmlWhitespaceSensitivity: 'ignore',
+  trailingComma: 'es5',
+  // cssEnable: ['css', 'less', 'sass'],
   // singleAttributePerLine: true,
 };

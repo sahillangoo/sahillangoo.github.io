@@ -9,7 +9,7 @@ const publishedProjectEntries = await getCollection('projects', ({ data }) => {
 });
 
 const projects = publishedProjectEntries.sort(
-  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
+  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
 );
 ---
 

@@ -4,7 +4,11 @@ module.exports = {
     es2022: true,
     browser: true,
   },
-  extends: ['eslint:recommended', 'plugin:astro/recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:astro/recommended',
+    'plugin:prettier/recommended',
+  ],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
@@ -39,7 +43,10 @@ module.exports = {
       rules: {
         '@typescript-eslint/no-unused-vars': [
           'error',
-          { argsIgnorePattern: '^_', destructuredArrayIgnorePattern: '^_' },
+          {
+            argsIgnorePattern: '^_',
+            destructuredArrayIgnorePattern: '^_',
+          },
         ],
         '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/triple-slash-reference': 'off',
