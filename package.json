@@ -56,7 +56,6 @@
     "astro-eslint-parser": "^0.16.2",
     "astro-favicons": "^2.0.2",
     "astro-icon": "^1.0.2",
-    "astro-meta-tags": "^0.2.1",
     "astro-min": "^1.0.0",
     "astro-webmanifest": "^1.0.0",
     "autoprefixer": "^10.4.17",

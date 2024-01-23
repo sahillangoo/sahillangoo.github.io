@@ -1,13 +1,13 @@
 import mdx from '@astrojs/mdx';
+import partytown from '@astrojs/partytown';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
+import icon from "astro-icon";
+import minify from 'astro-min';
 import { defineConfig } from 'astro/config';
 import rehypeExternalLinks from 'rehype-external-links';
 import { remarkReadingTime } from './src/utils/remark-reading-time.mjs';
 import { SITE } from '/src/consts.ts';
-import icon from "astro-icon";
-import metaTags from "astro-meta-tags";
-import minify from 'astro-min';
 const repo = SITE.REPO;
 const site = SITE.URL;
 const author = SITE.AUTHOR;
@@ -32,9 +32,9 @@ export default defineConfig({
     nesting: true,
     //  Enable nesting, like Sass
     applyBaseStyles: false //  Apply Tailwind's base styles
-  }), sitemap(), icon({
+  }),partytown(), sitemap(), icon({
     iconDir: "src/assets/icons"
-  }), metaTags(),minify()],
+  }),minify()],
   markdown: {
     remarkPlugins: [remarkReadingTime],
     rehypePlugins: [[rehypeExternalLinks, {
