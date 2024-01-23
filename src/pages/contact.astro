@@ -1,9 +1,8 @@
 ---
 import MainLayout from '@layouts/MainLayout.astro';
-import '@styles/pageclip.css';
+// import '@styles/pageclip.css';
 ---
 
-<pageclip client:only></pageclip>
 <MainLayout>
   <section class="container mx-auto flex gap-4 px-4 py-12 font-body">
     <div class="container mx-auto flex-1 space-y-8">
@@ -21,61 +20,64 @@ import '@styles/pageclip.css';
         method="post">
         <div class="-mx-2 flex flex-wrap">
           <div class="w-full px-2 md:w-1/2">
-            <span class="namet">What is your name?</span>
+            <span class="name">Name*</span>
             <input
               type="text"
               name="name"
               id="name"
               min="3"
               max="30"
+              pattern="[a-zA-Z ]+"
               required
               placeholder="Han Solo"
-              class="input input-bordered input-primary w-full max-w-xs"
+              class="input input-bordered input-primary w-full max-w-xs invalid:inline-block invalid:text-red-600"
             />
           </div>
           <div class="w-full px-2 md:w-1/2">
-            <label for="subject" class="text-md">Subject</label>
+            <label for="subject" class="text-md">Subject*</label>
             <input
               type="text"
               name="subject"
               id="subject"
               min="5"
               max="30"
+              pattern="[a-zA-Z !.?]+"
               required
               placeholder="I have a project for you!"
-              class="input input-bordered input-primary w-full max-w-xs"
+              class="input input-bordered input-primary w-full max-w-xs invalid:inline-block invalid:text-red-600"
             />
           </div>
         </div>
         <div class="-mx-2 flex flex-wrap">
-          <div class="w-full px-2 md:w-1/2">
-            <label for="email" class="text-md">Email</label>
+          <div class="form-group w-full px-2 md:w-1/2">
+            <label for="email" class="text-md">Email*</label>
             <input
               type="email"
               name="email"
               id="email"
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
               required
               placeholder="hansolo@mail.com"
-              class="input input-bordered input-primary w-full max-w-xs"
+              class="input input-bordered input-primary w-full max-w-xs invalid:inline-block invalid:text-red-600"
             />
           </div>
           <div class="w-full px-2 md:w-1/2">
-            <label for="phone" class="text-md">Phone</label>
+            <label for="phone" class="text-md">Phone*</label>
             <input
               type="tel"
               name="phone"
               id="phone"
               min="10"
               max="12"
-              required
               pattern="[0-9]{10,12}"
+              required
               placeholder="+91 9988 776 655"
-              class="input input-bordered input-primary w-full max-w-xs"
+              class="input input-bordered input-primary w-full max-w-xs invalid:inline-block invalid:text-red-600"
             />
           </div>
         </div>
         <div class="w-full">
-          <label for="message" class="text-md">Message</label>
+          <label for="message" class="text-md">Message*</label>
           <textarea
             name="message"
             id="message"
@@ -83,7 +85,7 @@ import '@styles/pageclip.css';
             minlength="10"
             maxlength="500"
             required
-            class="textarea textarea-primary w-full"
+            class="textarea textarea-primary w-full invalid:inline-block invalid:text-red-600"
             placeholder="Something you want me to know!">
           </textarea>
         </div>
@@ -94,3 +96,5 @@ import '@styles/pageclip.css';
     </div>
   </section>
 </MainLayout>
+
+<script type="text/partytown" src="../utils/pageclip.js"></script>
