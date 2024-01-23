@@ -9,18 +9,13 @@ import type { CollectionEntry } from 'astro:content';
 
 type Props = CollectionEntry<'projects'>['data'];
 
-const { title, description, category, tags, pubDate, updatedDate, heroImage } =
-  Astro.props;
+const { title, description, category, tags, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en" data-theme="InfinityDark" class="scroll-smooth antialiased">
   <head>
-    <MainHead
-      title={PROJECT.TITLE}
-      description={PROJECT.DESCRIPTION}
-      image={SITE.IMAGE}
-    />
+    <MainHead title={PROJECT.TITLE} description={PROJECT.DESCRIPTION} image={SITE.IMAGE} />
   </head>
 
   <body transition:animate="initial" class="h-full selection:bg-primary">
@@ -30,22 +25,14 @@ const { title, description, category, tags, pubDate, updatedDate, heroImage } =
       <article class="rounded-lg p-6 shadow">
         <header>
           <div class="hero-image mb-4">
-            {
-              heroImage && (
-                <img class="rounded-lg" src={heroImage} alt={title} />
-              )
-            }
+            {heroImage && <img class="rounded-lg" src={heroImage} alt={title} />}
           </div>
           <h1 class="mb-2 text-3xl font-bold">{title}</h1>
           <p class="mb-4">{description}</p>
           <div class="mb-4 text-sm">
             <span>Category: {category}</span>
             <div class="tags mb-2 flex space-x-2">
-              {
-                tags?.map((tag) => (
-                  <span class="tag rounded-full px-2 py-1">{tag}</span>
-                ))
-              }
+              {tags?.map((tag) => <span class="tag rounded-full px-2 py-1">{tag}</span>)}
             </div>
             <span>Published: <FormattedDate date={pubDate} /></span>
             {

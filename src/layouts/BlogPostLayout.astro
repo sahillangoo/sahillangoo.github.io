@@ -8,26 +8,14 @@ import { BLOG, SITE } from '@consts';
 import type { CollectionEntry } from 'astro:content';
 
 type Props = CollectionEntry<'blog'>['data'] & { timetoread: number };
-const {
-  title,
-  description,
-  category,
-  tags,
-  pubDate,
-  updatedDate,
-  heroImage,
-  timetoread,
-} = Astro.props;
+const { title, description, category, tags, pubDate, updatedDate, heroImage, timetoread } =
+  Astro.props;
 ---
 
 <!doctype html>
 <html lang="en" data-theme="InfinityDark" class="scroll-smooth antialiased">
   <head>
-    <MainHead
-      title={BLOG.TITLE}
-      description={BLOG.DESCRIPTION}
-      image={SITE.IMAGE}
-    />
+    <MainHead title={BLOG.TITLE} description={BLOG.DESCRIPTION} image={SITE.IMAGE} />
   </head>
 
   <body transition:animate="initial" class="h-full selection:bg-primary">
@@ -45,11 +33,7 @@ const {
           <div class="post-meta mb-4 text-sm">
             <span>Category: {category}</span>
             <div class="tags mb-2 flex space-x-2">
-              {
-                tags?.map((tag) => (
-                  <span class="tag rounded-full px-2 py-1">{tag}</span>
-                ))
-              }
+              {tags?.map((tag) => <span class="tag rounded-full px-2 py-1">{tag}</span>)}
             </div>
             <span>Published: <FormattedDate date={pubDate} /></span>
             {
