@@ -15,6 +15,7 @@ export default {
     },
   ],
   singleQuote: true,
+  printWidth: 100,
   bracketSameLine: true,
   htmlWhitespaceSensitivity: 'ignore',
   trailingComma: 'es5',

@@ -19,10 +19,7 @@ const projects = publishedProjectEntries.sort(
   </h1>
   <p class="mb-8 text-center font-body text-lg">
     Here are some of the projects I've worked on.
-    <br /><a
-      href="https://twitter.com/kashurgeek"
-      target="_blank"
-      class="text-primary">
+    <br /><a href="https://twitter.com/kashurgeek" target="_blank" class="text-primary">
       Follow me on twitter
     </a> to get notified when I post something new.
     <br /> showing [{projects.length}] projects.
@@ -34,10 +31,7 @@ const projects = publishedProjectEntries.sort(
           <a href={`/projects/${project.slug}/`}>
             <div class="bg-base-500 card card-compact w-full border-2 border-primary shadow-xl">
               <figure>
-                <img
-                  src={project.data.heroImage}
-                  alt="{project.data.heroImage}"
-                />
+                <img src={project.data.heroImage} alt="{project.data.heroImage}" />
               </figure>
               <div class="card-body">
                 <h2 class="card-title font-display">{project.data.title}</h2>
@@ -45,9 +39,7 @@ const projects = publishedProjectEntries.sort(
                 <p class="font-body">{project.data.description}</p>
                 <div class="card-actions justify-end">
                   {project.data.tags &&
-                    project.data.tags.map((tag) => (
-                      <div class="badge badge-outline">{tag}</div>
-                    ))}
+                    project.data.tags.map((tag) => <div class="badge badge-outline">{tag}</div>)}
                 </div>
               </div>
             </div>
