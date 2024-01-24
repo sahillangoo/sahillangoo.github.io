@@ -14,6 +14,7 @@ export const SOCIAL = {
   TWITTER: 'https://twitter.com/KashurGeek',
   GITHUB: 'https://github.com/sahillangoo',
   LINKEDIN: 'https://linkedin.com/in/sahillangoo',
+  WELLFOUND: 'https://wellfound.com/u/sahil-langoo',
   INSTAGRAM: 'https://www.instagram.com/sahil.langoo/',
   DRIBBLE: 'https://dribbble.com/sahillangoo',
 };

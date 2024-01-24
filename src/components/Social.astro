@@ -4,6 +4,7 @@ import { Icon } from 'astro-icon/components';
 
 const socialLinks = [
   { name: 'linkedin', tip: 'LinkedIn', href: SOCIAL.LINKEDIN },
+  { name: 'wellfound', tip: 'WellFound / Angellist', href: SOCIAL.WELLFOUND },
   { name: 'twitter', tip: 'Twitter / X.', href: SOCIAL.TWITTER },
   { name: 'github', tip: 'GitHub', href: SOCIAL.GITHUB },
   { name: 'dribble', tip: 'Dribble', href: SOCIAL.DRIBBLE },
@@ -11,8 +12,8 @@ const socialLinks = [
 ];
 ---
 
-<div class="flex items-center justify-start space-x-2 font-body lg:space-x-8">
-  <span class="text-sm lg:text-lg">Connect with me:</span>
+<div class="flex items-center justify-center space-x-4 font-body lg:justify-start lg:space-x-8">
+  <span class="text-sm lg:text-base">Social:</span>
   {
     socialLinks.map(({ name, tip, href }) => (
       <a
@@ -23,7 +24,7 @@ const socialLinks = [
         rel="noopener noreferrer"
         aria-label={`Visit my ${tip} profile`}>
         <Icon
-          class="size-10  hover:scale-125  hover:transition hover:delay-100 hover:duration-500 hover:ease-in-out"
+          class="size-8 text-primary hover:scale-125 hover:text-base-content hover:transition hover:duration-500 hover:ease-in-out lg:size-10"
           name={name}
         />
         <span class="sr-only">{`Visit my ${tip} profile`}</span>

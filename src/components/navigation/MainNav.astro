@@ -7,6 +7,7 @@ const links = [
   { href: '/blog', text: 'Blog', icon: 'blog' },
   { href: '/projects', text: 'Projects', icon: 'project' },
   { href: '/contact', text: 'Contact', icon: 'contact' },
+  { href: '/resume/Sahil_Resume_W_2024.pdf', text: 'Resume', icon: 'resume' },
 ];
 ---
 
@@ -22,6 +23,7 @@ const links = [
           <Icon name="menu" class="size-8" />
         </label>
       </div>
+
       <div class="mx-2 flex-1 px-2 text-2xl font-semibold italic hover:underline lg:text-3xl">
         <a href="/" aria-label="Home">{SITE.AUTHOR}.</a>
       </div>
@@ -33,7 +35,7 @@ const links = [
             links.map((link) => (
               <NavLink
                 href={link.href}
-                class="transition-all duration-300 hover:bg-secondary hover:text-primary hover:shadow-lg">
+                class="transition-transform duration-300 hover:bg-secondary hover:text-primary  hover:shadow-lg hover:shadow-secondary hover:transition  hover:duration-500 hover:ease-in-out active:scale-90 active:bg-secondary ">
                 {link.text}
               </NavLink>
             ))
@@ -61,7 +63,7 @@ const links = [
 
   <!-- Rest of the code remains the same -->
 
-  <div class="drawer-side z-10">
+  <div class="drawer-side z-20">
     <label for="mobile-menu" aria-label="close sidebar" class="drawer-overlay"></label>
     <ul
       class="menu flex min-h-full w-80 flex-col items-center space-y-4 bg-base-100 p-4 pt-12 text-2xl font-medium lowercase text-base-content">
