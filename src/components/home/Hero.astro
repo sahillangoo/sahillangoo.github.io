@@ -5,63 +5,61 @@ import { Icon } from 'astro-icon/components';
 import { Picture } from 'astro:assets';
 ---
 
-<section class="hero py-8 text-base-content sm:space-y-6 lg:py-14">
-  <div class="fade-in hero-content flex-col lg:flex-row">
-    <figure>
+<section class="hero py-8 text-center text-base-content sm:space-y-6 sm:text-left lg:py-14">
+  <div class="fade-in hero-content flex-col items-center sm:items-start lg:flex-row">
+    <figure class="mx-auto sm:mx-0">
       <Picture
         class="max-w-sm transform rounded rounded-t-3xl object-cover object-center shadow-2xl shadow-primary grayscale transition-all duration-700 hover:scale-x-[-1] hover:grayscale-0 sm:max-w-sm"
         src={sahil}
         formats={['avif', 'webp']}
-        alt="Image of water smoke"
+        alt="Sahil Potrait Image"
         loading="eager"
-        quality={78}
         height={500}
       />
-      <figcaption class="sr-only">Image of water smoke</figcaption>
+      <figcaption class="sr-only">Sahil Potrait Image</figcaption>
     </figure>
 
-    <div class="space-y-6 font-body font-semibold lg:ml-8">
-      <p class="font-mono text-xl lowercase">Hello World,</p>
-      <h1 class="font-display text-4xl font-bold italic lg:text-6xl">
-        My name is <span
-          class="hover:bg-primary hover:transition-all hover:delay-75 hover:duration-500 hover:ease-in-out">
-          Sahil
+    <div class="mx-auto mt-8 space-y-4 font-body sm:mx-0 lg:ml-8 lg:mt-0">
+      <p class="font-mono text-lg font-normal">Hello World! WIP 👷</p>
+      <h1 class="font-display text-3xl font-bold italic lg:text-4xl">
+        My name is
+        <span
+          class="bg-gradient-to-r bg-clip-text hover:from-green-400 hover:to-blue-500 hover:text-transparent hover:transition-all hover:duration-500 hover:ease-in-out">
+          Sahil.
         </span>
-        <button id="play-name">
+        <button id="play-name" class="tooltip tooltip-right" data-tip="Say my name">
           <Icon
             name="waveform"
-            class="inline-block size-8 cursor-pointer hover:animate-spin hover:transition hover:delay-100 hover:duration-500 hover:ease-in-out"
+            class="inline-block size-8 cursor-pointer text-primary hover:scale-125 hover:text-base-content hover:transition hover:duration-500 hover:ease-in-out"
             aria-label="Listen to my name"
             style="vertical-align: top;"
           />
         </button>
       </h1>
-      <h2 class="font-display text-2xl font-medium sm:text-4xl">
-        A multifaceted developer & designer
-      </h2>
+      <h2 class="font-display text-xl lg:text-2xl">A multifaceted developer & designer!</h2>
 
-      <p class="text-xl leading-relaxed">
+      <p class="text-pretty text-lg leading-relaxed lg:w-2/3">
         I'm a professional freelancer and I craft unique brand identities, compelling websites, and
         innovative software solutions<span class="typing"></span>.
       </p>
       <!-- Social Links -->
-      <Social />
-      <a
-        class="btn btn-primary btn-md font-display hover:scale-110 hover:shadow-2xl hover:shadow-primary hover:transition hover:delay-100 hover:duration-500 hover:ease-in-out active:scale-90"
-        href="/contact"
-        transition:name="contact"
-        aria-label="Contact me">
-        Contact Me
-      </a>
-      <a
-        class="btn btn-secondary btn-md ml-4 font-display hover:scale-110 hover:shadow-2xl hover:shadow-secondary hover:transition hover:delay-100 hover:duration-500 hover:ease-in-out active:scale-90"
-        href="/resume/Sahil_Resume_W_2024.pdf"
-        rel="noopener noreferrer"
-        target="_blank"
-        download
-        aria-label="Download Resume">
-        Download Resume
-      </a>
+      <Social class="justify-center" />
+
+      <div class="flex justify-center space-x-4 sm:block sm:space-x-0">
+        <a
+          class="btn btn-primary btn-sm font-display lg:btn-md hover:scale-110 hover:shadow-2xl hover:shadow-primary hover:transition hover:duration-500 hover:ease-in-out active:scale-90"
+          href="/contact"
+          transition:name="contact"
+          aria-label="Contact me">
+          Contact Me
+        </a>
+        <a
+          class="btn btn-secondary btn-sm font-display hover:scale-110 hover:shadow-2xl hover:shadow-secondary hover:transition hover:duration-500 hover:ease-in-out active:scale-90 md:hidden"
+          href="/resume/Sahil_Resume_W_2024.pdf"
+          aria-label="Resume">
+          Resume
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -70,7 +68,11 @@ import { Picture } from 'astro:assets';
   const playButton = document.getElementById('play-name') as HTMLElement | null;
   if (playButton) {
     playButton.addEventListener('click', function () {
-      nameSound.play();
+      try {
+        nameSound.play();
+      } catch (error) {
+        console.error('Error playing name sound:', error);
+      }
     });
   }
 </script>
