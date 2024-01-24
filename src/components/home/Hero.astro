@@ -1,6 +1,5 @@
 ---
 import Social from '@components/Social.astro';
-import { SITE } from '@consts';
 import sahil from '@images/sahil-og.jpg';
 import { Icon } from 'astro-icon/components';
 import { Picture } from 'astro:assets';
@@ -49,9 +48,8 @@ import { Picture } from 'astro:assets';
       <Social />
       <a
         class="btn btn-primary btn-md font-display hover:scale-110 hover:shadow-2xl hover:shadow-primary hover:transition hover:delay-100 hover:duration-500 hover:ease-in-out active:scale-90"
-        href={`mailto:${SITE.MAIL}?subject=Hello There!&amp;body=Hi Sahil, so I was looking at your blog and...`}
-        target="_blank"
-        rel="noopener noreferrer"
+        href="/contact"
+        transition:name="contact"
         aria-label="Contact me">
         Contact Me
       </a>

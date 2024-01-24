@@ -1,25 +1,35 @@
 ---
+import contactpic from '@images/3d-guy.png';
 import MainLayout from '@layouts/MainLayout.astro';
-// import '@styles/pageclip.css';
+import { Picture } from 'astro:assets';
 ---
 
 <MainLayout>
-  <section class="container mx-auto flex gap-4 px-4 py-12 font-body">
-    <div class="container mx-auto flex-1 space-y-8">
+  <section class="container mx-auto grid grid-cols-1 gap-4 px-4 py-12 font-body md:grid-cols-2">
+    <div class="space-y-8">
       <h1 class="text-center font-display text-4xl font-bold">Contact Form</h1>
       <p class="text-center text-lg">
         Have a question or inquiry? Fill out the form below hit send! 🚀 & I will get back to you as
         soon as possible.
       </p>
+      <figure class="hidden justify-center md:flex">
+        <Picture
+          src={contactpic}
+          alt="contact"
+          formats={['avif', 'webp']}
+          class="scale-x-[-1] shadow-lg"
+          height={300}
+        />
+      </figure>
     </div>
 
-    <div class="container mx-auto flex-1 space-y-8 px-12">
+    <div class="space-y-8 px-4 md:px-12" transition:name="contact">
       <form
         action="https://send.pageclip.co/6N14uX3PyM17F0uIMBMdd1zA1nxVoe6p/contact-me"
         class="pageclip-form space-y-4"
         method="post">
-        <div class="-mx-2 flex flex-wrap">
-          <div class="w-full px-2 md:w-1/2">
+        <div class="grid grid-cols-2 gap-4">
+          <div>
             <span class="name">Name*</span>
             <input
               type="text"
@@ -30,10 +40,11 @@ import MainLayout from '@layouts/MainLayout.astro';
               pattern="[a-zA-Z ]+"
               required
               placeholder="Han Solo"
-              class="input input-bordered input-primary w-full max-w-xs invalid:inline-block invalid:text-red-600"
+              class="input input-bordered input-primary w-full max-w-xs
+               invalid:text-red-600"
             />
           </div>
-          <div class="w-full px-2 md:w-1/2">
+          <div>
             <label for="subject" class="text-md">Subject*</label>
             <input
               type="text"
@@ -48,8 +59,8 @@ import MainLayout from '@layouts/MainLayout.astro';
             />
           </div>
         </div>
-        <div class="-mx-2 flex flex-wrap">
-          <div class="form-group w-full px-2 md:w-1/2">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="form-group">
             <label for="email" class="text-md">Email*</label>
             <input
               type="email"
@@ -61,7 +72,7 @@ import MainLayout from '@layouts/MainLayout.astro';
               class="input input-bordered input-primary w-full max-w-xs invalid:inline-block invalid:text-red-600"
             />
           </div>
-          <div class="w-full px-2 md:w-1/2">
+          <div>
             <label for="phone" class="text-md">Phone*</label>
             <input
               type="tel"
@@ -71,7 +82,7 @@ import MainLayout from '@layouts/MainLayout.astro';
               max="12"
               pattern="[0-9]{10,12}"
               required
-              placeholder="+91 9988 776 655"
+              placeholder="91 9988-776-655"
               class="input input-bordered input-primary w-full max-w-xs invalid:inline-block invalid:text-red-600"
             />
           </div>
@@ -89,7 +100,10 @@ import MainLayout from '@layouts/MainLayout.astro';
             placeholder="Something you want me to know!">
           </textarea>
         </div>
-        <button type="submit" class="pageclip-form__submit btn btn-primary btn-active btn-block">
+        <button
+          type="submit"
+          class="pageclip-form__submit btn btn-primary btn-block font-display hover:scale-105 hover:shadow-2xl hover:shadow-primary hover:transition
+        hover:duration-500 hover:ease-in-out">
           <span>Send</span>
         </button>
       </form>

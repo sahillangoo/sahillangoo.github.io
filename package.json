@@ -40,7 +40,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.4.1",
-    "@astrojs/mdx": "^2.0.6",
+    "@astrojs/mdx": "^2.1.0",
     "@astrojs/partytown": "^2.0.4",
     "@astrojs/rss": "^4.0.3",
     "@astrojs/sitemap": "^3.0.5",
@@ -51,7 +51,7 @@
     "@tailwindcss/typography": "^0.5.10",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
-    "astro": "^4.2.3",
+    "astro": "^4.2.4",
     "astro-breadcrumbs": "^1.8.1",
     "astro-eslint-parser": "^0.16.2",
     "astro-favicons": "^2.0.2",
