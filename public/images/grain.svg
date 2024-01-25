@@ -1,10 +1,1 @@
-<svg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'>
-  <filter id='noiseFilter'>
-    <feTurbulence type='fractalNoise' baseFrequency='20' numOctaves='10' stitchTiles='stitch'
-      result='noise' />
-    <feComponentTransfer>
-      <feFuncA type='table' tableValues='0 0.08' />
-    </feComponentTransfer>
-  </filter>
-  <rect width='100%' height='100%' filter='url(#noiseFilter)' />
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><filter id="noiseFilter"><feTurbulence baseFrequency="20" numOctaves="10" result="noise" stitchTiles="stitch" type="fractalNoise"/><feComponentTransfer><feFuncA tableValues="0 0.08" type="table"/></feComponentTransfer></filter><rect width="100%" height="100%" filter="url(#noiseFilter)"/></svg>
