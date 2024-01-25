@@ -5,65 +5,69 @@ import { Icon } from 'astro-icon/components';
 import { Picture } from 'astro:assets';
 ---
 
-<section class="hero py-8 text-center text-base-content sm:space-y-6 sm:text-left lg:py-14">
-  <div class="fade-in hero-content flex-col items-center sm:items-start lg:flex-row">
+<section
+  class="fade-in container mx-auto grid grid-cols-1 gap-12 px-4 py-8 md:grid-cols-3 lg:py-14">
+  <div class="container mx-auto flex items-center justify-center md:col-span-1">
     <figure class="mx-auto sm:mx-0">
       <Picture
-        class="max-w-sm transform rounded rounded-t-3xl object-cover object-center shadow-2xl shadow-primary grayscale transition-all duration-700 hover:scale-x-[-1] hover:grayscale-0 sm:max-w-sm"
+        class="transform rounded rounded-t-3xl object-cover object-center shadow-2xl shadow-primary grayscale transition-all duration-700 hover:scale-x-[-1] hover:grayscale-0"
         src={sahil}
         formats={['avif', 'webp']}
         alt="Sahil Potrait Image"
         loading="eager"
-        height={500}
+        height={600}
       />
       <figcaption class="sr-only">Sahil Potrait Image</figcaption>
     </figure>
+  </div>
+  <div
+    class="container mx-auto flex flex-col items-center justify-center space-y-6 md:col-span-2 md:block">
+    <p class="text-center font-mono text-xl font-normal md:text-left">Hello World! | WIP 👷</p>
+    <h1 class="text-center font-display text-3xl font-bold italic md:text-left lg:text-6xl">
+      My name is
+      <span
+        class="bg-gradient-to-r bg-clip-text hover:from-green-400 hover:to-blue-500 hover:text-transparent hover:transition-all hover:duration-500 hover:ease-in-out">
+        Sahil.
+      </span>
+      <span id="play-name" class="tooltip tooltip-top" data-tip="Say my name">
+        <Icon
+          name="waveform"
+          class="inline-block size-10 cursor-pointer text-primary hover:scale-125 hover:text-base-content hover:transition hover:duration-500 hover:ease-in-out"
+          aria-label="Listen to my name"
+          style="vertical-align: top;"
+        />
+      </span>
+    </h1>
+    <h2 class="text-center font-display text-xl md:text-left lg:text-4xl">
+      A Multifaceted Developer & Designer!
+    </h2>
 
-    <div class="mx-auto mt-8 space-y-4 font-body sm:mx-0 lg:ml-8 lg:mt-0">
-      <p class="font-mono text-lg font-normal">Hello World! WIP 👷</p>
-      <h1 class="font-display text-3xl font-bold italic lg:text-4xl">
-        My name is
-        <span
-          class="bg-gradient-to-r bg-clip-text hover:from-green-400 hover:to-blue-500 hover:text-transparent hover:transition-all hover:duration-500 hover:ease-in-out">
-          Sahil.
-        </span>
-        <button id="play-name" class="tooltip tooltip-right" data-tip="Say my name">
-          <Icon
-            name="waveform"
-            class="inline-block size-8 cursor-pointer text-primary hover:scale-125 hover:text-base-content hover:transition hover:duration-500 hover:ease-in-out"
-            aria-label="Listen to my name"
-            style="vertical-align: top;"
-          />
-        </button>
-      </h1>
-      <h2 class="font-display text-xl lg:text-2xl">A multifaceted developer & designer!</h2>
+    <p class="text-pretty text-center text-xl leading-relaxed md:text-left">
+      I'm a professional freelancer and I craft unique brand identities, compelling websites, and
+      innovative software solutions<span class="typing"></span>.
+    </p>
+    <!-- Social Links -->
+    <Social />
 
-      <p class="text-pretty text-lg leading-relaxed lg:w-2/3">
-        I'm a professional freelancer and I craft unique brand identities, compelling websites, and
-        innovative software solutions<span class="typing"></span>.
-      </p>
-      <!-- Social Links -->
-      <Social class="justify-center" />
-
-      <div class="flex justify-center space-x-4 sm:block sm:space-x-0">
-        <a
-          class="btn btn-primary btn-sm font-display lg:btn-md hover:scale-110 hover:shadow-2xl hover:shadow-primary hover:transition hover:duration-500 hover:ease-in-out active:scale-90"
-          href="/contact"
-          transition:name="contact"
-          aria-label="Contact me">
-          Contact Me
-        </a>
-        <a
-          class="btn btn-secondary btn-sm font-display hover:scale-110 hover:shadow-2xl hover:shadow-secondary hover:transition hover:duration-500 hover:ease-in-out active:scale-90 md:hidden"
-          href="/resume/Sahil_Resume_W_2024.pdf"
-          aria-label="Resume">
-          Resume
-        </a>
-      </div>
+    <div class="flex justify-center space-x-4 sm:block sm:space-x-0">
+      <a
+        class="btn btn-primary btn-sm font-display lg:btn-md hover:scale-110 hover:shadow-2xl hover:shadow-primary hover:transition hover:duration-500 hover:ease-in-out active:scale-90"
+        href="/contact"
+        transition:name="contact"
+        aria-label="Contact me">
+        Contact Me
+      </a>
+      <a
+        class="btn btn-secondary btn-sm font-display hover:scale-110 hover:shadow-2xl hover:shadow-secondary hover:transition hover:duration-500 hover:ease-in-out active:scale-90 md:hidden"
+        href="/resume/Sahil_Resume_W_2024.pdf"
+        aria-label="Resume">
+        Resume
+      </a>
     </div>
   </div>
 </section>
-<script>
+
+<script is:inline>
   const nameSound = new Audio('./audio/sahil-name.mp3');
   const playButton = document.getElementById('play-name') as HTMLElement | null;
   if (playButton) {

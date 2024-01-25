@@ -1,5 +1,4 @@
 import mdx from '@astrojs/mdx';
-import partytown from '@astrojs/partytown';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import icon from "astro-icon";
@@ -32,7 +31,7 @@ export default defineConfig({
     nesting: true,
     //  Enable nesting, like Sass
     applyBaseStyles: false //  Apply Tailwind's base styles
-  }),partytown(), sitemap(), icon({
+  }),sitemap(), icon({
     iconDir: "src/assets/icons"
   }),minify()],
   markdown: {
