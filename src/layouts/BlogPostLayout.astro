@@ -33,7 +33,7 @@ const { title, description, category, tags, pubDate, updatedDate, heroImage, tim
           <div class="post-meta mb-4 text-sm">
             <span>Category: {category}</span>
             <div class="tags mb-2 flex space-x-2">
-              {tags?.map((tag) => <span class="tag rounded-full px-2 py-1">{tag}</span>)}
+              {tags?.map((tag: string) => <span class="tag rounded-full px-2 py-1">{tag}</span>)}
             </div>
             <span>Published: <FormattedDate date={pubDate} /></span>
             {

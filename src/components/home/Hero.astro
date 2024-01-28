@@ -10,7 +10,7 @@ import { Picture } from 'astro:assets';
   <div class="container mx-auto flex items-center justify-center md:col-span-1">
     <figure class="mx-auto sm:mx-0">
       <Picture
-        class="transform rounded rounded-t-3xl object-cover object-center shadow-2xl shadow-primary grayscale transition-all duration-700 hover:scale-x-[-1] hover:grayscale-0"
+        class="transform rounded rounded-t-3xl object-cover object-center shadow-2xl shadow-primary grayscale transition-all duration-1000 hover:scale-x-[-1] hover:grayscale-0"
         src={sahil}
         formats={['avif', 'webp']}
         alt="Sahil Potrait Image"
@@ -22,7 +22,10 @@ import { Picture } from 'astro:assets';
   </div>
   <div
     class="container mx-auto flex flex-col items-center justify-center space-y-6 md:col-span-2 md:block">
-    <p class="text-center font-mono text-xl font-normal md:text-left">Hello World! | WIP 👷</p>
+    <p
+      class="animate-bounce text-center font-mono text-xl font-normal transition-all delay-100 duration-500 md:text-left">
+      Hello World! | WIP 👷
+    </p>
     <h1 class="text-center font-display text-3xl font-bold italic md:text-left lg:text-6xl">
       My name is
       <span
@@ -42,7 +45,7 @@ import { Picture } from 'astro:assets';
       A Multifaceted Developer & Designer!
     </h2>
 
-    <p class="text-pretty text-center text-xl leading-relaxed md:text-left">
+    <p class="text-pretty text-center font-body text-xl leading-relaxed md:text-left">
       I'm a professional freelancer and I craft unique brand identities, compelling websites, and
       innovative software solutions<span class="typing"></span>.
     </p>
@@ -59,7 +62,7 @@ import { Picture } from 'astro:assets';
       </a>
       <a
         class="btn btn-secondary btn-sm font-display hover:scale-110 hover:shadow-2xl hover:shadow-secondary hover:transition hover:duration-500 hover:ease-in-out active:scale-90 md:hidden"
-        href="/resume/Sahil_Resume_W_2024.pdf"
+        href="/resume/resume_sahil_plain_2024"
         aria-label="Resume">
         Resume
       </a>
@@ -69,7 +72,7 @@ import { Picture } from 'astro:assets';
 
 <script is:inline>
   const nameSound = new Audio('./audio/sahil-name.mp3');
-  const playButton = document.getElementById('play-name') as HTMLElement | null;
+  const playButton = document.querySelector('#play-name');
   if (playButton) {
     playButton.addEventListener('click', function () {
       try {

@@ -15,7 +15,6 @@
     "last 2 versions",
     "not ie <= 8"
   ],
-  "packageManager": "pnpm@8.14.1",
   "engines": {
     "node": ">=18.17.1",
     "npm": ">=9.6.7"
@@ -42,7 +41,7 @@
     "@astrojs/check": "^0.4.1",
     "@astrojs/mdx": "^2.1.0",
     "@astrojs/partytown": "^2.0.4",
-    "@astrojs/rss": "^4.0.3",
+    "@astrojs/rss": "^4.0.4",
     "@astrojs/sitemap": "^3.0.5",
     "@astrojs/tailwind": "^5.1.0",
     "@divriots/jampack": "^0.23.2",
@@ -51,11 +50,11 @@
     "@tailwindcss/typography": "^0.5.10",
     "@typescript-eslint/eslint-plugin": "^6.19.1",
     "@typescript-eslint/parser": "^6.19.1",
-    "astro": "^4.2.4",
-    "astro-breadcrumbs": "^1.8.1",
+    "astro": "^4.2.6",
+    "astro-breadcrumbs": "^1.9.0",
     "astro-eslint-parser": "^0.16.2",
     "astro-favicons": "^2.0.2",
-    "astro-icon": "^1.0.2",
+    "astro-icon": "^1.0.3",
     "astro-min": "^1.0.1",
     "astro-webmanifest": "^1.0.0",
     "autoprefixer": "^10.4.17",
