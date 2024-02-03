@@ -23,17 +23,24 @@ export default defineConfig({
       // inlineStylesheets: 'never',
     }
   },
-  integrations: [mdx({
+  integrations: [
+    mdx({
     optimize: true
-  }), tailwind({
+    }),
+    tailwind({
     // Example: Allow writing nested CSS declarations
     // alongside Tailwind's syntax
     nesting: true,
     //  Enable nesting, like Sass
-    applyBaseStyles: false //  Apply Tailwind's base styles
-  }),sitemap(), icon({
+    applyBaseStyles: false
+    //  Apply Tailwind's base styles
+  }),
+    sitemap(),
+    icon({
     iconDir: "src/assets/icons"
-  }),minify()],
+    }),
+    minify(),
+  ],
   markdown: {
     remarkPlugins: [remarkReadingTime],
     rehypePlugins: [[rehypeExternalLinks, {

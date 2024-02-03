@@ -4,7 +4,7 @@ export default {
     'prettier-plugin-astro',
     'prettier-plugin-tailwindcss',
     'prettier-plugin-css-order',
-    'prettier-plugin-astro-organize-imports',
+    // 'prettier-plugin-astro-organize-imports',
   ],
   overrides: [
     {

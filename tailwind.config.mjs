@@ -17,9 +17,9 @@ const config = {
     },
   },
   plugins: [
-    require('@tailwindcss/typography'),
     // require('@tailwindcss/aspect-ratio'),
     // require('@tailwindcss/container-queries'),
+    require('@tailwindcss/typography'),
     require('daisyui'),
   ],
   daisyui: {

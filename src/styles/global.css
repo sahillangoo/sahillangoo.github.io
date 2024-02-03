@@ -267,27 +267,27 @@
     content: '';
   }
 
-  /* scroll bar styles  */
-  body {
-    --sb-track-color: #232e33;
-    --sb-thumb-color: #2e6b55;
-    --sb-size: 10px;
+  .custom-scrollbars {
+    /* Non-Standard, But More Styling-Capable Properties */
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background: #2e6b55;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
 
-    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
-  }
-
-  body::-webkit-scrollbar {
-    width: var(--sb-size);
-  }
-
-  body::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background: var(--sb-track-color);
-  }
-
-  body::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background: var(--sb-thumb-color);
+    /* Standardized Properties */
+    @supports not selector(::-webkit-scrollbar) {
+      scrollbar-color: #2e6b55 transparent;
+      scrollbar-width: thin;
+    }
+    --scrollbar-width: thin;
+    --scrollbar-width-legacy: 10px;
   }
 
   /* Adds a background to the body */
