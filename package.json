@@ -40,7 +40,7 @@
     "@astrojs/mdx": "^2.1.1",
     "@astrojs/partytown": "^2.0.4",
     "@astrojs/rss": "^4.0.5",
-    "@astrojs/sitemap": "^3.0.5",
+    "@astrojs/sitemap": "^3.1.1",
     "@astrojs/tailwind": "^5.1.0",
     "@divriots/jampack": "^0.23.3",
     "@tailwindcss/aspect-ratio": "^0.4.2",
@@ -48,12 +48,12 @@
     "@tailwindcss/typography": "^0.5.10",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
-    "astro": "^4.4.0",
+    "astro": "^4.4.3",
     "astro-breadcrumbs": "^1.10.0",
     "astro-eslint-parser": "^0.16.3",
     "astro-favicons": "^2.0.2",
     "astro-icon": "^1.1.0",
-    "astro-min": "^1.2.4",
+    "astro-min": "^1.2.6",
     "astro-webmanifest": "^1.0.0",
     "autoprefixer": "^10.4.17",
     "blaze-slider": "^1.9.3",
@@ -78,5 +78,5 @@
     "theme-change": "^2.5.0",
     "typescript": "^5.3.3"
   },
-  "packageManager": "pnpm@8.15.1+sha256.245fe901f8e7fa8782d7f17d32b6a83995e2ae03984cb5b62b8949bfdc27c7b5"
+  "packageManager": "pnpm@8.15.3+sha256.fc4a49bd609550a41e14d20efbce802a4b892aa4cac877322de2f0924f122991"
 }
