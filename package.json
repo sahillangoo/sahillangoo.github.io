@@ -48,14 +48,14 @@
     "@tailwindcss/typography": "^0.5.10",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
-    "astro": "^4.4.4",
+    "astro": "^4.4.14",
     "astro-breadcrumbs": "^1.10.0",
     "astro-eslint-parser": "^0.16.3",
     "astro-favicons": "^2.0.2",
     "astro-icon": "^1.1.0",
     "astro-min": "^1.2.6",
     "astro-webmanifest": "^1.0.0",
-    "autoprefixer": "^10.4.17",
+    "autoprefixer": "^10.4.18",
     "blaze-slider": "^1.9.3",
     "daisyui": "^4.7.2",
     "eslint": "^8.57.0",
@@ -70,13 +70,13 @@
     "prettier-plugin-astro": "^0.12.3",
     "prettier-plugin-astro-organize-imports": "^0.3.3",
     "prettier-plugin-css-order": "^2.0.1",
-    "prettier-plugin-tailwindcss": "^0.5.11",
+    "prettier-plugin-tailwindcss": "^0.5.12",
     "reading-time": "^1.5.0",
     "rehype-external-links": "^3.0.0",
     "sharp": "^0.33.2",
     "tailwindcss": "^3.4.1",
     "theme-change": "^2.5.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.2"
   },
   "packageManager": "pnpm@8.15.4+sha256.cea6d0bdf2de3a0549582da3983c70c92ffc577ff4410cbf190817ddc35137c2"
 }
