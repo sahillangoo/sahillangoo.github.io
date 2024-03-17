@@ -23,6 +23,10 @@ export default defineConfig({
       // inlineStylesheets: 'never',
     }
   },
+   experimental: {
+     directRenderScript: true,
+     contentCollectionCache: true,
+  },
   integrations: [
     mdx({
     optimize: true

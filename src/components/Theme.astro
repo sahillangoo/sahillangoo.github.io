@@ -1,0 +1,59 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<!-- Theme Switcher -->
+<div class="mx-4" transition:persist>
+  <label class="swap swap-rotate">
+    <input type="checkbox" id="themeToggle" aria-label="Toggle theme" />
+    <Icon name="light" class="swap-on size-8 fill-neutral" />
+    <Icon name="dark" class="swap-off size-8 fill-neutral" />
+  </label>
+
+  <script is:inline>
+    // Default theme
+    const THEME_DEFAULT = 'InfinityDark';
+    // Key to store theme in local storage
+    const THEME_STORAGE_KEY = 'data-theme';
+
+    // Function to get the stored theme or default to 'InfinityLight'
+    function getStoredTheme() {
+      return window.localStorage.getItem(THEME_STORAGE_KEY) || THEME_DEFAULT;
+    }
+
+    // Function to set the theme in local storage and on the HTML element
+    function setTheme(doc, theme) {
+      doc.querySelector('html').setAttribute(THEME_STORAGE_KEY, theme);
+      window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+    }
+
+    // Function to setup event listener for theme toggle
+    function setupThemeChangeListeners(doc) {
+      const themeToggle = doc.querySelector('#themeToggle');
+      themeToggle.addEventListener('change', () => {
+        const theme = themeToggle.checked ? 'night' : 'InfinityLight';
+        setTheme(doc, theme);
+      });
+    }
+
+    // Function to initialize the theme
+    function initializeTheme(doc) {
+      const storedTheme = getStoredTheme();
+      setTheme(doc, storedTheme);
+      const themeToggle = doc.querySelector('#themeToggle');
+      themeToggle.checked = storedTheme === 'night';
+      setupThemeChangeListeners(doc);
+    }
+
+    // Initialize theme on page load
+    initializeTheme(document);
+
+    // Update theme before page swap
+    document.addEventListener('astro:before-swap', (ev) => {
+      setTheme(ev.newDocument, getStoredTheme());
+    });
+
+    // Setup theme change listeners after page swap
+    document.addEventListener('astro:after-swap', () => setupThemeChangeListeners(document));
+  </script>
+</div>

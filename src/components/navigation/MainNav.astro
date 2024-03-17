@@ -1,4 +1,5 @@
 ---
+import Theme from '@components/Theme.astro';
 import NavLink from '@components/navigation/NavLinks.astro';
 import { Icon } from 'astro-icon/components';
 
@@ -7,7 +8,7 @@ const links = [
   { href: '/blog', text: 'Blog', icon: 'blog' },
   { href: '/projects', text: 'Projects', icon: 'project' },
   { href: '/contact', text: 'Contact', icon: 'contact' },
-  { href: '/resume/resume_sahil_plain_2024.pdf', text: 'Resume', icon: 'resume' },
+  { href: '/resume/Resume-Sahil-Plain-2024.pdf', text: 'Resume', icon: 'resume' },
 ];
 ---
 
@@ -44,20 +45,7 @@ const links = [
       </div>
 
       <!-- Theme Switcher -->
-      <span class="mr-2">
-        <label class="swap swap-rotate">
-          <input
-            name="theme"
-            type="checkbox"
-            class="theme-controller"
-            value="InfinityLight"
-            aria-label="Theme switcher"
-          />
-          <Icon name="light" class="swap-on size-8" />
-          <Icon name="dark" class="swap-off size-8" />
-          <span class="sr-only">Theme switcher</span>
-        </label>
-      </span>
+      <Theme />
     </div>
   </div>
 
@@ -94,20 +82,3 @@ const links = [
     </ul>
   </div>
 </div>
-
-<!-- Themes -->
-<script is:inline>
-  document.addEventListener('astro:page-load', () => {
-    function initTheme() {
-      let theme = localStorage.getItem('theme') || 'InfinityDark';
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-    }
-    initTheme();
-    document.addEventListener('astro:after-swap', initTheme);
-  });
-</script>
-<script>
-  import { themeChange } from 'theme-change';
-  themeChange();
-</script>

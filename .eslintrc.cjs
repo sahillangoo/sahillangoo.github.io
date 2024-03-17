@@ -16,7 +16,7 @@ module.exports = {
   rules: {},
   overrides: [
     {
-      files: ['*.js'],
+      files: ['*.js', '*.astro'],
       rules: {
         'no-mixed-spaces-and-tabs': ['error', 'smart-tabs'],
       },
