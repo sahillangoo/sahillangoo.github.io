@@ -1,0 +1,14 @@
+https://sahillangoo-portfolio.pages.dev/*
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet, notranslate, noimageindex
+
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/portfolio/*
+  X-Robots-Tag: nosnippet
