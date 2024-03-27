@@ -45,6 +45,7 @@
 
 @layer base {
   html {
+    scroll-behavior: smooth;
     text-rendering: optimizeLegibility;
     text-size-adjust: 100%;
 

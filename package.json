@@ -1,7 +1,8 @@
 {
   "name": "sahil-langoo-personal-website",
   "type": "module",
-  "version": "1.1.0",
+  "homepage": "https://sahillangoo.com",
+  "version": "1.3.0",
   "private": true,
   "description": "Sahil's personal website built with Astro and Tailwind CSS",
   "author": "Sahil Langoo",
@@ -16,8 +17,8 @@
     "not ie <= 8"
   ],
   "engines": {
-    "node": ">=18.17.1",
-    "npm": ">=9.6.7"
+    "node": ">=18.0.0",
+    "npm": ">=9.50.0"
   },
   "scripts": {
     "dev": "astro dev",
@@ -37,49 +38,44 @@
   },
   "dependencies": {
     "@astrojs/check": "^0.4.1",
-    "@astrojs/mdx": "^2.2.0",
-    "@astrojs/partytown": "^2.0.4",
+    "@astrojs/mdx": "^2.2.2",
     "@astrojs/rss": "^4.0.5",
-    "@astrojs/sitemap": "^3.1.1",
+    "@astrojs/sitemap": "^3.1.2",
     "@astrojs/tailwind": "^5.1.0",
     "@divriots/jampack": "^0.23.3",
-    "@glidejs/glide": "^3.6.0",
-    "@tailwindcss/aspect-ratio": "^0.4.2",
-    "@tailwindcss/container-queries": "^0.1.1",
-    "@tailwindcss/typography": "^0.5.10",
-    "astro": "^4.5.6",
+    "@tailwindcss/typography": "^0.5.11",
+    "astro": "^4.5.10",
     "astro-breadcrumbs": "^1.10.0",
     "astro-favicons": "^2.0.2",
     "astro-icon": "^1.1.0",
     "astro-min": "^1.2.6",
     "astro-webmanifest": "^1.0.0",
-    "daisyui": "^4.7.3",
+    "daisyui": "^4.9.0",
     "mdast-util-to-string": "^4.0.0",
     "reading-time": "^1.5.0",
     "rehype-external-links": "^3.0.0",
-    "sharp": "^0.33.2",
+    "sharp": "^0.33.3",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@types/glidejs__glide": "^3.6.5",
-    "@typescript-eslint/eslint-plugin": "^7.3.0",
-    "@typescript-eslint/parser": "^7.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
     "astro-eslint-parser": "^0.16.3",
-    "autoprefixer": "^10.4.18",
+    "autoprefixer": "^10.4.19",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-astro": "^0.31.4",
     "eslint-plugin-prettier": "^5.1.3",
     "husky": "^8.0.3",
     "lint-staged": "^15.2.2",
-    "postcss": "^8.4.36",
+    "postcss": "^8.4.38",
     "prettier": "^3.2.5",
     "prettier-plugin-astro": "^0.12.3",
     "prettier-plugin-astro-organize-imports": "^0.3.3",
-    "prettier-plugin-css-order": "^2.0.1",
+    "prettier-plugin-css-order": "^2.1.1",
     "prettier-plugin-tailwindcss": "^0.5.12",
-    "typescript": "^5.4.2"
+    "typescript": "^5.4.3"
   },
   "packageManager": "pnpm@8.15.4+sha256.cea6d0bdf2de3a0549582da3983c70c92ffc577ff4410cbf190817ddc35137c2"
 }

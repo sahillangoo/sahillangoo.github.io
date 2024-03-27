@@ -5,6 +5,10 @@
     "baseUrl": "src", // base path for imports
     "strictNullChecks": true, // enable strict null checks
     "allowJs": true, // allow JS files to be imported
+    "target": "ESNext",
+    "strict": true, // enable all strict type-checking options
+    "forceConsistentCasingInFileNames": true, // enforce consistent casing in file names
+    "incremental": true, // enable incremental compilation
     "paths": {
       "@consts": ["consts.ts"],
       "@assets/*": ["assets/*"],
