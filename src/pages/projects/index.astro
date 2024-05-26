@@ -8,20 +8,15 @@ const publishedProjectEntries = await getCollection('projects', ({ data }) => {
   return data.draft !== true;
 });
 
-const projects = publishedProjectEntries.sort(
-  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
-);
+const projects = publishedProjectEntries.sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
 ---
 
 <MainLayout>
-  <h1 class="mb-4 text-center font-display text-2xl font-bold md:text-4xl">
-    sl [infinity] projects [🔨].
-  </h1>
+  <h1 class="mb-4 text-center font-display text-2xl font-bold md:text-4xl">sl [infinity] projects [🔨].</h1>
   <p class="mb-8 text-center font-body text-lg">
     Here are some of the projects I've worked on.
-    <br /><a href="https://twitter.com/kashurgeek" target="_blank" class="text-primary">
-      Follow me on twitter
-    </a> to get notified when I post something new.
+    <br /><a href="https://twitter.com/kashurgeek" target="_blank" class="text-primary">Follow me on twitter</a> to get notified when I post something
+    new.
     <br /> showing [{projects.length}] projects.
   </p>
   <main>
@@ -38,10 +33,7 @@ const projects = publishedProjectEntries.sort(
                 <FormattedDate date={project.data.pubDate} />
                 <p class="font-body">{project.data.description}</p>
                 <div class="card-actions justify-end">
-                  {project.data.tags &&
-                    project.data.tags.map((tag: string) => (
-                      <div class="badge badge-outline">{tag}</div>
-                    ))}
+                  {project.data.tags && project.data.tags.map((tag: string) => <div class="badge badge-outline">{tag}</div>)}
                 </div>
               </div>
             </div>

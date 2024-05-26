@@ -16,13 +16,7 @@ const socialLinks = [
   <span class="text-sm lg:text-base">Social:</span>
   {
     socialLinks.map(({ name, tip, href }) => (
-      <a
-        class="tooltip tooltip-bottom"
-        data-tip={tip}
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`Visit my ${tip} profile`}>
+      <a class="tooltip tooltip-bottom" data-tip={tip} href={href} target="_blank" rel="noopener noreferrer" aria-label={`Visit my ${tip} profile`}>
         <Icon
           class="size-8 text-primary hover:scale-125 hover:text-base-content hover:transition hover:duration-500 hover:ease-in-out lg:size-10"
           name={name}

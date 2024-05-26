@@ -8,20 +8,15 @@ const publishedBlogEntries = await getCollection('blog', ({ data }) => {
   return data.draft !== true;
 });
 
-const posts = publishedBlogEntries.sort(
-  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
-);
+const posts = publishedBlogEntries.sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
 ---
 
 <MainLayout>
-  <h1 class="mb-4 text-center font-display text-2xl font-bold md:text-4xl">
-    sl [infinity] blog [✒️].
-  </h1>
+  <h1 class="mb-4 text-center font-display text-2xl font-bold md:text-4xl">sl [infinity] blog [✒️].</h1>
   <p class="mb-8 text-center font-body text-lg">
     My thoughts here, I write about random stuff, tech, and life in general.
-    <br /><a href="https://twitter.com/kashurgeek" target="_blank" class="text-primary">
-      Follow me on twitter
-    </a> to get notified when I post something new.
+    <br /><a href="https://twitter.com/kashurgeek" target="_blank" class="text-primary">Follow me on twitter</a> to get notified when I post something
+    new.
     <br /> showing [{posts.length}] posts.
   </p>
   <main>
@@ -38,10 +33,7 @@ const posts = publishedBlogEntries.sort(
                 <FormattedDate date={post.data.pubDate} />
                 <p class="font-body">{post.data.description}</p>
                 <div class="card-actions justify-end">
-                  {post.data.tags &&
-                    post.data.tags.map((tag: string) => (
-                      <div class="badge badge-outline">{tag}</div>
-                    ))}
+                  {post.data.tags && post.data.tags.map((tag: string) => <div class="badge badge-outline">{tag}</div>)}
                 </div>
               </div>
             </div>

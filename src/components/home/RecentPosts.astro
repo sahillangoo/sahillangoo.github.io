@@ -31,8 +31,7 @@ posts = posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
               <FormattedDate date={post.data.pubDate} />
               <p class="line-clamp-2 font-body">{post.data.description}</p>
               <div class="card-actions justify-end">
-                {post.data.tags &&
-                  post.data.tags.map((tag: string) => <div class="badge badge-outline">{tag}</div>)}
+                {post.data.tags && post.data.tags.map((tag: string) => <div class="badge badge-outline">{tag}</div>)}
               </div>
             </div>
           </div>
@@ -44,10 +43,7 @@ posts = posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
     <a
       href="/blog"
       class="transform font-display text-2xl font-medium text-base-content transition-all duration-200 ease-in-out group-hover:text-primary">
-      View More <Icon
-        name="forward_button"
-        class="ml-2 inline-block size-8 group-hover:animate-spin"
-      />
+      View More <Icon name="forward_button" class="ml-2 inline-block size-8 group-hover:animate-spin" />
     </a>
   </div>
 </section>

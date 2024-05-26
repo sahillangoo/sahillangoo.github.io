@@ -8,8 +8,7 @@ import { BLOG, SITE } from '@consts';
 import type { CollectionEntry } from 'astro:content';
 
 type Props = CollectionEntry<'blog'>['data'] & { timetoread: number };
-const { title, description, category, tags, pubDate, updatedDate, heroImage, timetoread } =
-  Astro.props;
+const { title, description, category, tags, pubDate, updatedDate, heroImage, timetoread } = Astro.props;
 ---
 
 <!doctype html>
