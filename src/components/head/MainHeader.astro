@@ -16,40 +16,119 @@ import '@styles/global.css';
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, shrink-to-fit=no"
+/>
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
 <ViewTransitions />
-<link rel="dns-prefetch" href="//sahillangoo.com/" />
-<link rel="preconnect" href={SITE.URL} />
-<link rel="prefetch" href={SITE.URL} />
-<meta name="title" content={title} />
-<meta name="description" property="og:description" content={description} />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<meta name="generator" content={Astro.generator} />
-<meta name="theme-color" content={SITE.PRIMARY_COLOR} />
+<link
+  rel="dns-prefetch"
+  href="//sahillangoo.com/"
+/>
+<link
+  rel="preconnect"
+  href={SITE.URL}
+/>
+<link
+  rel="prefetch"
+  href={SITE.URL}
+/>
+<meta
+  name="title"
+  content={title}
+/>
+<meta
+  name="description"
+  property="og:description"
+  content={description}
+/>
+<link
+  rel="icon"
+  type="image/svg+xml"
+  href="/favicon.svg"
+/>
+<meta
+  name="generator"
+  content={Astro.generator}
+/>
+<meta
+  name="theme-color"
+  content={SITE.PRIMARY_COLOR}
+/>
 
 <!-- Canonical URL -->
-<link rel="canonical" href={canonicalURL} />
+<link
+  rel="canonical"
+  href={canonicalURL}
+/>
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
-<meta property="og:title" content={title} />
-<meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image ?? '', Astro.url)} />
-<meta property="og:site_name" content={title} />
-<meta property="og:locale" content="en_US" />
-<meta property="article:author" content={SITE.AUTHOR} />
+<meta
+  property="og:type"
+  content="website"
+/>
+<meta
+  property="og:url"
+  content={Astro.url}
+/>
+<meta
+  property="og:title"
+  content={title}
+/>
+<meta
+  property="og:description"
+  content={description}
+/>
+<meta
+  property="og:image"
+  content={new URL(image ?? '', Astro.url)}
+/>
+<meta
+  property="og:site_name"
+  content={title}
+/>
+<meta
+  property="og:locale"
+  content="en_US"
+/>
+<meta
+  property="article:author"
+  content={SITE.AUTHOR}
+/>
 
 <!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta name="twitter:creator" content={SOCIAL.TWITTER} />
-<meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image ?? '', Astro.url)} />
+<meta
+  property="twitter:card"
+  content="summary_large_image"
+/>
+<meta
+  name="twitter:creator"
+  content={SOCIAL.TWITTER}
+/>
+<meta
+  property="twitter:url"
+  content={Astro.url}
+/>
+<meta
+  property="twitter:title"
+  content={title}
+/>
+<meta
+  property="twitter:description"
+  content={description}
+/>
+<meta
+  property="twitter:image"
+  content={new URL(image ?? '', Astro.url)}
+/>
 
 <!-- RSS -->
-<link rel="alternate" type="application/rss+xml" title="Blog RSS" href="/rss.xml" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title="Blog RSS"
+  href="/rss.xml"
+/>

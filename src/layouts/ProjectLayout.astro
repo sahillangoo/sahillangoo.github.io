@@ -13,19 +13,36 @@ const { title, description, category, tags, pubDate, updatedDate, heroImage } = 
 ---
 
 <!doctype html>
-<html lang="en" data-theme="InfinityDark" class="scroll-smooth antialiased">
+<html
+  lang="en"
+  data-theme="InfinityDark"
+  class="scroll-smooth antialiased">
   <head>
-    <MainHead title={PROJECT.TITLE} description={PROJECT.DESCRIPTION} image={SITE.IMAGE} />
+    <MainHead
+      title={PROJECT.TITLE}
+      description={PROJECT.DESCRIPTION}
+      image={SITE.IMAGE}
+    />
   </head>
 
-  <body transition:animate="initial" class="h-full selection:bg-primary">
+  <body
+    transition:animate="initial"
+    class="h-full selection:bg-primary">
     <MainNav />
     <BreadcrumbsNav />
     <main class="container">
       <article class="rounded-lg p-6 shadow">
         <header>
           <div class="hero-image mb-4">
-            {heroImage && <img class="rounded-lg" src={heroImage} alt={title} />}
+            {
+              heroImage && (
+                <img
+                  class="rounded-lg"
+                  src={heroImage}
+                  alt={title}
+                />
+              )
+            }
           </div>
           <h1 class="mb-2 text-3xl font-bold">{title}</h1>
           <p class="mb-4">{description}</p>

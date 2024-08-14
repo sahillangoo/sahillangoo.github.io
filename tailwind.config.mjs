@@ -4,6 +4,9 @@ const config = {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue,svg}'],
   theme: {
     extend: {
+      fontSize: {
+        xxs: ['0.625rem', { lineHeight: '0.875rem' }],
+      },
       backgroundImage: {
         'hero-wave': "url('/images/bg_wave.svg')",
       },
@@ -23,20 +26,10 @@ const config = {
           '2xl': '6rem',
         },
       },
-      // default breakpoints but with 40px removed
-      screens: {
-        sm: '540px',
-        md: '768px',
-        lg: '1024px',
-        xl: '1280px',
-        '2xl': '1536px',
-      },
       variants: {},
     },
   },
   plugins: [
-    // require('@tailwindcss/container-queries'),
-    // require('@tailwindcss/aspect-ratio'),
     // require('tailwindcss-animate'),
     require('@tailwindcss/typography'),
     require('daisyui'),
@@ -76,7 +69,6 @@ const config = {
         },
       },
     ],
-    rtl: false, // whether to enable rtl support or not
     darkTheme: 'InfinityDark', // name of one of the included themes for dark mode
     base: true, // applies background color and foreground color for root element by default
     styled: true, // include daisyUI colors and design decisions for all components

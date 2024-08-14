@@ -15,8 +15,12 @@ const posts = publishedBlogEntries.sort((a, b) => a.data.pubDate.valueOf() - b.d
   <h1 class="mb-4 text-center font-display text-2xl font-bold md:text-4xl">sl [infinity] blog [✒️].</h1>
   <p class="mb-8 text-center font-body text-lg">
     My thoughts here, I write about random stuff, tech, and life in general.
-    <br /><a href="https://twitter.com/kashurgeek" target="_blank" class="text-primary">Follow me on twitter</a> to get notified when I post something
-    new.
+    <br /><a
+      href="https://twitter.com/kashurgeek"
+      target="_blank"
+      class="text-primary">
+      Follow me on twitter
+    </a> to get notified when I post something new.
     <br /> showing [{posts.length}] posts.
   </p>
   <main>
@@ -26,7 +30,10 @@ const posts = publishedBlogEntries.sort((a, b) => a.data.pubDate.valueOf() - b.d
           <a href={`/blog/${post.slug}/`}>
             <div class="bg-base-500 card card-compact w-full border-2 border-primary shadow-xl">
               <figure>
-                <img src={post.data.heroImage} alt="{post.data.heroImage}" />
+                <img
+                  src={post.data.heroImage}
+                  alt="{post.data.heroImage}"
+                />
               </figure>
               <div class="card-body">
                 <h2 class="card-title font-display font-bold ">{post.data.title}</h2>

@@ -14,17 +14,25 @@ posts = posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
       class="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-transparent bg-gradient-to-r from-transparent via-primary to-transparent opacity-75">
     </div>
     <h2 class="relative z-10 bg-base-100 px-6 font-display text-2xl font-bold italic lg:text-4xl">
-      Latest posts from the blog <Icon name="blog" class="ml-2 inline-block size-8" />
+      Latest posts from the blog <Icon
+        name="blog"
+        class="ml-2 inline-block size-8"
+      />
     </h2>
   </div>
 
   <div class="mx-8 grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-4">
     {
       posts.map((post) => (
-        <a href={`/blog/${post.slug}/`} class="flex flex-col">
+        <a
+          href={`/blog/${post.slug}/`}
+          class="flex flex-col">
           <div class="card card-compact w-full flex-grow border-2 border-base-300 bg-base-200 shadow-lg shadow-primary/80 transition-colors hover:bg-base-300">
             <figure>
-              <img src={post.data.heroImage} alt="{post.data.heroImage}" />
+              <img
+                src={post.data.heroImage}
+                alt="{post.data.heroImage}"
+              />
             </figure>
             <div class="card-body">
               <h2 class="card-title font-display font-bold ">{post.data.title}</h2>
@@ -43,7 +51,10 @@ posts = posts.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime()
     <a
       href="/blog"
       class="transform font-display text-2xl font-medium text-base-content transition-all duration-200 ease-in-out group-hover:text-primary">
-      View More <Icon name="forward_button" class="ml-2 inline-block size-8 group-hover:animate-spin" />
+      View More <Icon
+        name="forward_button"
+        class="ml-2 inline-block size-8 group-hover:animate-spin"
+      />
     </a>
   </div>
 </section>

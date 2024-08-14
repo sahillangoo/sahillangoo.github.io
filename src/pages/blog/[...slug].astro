@@ -12,6 +12,8 @@ const { data, render } = Astro.props;
 const { Content, remarkPluginFrontmatter } = await render();
 ---
 
-<BlogPost {...data} timetoread={remarkPluginFrontmatter.minutesRead}>
+<BlogPost
+  {...data}
+  timetoread={remarkPluginFrontmatter.minutesRead}>
   <Content />
 </BlogPost>

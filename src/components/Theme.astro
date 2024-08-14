@@ -3,11 +3,23 @@ import { Icon } from 'astro-icon/components';
 ---
 
 <!-- Theme Switcher -->
-<div class="mx-4" transition:persist>
+<div
+  class="mx-4"
+  transition:persist>
   <label class="swap swap-rotate">
-    <input type="checkbox" id="themeToggle" aria-label="Toggle theme" />
-    <Icon name="light" class="swap-on size-8 fill-neutral" />
-    <Icon name="dark" class="swap-off size-8 fill-neutral" />
+    <input
+      type="checkbox"
+      id="themeToggle"
+      aria-label="Toggle theme"
+    />
+    <Icon
+      name="light"
+      class="swap-on size-8 fill-neutral"
+    />
+    <Icon
+      name="dark"
+      class="swap-off size-8 fill-neutral"
+    />
   </label>
 
   <script is:inline>

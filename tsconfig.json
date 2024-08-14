@@ -9,6 +9,18 @@
     "strict": true, // enable all strict type-checking options
     "forceConsistentCasingInFileNames": true, // enforce consistent casing in file names
     "incremental": true, // enable incremental compilation
+    "noEmit": true,
+    "jsx": "react",
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "esnext", // Use ESNext module code generation
+    "lib": ["dom", "es6"], // Include DOM and ES6 library files
+    "sourceMap": true, // Generate source maps for debugging
+    "outDir": "./dist", // Redirect output to the 'dist' directory
+    "rootDir": "./src", // Specify the root directory of input files
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "resolveJsonModule": true, // Allow importing JSON modules
+
     "paths": {
       "@consts": ["consts.ts"],
       "@assets/*": ["assets/*"],

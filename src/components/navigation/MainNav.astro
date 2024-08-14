@@ -12,19 +12,35 @@ const links = [
 ];
 ---
 
-<div class="drawer mx-auto font-display text-primary-content shadow-lg shadow-black/20" transition:persist>
-  <input id="mobile-menu" type="checkbox" class="drawer-toggle" />
+<div
+  class="drawer mx-auto font-display text-primary-content shadow-lg shadow-black/20"
+  transition:persist>
+  <input
+    id="mobile-menu"
+    type="checkbox"
+    class="drawer-toggle"
+  />
   <div class="drawer-content flex flex-col">
     <!-- Navbar -->
     <div class="navbar w-full bg-primary lg:px-12">
       <div class="flex-none lg:hidden">
-        <label for="mobile-menu" aria-label="open sidebar" class="btn btn-square btn-ghost">
-          <Icon name="menu" class="size-8" />
+        <label
+          for="mobile-menu"
+          aria-label="open sidebar"
+          class="btn btn-square btn-ghost">
+          <Icon
+            name="menu"
+            class="size-8"
+          />
         </label>
       </div>
 
       <div class="mx-2 flex-1 px-2 text-2xl font-semibold italic hover:underline lg:text-3xl">
-        <a href="/" aria-label="Home">{SITE.AUTHOR}.</a>
+        <a
+          href="/"
+          aria-label="Home">
+          {SITE.AUTHOR}.
+        </a>
       </div>
 
       <div class="hidden flex-none lg:block">
@@ -48,13 +64,21 @@ const links = [
   </div>
 
   <div class="drawer-side z-20">
-    <label for="mobile-menu" aria-label="close sidebar" class="drawer-overlay"></label>
-    <ul class="menu flex min-h-full w-80 flex-col items-center space-y-4 bg-base-100 p-4 pt-12 text-2xl font-medium lowercase text-base-content">
+    <label
+      for="mobile-menu"
+      aria-label="close sidebar"
+      class="drawer-overlay">
+    </label>
+    <ul
+      class="menu flex min-h-full w-80 flex-col items-center space-y-4 bg-base-100 p-4 pt-12 text-2xl font-medium lowercase text-base-content">
       <!-- Sidebar content here -->
       <li class="border-b-2 border-b-base-300 pb-4 font-bold">Main Menu</li>
       <li>
         <a href="/">
-          <Icon name="home" class="size-8" />
+          <Icon
+            name="home"
+            class="size-8"
+          />
           Home.
         </a>
       </li>
@@ -62,7 +86,10 @@ const links = [
         links.map((link) => (
           <li>
             <a href={link.href}>
-              <Icon name={link.icon} class="size-8" />
+              <Icon
+                name={link.icon}
+                class="size-8"
+              />
               {link.text}.
             </a>
           </li>
@@ -70,7 +97,10 @@ const links = [
       }
       <li>
         <a href="/rss.xml">
-          <Icon name="rss" class="size-8" />
+          <Icon
+            name="rss"
+            class="size-8"
+          />
           RSS.
         </a>
       </li>

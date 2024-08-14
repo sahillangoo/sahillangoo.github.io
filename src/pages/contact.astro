@@ -12,12 +12,23 @@ import { Picture } from 'astro:assets';
         Have a question or inquiry? Fill out the form below hit send! 🚀 & I will get back to you as soon as possible.
       </p>
       <figure class="hidden justify-center md:flex">
-        <Picture src={contactpic} alt="contact" formats={['avif', 'webp']} class="scale-x-[-1] shadow-lg" height={300} />
+        <Picture
+          src={contactpic}
+          alt="contact"
+          formats={['avif', 'webp']}
+          class="scale-x-[-1] shadow-lg"
+          height={300}
+        />
       </figure>
     </div>
 
-    <div class="space-y-8 px-4 md:px-12" transition:name="contact">
-      <form action="https://send.pageclip.co/6N14uX3PyM17F0uIMBMdd1zA1nxVoe6p/contact-me" class="pageclip-form space-y-4" method="post">
+    <div
+      class="space-y-8 px-4 md:px-12"
+      transition:name="contact">
+      <form
+        action="https://send.pageclip.co/6N14uX3PyM17F0uIMBMdd1zA1nxVoe6p/contact-me"
+        class="pageclip-form space-y-4"
+        method="post">
         <div class="grid grid-cols-2 gap-4">
           <div>
             <span class="name">Name*</span>
@@ -35,7 +46,11 @@ import { Picture } from 'astro:assets';
             />
           </div>
           <div>
-            <label for="subject" class="text-md">Subject*</label>
+            <label
+              for="subject"
+              class="text-md">
+              Subject*
+            </label>
             <input
               type="text"
               name="subject"
@@ -51,7 +66,11 @@ import { Picture } from 'astro:assets';
         </div>
         <div class="grid grid-cols-2 gap-4">
           <div class="form-group">
-            <label for="email" class="text-md">Email*</label>
+            <label
+              for="email"
+              class="text-md">
+              Email*
+            </label>
             <input
               type="email"
               name="email"
@@ -63,7 +82,11 @@ import { Picture } from 'astro:assets';
             />
           </div>
           <div>
-            <label for="phone" class="text-md">Phone*</label>
+            <label
+              for="phone"
+              class="text-md">
+              Phone*
+            </label>
             <input
               type="tel"
               name="phone"
@@ -78,7 +101,11 @@ import { Picture } from 'astro:assets';
           </div>
         </div>
         <div class="w-full">
-          <label for="message" class="text-md">Message*</label>
+          <label
+            for="message"
+            class="text-md">
+            Message*
+          </label>
           <textarea
             name="message"
             id="message"
@@ -101,5 +128,13 @@ import { Picture } from 'astro:assets';
   </section>
 </MainLayout>
 
-<link rel="stylesheet" href="https://s.pageclip.co/v1/pageclip.css" media="screen" />
-<script is:inline src="https://s.pageclip.co/v1/pageclip.js" charset="utf-8"></script>
+<link
+  rel="stylesheet"
+  href="https://s.pageclip.co/v1/pageclip.css"
+  media="screen"
+/>
+<script
+  is:inline
+  src="https://s.pageclip.co/v1/pageclip.js"
+  charset="utf-8">
+</script>
