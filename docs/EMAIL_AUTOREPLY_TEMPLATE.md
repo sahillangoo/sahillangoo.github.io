@@ -4,16 +4,16 @@ This template is designed for the automated email auto-responder / vacation repl
 
 ---
 
-## 🎨 Option 1: Modern Interactive HTML Template (Dark & Light Mode Responsive)
+## 🎨 Option 1: Monochrome HTML Template (Dark & Light Mode Responsive)
 
-This template conforms strictly to **W3C email standards** and **table-based cross-client architecture** (Outlook Windows/Mac/Web, Apple Mail iOS/macOS, Gmail Android/iOS/Web, Superhuman, Thunderbird, and Proton Mail).
+This template adheres to the website's **editorial monochrome palette (black, white, obsidian, and zinc)** with **zero colored tinting or purple accents**. It uses standard table-based email markup compatible with Outlook (Windows/Mac/Web), Gmail (iOS/Android/Web), Apple Mail, Proton Mail, Thunderbird, and Superhuman.
 
-### Key Features:
-- **Automatic Dark & Light Mode**: Seamlessly transitions between `#F8F9FA` (clean paper light) and `#0B0C10` (obsidian dark) using `@media (prefers-color-scheme: dark)` and `[data-ogsc]` tags.
-- **Brand Consistency**: Styled with Sahil Langoo's purple metal accents (`#7C3AED` / `#A78BFA`), monospace typography, and interactive resource tiles.
-- **Accessible & Outlook Safe**: Clean table structures, MSO conditional tags, hidden preheaders, and $44\text{px}$ touch targets.
+### Key Architectural Details:
+- **Pure Monochromatic Palette**: High-contrast obsidian (`#090A0C` / `#121316`) on dark mode, crisp neutral (`#FFFFFF` on `#F4F4F5`) on light mode.
+- **Embedded SquadCoders Studio Link**: Explicitly highlights [@SquadCoders](https://github.com/SquadCoders) across resources and signature.
+- **Cross-Client Table Architecture**: MSO conditional blocks, fluid mobile stacking, inline CSS properties, and touch targets $\ge 44\text{px}$.
 
-### HTML Code to Paste:
+### HTML Code:
 
 ```html
 <!DOCTYPE html>
@@ -48,8 +48,8 @@ This template conforms strictly to **W3C email standards** and **table-based cro
       width: 100% !important;
       -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
-      background-color: #F8F9FA;
-      color: #18181B;
+      background-color: #F4F4F5;
+      color: #09090B;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
     table {
@@ -69,114 +69,142 @@ This template conforms strictly to **W3C email standards** and **table-based cro
       -ms-interpolation-mode: bicubic;
     }
     a {
-      color: #7C3AED;
+      color: #09090B;
       text-decoration: none;
     }
-    .hover-lift:hover {
-      background-color: #F4F4F7 !important;
-    }
-    .btn-primary:hover {
-      background-color: #6D28D9 !important;
-    }
 
-    /* Dark Mode Overrides */
-    @media (prefers-color-scheme: dark) {
-      body, .email-bg {
-        background-color: #0B0C10 !important;
+    /* Mobile Responsiveness */
+    @media only screen and (max-width: 600px) {
+      .email-wrapper {
+        width: 100% !important;
+        padding: 16px 8px !important;
       }
       .email-card {
-        background-color: #13141C !important;
-        border-color: #232533 !important;
+        width: 100% !important;
+      }
+      .col-half {
+        display: block !important;
+        width: 100% !important;
+        padding-right: 0 !important;
+        padding-bottom: 10px !important;
+      }
+      .col-space {
+        display: none !important;
+      }
+      .btn-row td {
+        display: block !important;
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-bottom: 8px !important;
+      }
+      .btn-row a {
+        display: block !important;
+        text-align: center !important;
+      }
+    }
+
+    /* Dark Mode Overrides (Monochrome Obsidian Aesthetic) */
+    @media (prefers-color-scheme: dark) {
+      body, .email-bg {
+        background-color: #090A0C !important;
+      }
+      .email-card {
+        background-color: #121316 !important;
+        border-color: #26282E !important;
       }
       .email-subcard {
-        background-color: #1A1B26 !important;
-        border-color: #282A3A !important;
+        background-color: #181A1F !important;
+        border-color: #2D3039 !important;
       }
       .email-subcard:hover {
-        background-color: #212232 !important;
+        background-color: #21232B !important;
+        border-color: #3F4350 !important;
       }
       .text-primary {
-        color: #EDEDF0 !important;
+        color: #F4F4F5 !important;
       }
       .text-secondary {
-        color: #9D9EAE !important;
+        color: #A1A1AA !important;
       }
       .text-muted {
         color: #71717A !important;
       }
-      .text-accent {
-        color: #A78BFA !important;
+      .text-mono-brand {
+        color: #E4E4E7 !important;
       }
       .border-divider {
-        border-color: #232533 !important;
+        border-color: #26282E !important;
       }
       .tag-pill {
-        background-color: #1E1B2E !important;
-        border-color: #3730A3 !important;
-        color: #C4B5FD !important;
+        background-color: #181A1F !important;
+        border-color: #2D3039 !important;
+        color: #E4E4E7 !important;
       }
       .avatar-badge {
-        background-color: #1E1B2E !important;
-        border-color: #3B3859 !important;
-        color: #A78BFA !important;
+        background-color: #181A1F !important;
+        border-color: #3F4350 !important;
+        color: #F4F4F5 !important;
       }
       .btn-primary {
-        background-color: #8B5CF6 !important;
-        color: #0B0C10 !important;
+        background-color: #F4F4F5 !important;
+        color: #090A0C !important;
       }
       .btn-outline {
-        border-color: #3B3859 !important;
-        color: #EDEDF0 !important;
-        background-color: #1A1B26 !important;
+        border-color: #3F4350 !important;
+        color: #F4F4F5 !important;
+        background-color: #181A1F !important;
       }
       .btn-outline:hover {
-        background-color: #232533 !important;
+        background-color: #26282E !important;
+      }
+      .card-link-title {
+        color: #F4F4F5 !important;
       }
     }
 
-    /* Support for Outlook / Samsung / Web Dark Modes */
-    [data-ogsc] body, [data-ogsc] .email-bg { background-color: #0B0C10 !important; }
-    [data-ogsc] .email-card { background-color: #13141C !important; border-color: #232533 !important; }
-    [data-ogsc] .text-primary { color: #EDEDF0 !important; }
-    [data-ogsc] .text-secondary { color: #9D9EAE !important; }
-    [data-ogsc] .text-accent { color: #A78BFA !important; }
+    /* Outlook / Web Dark Mode Support */
+    [data-ogsc] body, [data-ogsc] .email-bg { background-color: #090A0C !important; }
+    [data-ogsc] .email-card { background-color: #121316 !important; border-color: #26282E !important; }
+    [data-ogsc] .text-primary { color: #F4F4F5 !important; }
+    [data-ogsc] .text-secondary { color: #A1A1AA !important; }
+    [data-ogsc] .card-link-title { color: #F4F4F5 !important; }
   </style>
 </head>
-<body class="email-bg" style="margin: 0; padding: 32px 12px; background-color: #F8F9FA;">
+<body class="email-bg" style="margin: 0; padding: 32px 12px; background-color: #F4F4F5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
 
   <!-- Outer Center Table -->
-  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" class="email-bg" style="background-color: #F8F9FA;">
+  <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" class="email-bg" style="background-color: #F4F4F5;">
     <tr>
       <td align="center" style="padding: 0 8px;">
 
-        <!-- Preheader (Hidden Preview Text) -->
+        <!-- Hidden Preheader for Inbox Snippet Previews -->
         <div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
-          Thanks for reaching out! Your message was received at hello@sahillangoo.in. I'll get back to you within 24–48 hours.
+          Thanks for getting in touch! Your message was received at hello@sahillangoo.in. I'll get back to you within 24–48 hours.
           &#847; &zwnj; &nbsp; &#8199; &shy; &#847; &zwnj; &nbsp; &#8199; &shy; &#847; &zwnj; &nbsp; &#8199; &shy;
         </div>
 
         <!-- Main Card (Max Width 580px) -->
-        <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" class="email-card" style="max-width: 580px; background-color: #FFFFFF; border: 1px solid #E4E4E7; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);">
+        <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" class="email-card" style="max-width: 580px; width: 100%; background-color: #FFFFFF; border: 1px solid #E4E4E7; border-radius: 8px; overflow: hidden;">
           
-          <!-- Header Bar: Avatar + Name + Live Availability -->
+          <!-- Top Header: Monogram Avatar + Title + Availability Status -->
           <tr>
-            <td style="padding: 28px 28px 20px 28px; border-bottom: 1px solid #F0F0F2;" class="border-divider">
+            <td style="padding: 24px 28px 18px 28px; border-bottom: 1px solid #E4E4E7;" class="border-divider">
               <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0">
                 <tr>
-                  <!-- Left: Monogram Badge & Title -->
+                  <!-- Left: SL Monogram & Brand -->
                   <td align="left" style="vertical-align: middle;">
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                       <tr>
-                        <td style="vertical-align: middle; padding-right: 14px;">
-                          <div class="avatar-badge" style="width: 42px; height: 42px; line-height: 42px; text-align: center; border-radius: 50%; background-color: #F3F0FF; border: 1px solid #DDD6FE; color: #7C3AED; font-family: 'SFMono-Regular', Consolas, Menlo, monospace; font-size: 15px; font-weight: 700;">
+                        <td style="vertical-align: middle; padding-right: 12px;">
+                          <div class="avatar-badge" style="width: 38px; height: 38px; line-height: 38px; text-align: center; border-radius: 6px; background-color: #F4F4F5; border: 1px solid #E4E4E7; color: #09090B; font-family: 'SFMono-Regular', Consolas, Menlo, Monaco, monospace; font-size: 14px; font-weight: 700; letter-spacing: -0.02em;">
                             SL
                           </div>
                         </td>
                         <td style="vertical-align: middle;">
-                          <div class="text-primary" style="font-size: 16px; font-weight: 700; color: #18181B; letter-spacing: -0.01em;">
+                          <div class="text-primary" style="font-size: 15px; font-weight: 700; color: #09090B; letter-spacing: -0.02em;">
                             Sahil Langoo
                           </div>
-                          <div class="text-secondary" style="font-size: 12px; color: #71717A; font-family: 'SFMono-Regular', Consolas, monospace; margin-top: 1px;">
+                          <div class="text-secondary" style="font-size: 11px; color: #71717A; font-family: 'SFMono-Regular', Consolas, Monaco, monospace; margin-top: 1px;">
                             Full Stack Systems Engineer
                           </div>
                         </td>
@@ -184,11 +212,11 @@ This template conforms strictly to **W3C email standards** and **table-based cro
                     </table>
                   </td>
 
-                  <!-- Right: Live Availability Pill -->
+                  <!-- Right: Availability Pill -->
                   <td align="right" style="vertical-align: middle;">
-                    <div class="tag-pill" style="display: inline-block; padding: 4px 10px; background-color: #F0FDF4; border: 1px solid #BBF7D0; border-radius: 20px; font-family: 'SFMono-Regular', Consolas, monospace; font-size: 11px; font-weight: 600; color: #15803D;">
-                      <span style="display: inline-block; width: 6px; height: 6px; background-color: #22C55E; border-radius: 50%; margin-right: 4px; vertical-align: middle;"></span>
-                      Online
+                    <div class="tag-pill" style="display: inline-block; padding: 4px 9px; background-color: #F4F4F5; border: 1px solid #E4E4E7; border-radius: 4px; font-family: 'SFMono-Regular', Consolas, Monaco, monospace; font-size: 11px; font-weight: 600; color: #09090B;">
+                      <span style="display: inline-block; width: 6px; height: 6px; background-color: #10B981; border-radius: 50%; margin-right: 4px; vertical-align: middle;"></span>
+                      Available
                     </div>
                   </td>
                 </tr>
@@ -196,107 +224,105 @@ This template conforms strictly to **W3C email standards** and **table-based cro
             </td>
           </tr>
 
-          <!-- Main Body Content -->
+          <!-- Main Content Area -->
           <tr>
-            <td style="padding: 28px 28px 20px 28px;">
+            <td style="padding: 28px 28px 24px 28px;">
               
-              <!-- Eyebrow -->
-              <div class="text-accent" style="font-family: 'SFMono-Regular', Consolas, Menlo, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: #7C3AED; font-weight: 600; margin-bottom: 8px;">
+              <!-- Eyebrow Badge -->
+              <div class="text-muted" style="font-family: 'SFMono-Regular', Consolas, Monaco, monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: #71717A; font-weight: 600; margin-bottom: 8px;">
                 AUTOMATED CONFIRMATION
               </div>
 
               <!-- Main Heading -->
-              <h1 class="text-primary" style="margin: 0 0 16px 0; font-size: 22px; line-height: 1.3; font-weight: 800; color: #18181B; letter-spacing: -0.02em;">
+              <h1 class="text-primary" style="margin: 0 0 16px 0; font-size: 22px; line-height: 1.25; font-weight: 700; color: #09090B; letter-spacing: -0.025em;">
                 Thanks for reaching out!
               </h1>
 
               <!-- Message Body -->
-              <p class="text-secondary" style="margin: 0 0 16px 0; font-size: 14px; line-height: 1.65; color: #3F3F46;">
-                This is an automated confirmation that your email has been received at <strong class="text-primary" style="color: #18181B;">hello@sahillangoo.in</strong>.
+              <p class="text-secondary" style="margin: 0 0 14px 0; font-size: 14px; line-height: 1.65; color: #3F3F46;">
+                Your message has reached my primary inbox at <strong class="text-primary" style="color: #09090B; font-weight: 600;">hello@sahillangoo.in</strong>.
               </p>
 
               <p class="text-secondary" style="margin: 0 0 24px 0; font-size: 14px; line-height: 1.65; color: #3F3F46;">
-                I review every incoming message and typically respond within <strong>24–48 hours</strong> (Monday through Friday). If your inquiry is regarding a high-impact web system, architecture consulting, or collaboration with <strong>@SquadCoders</strong>, I will follow up with specific next steps shortly.
+                I typically review and reply to all inquiries within <strong>24–48 hours</strong> (Monday through Friday). If your message is regarding a new web platform, architecture consulting, or engineering collaboration with <strong class="text-primary" style="color: #09090B;">SquadCoders</strong>, I will follow up with details and next steps shortly.
               </p>
 
-              <!-- Section: Selected Work & Resources -->
-              <div style="margin-bottom: 24px;">
-                <div class="text-primary" style="font-family: 'SFMono-Regular', Consolas, monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #18181B; margin-bottom: 12px;">
-                  Quick Links & Selected Resources:
-                </div>
-
-                <!-- 2-Column Resource Grid -->
-                <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0">
-                  <tr>
-                    <!-- Card 1: Case Studies -->
-                    <td width="48%" style="vertical-align: top; padding-bottom: 10px;">
-                      <a href="https://sahillangoo.in/projects/" class="email-subcard hover-lift" style="display: block; padding: 12px 14px; background-color: #F8F9FA; border: 1px solid #E4E4E7; border-radius: 8px; text-decoration: none;">
-                        <div style="font-size: 13px; font-weight: 700; color: #7C3AED;" class="text-accent">
-                          ⚡ Case Studies &rarr;
-                        </div>
-                        <div class="text-secondary" style="font-size: 11px; color: #71717A; line-height: 1.4; margin-top: 4px;">
-                          9 production systems & tools
-                        </div>
-                      </a>
-                    </td>
-
-                    <td width="4%">&nbsp;</td>
-
-                    <!-- Card 2: Engineering Essays -->
-                    <td width="48%" style="vertical-align: top; padding-bottom: 10px;">
-                      <a href="https://sahillangoo.in/blog/" class="email-subcard hover-lift" style="display: block; padding: 12px 14px; background-color: #F8F9FA; border: 1px solid #E4E4E7; border-radius: 8px; text-decoration: none;">
-                        <div style="font-size: 13px; font-weight: 700; color: #7C3AED;" class="text-accent">
-                          📝 Journal & Essays &rarr;
-                        </div>
-                        <div class="text-secondary" style="font-size: 11px; color: #71717A; line-height: 1.4; margin-top: 4px;">
-                          Edge, CAPI & architecture
-                        </div>
-                      </a>
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <!-- Card 3: Digital Garden -->
-                    <td width="48%" style="vertical-align: top;">
-                      <a href="https://sahillangoo.in/notes/" class="email-subcard hover-lift" style="display: block; padding: 12px 14px; background-color: #F8F9FA; border: 1px solid #E4E4E7; border-radius: 8px; text-decoration: none;">
-                        <div style="font-size: 13px; font-weight: 700; color: #7C3AED;" class="text-accent">
-                          🌿 Digital Garden &rarr;
-                        </div>
-                        <div class="text-secondary" style="font-size: 11px; color: #71717A; line-height: 1.4; margin-top: 4px;">
-                          Atomic TILs & mental models
-                        </div>
-                      </a>
-                    </td>
-
-                    <td width="4%">&nbsp;</td>
-
-                    <!-- Card 4: GitHub -->
-                    <td width="48%" style="vertical-align: top;">
-                      <a href="https://github.com/sahillangoo" class="email-subcard hover-lift" style="display: block; padding: 12px 14px; background-color: #F8F9FA; border: 1px solid #E4E4E7; border-radius: 8px; text-decoration: none;">
-                        <div style="font-size: 13px; font-weight: 700; color: #7C3AED;" class="text-accent">
-                          💻 GitHub Activity &rarr;
-                        </div>
-                        <div class="text-secondary" style="font-size: 11px; color: #71717A; line-height: 1.4; margin-top: 4px;">
-                          Open-source repositories
-                        </div>
-                      </a>
-                    </td>
-                  </tr>
-                </table>
+              <!-- Selected Work & Resources Header -->
+              <div class="text-muted" style="font-family: 'SFMono-Regular', Consolas, Monaco, monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #71717A; margin-bottom: 12px; border-top: 1px solid #E4E4E7; padding-top: 20px;" class="border-divider">
+                Selected Work & Systems
               </div>
 
-              <!-- CTA Button Row -->
-              <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin-top: 8px; margin-bottom: 12px;">
+              <!-- 2-Column Resource Grid (Monochrome) -->
+              <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td align="left">
-                    <a href="https://sahillangoo.in/projects/" class="btn-primary" style="display: inline-block; padding: 10px 20px; background-color: #7C3AED; color: #FFFFFF; font-size: 12px; font-weight: 600; font-family: 'SFMono-Regular', Consolas, monospace; text-transform: uppercase; letter-spacing: 0.05em; border-radius: 6px; text-decoration: none; mso-padding-alt: 0;">
-                      <!--[if mso]><i style="letter-spacing: 20px; mso-font-width: -100%; mso-text-raise: 20pt;">&nbsp;</i><![endif]-->
-                      <span style="mso-text-raise: 10pt;">Explore Case Studies</span>
-                      <!--[if mso]><i style="letter-spacing: 20px; mso-font-width: -100%;">&nbsp;</i><![endif]-->
+                  <!-- Card 1: Case Studies -->
+                  <td width="48%" class="col-half" style="vertical-align: top; padding-bottom: 10px;">
+                    <a href="https://sahillangoo.in/projects/" class="email-subcard" style="display: block; padding: 12px 14px; background-color: #FAFAFA; border: 1px solid #E4E4E7; border-radius: 6px; text-decoration: none;">
+                      <div class="card-link-title" style="font-size: 13px; font-weight: 700; color: #09090B; font-family: 'SFMono-Regular', Consolas, monospace;">
+                        Selected Projects &rarr;
+                      </div>
+                      <div class="text-secondary" style="font-size: 11px; color: #71717A; line-height: 1.4; margin-top: 4px;">
+                        9 production systems & tools
+                      </div>
                     </a>
                   </td>
-                  <td style="padding-left: 12px;">
-                    <a href="https://sahillangoo.in/resume/" class="btn-outline" style="display: inline-block; padding: 9px 18px; background-color: #FFFFFF; border: 1px solid #D4D4D8; color: #3F3F46; font-size: 12px; font-weight: 600; font-family: 'SFMono-Regular', Consolas, monospace; text-transform: uppercase; letter-spacing: 0.05em; border-radius: 6px; text-decoration: none;">
+
+                  <td width="4%" class="col-space">&nbsp;</td>
+
+                  <!-- Card 2: Engineering Essays -->
+                  <td width="48%" class="col-half" style="vertical-align: top; padding-bottom: 10px;">
+                    <a href="https://sahillangoo.in/blog/" class="email-subcard" style="display: block; padding: 12px 14px; background-color: #FAFAFA; border: 1px solid #E4E4E7; border-radius: 6px; text-decoration: none;">
+                      <div class="card-link-title" style="font-size: 13px; font-weight: 700; color: #09090B; font-family: 'SFMono-Regular', Consolas, monospace;">
+                        Technical Journal &rarr;
+                      </div>
+                      <div class="text-secondary" style="font-size: 11px; color: #71717A; line-height: 1.4; margin-top: 4px;">
+                        Edge, CAPI & architecture
+                      </div>
+                    </a>
+                  </td>
+                </tr>
+
+                <tr>
+                  <!-- Card 3: SquadCoders Studio -->
+                  <td width="48%" class="col-half" style="vertical-align: top; padding-bottom: 10px;">
+                    <a href="https://github.com/SquadCoders" class="email-subcard" style="display: block; padding: 12px 14px; background-color: #FAFAFA; border: 1px solid #E4E4E7; border-radius: 6px; text-decoration: none;">
+                      <div class="card-link-title" style="font-size: 13px; font-weight: 700; color: #09090B; font-family: 'SFMono-Regular', Consolas, monospace;">
+                        SquadCoders Studio &rarr;
+                      </div>
+                      <div class="text-secondary" style="font-size: 11px; color: #71717A; line-height: 1.4; margin-top: 4px;">
+                        Software studio & platforms
+                      </div>
+                    </a>
+                  </td>
+
+                  <td width="4%" class="col-space">&nbsp;</td>
+
+                  <!-- Card 4: Digital Garden -->
+                  <td width="48%" class="col-half" style="vertical-align: top; padding-bottom: 10px;">
+                    <a href="https://sahillangoo.in/notes/" class="email-subcard" style="display: block; padding: 12px 14px; background-color: #FAFAFA; border: 1px solid #E4E4E7; border-radius: 6px; text-decoration: none;">
+                      <div class="card-link-title" style="font-size: 13px; font-weight: 700; color: #09090B; font-family: 'SFMono-Regular', Consolas, monospace;">
+                        Digital Garden &rarr;
+                      </div>
+                      <div class="text-secondary" style="font-size: 11px; color: #71717A; line-height: 1.4; margin-top: 4px;">
+                        Atomic TILs & code patterns
+                      </div>
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- CTA Actions Row -->
+              <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin-top: 14px;" class="btn-row">
+                <tr>
+                  <td align="left">
+                    <a href="https://sahillangoo.in/projects/" class="btn-primary" style="display: inline-block; padding: 9px 18px; background-color: #09090B; color: #FFFFFF; font-size: 11px; font-weight: 600; font-family: 'SFMono-Regular', Consolas, Monaco, monospace; text-transform: uppercase; letter-spacing: 0.06em; border-radius: 4px; text-decoration: none; mso-padding-alt: 0;">
+                      <!--[if mso]><i style="letter-spacing: 18px; mso-font-width: -100%; mso-text-raise: 18pt;">&nbsp;</i><![endif]-->
+                      <span style="mso-text-raise: 9pt;">Explore Case Studies</span>
+                      <!--[if mso]><i style="letter-spacing: 18px; mso-font-width: -100%;">&nbsp;</i><![endif]-->
+                    </a>
+                  </td>
+                  <td style="padding-left: 10px;">
+                    <a href="https://sahillangoo.in/resume/" class="btn-outline" style="display: inline-block; padding: 8px 16px; background-color: #FFFFFF; border: 1px solid #E4E4E7; color: #09090B; font-size: 11px; font-weight: 600; font-family: 'SFMono-Regular', Consolas, Monaco, monospace; text-transform: uppercase; letter-spacing: 0.06em; border-radius: 4px; text-decoration: none;">
                       View Resume
                     </a>
                   </td>
@@ -306,18 +332,18 @@ This template conforms strictly to **W3C email standards** and **table-based cro
             </td>
           </tr>
 
-          <!-- Footer Signature & Socials -->
+          <!-- Footer Signature with Verified Links -->
           <tr>
-            <td style="padding: 20px 28px; background-color: #FAFAFA; border-top: 1px solid #E4E4E7;" class="email-subcard border-divider">
+            <td style="padding: 18px 28px; background-color: #FAFAFA; border-top: 1px solid #E4E4E7;" class="email-subcard border-divider">
               <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0">
                 <tr>
-                  <!-- Left: Profile Info -->
+                  <!-- Left: Signature -->
                   <td align="left" style="vertical-align: middle;">
-                    <div class="text-primary" style="font-size: 13px; font-weight: 700; color: #18181B;">
+                    <div class="text-primary" style="font-size: 13px; font-weight: 700; color: #09090B;">
                       Sahil Langoo
                     </div>
-                    <div class="text-secondary" style="font-size: 11px; color: #71717A; margin-top: 2px;">
-                      Co-Founder @SquadCoders &bull; <a href="https://sahillangoo.in" class="text-accent" style="color: #7C3AED; font-family: 'SFMono-Regular', Consolas, monospace;">sahillangoo.in</a>
+                    <div class="text-secondary" style="font-size: 11px; color: #71717A; margin-top: 2px; font-family: 'SFMono-Regular', Consolas, monospace;">
+                      <a href="https://github.com/SquadCoders" class="text-mono-brand" style="color: #09090B; text-decoration: none; font-weight: 600;">@SquadCoders</a> &bull; <a href="https://sahillangoo.in" style="color: #71717A; text-decoration: none;">sahillangoo.in</a>
                     </div>
                   </td>
 
@@ -325,19 +351,19 @@ This template conforms strictly to **W3C email standards** and **table-based cro
                   <td align="right" style="vertical-align: middle;">
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                       <tr>
-                        <td style="padding-left: 10px;">
+                        <td style="padding-left: 8px;">
                           <a href="https://github.com/sahillangoo" class="text-secondary" style="font-family: 'SFMono-Regular', Consolas, monospace; font-size: 11px; color: #71717A; text-decoration: none;">
                             GitHub
                           </a>
                         </td>
-                        <td style="padding-left: 8px; color: #D4D4D8;">&bull;</td>
-                        <td style="padding-left: 8px;">
+                        <td style="padding-left: 6px; color: #D4D4D8;">&bull;</td>
+                        <td style="padding-left: 6px;">
                           <a href="https://linkedin.com/in/sahillangoo" class="text-secondary" style="font-family: 'SFMono-Regular', Consolas, monospace; font-size: 11px; color: #71717A; text-decoration: none;">
                             LinkedIn
                           </a>
                         </td>
-                        <td style="padding-left: 8px; color: #D4D4D8;">&bull;</td>
-                        <td style="padding-left: 8px;">
+                        <td style="padding-left: 6px; color: #D4D4D8;">&bull;</td>
+                        <td style="padding-left: 6px;">
                           <a href="https://twitter.com/kashurgeek" class="text-secondary" style="font-family: 'SFMono-Regular', Consolas, monospace; font-size: 11px; color: #71717A; text-decoration: none;">
                             X
                           </a>
@@ -352,11 +378,11 @@ This template conforms strictly to **W3C email standards** and **table-based cro
 
         </table>
 
-        <!-- Sub-footer Note -->
+        <!-- Sub-footer Notice -->
         <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="max-width: 580px; margin-top: 14px;">
           <tr>
-            <td align="center" class="text-muted" style="font-size: 11px; color: #A1A1AA; font-family: 'SFMono-Regular', Consolas, monospace; line-height: 1.5;">
-              Automated response sent to acknowledge your email to hello@sahillangoo.in.
+            <td align="center" class="text-muted" style="font-size: 10px; color: #A1A1AA; font-family: 'SFMono-Regular', Consolas, monospace; line-height: 1.5;">
+              Automated confirmation sent to acknowledge receipt at hello@sahillangoo.in.
             </td>
           </tr>
         </table>
@@ -382,22 +408,24 @@ Thanks for reaching out — Sahil Langoo
 ```text
 Hi there,
 
-Thanks for reaching out! This is an automated confirmation to let you know that your message has landed safely in my inbox at hello@sahillangoo.in.
+Thanks for reaching out! This is an automated confirmation to let you know that your message has landed safely in my primary inbox at hello@sahillangoo.in.
 
-I typically review and reply to emails within 24–48 hours (Monday through Friday). If your inquiry is regarding a high-impact software engineering project, architecture consulting, or collaboration with SquadCoders, I will get back to you with next steps as soon as possible.
+I typically review and reply to all emails within 24–48 hours (Monday through Friday). If your inquiry is regarding a new web platform, architecture consulting, or engineering collaboration with SquadCoders, I will get back to you with next steps as soon as possible.
 
 In the meantime, feel free to explore:
 • Case Studies & Engineered Systems: https://sahillangoo.in/projects/
 • Technical Journal & Architecture Essays: https://sahillangoo.in/blog/
 • Digital Garden & TIL Notes: https://sahillangoo.in/notes/
-• Verified Profiles & Code: https://github.com/sahillangoo | https://linkedin.com/in/sahillangoo
+• SquadCoders Studio: https://github.com/SquadCoders
+• Verified Code & Repositories: https://github.com/sahillangoo
 
-Looking forward to connecting!
+Looking forward to speaking with you!
 
 Best regards,
 
 Sahil Langoo
 Full Stack Systems Engineer & Co-Founder at @SquadCoders
 Website: https://sahillangoo.in
+Studio: https://github.com/SquadCoders
 Email: hello@sahillangoo.in
 ```
