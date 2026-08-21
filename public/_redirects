@@ -4,6 +4,11 @@ https://www.sahillangoo.in/*  https://sahillangoo.in/:splat  301
 http://www.sahillangoo.in/*   https://sahillangoo.in/:splat  301
 http://sahillangoo.in/*       https://sahillangoo.in/:splat  301
 
+# Sitemap Redirections (Alias all alternate sitemap paths to /sitemap.xml)
+/sitemap_index.xml  /sitemap.xml  301
+/sitemaps.xml       /sitemap.xml  301
+/sitemap/           /sitemap.xml  301
+
 # Route Aliases & Shortlinks
 /work       /projects/  301
 /articles   /blog/      301

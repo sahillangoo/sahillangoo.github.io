@@ -135,6 +135,10 @@ if (fs.existsSync(redirectsPath)) {
     redirectsContent.includes('https://www.sahillangoo.in/*  https://sahillangoo.in/:splat  301'),
     '_redirects contains canonical www to apex domain 301 redirection'
   );
+  assert(
+    redirectsContent.includes('/sitemap_index.xml  /sitemap.xml  301'),
+    '_redirects contains /sitemap_index.xml to /sitemap.xml 301 redirection'
+  );
 }
 
 // 6. Scan all rendered HTML files for canonicals, schemas, and forbidden legacy strings
