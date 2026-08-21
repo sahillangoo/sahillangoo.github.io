@@ -1,6 +1,6 @@
 # Automated Email Auto-Responder & Deliverability Guide
 
-This document defines the email auto-responder configuration, anti-spam audit rules, RFC 3834 compliance, and hardened templates for `hello@sahillangoo.in`.
+This document defines the email auto-responder configuration, anti-spam audit rules, RFC 3834 compliance, and personal, cynical-leaning templates for `hello@sahillangoo.in`.
 
 ---
 
@@ -17,7 +17,7 @@ When setting up automated responses in your email hosting or worker script:
 ### 2. Elimination of Spam Filter Anti-Patterns
 - ❌ **No Zero-Font or Hidden Text (`font-size: 0px; opacity: 0; display: none;`)**: Triggers SpamAssassin `HTML_FONT_LOW_CONTRAST` and `ZERO_FONT_SIZE`. Replaced with safe natural preheaders.
 - ❌ **No Zero-Width Obfuscation (`&zwnj; &shy; &#847;` flooding)**: Spammer evasion heuristics flag repeated zero-width character sequences as obfuscation attempts. Removed completely.
-- ❌ **No Generic Phishing Triggers ("Click Here", "Act Now", "Free")**: All anchor links use descriptive semantic labels (`Selected Projects`, `Technical Journal`).
+- ❌ **No Generic Phishing Triggers ("Click Here", "Act Now", "Free")**: All anchor links use descriptive semantic labels (`Selected Systems`, `Engineering Essays`).
 - ❌ **No URL Mismatch**: Displayed text and `href` targets match identical canonical hostnames (`https://sahillangoo.in` and `https://github.com/SquadCoders`), preventing `PHISHING_URL_MISMATCH` heuristics.
 - ❌ **No Excessive Punctuation or All-Caps**: Headings use natural sentence casing without trailing exclamation marks.
 - ❌ **100% Text-to-HTML Ratio**: No tracking pixels or external imagery that trigger "images blocked" warnings or low text-to-image ratios.
@@ -30,11 +30,11 @@ Ensure your DNS records at Cloudflare have:
 
 ---
 
-## 🎨 Option 1: Hardened Monochrome HTML Template
+## 🎨 Option 1: Cynical & Personal Monochrome HTML Template
 
 ### Subject Line:
 ```text
-Receipt Confirmation — Sahil Langoo
+Your message arrived — Sahil Langoo
 ```
 
 ### HTML Code:
@@ -49,7 +49,7 @@ Receipt Confirmation — Sahil Langoo
   <meta name="x-apple-disable-message-reformatting">
   <meta name="color-scheme" content="light dark">
   <meta name="supported-color-schemes" content="light dark">
-  <title>Receipt Confirmation — Sahil Langoo</title>
+  <title>Your message arrived — Sahil Langoo</title>
   <!--[if mso]>
   <xml>
     <o:OfficeDocumentSettings>
@@ -201,11 +201,11 @@ Receipt Confirmation — Sahil Langoo
     <tr>
       <td align="center" style="padding: 0 8px;">
 
-        <!-- Spam-Safe Natural Preheader (No zero-font or hidden character flooding) -->
+        <!-- Spam-Safe Natural Preheader -->
         <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 580px; margin-bottom: 8px;">
           <tr>
             <td align="right" class="text-muted" style="font-size: 11px; color: #8E8E93; font-family: 'SFMono-Regular', Consolas, Monaco, monospace;">
-              Auto-Reply &bull; Direct inquiry received
+              Auto-Reply &bull; No LLMs were harmed in drafting this
             </td>
           </tr>
         </table>
@@ -243,7 +243,7 @@ Receipt Confirmation — Sahil Langoo
                   <td align="right" style="vertical-align: middle;">
                     <div class="tag-pill" style="display: inline-block; padding: 4px 9px; background-color: #F4F4F5; border: 1px solid #E4E4E7; border-radius: 4px; font-family: 'SFMono-Regular', Consolas, Monaco, monospace; font-size: 11px; font-weight: 600; color: #09090B;">
                       <span style="display: inline-block; width: 6px; height: 6px; background-color: #10B981; border-radius: 50%; margin-right: 4px; vertical-align: middle;"></span>
-                      Online
+                      In the terminal
                     </div>
                   </td>
                 </tr>
@@ -255,28 +255,32 @@ Receipt Confirmation — Sahil Langoo
           <tr>
             <td style="padding: 28px 28px 24px 28px;">
               
-              <!-- Semantic Eyebrow -->
+              <!-- Eyebrow Badge -->
               <div class="text-muted" style="font-family: 'SFMono-Regular', Consolas, Monaco, monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #71717A; font-weight: 600; margin-bottom: 8px;">
-                Receipt Confirmation
+                Human-to-Human Handshake
               </div>
 
               <!-- Main Heading -->
               <h1 class="text-primary" style="margin: 0 0 16px 0; font-size: 20px; line-height: 1.3; font-weight: 700; color: #09090B; letter-spacing: -0.02em;">
-                Thank you for your message.
+                Your message survived the internet.
               </h1>
 
               <!-- Message Body Paragraphs -->
               <p class="text-secondary" style="margin: 0 0 14px 0; font-size: 14px; line-height: 1.65; color: #3F3F46;">
-                Your inquiry has been received at <strong class="text-primary" style="color: #09090B; font-weight: 600;">hello@sahillangoo.in</strong>.
+                This is an automated receipt because I am currently neck-deep in code, untangling an edge routing bug, or actively avoiding an unnecessary meeting.
+              </p>
+
+              <p class="text-secondary" style="margin: 0 0 14px 0; font-size: 14px; line-height: 1.65; color: #3F3F46;">
+                Your email is safely resting in my inbox at <strong class="text-primary" style="color: #09090B; font-weight: 600;">hello@sahillangoo.in</strong>. Unlike modern web frameworks, I do not require 400 npm dependencies or hallucinate responses. A real human with strong opinions on type safety and minimalist architecture will read and reply within <strong>24 to 48 hours</strong>.
               </p>
 
               <p class="text-secondary" style="margin: 0 0 24px 0; font-size: 14px; line-height: 1.65; color: #3F3F46;">
-                I review incoming correspondence regularly and typically reply within <strong>24 to 48 business hours</strong>. If your message is regarding web systems engineering, consulting, or collaboration with <strong class="text-primary" style="color: #09090B;">SquadCoders</strong>, I will follow up with detailed next steps shortly.
+                <em>(Unless this is an unsolicited sales pitch for generic offshore lead-gen, in which case it has already met the void).</em>
               </p>
 
               <!-- Section Divider -->
               <div class="text-muted" style="font-family: 'SFMono-Regular', Consolas, Monaco, monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #71717A; margin-bottom: 12px; border-top: 1px solid #E4E4E7; padding-top: 20px;" class="border-divider">
-                Selected Work & Systems
+                Things I built while avoiding email
               </div>
 
               <!-- 2-Column Resource Grid -->
@@ -286,10 +290,10 @@ Receipt Confirmation — Sahil Langoo
                   <td width="48%" class="col-half" style="vertical-align: top; padding-bottom: 10px;">
                     <a href="https://sahillangoo.in/projects/" class="email-subcard" style="display: block; padding: 12px 14px; background-color: #FAFAFA; border: 1px solid #E4E4E7; border-radius: 6px; text-decoration: none;">
                       <div class="card-link-title" style="font-size: 13px; font-weight: 700; color: #09090B; font-family: 'SFMono-Regular', Consolas, monospace;">
-                        Selected Projects &rarr;
+                        Selected Systems &rarr;
                       </div>
                       <div class="text-secondary" style="font-size: 11px; color: #71717A; line-height: 1.4; margin-top: 4px;">
-                        9 production systems & tools
+                        Proof that sites don't need 10MB JS
                       </div>
                     </a>
                   </td>
@@ -300,10 +304,10 @@ Receipt Confirmation — Sahil Langoo
                   <td width="48%" class="col-half" style="vertical-align: top; padding-bottom: 10px;">
                     <a href="https://sahillangoo.in/blog/" class="email-subcard" style="display: block; padding: 12px 14px; background-color: #FAFAFA; border: 1px solid #E4E4E7; border-radius: 6px; text-decoration: none;">
                       <div class="card-link-title" style="font-size: 13px; font-weight: 700; color: #09090B; font-family: 'SFMono-Regular', Consolas, monospace;">
-                        Technical Journal &rarr;
+                        Engineering Essays &rarr;
                       </div>
                       <div class="text-secondary" style="font-size: 11px; color: #71717A; line-height: 1.4; margin-top: 4px;">
-                        Edge, CAPI & architecture
+                        Rants on edge proxies & simplicity
                       </div>
                     </a>
                   </td>
@@ -317,7 +321,7 @@ Receipt Confirmation — Sahil Langoo
                         SquadCoders Studio &rarr;
                       </div>
                       <div class="text-secondary" style="font-size: 11px; color: #71717A; line-height: 1.4; margin-top: 4px;">
-                        Software studio & platforms
+                        Where we build fast software
                       </div>
                     </a>
                   </td>
@@ -331,7 +335,7 @@ Receipt Confirmation — Sahil Langoo
                         Digital Garden &rarr;
                       </div>
                       <div class="text-secondary" style="font-size: 11px; color: #71717A; line-height: 1.4; margin-top: 4px;">
-                        Atomic TILs & code patterns
+                        Atomic TILs & half-formed ideas
                       </div>
                     </a>
                   </td>
@@ -344,7 +348,7 @@ Receipt Confirmation — Sahil Langoo
                   <td align="left">
                     <a href="https://sahillangoo.in/projects/" class="btn-primary" style="display: inline-block; padding: 9px 18px; background-color: #09090B; color: #FFFFFF; font-size: 11px; font-weight: 600; font-family: 'SFMono-Regular', Consolas, Monaco, monospace; text-transform: uppercase; letter-spacing: 0.06em; border-radius: 4px; text-decoration: none; mso-padding-alt: 0;">
                       <!--[if mso]><i style="letter-spacing: 18px; mso-font-width: -100%; mso-text-raise: 18pt;">&nbsp;</i><![endif]-->
-                      <span style="mso-text-raise: 9pt;">Explore Case Studies</span>
+                      <span style="mso-text-raise: 9pt;">Explore Systems</span>
                       <!--[if mso]><i style="letter-spacing: 18px; mso-font-width: -100%;">&nbsp;</i><![endif]-->
                     </a>
                   </td>
@@ -405,11 +409,11 @@ Receipt Confirmation — Sahil Langoo
 
         </table>
 
-        <!-- Legitimate Auto-Responder Notice (Suppresses Spam Traps) -->
+        <!-- Sub-footer Notice -->
         <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="max-width: 580px; margin-top: 14px;">
           <tr>
             <td align="center" class="text-muted" style="font-size: 10px; color: #8E8E93; font-family: 'SFMono-Regular', Consolas, monospace; line-height: 1.5;">
-              This is an automated acknowledgment sent in response to your email to hello@sahillangoo.in.
+              Automated acknowledgment sent in response to your email to hello@sahillangoo.in.
             </td>
           </tr>
         </table>
@@ -424,27 +428,29 @@ Receipt Confirmation — Sahil Langoo
 
 ---
 
-## ✉️ Option 2: Hardened Plain-Text Template
+## ✉️ Option 2: Cynical & Personal Plain-Text Template
 
 ### Subject Line:
 ```text
-Receipt Confirmation — Sahil Langoo
+Your message arrived — Sahil Langoo
 ```
 
 ### Body:
 ```text
 Hi there,
 
-Thank you for your message. This is an automated confirmation to let you know that your email has been received at hello@sahillangoo.in.
+This is an automated confirmation because I am currently neck-deep in code, untangling an edge routing bug, or actively avoiding an unnecessary meeting.
 
-I review incoming correspondence regularly and typically reply within 24 to 48 business hours. If your message is regarding a new web platform, architecture consulting, or engineering collaboration with SquadCoders, I will follow up with detailed next steps shortly.
+Your email is resting safely in my inbox at hello@sahillangoo.in. Unlike modern web frameworks, I do not require 400 npm dependencies or hallucinate responses. A real human with strong opinions on type safety and minimalist architecture will read and reply within 24 to 48 hours.
 
-In the meantime, feel free to explore:
-• Case Studies & Engineered Systems: https://sahillangoo.in/projects/
-• Technical Journal & Architecture Essays: https://sahillangoo.in/blog/
-• Digital Garden & TIL Notes: https://sahillangoo.in/notes/
-• SquadCoders Studio: https://github.com/SquadCoders
-• Verified Code & Repositories: https://github.com/sahillangoo
+(Unless this is an unsolicited sales pitch for generic offshore lead-gen, in which case it has already met the void).
+
+In the meantime, feel free to explore what I build when I'm not answering emails:
+• Selected Systems (proof sites don't need 10MB JS): https://sahillangoo.in/projects/
+• Engineering Essays (rants on edge simplicity): https://sahillangoo.in/blog/
+• Digital Garden (atomic TILs & half-formed ideas): https://sahillangoo.in/notes/
+• SquadCoders Studio (where we build fast software): https://github.com/SquadCoders
+• GitHub (actual code): https://github.com/sahillangoo
 
 Best regards,
 
