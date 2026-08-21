@@ -1,0 +1,51 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "strictNullChecks": true,
+    "verbatimModuleSyntax": true,
+    "allowJs": true,
+    "baseUrl": "src",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ESNext",
+    "paths": {
+      "@/*": ["*"],
+      "@assets/*": ["assets/*"],
+      "@images/*": ["assets/images/*"],
+      "@components/*": ["components/*"],
+      "@layouts/*": ["layouts/*"],
+      "@styles/*": ["styles/*"],
+      "@services/*": ["services/*"],
+      "@utils/*": ["utils/*"],
+      "@data/*": ["data/*"],
+      "@data-types/*": ["data/types/*"],
+      "@const/*": ["const/*"],
+      "@copy/*": ["const/copy/*"],
+      "@scripts/*": ["scripts/*"],
+      "@content/*": ["content/*"],
+      "@plugins/*": ["plugins/*"],
+      "@types/*": ["types/*"],
+      "@lib/*": ["lib/*"],
+      "@pages/*": ["pages/*"]
+    },
+    "plugins": [
+      {
+        "name": "@astrojs/ts-plugin"
+      }
+    ],
+    "jsx": "preserve",
+    "types": ["astro/client"],
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "noUncheckedIndexedAccess": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist"
+  },
+  "exclude": ["node_modules", "dist", ".astro", ".output", ".agents", ".codex", ".cursor"]
+}

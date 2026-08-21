@@ -1,0 +1,102 @@
+---
+import { SITE } from '@/const/site.ts';
+import { ClientRouter } from 'astro:transitions';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonicalUrl?: string;
+  type?: 'website' | 'article' | 'profile';
+  publishDate?: string;
+}
+
+const {
+  title = SITE.title,
+  description = SITE.description,
+  image = '/favicon.svg',
+  canonicalUrl = Astro.url.href,
+  type = 'website',
+  publishDate,
+} = Astro.props;
+
+const formattedTitle = title === SITE.title ? title : `${title} — ${SITE.name}`;
+const siteUrl = SITE.url;
+const ogImage = image.startsWith('http')
+  ? image
+  : `${siteUrl}${image.startsWith('/') ? '' : '/'}${image}`;
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: SITE.name,
+  url: SITE.url,
+  jobTitle: 'Full Stack Engineer & Creative Technologist',
+  sameAs: [SITE.social.github, SITE.social.linkedin, SITE.social.twitter],
+};
+
+const webSiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE.name,
+  url: SITE.url,
+  description: SITE.description,
+};
+---
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="canonical" href={canonicalUrl} />
+  <meta name="generator" content={Astro.generator} />
+
+  <!-- Astro View Transitions Router -->
+  <ClientRouter />
+
+  <!-- Primary Meta Tags -->
+  <title>{formattedTitle}</title>
+  <meta name="title" content={formattedTitle} />
+  <meta name="description" content={description} />
+  <meta name="author" content={SITE.author} />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content={type} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:title" content={formattedTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:site_name" content={SITE.name} />
+  {publishDate && <meta property="article:published_time" content={publishDate} />}
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content={canonicalUrl} />
+  <meta property="twitter:title" content={formattedTitle} />
+  <meta property="twitter:description" content={description} />
+  <meta property="twitter:image" content={ogImage} />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(webSiteSchema)} />
+
+  <!-- Theme script for anti-flash and View Transitions sync -->
+  <script is:inline>
+    const normalizeTheme = (theme) => {
+      if (theme === 'editorialLight' || theme === 'light') return 'editorialLight';
+      if (theme === 'editorialDark' || theme === 'dark') return 'editorialDark';
+      return window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'editorialDark'
+        : 'editorialLight';
+    };
+
+    const applyTheme = () => {
+      const saved = window.localStorage ? window.localStorage.getItem('theme') : null;
+      const targetTheme = normalizeTheme(saved);
+      document.documentElement.setAttribute('data-theme', targetTheme);
+    };
+
+    applyTheme();
+    document.addEventListener('astro:after-swap', applyTheme);
+  </script>
+</head>

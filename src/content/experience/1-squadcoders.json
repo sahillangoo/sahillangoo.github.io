@@ -1,0 +1,26 @@
+{
+  "role": "Lead Software Engineer & Co-Founder",
+  "company": "SquadCoders",
+  "companyUrl": "https://github.com/SquadCoders",
+  "location": "Kashmir, India",
+  "period": "2023 — Present",
+  "current": true,
+  "highlights": [
+    "Co-founded and engineered the core web architectures at SquadCoders, leading frontend and edge systems development across high-impact client platforms.",
+    "Architected SoulMedia creative agency platform, Hotel Akbar Sonamarg hospitality portal, Rooh Yaseen photography portfolio, and TravelKit modular platform.",
+    "Built automated zero-dependency quality enforcers (`astroSiteQualityEnforcer`), Docker multi-stage deployment pipelines, Cloudflare R2 asset synchronizers, and Sentry observability telemetry."
+  ],
+  "skills": [
+    "Astro 7.2",
+    "TypeScript",
+    "Tailwind CSS v4",
+    "daisyUI 5",
+    "Cloudflare Pages & R2",
+    "Zod",
+    "Sentry",
+    "Docker",
+    "Lenis",
+    "Motion"
+  ],
+  "order": 1
+}

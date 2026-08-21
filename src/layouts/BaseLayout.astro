@@ -1,0 +1,94 @@
+---
+import SeoHead from '@/components/common/SeoHead.astro';
+import NavigationBar from '@/components/common/NavigationBar.astro';
+import MobileNavigation from '@/components/common/MobileNavigation.astro';
+import SiteFooter from '@/components/common/SiteFooter.astro';
+import CommandPalette from '@/components/common/CommandPalette.astro';
+import BackToTop from '@/components/common/BackToTop.astro';
+import CodeCopyScript from '@/components/common/CodeCopyScript.astro';
+import '@/styles/global.css';
+import 'lenis/dist/lenis.css';
+
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonicalUrl?: string;
+  type?: 'website' | 'article' | 'profile';
+  publishDate?: string;
+  hideFooter?: boolean;
+  hideNav?: boolean;
+}
+
+const {
+  title,
+  description,
+  image,
+  canonicalUrl,
+  type,
+  publishDate,
+  hideFooter = false,
+  hideNav = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" data-theme="editorialDark">
+  <SeoHead
+    title={title}
+    description={description}
+    image={image}
+    canonicalUrl={canonicalUrl}
+    type={type}
+    publishDate={publishDate}
+  />
+  <body class="bg-base-100 text-base-content relative flex min-h-screen flex-col antialiased">
+    {!hideNav && <NavigationBar />}
+    <MobileNavigation />
+    <CommandPalette />
+    <BackToTop />
+    <CodeCopyScript />
+
+    <main class={`w-full flex-grow ${hideNav ? 'pt-0' : 'pt-20 md:pt-24'}`}>
+      <slot />
+    </main>
+
+    {!hideFooter && <SiteFooter />}
+
+    <script>
+      import Lenis from 'lenis';
+
+      function initLenis(): Lenis {
+        const win = window as unknown as Record<string, unknown>;
+        if (!win.__lenis__) {
+          win.__lenis__ = new Lenis({
+            autoRaf: true,
+            duration: 1.0,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          });
+        }
+        return win.__lenis__ as Lenis;
+      }
+
+      initLenis();
+
+      document.addEventListener('astro:after-swap', () => {
+        document.body.style.overflow = '';
+        const win = window as unknown as Record<string, unknown>;
+        if (win.__lenis__) {
+          (win.__lenis__ as Lenis).scrollTo(0, { immediate: true });
+        }
+      });
+
+      document.addEventListener('astro:page-load', () => {
+        const lenis = initLenis();
+        if (window.location.hash) {
+          const target = document.querySelector(window.location.hash);
+          if (target) {
+            lenis.scrollTo(target as HTMLElement, { immediate: true });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

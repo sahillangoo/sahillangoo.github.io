@@ -1,0 +1,114 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getEntry } from 'astro:content';
+import { SITE } from '@/const/site.ts';
+import { Icon } from 'astro-icon/components';
+
+const siteData = await getEntry('site', 'profile');
+const profile = siteData?.data;
+---
+
+<BaseLayout
+  title="About Me"
+  description="Learn more about Sahil Langoo, background in software engineering, technical philosophy, and internet presence."
+>
+  <div class="mx-auto max-w-3xl space-y-12 px-4 py-8 sm:px-6 sm:py-12">
+    <!-- Header -->
+    <div class="border-base-300 border-b pb-6">
+      <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">About</span>
+      <h1 class="text-base-content mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl">
+        Engineering with Intent & Craft
+      </h1>
+    </div>
+
+    <!-- Bio Narrative -->
+    <section class="text-base-content/80 space-y-4 text-base leading-relaxed sm:text-lg">
+      <p>
+        Hello! I'm <strong class="text-base-content">{SITE.name}</strong>, a Software Engineer and
+        Creative Technologist based in {SITE.location}.
+      </p>
+      <p>
+        I focus on building resilient web applications, developer tooling, and distributed edge
+        architectures. I believe software should be fast by default, respectful of user privacy and
+        resources, and crafted with high aesthetic standards.
+      </p>
+      <p>
+        When building systems, my default bias is towards simplicity (KISS), shipping minimal client
+        JavaScript, using static generation where possible, and structuring code that is easy to
+        reason about and maintain.
+      </p>
+    </section>
+
+    <!-- Principles Grid -->
+    {
+      profile?.principles && (
+        <section class="border-base-300 space-y-4 border-t pt-8">
+          <h2 class="text-base-content text-xl font-bold tracking-tight">
+            Core Operating Principles
+          </h2>
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {profile.principles.map((principle) => (
+              <div class="editorial-card p-5">
+                <h3 class="text-accent font-mono text-sm font-bold">{principle.title}</h3>
+                <p class="text-base-content/75 mt-1.5 text-xs leading-relaxed">
+                  {principle.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <!-- Workspace & Setup -->
+    <section class="border-base-300 space-y-4 border-t pt-8">
+      <h2 class="text-base-content text-xl font-bold tracking-tight">Daily Tools & Tech Stack</h2>
+      <div class="editorial-card text-base-content/80 space-y-3 p-6 text-sm">
+        <div class="flex items-start gap-2">
+          <span class="text-accent font-mono">›</span>
+          <span>
+            <strong>Frameworks & Languages:</strong> TypeScript, Astro, Next.js, React, Node.js, Go, Python.
+          </span>
+        </div>
+        <div class="flex items-start gap-2">
+          <span class="text-accent font-mono">›</span>
+          <span>
+            <strong>CSS & Design:</strong> Tailwind CSS v4, DaisyUI 5, OKLCH color spaces, Figma.
+          </span>
+        </div>
+        <div class="flex items-start gap-2">
+          <span class="text-accent font-mono">›</span>
+          <span>
+            <strong>Cloud & Infrastructure:</strong> Cloudflare Pages & Workers, Vercel, Docker, PostgreSQL,
+            D1.
+          </span>
+        </div>
+        <div class="flex items-start gap-2">
+          <span class="text-accent font-mono">›</span>
+          <span>
+            <strong>Editor & Terminal:</strong> VS Code / Cursor, Windows PowerShell / Zsh, pnpm.
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Connect Box -->
+    <section
+      class="border-base-300 flex flex-col items-center justify-between gap-4 border-t pt-8 sm:flex-row"
+    >
+      <div>
+        <h3 class="text-base-content font-bold">Want to work together?</h3>
+        <p class="text-base-content/70 text-xs">
+          Let's discuss architecture, open-source, or new projects.
+        </p>
+      </div>
+      <a
+        href="/contact/"
+        class="btn bg-base-content text-base-100 hover:bg-base-content/90 flex items-center gap-2 rounded-md border-0 px-4 font-mono text-xs tracking-wider uppercase"
+      >
+        <Icon name="ph:paper-plane-tilt-bold" class="h-3.5 w-3.5" />
+        Get in Touch
+      </a>
+    </section>
+  </div>
+</BaseLayout>

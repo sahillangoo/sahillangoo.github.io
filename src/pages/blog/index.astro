@@ -1,0 +1,36 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ArticleCard from '@/components/portfolio/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const articles = await getCollection('blog');
+const publishedArticles = articles
+  .filter((a) => !a.data.draft)
+  .sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
+---
+
+<BaseLayout
+  title="Writing & Articles"
+  description="Technical writings, software architecture deep dives, performance analysis, and engineering reflections by Sahil Langoo."
+>
+  <div class="mx-auto max-w-4xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">
+    <!-- Header -->
+    <div class="border-base-300 border-b pb-6">
+      <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
+        Articles
+      </span>
+      <h1 class="text-base-content mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl">
+        Engineering Journal & Essays
+      </h1>
+      <p class="text-base-content/75 mt-3 text-sm leading-relaxed sm:text-base">
+        Deep dives into static architecture, type safety, performance benchmarks, and minimalist
+        software engineering principles.
+      </p>
+    </div>
+
+    <!-- Articles List -->
+    <div class="space-y-6">
+      {publishedArticles.map((post) => <ArticleCard post={post} />)}
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,100 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from '@/components/portfolio/ProjectCard.astro';
+import { Icon } from 'astro-icon/components';
+
+const projects = await getCollection('projects');
+const sortedProjects = projects.sort((a, b) => a.data.order - b.data.order);
+
+const categories = [
+  { id: 'all', label: 'All Projects' },
+  { id: 'web-app', label: 'Web Apps' },
+  { id: 'open-source', label: 'Open Source' },
+  { id: 'cli-tool', label: 'CLI & Tools' },
+  { id: 'systems', label: 'Systems' },
+];
+---
+
+<div class="space-y-8" id="project-filter-root">
+  <!-- Filter Controls -->
+  <div class="border-base-300 flex flex-wrap items-center gap-2 border-b pb-4">
+    <span class="text-base-content/50 mr-1 flex items-center gap-1.5 font-mono text-xs">
+      <Icon name="ph:funnel-bold" class="h-3.5 w-3.5" /> Filter:
+    </span>
+    {
+      categories.map((cat, idx) => (
+        <button
+          type="button"
+          data-filter={cat.id}
+          class={`filter-btn rounded-md px-3 py-1 font-mono text-xs transition-colors ${
+            idx === 0
+              ? 'bg-base-content text-base-100 active-filter font-semibold'
+              : 'bg-base-200 text-base-content/75 hover:bg-base-300 hover:text-base-content'
+          }`}
+        >
+          {cat.label}
+        </button>
+      ))
+    }
+  </div>
+
+  <!-- Projects Grid -->
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-2" id="projects-grid">
+    {
+      sortedProjects.map((project) => (
+        <div class="project-item" data-category={project.data.category}>
+          <ProjectCard project={project} />
+        </div>
+      ))
+    }
+  </div>
+
+  <div id="no-projects-msg" class="text-base-content/50 hidden py-12 text-center font-mono text-sm">
+    No projects found matching the selected filter.
+  </div>
+</div>
+
+<script>
+  function setupProjectFilter() {
+    const root = document.getElementById('project-filter-root');
+    if (!root) return;
+
+    const filterBtns = root.querySelectorAll<HTMLButtonElement>('.filter-btn');
+    const items = root.querySelectorAll<HTMLElement>('.project-item');
+    const emptyMsg = document.getElementById('no-projects-msg');
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+
+        // Update button styles
+        filterBtns.forEach((b) => {
+          b.classList.remove('bg-base-content', 'text-base-100', 'font-semibold', 'active-filter');
+          b.classList.add('bg-base-200', 'text-base-content/75');
+        });
+
+        btn.classList.add('bg-base-content', 'text-base-100', 'font-semibold', 'active-filter');
+        btn.classList.remove('bg-base-200', 'text-base-content/75');
+
+        // Filter items
+        let visibleCount = 0;
+        items.forEach((item) => {
+          const category = item.getAttribute('data-category');
+          if (filter === 'all' || category === filter) {
+            item.style.display = 'block';
+            visibleCount++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        if (emptyMsg) {
+          emptyMsg.classList.toggle('hidden', visibleCount > 0);
+        }
+      });
+    });
+  }
+
+  setupProjectFilter();
+  document.addEventListener('astro:page-load', setupProjectFilter);
+</script>

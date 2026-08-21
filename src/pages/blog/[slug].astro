@@ -1,0 +1,109 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ReadingProgressBar from '@/components/common/ReadingProgressBar.astro';
+import { getCollection, render } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { data } = post;
+const { Content } = await render(post);
+
+const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  type="article"
+  publishDate={data.publishDate}
+>
+  <ReadingProgressBar />
+
+  <article class="mx-auto max-w-3xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">
+    <!-- Back Link -->
+    <a
+      href="/blog/"
+      class="text-base-content/60 hover:text-accent inline-flex items-center gap-1.5 font-mono text-xs transition-colors"
+    >
+      <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Back to all articles
+    </a>
+
+    <!-- Article Header -->
+    <header class="border-base-300 space-y-4 border-b pb-8">
+      <div class="text-base-content/60 flex items-center gap-3 font-mono text-xs">
+        <span class="text-accent font-semibold">{data.category}</span>
+        <span>•</span>
+        <time datetime={data.publishDate}>{formattedDate}</time>
+        {
+          data.readingTime && (
+            <>
+              <span>•</span>
+              <span>{data.readingTime}</span>
+            </>
+          )
+        }
+      </div>
+
+      <h1
+        class="text-base-content text-3xl leading-tight font-extrabold tracking-tight sm:text-4xl lg:text-5xl"
+      >
+        {data.title}
+      </h1>
+
+      <p class="text-base-content/80 text-base leading-relaxed sm:text-lg">
+        {data.description}
+      </p>
+
+      <div class="flex flex-wrap gap-2 pt-2">
+        {
+          data.tags.map((tag) => (
+            <span class="bg-base-200 border-base-300 text-base-content/70 rounded border px-2.5 py-0.5 font-mono text-xs">
+              #{tag}
+            </span>
+          ))
+        }
+      </div>
+    </header>
+
+    <!-- Post Body -->
+    <div
+      class="prose prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-base-content prose-p:text-base-content/80 prose-p:leading-relaxed prose-a:text-accent hover:prose-a:underline prose-code:font-mono prose-code:text-accent prose-pre:border prose-pre:border-base-300 prose-pre:bg-base-200 max-w-none"
+    >
+      <Content />
+    </div>
+
+    <!-- Article Footer / Author Box -->
+    <footer class="border-base-300 mt-12 border-t pt-8">
+      <div
+        class="editorial-card flex flex-col justify-between gap-4 p-6 sm:flex-row sm:items-center"
+      >
+        <div>
+          <h4 class="text-base-content font-bold">Written by Sahil Langoo</h4>
+          <p class="text-base-content/70 mt-0.5 text-xs">
+            Full stack engineer focused on resilient systems, performance, and minimalist UI craft.
+          </p>
+        </div>
+        <a
+          href="/contact/"
+          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 flex shrink-0 items-center gap-1.5 self-start rounded-md font-mono text-xs sm:self-auto"
+        >
+          <Icon name="ph:paper-plane-tilt-bold" class="h-3.5 w-3.5" />
+          Say Hello
+        </a>
+      </div>
+    </footer>
+  </article>
+</BaseLayout>

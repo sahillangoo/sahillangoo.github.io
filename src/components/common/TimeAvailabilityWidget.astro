@@ -1,0 +1,81 @@
+---
+import { Icon } from 'astro-icon/components';
+
+export interface Props {
+  variant?: 'compact' | 'full';
+}
+
+const { variant = 'compact' } = Astro.props;
+---
+
+<div
+  class={`inline-flex items-center gap-3 font-mono text-xs ${variant === 'full' ? 'editorial-card p-4 sm:p-5' : ''}`}
+>
+  <div class="flex items-center gap-2">
+    <span class="relative flex h-2 w-2">
+      <span
+        class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+      >
+      </span>
+      <span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+    </span>
+    <span class="text-base-content/80 font-medium">Kashmir, India</span>
+  </div>
+
+  <span class="text-base-content/30">•</span>
+
+  <div class="text-base-content/70 flex items-center gap-1.5">
+    <Icon name="ph:clock-bold" class="text-accent h-3.5 w-3.5" />
+    <span id="kashmir-live-clock" class="font-mono font-medium tabular-nums">--:--:-- IST</span>
+  </div>
+
+  {
+    variant === 'full' && (
+      <div class="ml-auto hidden rounded-full border border-emerald-800/40 bg-emerald-950/40 px-2.5 py-0.5 text-[11px] font-medium text-emerald-400 sm:block">
+        Open to Select Projects
+      </div>
+    )
+  }
+</div>
+
+<script>
+  let clockInterval: ReturnType<typeof setInterval> | null = null;
+
+  function updateKashmirClock() {
+    const clockEl = document.getElementById('kashmir-live-clock');
+    if (!clockEl) return;
+
+    try {
+      const now = new Date();
+      const options: Intl.DateTimeFormatOptions = {
+        timeZone: 'Asia/Kolkata',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+      };
+      const formatter = new Intl.DateTimeFormat('en-US', options);
+      clockEl.textContent = `${formatter.format(now)} IST`;
+    } catch {
+      // Fallback
+    }
+  }
+
+  function setupClock() {
+    if (clockInterval) {
+      clearInterval(clockInterval);
+      clockInterval = null;
+    }
+    updateKashmirClock();
+    clockInterval = setInterval(updateKashmirClock, 1000);
+  }
+
+  setupClock();
+  document.addEventListener('astro:page-load', setupClock);
+  document.addEventListener('astro:before-swap', () => {
+    if (clockInterval) {
+      clearInterval(clockInterval);
+      clockInterval = null;
+    }
+  });
+</script>

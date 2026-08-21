@@ -1,0 +1,60 @@
+{
+  "name": "Sahil Langoo",
+  "title": "Full Stack Engineer & Systems Architect",
+  "bio": "A man of mystery and power, whose power is exceeded only by his mystery. <I design, code & sometimes dream about making art./>",
+  "about": "I am a Full Stack Systems Engineer and Co-Founder at @SquadCoders, actively contributing to enterprise systems at @ecspl and open source. Based in Kashmir, India, I specialize in architecting ultra-fast static web architectures (Astro, Next.js, React, TypeScript, Tailwind CSS v4, daisyUI 5), distributed edge proxies (Hono, Cloudflare Workers & R2, Meta CAPI, Turnstile, Partytown), local AI workflows (Bun, Gemma SLMs, LM Studio), and production observability pipelines (Sentry, Playwright). I believe in building software that is fast by default, zero-waste, and designed with high aesthetic discipline.",
+  "skills": {
+    "languages": ["TypeScript", "JavaScript", "Go", "Python", "HTML5", "CSS3 / OKLCH", "SQL"],
+    "frameworks": [
+      "Astro",
+      "Next.js",
+      "React",
+      "Tailwind CSS v4",
+      "daisyUI 5",
+      "Hono",
+      "Node.js",
+      "Partytown"
+    ],
+    "databases": ["PostgreSQL", "SQLite / D1", "Cloudflare KV", "Redis", "MongoDB"],
+    "cloud": [
+      "Cloudflare Pages & Workers",
+      "Cloudflare Turnstile",
+      "Cloudflare R2",
+      "Meta CAPI Gateways",
+      "Vercel",
+      "Docker",
+      "GitHub Actions CI/CD"
+    ],
+    "tools": [
+      "Git & GitHub CLI",
+      "pnpm",
+      "Bun",
+      "LM Studio / Local SLMs (Gemma)",
+      "Wrangler",
+      "ESLint 10",
+      "Prettier",
+      "Playwright",
+      "Sentry",
+      "Figma",
+      "PWA / Service Workers"
+    ]
+  },
+  "principles": [
+    {
+      "title": "KISS & YAGNI",
+      "description": "Simplicity over premature abstraction. Build what is needed with precision and zero unnecessary dependencies."
+    },
+    {
+      "title": "Performance by Default",
+      "description": "Static HTML generation first, Partytown worker offloading, zero main-thread block, 0.00 CLS, and instant global TTFB."
+    },
+    {
+      "title": "Tactile UI Craft",
+      "description": "High-contrast typography, calibrated OKLCH color systems, and responsive micro-interactions (scale on press, smooth scroll)."
+    },
+    {
+      "title": "Type Safety & Quality Gates",
+      "description": "End-to-end type safety, Zod runtime schema validation, and automated build-time link and asset verification."
+    }
+  ]
+}

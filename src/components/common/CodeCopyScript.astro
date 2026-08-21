@@ -1,0 +1,40 @@
+---
+
+---
+
+<script>
+  function setupCodeCopyButtons() {
+    const preBlocks = document.querySelectorAll('pre');
+    preBlocks.forEach((pre) => {
+      if (pre.querySelector('.code-copy-btn')) return;
+
+      pre.style.position = 'relative';
+      const btn = document.createElement('button');
+      btn.className =
+        'code-copy-btn absolute top-2 right-2 rounded border border-base-300 bg-base-200/90 px-2 py-1 font-mono text-[10px] text-base-content/70 hover:text-accent hover:border-accent transition-colors';
+      btn.textContent = 'Copy';
+      btn.type = 'button';
+      btn.setAttribute('aria-label', 'Copy code to clipboard');
+
+      btn.addEventListener('click', async () => {
+        const code = pre.querySelector('code')?.innerText || pre.innerText;
+        try {
+          await navigator.clipboard.writeText(code);
+          btn.textContent = 'Copied!';
+          btn.classList.add('text-emerald-400');
+          setTimeout(() => {
+            btn.textContent = 'Copy';
+            btn.classList.remove('text-emerald-400');
+          }, 2000);
+        } catch {
+          btn.textContent = 'Failed';
+        }
+      });
+
+      pre.appendChild(btn);
+    });
+  }
+
+  setupCodeCopyButtons();
+  document.addEventListener('astro:page-load', setupCodeCopyButtons);
+</script>

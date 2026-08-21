@@ -1,0 +1,30 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectFilter from '@/components/portfolio/ProjectFilter.astro';
+---
+
+<BaseLayout
+  title="Projects & Engineering Systems — Sahil Langoo"
+  description="Catalog of software projects, developer tools, CLI utilities, and open source systems engineered by Sahil Langoo."
+>
+  <div class="mx-auto max-w-6xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">
+    <!-- Header -->
+    <div class="border-base-300 max-w-3xl space-y-4 border-b pb-8">
+      <div
+        class="border-base-300 bg-base-200 text-base-content/80 inline-flex items-center gap-2 rounded-full border px-3 py-0.5 font-mono text-xs"
+      >
+        <span>Portfolio Catalog</span>
+      </div>
+      <h1 class="text-base-content text-3xl font-extrabold tracking-tight sm:text-4xl">
+        Engineered Work & Systems
+      </h1>
+      <p class="text-base-content/75 text-base leading-relaxed">
+        A curated archive of production web applications, open source developer tools, command-line
+        utilities, and distributed system architectures.
+      </p>
+    </div>
+
+    <!-- Filter & Grid -->
+    <ProjectFilter />
+  </div>
+</BaseLayout>

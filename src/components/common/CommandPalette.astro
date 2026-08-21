@@ -1,0 +1,338 @@
+---
+import { SITE } from '@/const/site.ts';
+import { Icon } from 'astro-icon/components';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects');
+const blog = await getCollection('blog');
+const notes = await getCollection('notes');
+
+const searchIndex = [
+  // Core Pages
+  {
+    title: 'Home',
+    subtitle: 'Overview & Selected Work',
+    url: '/',
+    icon: 'ph:house-bold',
+    category: 'Pages',
+  },
+  {
+    title: 'Projects',
+    subtitle: 'All engineered systems & tools',
+    url: '/projects/',
+    icon: 'ph:folder-notch-bold',
+    category: 'Pages',
+  },
+  {
+    title: 'Writing',
+    subtitle: 'Technical essays & articles',
+    url: '/blog/',
+    icon: 'ph:article-bold',
+    category: 'Pages',
+  },
+  {
+    title: 'Digital Garden',
+    subtitle: 'Notes, snippets & TILs',
+    url: '/notes/',
+    icon: 'ph:plant-bold',
+    category: 'Pages',
+  },
+  {
+    title: 'Resume / CV',
+    subtitle: 'Experience, timeline & skills',
+    url: '/resume/',
+    icon: 'ph:briefcase-bold',
+    category: 'Pages',
+  },
+  {
+    title: 'About',
+    subtitle: 'Background, bio & philosophy',
+    url: '/about/',
+    icon: 'ph:user-bold',
+    category: 'Pages',
+  },
+  {
+    title: 'Now',
+    subtitle: 'What I am currently building & learning',
+    url: '/now/',
+    icon: 'ph:clock-bold',
+    category: 'Pages',
+  },
+  {
+    title: 'Uses & Stack',
+    subtitle: 'Hardware, software & editor setup',
+    url: '/uses/',
+    icon: 'ph:laptop-bold',
+    category: 'Pages',
+  },
+  {
+    title: 'Colophon',
+    subtitle: 'How this site is engineered',
+    url: '/colophon/',
+    icon: 'ph:info-bold',
+    category: 'Pages',
+  },
+  {
+    title: 'Contact',
+    subtitle: 'Start a conversation / inquiry',
+    url: '/contact/',
+    icon: 'ph:envelope-simple-bold',
+    category: 'Pages',
+  },
+  {
+    title: 'Links Hub',
+    subtitle: 'All profiles and quick links',
+    url: '/links/',
+    icon: 'ph:link-simple-bold',
+    category: 'Pages',
+  },
+
+  // Dynamic Projects
+  ...projects.map((p) => ({
+    title: p.data.title,
+    subtitle: p.data.description,
+    url: `/projects/${p.id}/`,
+    icon: 'ph:folder-notch-bold',
+    category: 'Projects',
+  })),
+
+  // Dynamic Blog Posts
+  ...blog
+    .filter((b) => !b.data.draft)
+    .map((b) => ({
+      title: b.data.title,
+      subtitle: `${b.data.category} • ${b.data.publishDate}`,
+      url: `/blog/${b.id}/`,
+      icon: 'ph:book-open-text-bold',
+      category: 'Articles',
+    })),
+
+  // Dynamic Notes
+  ...notes.map((n) => ({
+    title: n.data.title,
+    subtitle: `${n.data.topic} • ${n.data.publishDate}`,
+    url: `/notes/${n.id}/`,
+    icon: 'ph:file-code-bold',
+    category: 'Notes',
+  })),
+];
+---
+
+<div
+  id="command-palette-modal"
+  class="fixed inset-0 z-50 hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Command Palette"
+>
+  <!-- Backdrop -->
+  <div
+    id="command-palette-backdrop"
+    class="fixed inset-0 bg-black/70 backdrop-blur-xs transition-opacity"
+  >
+  </div>
+
+  <!-- Palette Container -->
+  <div class="fixed inset-0 z-10 flex items-start justify-center p-4 pt-16 sm:pt-24">
+    <div
+      class="border-base-300 bg-base-100/95 flex max-h-[80vh] w-full max-w-xl flex-col overflow-hidden rounded-xl border shadow-2xl backdrop-blur-md"
+    >
+      <!-- Search Input Header -->
+      <div class="border-base-300 flex items-center gap-3 border-b px-4 py-3.5">
+        <Icon name="ph:magnifying-glass-bold" class="text-base-content/50 h-4 w-4 shrink-0" />
+        <input
+          id="command-palette-input"
+          type="text"
+          placeholder="Search pages, projects, articles, notes, or actions..."
+          class="text-base-content placeholder:text-base-content/40 w-full bg-transparent text-sm focus:outline-none"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <kbd
+          class="border-base-300 bg-base-200 text-base-content/60 hidden items-center gap-0.5 rounded border px-1.5 py-0.5 font-mono text-[10px] sm:inline-flex"
+        >
+          ESC
+        </kbd>
+      </div>
+
+      <!-- Results Container -->
+      <div id="command-palette-results" class="flex-grow space-y-1 overflow-y-auto p-2">
+        <!-- Results will be dynamically filtered and rendered via client script -->
+      </div>
+
+      <!-- Palette Footer -->
+      <div
+        class="border-base-300/80 bg-base-200/50 text-base-content/50 flex items-center justify-between border-t px-4 py-2 font-mono text-[11px]"
+      >
+        <div class="flex items-center gap-3">
+          <span class="flex items-center gap-1">
+            <kbd class="border-base-300 bg-base-100 rounded border px-1">↑</kbd>
+            <kbd class="border-base-300 bg-base-100 rounded border px-1">↓</kbd> Navigate
+          </span>
+          <span class="flex items-center gap-1">
+            <kbd class="border-base-300 bg-base-100 rounded border px-1">↵</kbd> Select
+          </span>
+        </div>
+        <span>{SITE.name}</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ searchIndex }}>
+  window.__SEARCH_INDEX__ = searchIndex;
+</script>
+
+<script>
+  interface SearchItem {
+    title: string;
+    subtitle: string;
+    url: string;
+    icon: string;
+    category: string;
+  }
+
+  declare global {
+    interface Window {
+      __SEARCH_INDEX__?: SearchItem[];
+    }
+  }
+
+  function setupCommandPalette() {
+    const modal = document.getElementById('command-palette-modal');
+    const backdrop = document.getElementById('command-palette-backdrop');
+    const input = document.getElementById('command-palette-input') as HTMLInputElement | null;
+    const resultsContainer = document.getElementById('command-palette-results');
+    const openBtns = document.querySelectorAll('[data-open-palette]');
+
+    if (!modal || !input || !resultsContainer) return;
+
+    const items: SearchItem[] = window.__SEARCH_INDEX__ || [];
+    let selectedIndex = 0;
+    let filteredItems: SearchItem[] = [...items];
+
+    const close = () => {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    };
+
+    const open = () => {
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      input.value = '';
+      filter('');
+      setTimeout(() => input.focus(), 50);
+    };
+
+    const renderResults = () => {
+      if (filteredItems.length === 0) {
+        resultsContainer.innerHTML = `
+          <div class="py-8 text-center text-xs text-base-content/50 font-mono">
+            No matching documents or actions found.
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      let currentIndex = 0;
+
+      const categories = Array.from(new Set(filteredItems.map((i) => i.category)));
+
+      categories.forEach((cat) => {
+        html += `<div class="px-2 pt-2 pb-1 text-[10px] font-mono uppercase tracking-widest text-accent font-semibold">${cat}</div>`;
+        const catItems = filteredItems.filter((i) => i.category === cat);
+        catItems.forEach((item) => {
+          const isSelected = currentIndex === selectedIndex;
+          html += `
+            <a
+              href="${item.url}"
+              data-index="${currentIndex}"
+              class="palette-result-item flex items-center justify-between rounded-lg px-3 py-2 text-xs transition-colors ${
+                isSelected
+                  ? 'bg-base-300 text-base-content font-medium'
+                  : 'text-base-content/75 hover:bg-base-200 hover:text-base-content'
+              }"
+            >
+              <div class="min-w-0 pr-2">
+                <div class="font-medium text-base-content truncate">${item.title}</div>
+                <div class="text-[11px] text-base-content/50 truncate">${item.subtitle}</div>
+              </div>
+              <span class="font-mono text-[10px] text-base-content/40 shrink-0">Jump ↵</span>
+            </a>
+          `;
+          currentIndex++;
+        });
+      });
+
+      resultsContainer.innerHTML = html;
+
+      // Close palette on click
+      resultsContainer.querySelectorAll('a').forEach((a) => {
+        a.addEventListener('click', close);
+      });
+    };
+
+    const filter = (query: string) => {
+      const q = query.toLowerCase().trim();
+      if (!q) {
+        filteredItems = [...items];
+      } else {
+        filteredItems = items.filter(
+          (i) =>
+            i.title.toLowerCase().includes(q) ||
+            i.subtitle.toLowerCase().includes(q) ||
+            i.category.toLowerCase().includes(q)
+        );
+      }
+      selectedIndex = 0;
+      renderResults();
+    };
+
+    openBtns.forEach((btn) => btn.addEventListener('click', open));
+    backdrop?.addEventListener('click', close);
+
+    input.addEventListener('input', (e) => {
+      filter((e.target as HTMLInputElement).value);
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        if (modal.classList.contains('hidden')) {
+          open();
+        } else {
+          close();
+        }
+      } else if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        close();
+      } else if (!modal.classList.contains('hidden')) {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          selectedIndex = (selectedIndex + 1) % Math.max(1, filteredItems.length);
+          renderResults();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          selectedIndex =
+            (selectedIndex - 1 + filteredItems.length) % Math.max(1, filteredItems.length);
+          renderResults();
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          const target = filteredItems[selectedIndex];
+          if (target) {
+            close();
+            window.location.href = target.url;
+          }
+        }
+      }
+    });
+  }
+
+  setupCommandPalette();
+  document.addEventListener('astro:page-load', setupCommandPalette);
+  document.addEventListener('astro:before-swap', () => {
+    const modal = document.getElementById('command-palette-modal');
+    if (modal) modal.classList.add('hidden');
+    document.body.style.overflow = '';
+  });
+</script>

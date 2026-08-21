@@ -1,0 +1,142 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ExperienceTimeline from '@/components/portfolio/ExperienceTimeline.astro';
+import { getCollection, getEntry } from 'astro:content';
+import { SITE } from '@/const/site.ts';
+import { Icon } from 'astro-icon/components';
+
+const experiences = await getCollection('experience');
+const siteData = await getEntry('site', 'profile');
+const skills = siteData?.data.skills;
+---
+
+<BaseLayout
+  title="Resume & Curriculum Vitae"
+  description="Professional resume, technical background, experience timeline, and engineering skill set of Sahil Langoo."
+>
+  <div class="mx-auto max-w-4xl space-y-12 px-4 py-8 sm:px-6 sm:py-12">
+    <!-- Header with Actions -->
+    <div
+      class="border-base-300 flex flex-col gap-6 border-b pb-8 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <div>
+        <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
+          Curriculum Vitae
+        </span>
+        <h1 class="text-base-content mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl">
+          {SITE.name}
+        </h1>
+        <p class="text-base-content/80 mt-1 text-sm font-medium">
+          Full Stack Engineer & Creative Technologist • {SITE.location}
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <a
+          href="/contact/"
+          class="btn btn-sm bg-base-content text-base-100 hover:bg-base-content/90 flex items-center gap-1.5 rounded-md border-0 font-mono text-xs tracking-wider uppercase"
+        >
+          <Icon name="ph:paper-plane-tilt-bold" class="h-3.5 w-3.5" />
+          Contact Me
+        </a>
+        <a
+          href="https://github.com/sahillangoo"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 flex items-center gap-1.5 rounded-md font-mono text-xs tracking-wider uppercase"
+        >
+          <Icon name="ph:github-logo-bold" class="h-3.5 w-3.5" /> GitHub
+        </a>
+      </div>
+    </div>
+
+    <!-- Summary -->
+    <section class="space-y-3">
+      <h2
+        class="text-base-content text-accent font-mono text-lg text-xs font-bold tracking-wider uppercase"
+      >
+        Executive Summary
+      </h2>
+      <p class="text-base-content/80 text-sm leading-relaxed sm:text-base">
+        {siteData?.data.about}
+      </p>
+    </section>
+
+    <!-- Work Experience -->
+    <section class="space-y-6">
+      <h2
+        class="text-base-content text-accent font-mono text-lg text-xs font-bold tracking-wider uppercase"
+      >
+        Professional Experience
+      </h2>
+      <div class="editorial-card p-6 sm:p-8">
+        <ExperienceTimeline experiences={experiences} />
+      </div>
+    </section>
+
+    <!-- Skills Breakdown -->
+    {
+      skills && (
+        <section class="space-y-6">
+          <h2 class="text-base-content text-accent font-mono text-lg text-xs font-bold tracking-wider uppercase">
+            Technical Core Competencies
+          </h2>
+
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div class="editorial-card space-y-2 p-5">
+              <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
+                Languages
+              </h3>
+              <div class="flex flex-wrap gap-1.5">
+                {skills.languages.map((item) => (
+                  <span class="bg-base-300/40 text-base-content/80 rounded px-2 py-0.5 font-mono text-xs">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div class="editorial-card space-y-2 p-5">
+              <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
+                Frameworks & Libraries
+              </h3>
+              <div class="flex flex-wrap gap-1.5">
+                {skills.frameworks.map((item) => (
+                  <span class="bg-base-300/40 text-base-content/80 rounded px-2 py-0.5 font-mono text-xs">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div class="editorial-card space-y-2 p-5">
+              <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
+                Cloud & Edge Architecture
+              </h3>
+              <div class="flex flex-wrap gap-1.5">
+                {skills.cloud.map((item) => (
+                  <span class="bg-base-300/40 text-base-content/80 rounded px-2 py-0.5 font-mono text-xs">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div class="editorial-card space-y-2 p-5">
+              <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
+                Databases & Tools
+              </h3>
+              <div class="flex flex-wrap gap-1.5">
+                {[...skills.databases, ...skills.tools].map((item) => (
+                  <span class="bg-base-300/40 text-base-content/80 rounded px-2 py-0.5 font-mono text-xs">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      )
+    }
+  </div>
+</BaseLayout>

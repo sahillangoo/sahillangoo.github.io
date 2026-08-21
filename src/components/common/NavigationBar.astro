@@ -1,0 +1,155 @@
+---
+import { SITE } from '@/const/site.ts';
+import ThemeToggle from '@/components/common/ThemeToggle.astro';
+import { Icon } from 'astro-icon/components';
+
+const currentPath = Astro.url.pathname;
+
+function isActive(href: string): boolean {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
+---
+
+<header id="site-header" class="w-full" transition:persist="main-header">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 md:py-5">
+    <!-- Brand / Name with Status -->
+    <a
+      href="/"
+      class="group text-base-content flex items-center gap-3 font-semibold transition-opacity hover:opacity-80"
+    >
+      <span
+        class="bg-base-200 border-base-300 text-accent flex h-8 w-8 items-center justify-center rounded-md border font-mono text-xs font-bold"
+      >
+        SL
+      </span>
+      <div class="flex flex-col">
+        <span class="text-sm leading-tight font-semibold tracking-tight">{SITE.name}</span>
+        <span class="text-base-content/60 flex items-center gap-1.5 text-[11px]">
+          <span class="relative flex h-1.5 w-1.5">
+            <span
+              class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+            >
+            </span>
+            <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+          </span>
+          Available for work
+        </span>
+      </div>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav
+      id="desktop-nav"
+      class="border-base-300 bg-base-200/60 hidden items-center gap-1 rounded-full border px-3 py-1.5 backdrop-blur-md md:flex"
+    >
+      {
+        SITE.nav.map((item) => {
+          const active = isActive(item.href);
+          return (
+            <a
+              href={item.href}
+              data-nav-link={item.href}
+              class={`nav-item rounded-full px-3.5 py-1 text-xs font-medium transition-all ${
+                active
+                  ? 'bg-base-content text-base-100 font-semibold shadow-xs'
+                  : 'text-base-content/70 hover:text-base-content hover:bg-base-300/50'
+              }`}
+            >
+              {item.label}
+            </a>
+          );
+        })
+      }
+      <a
+        href="/now/"
+        data-nav-link="/now/"
+        class={`nav-item rounded-full px-3.5 py-1 text-xs font-medium transition-all flex items-center gap-1.5 ${
+          isActive('/now/')
+            ? 'bg-base-content text-base-100 font-semibold shadow-xs'
+            : 'text-base-content/70 hover:text-base-content hover:bg-base-300/50'
+        }`}
+      >
+        <span class="bg-accent h-1.5 w-1.5 animate-pulse rounded-full"></span>
+        Now
+      </a>
+    </nav>
+
+    <!-- Header Actions -->
+    <div class="flex items-center gap-2">
+      <!-- Command Palette Trigger Button -->
+      <button
+        type="button"
+        data-open-palette
+        aria-label="Open command palette"
+        class="border-base-300 bg-base-200/80 text-base-content/60 hover:text-base-content hover:border-base-content/30 hidden items-center gap-2 rounded-lg border px-2.5 py-1.5 font-mono text-xs transition-all sm:inline-flex"
+      >
+        <Icon name="ph:magnifying-glass-bold" class="h-3.5 w-3.5" />
+        <span class="text-[11px]">Search</span>
+        <kbd
+          class="border-base-300 bg-base-100 py-0.2 text-base-content/50 rounded border px-1 text-[10px]"
+        >
+          ⌘K
+        </kbd>
+      </button>
+
+      <!-- Mobile Search Icon Button -->
+      <button
+        type="button"
+        data-open-palette
+        aria-label="Open command palette"
+        class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content rounded-md sm:hidden"
+      >
+        <Icon name="ph:magnifying-glass-bold" class="h-4 w-4" />
+      </button>
+
+      <ThemeToggle />
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="mobile-menu-open"
+        type="button"
+        aria-label="Open mobile menu"
+        class="btn btn-ghost btn-sm btn-square text-base-content/80 hover:text-base-content rounded-md md:hidden"
+      >
+        <Icon name="ph:list-bold" class="h-5 w-5" />
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  function setupHeader() {
+    const header = document.getElementById('site-header');
+    if (!header) return;
+
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        header.classList.add('is-scrolled');
+      } else {
+        header.classList.remove('is-scrolled');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    // Update active nav link styling on client navigation
+    const current = window.location.pathname;
+    const navLinks = document.querySelectorAll<HTMLAnchorElement>('#desktop-nav [data-nav-link]');
+    navLinks.forEach((link) => {
+      const target = link.getAttribute('data-nav-link');
+      const isCurrentActive = target === '/' ? current === '/' : current.startsWith(target || '');
+      if (isCurrentActive) {
+        link.classList.add('bg-base-content', 'text-base-100', 'font-semibold', 'shadow-xs');
+        link.classList.remove('text-base-content/70', 'hover:bg-base-300/50');
+      } else {
+        link.classList.remove('bg-base-content', 'text-base-100', 'font-semibold', 'shadow-xs');
+        link.classList.add('text-base-content/70');
+      }
+    });
+  }
+
+  setupHeader();
+  document.addEventListener('astro:page-load', setupHeader);
+</script>

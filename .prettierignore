@@ -1,0 +1,21 @@
+# Build & Static Output
+dist/
+.astro/
+.wrangler/
+.mf/
+
+# Dependencies & Lockfiles
+node_modules/
+pnpm-lock.yaml
+
+# IDE & Tooling
+.vscode/
+.github/
+
+# Caches & Reports
+.eslintcache
+.prettiercache
+test-results/
+playwright-report/
+blob-report/
+*.log

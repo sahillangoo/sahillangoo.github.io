@@ -1,0 +1,46 @@
+packages:
+  - '.'
+
+# Package manager enforcement (see packageManager in package.json; pnpm 11+)
+pmOnFail: warn
+
+# Install reproducibility & store integrity
+preferFrozenLockfile: true
+verifyStoreIntegrity: true
+
+# Peer dependency policy
+autoInstallPeers: false
+trustPolicy: no-downgrade
+
+trustPolicyExclude:
+  - undici-types
+  - chokidar
+  - semver
+
+strictPeerDependencies: false
+
+# Targeted peer dep overrides
+peerDependencyRules:
+  allowedVersions:
+    'eslint-plugin-jsx-a11y>eslint': '10'
+    'eslint-plugin-astro>eslint': '9'
+
+# Supply-chain: delay freshly published packages (1 day)
+minimumReleaseAge: 1440
+minimumReleaseAgeStrict: true
+
+# Block exotic subdependencies for extra security
+blockExoticSubdeps: true
+
+# Pin vulnerable transitive packages
+overrides:
+  sharp@<0.35.0: ^0.35.0
+  shell-quote@<=1.8.4: ^1.8.5
+  yaml: '>=2.8.3'
+
+# Native/build scripts — only packages that require postinstall binaries
+allowBuilds:
+  esbuild: true
+  sharp: true
+  workerd: true
+  wrangler: true

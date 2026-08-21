@@ -1,0 +1,102 @@
+---
+import { SITE } from '@/const/site.ts';
+import TimeAvailabilityWidget from '@/components/common/TimeAvailabilityWidget.astro';
+import { Icon } from 'astro-icon/components';
+
+const currentYear = new Date().getFullYear();
+
+const footerLinks = [
+  { label: 'Work', href: '/projects/' },
+  { label: 'Writing', href: '/blog/' },
+  { label: 'Garden', href: '/notes/' },
+  { label: 'Resume', href: '/resume/' },
+  { label: 'Now', href: '/now/' },
+  { label: 'Uses', href: '/uses/' },
+  { label: 'Colophon', href: '/colophon/' },
+  { label: 'Links', href: '/links/' },
+  { label: 'Contact', href: '/contact/' },
+];
+---
+
+<footer class="border-base-300 bg-base-100/50 text-base-content/70 w-full border-t py-12">
+  <div class="mx-auto max-w-6xl space-y-8 px-4 sm:px-6">
+    <div class="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
+      <!-- Brand & Tagline -->
+      <div class="flex max-w-sm flex-col gap-2">
+        <span class="text-base-content font-mono text-sm font-bold tracking-tight">
+          {SITE.name}
+        </span>
+        <p class="text-base-content/60 text-xs leading-relaxed">
+          {SITE.tagline}
+        </p>
+        <div class="pt-2">
+          <TimeAvailabilityWidget variant="compact" />
+        </div>
+      </div>
+
+      <!-- Footer Quick Links Grid -->
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-xs">
+        {
+          footerLinks.map((item) => (
+            <a href={item.href} class="hover:text-accent transition-colors">
+              {item.label}
+            </a>
+          ))
+        }
+        <a
+          href="/rss.xml"
+          target="_blank"
+          class="hover:text-accent flex items-center gap-1 transition-colors"
+        >
+          <Icon name="ph:rss-bold" class="h-3.5 w-3.5" />
+          RSS
+        </a>
+      </div>
+
+      <!-- Social Links -->
+      <div class="flex items-center gap-2 self-start md:self-auto">
+        <a
+          href={SITE.social.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub"
+          class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
+        >
+          <Icon name="ph:github-logo-bold" class="h-4 w-4" />
+        </a>
+        <a
+          href={SITE.social.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn"
+          class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
+        >
+          <Icon name="ph:linkedin-logo-bold" class="h-4 w-4" />
+        </a>
+        <a
+          href={SITE.social.twitter}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Twitter"
+          class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
+        >
+          <Icon name="ph:x-logo-bold" class="h-4 w-4" />
+        </a>
+        <a
+          href={SITE.social.email}
+          aria-label="Email"
+          class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
+        >
+          <Icon name="ph:envelope-simple-bold" class="h-4 w-4" />
+        </a>
+      </div>
+    </div>
+
+    <div
+      class="border-base-300/60 text-base-content/50 flex flex-col items-center justify-between gap-2 border-t pt-6 text-[11px] sm:flex-row"
+    >
+      <span>© {currentYear} {SITE.name}. Built statically with Astro 7.2 & Tailwind CSS v4.</span>
+      <span class="font-mono text-[10px]">0.00 CLS • Sub-50ms TTFB • Cloudflare Edge</span>
+    </div>
+  </div>
+</footer>

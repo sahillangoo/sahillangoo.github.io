@@ -1,0 +1,28 @@
+# Sahil Langoo — Portfolio & Engineering Knowledge Base
+
+> Personal portfolio, technical essays, digital garden, and software engineering profile of Sahil Langoo.
+
+## Overview
+- **Name**: Sahil Langoo
+- **Role**: Software Engineer & Creative Technologist
+- **Affiliation**: @SquadCoders (Co-Founder & Lead Engineer)
+- **Specializations**: TypeScript, Astro, Bun, Go, Cloudflare Pages & Edge Workers, Minimalist UI Craft, Local AI Tooling.
+- **Location**: Kashmir, India
+- **Website**: https://sahillangoo.com
+- **GitHub**: https://github.com/sahillangoo
+- **Twitter / X**: https://twitter.com/kashurgeek
+- **DEV Community**: https://dev.to/sahillangoo
+- **LinkedIn**: https://linkedin.com/in/sahillangoo
+- **Email**: hey@sahillangoo.com
+
+## Key Sections
+- [Projects](https://sahillangoo.com/projects/): Production applications and open-source developer tooling (`smart-img-cli`, `hotel-akbar-sonmarg`, `roohyaseen-portfolio`, `hackforce-storefront`, `template-astro-daisy`, `ku-result`).
+- [Writing](https://sahillangoo.com/blog/): Technical essays on web architecture, performance, and simplicity.
+- [Digital Garden Notes](https://sahillangoo.com/notes/): Atomic technical notes, patterns, and snippets.
+- [Now](https://sahillangoo.com/now/): Live priorities, active client architecture, and current studies.
+- [Uses](https://sahillangoo.com/uses/): Complete hardware workstation, editor setup, and software tools.
+- [Colophon](https://sahillangoo.com/colophon/): Technical anatomy of how sahillangoo.com is built and hosted.
+- [Resume](https://sahillangoo.com/resume/): Experience history, competencies, and engineering timeline.
+- [About](https://sahillangoo.com/about/): Background, philosophy, and workspace setup.
+- [Contact](https://sahillangoo.com/contact/): Collaboration and consulting inquiries.
+- [Links](https://sahillangoo.com/links/): Link-in-bio hub with verified social handles.

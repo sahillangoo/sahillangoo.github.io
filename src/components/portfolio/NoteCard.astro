@@ -1,0 +1,60 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+
+export interface Props {
+  note: CollectionEntry<'notes'>;
+}
+
+const { note } = Astro.props;
+const { data, id } = note;
+
+const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+---
+
+<article class="editorial-card group relative flex flex-col justify-between p-5 sm:p-6">
+  <div>
+    <div class="text-base-content/60 mb-2 flex items-center justify-between text-xs">
+      <span
+        class="bg-accent/10 text-accent rounded px-2 py-0.5 font-mono text-[10px] font-semibold tracking-wider uppercase"
+      >
+        {data.topic}
+      </span>
+      <time datetime={data.publishDate} class="font-mono text-[11px]">{formattedDate}</time>
+    </div>
+
+    <h3
+      class="text-base-content group-hover:text-accent text-base font-bold tracking-tight transition-colors"
+    >
+      <a href={`/notes/${id}/`} class="after:absolute after:inset-0 focus:outline-none">
+        {data.title}
+      </a>
+    </h3>
+
+    {
+      data.description && (
+        <p class="text-base-content/70 mt-2 line-clamp-2 text-xs leading-relaxed">
+          {data.description}
+        </p>
+      )
+    }
+  </div>
+
+  <div class="border-base-300/40 mt-4 flex items-center justify-between border-t pt-3">
+    <div class="flex flex-wrap gap-1">
+      {
+        data.tags.map((tag) => (
+          <span class="text-base-content/50 font-mono text-[10px]">#{tag}</span>
+        ))
+      }
+    </div>
+    <Icon
+      name="ph:arrow-up-right-bold"
+      class="text-base-content/40 group-hover:text-accent h-3.5 w-3.5 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+    />
+  </div>
+</article>

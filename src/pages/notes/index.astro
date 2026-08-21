@@ -1,0 +1,36 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import NoteCard from '@/components/portfolio/NoteCard.astro';
+import { getCollection } from 'astro:content';
+
+const notes = await getCollection('notes');
+const sortedNotes = [...notes].sort(
+  (a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
+);
+---
+
+<BaseLayout
+  title="Digital Garden & Notes"
+  description="Atomic notes, TILs, code patterns, and architectural thoughts by Sahil Langoo."
+>
+  <div class="mx-auto max-w-5xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">
+    <!-- Header -->
+    <div class="border-base-300 max-w-2xl border-b pb-6">
+      <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
+        Digital Garden
+      </span>
+      <h1 class="text-base-content mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl">
+        Notes, Snippets & TILs
+      </h1>
+      <p class="text-base-content/75 mt-3 text-sm leading-relaxed sm:text-base">
+        A lightweight digital garden for atomic thoughts, technical snippets, learning notes, and
+        mental models.
+      </p>
+    </div>
+
+    <!-- Notes Grid -->
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {sortedNotes.map((note) => <NoteCard note={note} />)}
+    </div>
+  </div>
+</BaseLayout>

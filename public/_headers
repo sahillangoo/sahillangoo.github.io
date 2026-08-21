@@ -1,0 +1,75 @@
+# ==============================================================================
+# Cloudflare Pages Headers - Sahil Langoo Portfolio
+# Security, Caching, Anti-Crawling on Preview & Production Header Configuration
+# ==============================================================================
+
+# 1. Global Baseline Security, Privacy & Content Freshness
+/*
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob:; frame-src 'self'; connect-src 'self' blob: data:; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; upgrade-insecure-requests;
+  Cache-Control: public, max-age=0, must-revalidate
+
+# 2. Block Search Engine Crawling on Cloudflare Pages Preview Subdomains
+https://*.pages.dev/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+https://sahillangoo-portfolio.pages.dev/*
+  X-Robots-Tag: noindex, nofollow, noarchive
+
+# 3. Immutable Astro Bundled Assets (Content-Hashed JS, CSS, Fonts, Images)
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+# 4. Web Fonts (Immutable Long-Term Cache)
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+  X-Content-Type-Options: nosniff
+
+/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+  X-Content-Type-Options: nosniff
+
+# 5. Static Images & Favicons (30 Days with SWR)
+/*.webp
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+  X-Content-Type-Options: nosniff
+
+/*.png
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+  X-Content-Type-Options: nosniff
+
+/*.svg
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+  X-Content-Type-Options: nosniff
+
+/*.ico
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+# 6. Search Engine & AI Agent Crawlers (1 Day with SWR)
+/robots.txt
+  Cache-Control: public, max-age=86400, stale-while-revalidate=43200
+  Content-Type: text/plain; charset=utf-8
+
+/sitemap-index.xml
+  Cache-Control: public, max-age=86400, stale-while-revalidate=43200
+  Content-Type: application/xml; charset=utf-8
+
+/sitemap-*.xml
+  Cache-Control: public, max-age=86400, stale-while-revalidate=43200
+  Content-Type: application/xml; charset=utf-8
+
+/llms.txt
+  Cache-Control: public, max-age=86400, stale-while-revalidate=43200
+  Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *

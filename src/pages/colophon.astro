@@ -1,0 +1,90 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { Icon } from 'astro-icon/components';
+
+const specs = [
+  { label: 'Framework', value: 'Astro 7.2 (Static Site Generation)' },
+  { label: 'Styling Architecture', value: 'Tailwind CSS v4 + daisyUI 5' },
+  { label: 'Color System', value: 'OKLCH (editorialDark & editorialLight)' },
+  { label: 'Primary Typeface', value: 'Plus Jakarta Sans (Variable)' },
+  { label: 'Monospace Typeface', value: 'JetBrains Mono' },
+  { label: 'Motion & Scroll', value: 'Lenis Smooth Scroll + Hardware Transforms' },
+  { label: 'Hosting & CDN', value: 'Cloudflare Pages Global Edge' },
+  { label: 'Asset Verification', value: 'astroSiteQualityEnforcer (Zero 404s)' },
+  { label: 'Package Manager', value: 'pnpm v11+ with strict lockfile' },
+  { label: 'Linter & Quality', value: 'ESLint 10 Flat Config + Prettier' },
+  { label: 'Runtime Client JS', value: '0.00 KB on initial render (Hydration only on demand)' },
+  { label: 'Cumulative Layout Shift', value: '0.00 CLS guaranteed' },
+];
+---
+
+<BaseLayout
+  title="Colophon — Engineering & Design Specifications — Sahil Langoo"
+  description="Technical colophon detailing the typography, color science, build architecture, and performance standards of this website."
+>
+  <div class="mx-auto max-w-4xl space-y-12 px-4 py-8 sm:px-6 sm:py-12">
+    <!-- Header -->
+    <div class="border-base-300 space-y-4 border-b pb-8">
+      <div
+        class="border-base-300 bg-base-200 text-base-content/80 inline-flex items-center gap-2 rounded-full border px-3 py-0.5 font-mono text-xs"
+      >
+        <span>Site Anatomy</span>
+      </div>
+      <h1 class="text-base-content text-3xl font-extrabold tracking-tight sm:text-4xl">
+        Technical Colophon
+      </h1>
+      <p class="text-base-content/75 text-base leading-relaxed">
+        An exhaustive disclosure of the typography, color science, software dependencies, and design
+        principles behind this site.
+      </p>
+    </div>
+
+    <!-- Specifications Table / Matrix -->
+    <div class="editorial-card space-y-6 p-6 sm:p-8">
+      <h2
+        class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase"
+      >
+        <Icon name="ph:cpu-bold" class="h-4 w-4" />
+        System Specifications
+      </h2>
+
+      <div class="divide-base-300/80 divide-y">
+        {
+          specs.map((item) => (
+            <div class="flex flex-col gap-1 py-3 text-xs sm:flex-row sm:items-center sm:justify-between">
+              <span class="text-base-content/60 font-mono font-medium">{item.label}</span>
+              <span class="text-base-content font-mono font-semibold">{item.value}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Design & Performance Principles -->
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div class="editorial-card space-y-3 p-6">
+        <h3 class="text-accent font-mono text-xs font-bold tracking-wider uppercase">
+          Typography & Color Science
+        </h3>
+        <p class="text-base-content/75 text-xs leading-relaxed">
+          Set in <strong>Plus Jakarta Sans</strong> for clean editorial hierarchy and <strong>
+            JetBrains Mono
+          </strong> for code snippets. The color scheme is calibrated in perceptual <strong>
+            OKLCH space
+          </strong> for consistent visual contrast across light and dark modes.
+        </p>
+      </div>
+
+      <div class="editorial-card space-y-3 p-6">
+        <h3 class="text-accent font-mono text-xs font-bold tracking-wider uppercase">
+          Zero-Dependency Quality Hook
+        </h3>
+        <p class="text-base-content/75 text-xs leading-relaxed">
+          Integrated with a custom build-time plugin (<code>astroSiteQualityEnforcer</code>) that
+          crawls all rendered HTML in <code>dist/</code> to prevent broken links, missing assets, and
+          trailing slash violations before deployment.
+        </p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

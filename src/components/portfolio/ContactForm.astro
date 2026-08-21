@@ -1,0 +1,152 @@
+---
+import { SITE } from '@/const/site.ts';
+import { Icon } from 'astro-icon/components';
+---
+
+<div class="editorial-card p-6 sm:p-8">
+  <div class="mb-6">
+    <h3 class="text-base-content text-xl font-bold">Get in Touch</h3>
+    <p class="text-base-content/70 mt-1 text-sm">
+      Have an engineering project, consulting request, or open source initiative? Send a note
+      directly or reach out via <a
+        href={`mailto:${SITE.email}`}
+        class="text-accent font-medium underline"
+      >
+        {SITE.email}
+      </a>.
+    </p>
+  </div>
+
+  <form id="contact-form" data-author-email={SITE.email} class="space-y-4">
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div>
+        <label
+          for="contact-name"
+          class="text-base-content/80 mb-1.5 block font-mono text-xs font-medium"
+        >
+          Your Name <span class="text-accent">*</span>
+        </label>
+        <input
+          type="text"
+          id="contact-name"
+          name="name"
+          required
+          placeholder="e.g. Linus Torvalds"
+          class="input input-bordered bg-base-100 border-base-300 focus:border-accent text-base-content w-full rounded-md text-sm"
+        />
+      </div>
+      <div>
+        <label
+          for="contact-email"
+          class="text-base-content/80 mb-1.5 block font-mono text-xs font-medium"
+        >
+          Your Email <span class="text-accent">*</span>
+        </label>
+        <input
+          type="email"
+          id="contact-email"
+          name="email"
+          required
+          placeholder="e.g. name@example.com"
+          class="input input-bordered bg-base-100 border-base-300 focus:border-accent text-base-content w-full rounded-md text-sm"
+        />
+      </div>
+    </div>
+
+    <div>
+      <label
+        for="contact-subject"
+        class="text-base-content/80 mb-1.5 block font-mono text-xs font-medium"
+      >
+        Subject
+      </label>
+      <input
+        type="text"
+        id="contact-subject"
+        name="subject"
+        placeholder="e.g. Consulting Inquiry / Collaboration"
+        class="input input-bordered bg-base-100 border-base-300 focus:border-accent text-base-content w-full rounded-md text-sm"
+      />
+    </div>
+
+    <div>
+      <label
+        for="contact-message"
+        class="text-base-content/80 mb-1.5 block font-mono text-xs font-medium"
+      >
+        Message <span class="text-accent">*</span>
+      </label>
+      <textarea
+        id="contact-message"
+        name="message"
+        required
+        rows="5"
+        placeholder="Describe the scope, timeline, and goals..."
+        class="textarea textarea-bordered bg-base-100 border-base-300 focus:border-accent text-base-content w-full rounded-md text-sm"
+      >
+      </textarea>
+    </div>
+
+    <div class="flex items-center gap-4 pt-1">
+      <button
+        type="submit"
+        id="contact-submit-btn"
+        class="btn bg-base-content text-base-100 hover:bg-base-content/90 flex items-center gap-2 rounded-md border-0 px-6 font-mono text-xs font-medium tracking-wider uppercase"
+      >
+        <Icon name="ph:paper-plane-tilt-bold" class="h-3.5 w-3.5" />
+        <span id="contact-btn-text">Send Message</span>
+      </button>
+
+      <div id="contact-status-msg" class="hidden font-mono text-xs"></div>
+    </div>
+  </form>
+</div>
+
+<script>
+  function setupContactForm() {
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    const submitBtn = document.getElementById('contact-submit-btn') as HTMLButtonElement | null;
+    const btnText = document.getElementById('contact-btn-text');
+    const statusMsg = document.getElementById('contact-status-msg');
+
+    if (!form || !submitBtn || !btnText || !statusMsg) return;
+
+    const authorEmail = form.getAttribute('data-author-email') || 'hey@sahillangoo.com';
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const nameInput = document.getElementById('contact-name') as HTMLInputElement | null;
+      const emailInput = document.getElementById('contact-email') as HTMLInputElement | null;
+      const subjectInput = document.getElementById('contact-subject') as HTMLInputElement | null;
+      const messageInput = document.getElementById('contact-message') as HTMLTextAreaElement | null;
+
+      const name = nameInput ? nameInput.value.trim() : '';
+      const email = emailInput ? emailInput.value.trim() : '';
+      const subject =
+        subjectInput && subjectInput.value.trim()
+          ? subjectInput.value.trim()
+          : `Portfolio Inquiry from ${name}`;
+      const message = messageInput ? messageInput.value.trim() : '';
+
+      submitBtn.setAttribute('disabled', 'true');
+      btnText.textContent = 'Preparing...';
+
+      const bodyText = `Hi Sahil,\n\n${message}\n\nFrom: ${name} (${email})`;
+      const mailtoUrl = `mailto:${authorEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyText)}`;
+
+      statusMsg.textContent = 'Opening your mail client...';
+      statusMsg.className = 'text-xs font-mono text-emerald-400 block';
+
+      window.location.href = mailtoUrl;
+
+      setTimeout(() => {
+        submitBtn.removeAttribute('disabled');
+        btnText.textContent = 'Send Message';
+      }, 2000);
+    });
+  }
+
+  setupContactForm();
+  document.addEventListener('astro:page-load', setupContactForm);
+</script>

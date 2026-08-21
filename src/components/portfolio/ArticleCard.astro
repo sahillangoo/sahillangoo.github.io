@@ -1,0 +1,64 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+
+export interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { data, id } = post;
+
+const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+---
+
+<article class="editorial-card group relative flex flex-col justify-between p-6 sm:p-7">
+  <div>
+    <!-- Metadata -->
+    <div class="text-base-content/60 mb-3 flex items-center justify-between text-xs">
+      <span class="text-accent font-mono">{data.category}</span>
+      <div class="flex items-center gap-2 font-mono">
+        <time datetime={data.publishDate}>{formattedDate}</time>
+        {data.readingTime && <span>• {data.readingTime}</span>}
+      </div>
+    </div>
+
+    <!-- Title -->
+    <h3
+      class="text-base-content group-hover:text-accent text-lg font-bold tracking-tight transition-colors sm:text-xl"
+    >
+      <a href={`/blog/${id}/`} class="after:absolute after:inset-0 focus:outline-none">
+        {data.title}
+      </a>
+    </h3>
+
+    <!-- Description -->
+    <p class="text-base-content/70 mt-2 text-sm leading-relaxed">
+      {data.description}
+    </p>
+  </div>
+
+  <!-- Tags & Read indicator -->
+  <div class="border-base-300/60 mt-5 flex items-center justify-between border-t pt-4 text-xs">
+    <div class="flex flex-wrap gap-1.5">
+      {
+        data.tags
+          .slice(0, 3)
+          .map((tag) => (
+            <span class="bg-base-300/40 text-base-content/70 rounded px-2 py-0.5 font-mono text-[11px]">
+              #{tag}
+            </span>
+          ))
+      }
+    </div>
+    <span
+      class="text-accent flex items-center gap-1 font-mono text-[11px] font-medium transition-transform group-hover:translate-x-0.5"
+    >
+      Read <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
+    </span>
+  </div>
+</article>

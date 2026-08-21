@@ -1,0 +1,108 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ReadingProgressBar from '@/components/common/ReadingProgressBar.astro';
+import { getCollection, render } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { data } = project;
+const { Content } = await render(project);
+---
+
+<BaseLayout title={data.title} description={data.description} publishDate={data.publishDate}>
+  <ReadingProgressBar />
+
+  <article class="mx-auto max-w-4xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">
+    <!-- Back Link -->
+    <a
+      href="/projects/"
+      class="text-base-content/60 hover:text-accent inline-flex items-center gap-1.5 font-mono text-xs transition-colors"
+    >
+      <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Back to all projects
+    </a>
+
+    <!-- Project Header -->
+    <header class="border-base-300 space-y-4 border-b pb-8">
+      <div class="text-base-content/60 flex flex-wrap items-center gap-3 font-mono text-xs">
+        <span
+          class="bg-accent/10 text-accent rounded px-2 py-0.5 font-semibold tracking-wider uppercase"
+        >
+          {data.category.replace('-', ' ')}
+        </span>
+        <span>•</span>
+        <span>{data.year}</span>
+        <span>•</span>
+        <span>{data.role}</span>
+      </div>
+
+      <h1
+        class="text-base-content text-3xl leading-tight font-extrabold tracking-tight sm:text-4xl lg:text-5xl"
+      >
+        {data.title}
+      </h1>
+
+      <p class="text-base-content/80 max-w-2xl text-base leading-relaxed sm:text-lg">
+        {data.description}
+      </p>
+
+      <!-- Action buttons -->
+      <div class="flex flex-wrap items-center gap-3 pt-2">
+        {
+          data.githubUrl && (
+            <a
+              href={data.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-sm bg-base-content text-base-100 hover:bg-base-content/90 flex items-center gap-2 rounded-md border-0 font-mono text-xs tracking-wider uppercase"
+            >
+              <Icon name="ph:github-logo-bold" class="h-4 w-4" /> Source Code
+            </a>
+          )
+        }
+        {
+          data.liveUrl && (
+            <a
+              href={data.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 hover:text-base-content flex items-center gap-2 rounded-md font-mono text-xs tracking-wider uppercase"
+            >
+              <Icon name="ph:arrow-square-out-bold" class="h-4 w-4" /> Live Demo
+            </a>
+          )
+        }
+      </div>
+    </header>
+
+    <!-- Technologies Grid -->
+    <div class="editorial-card p-5 sm:p-6">
+      <h2 class="text-accent mb-3 font-mono text-xs font-semibold tracking-widest uppercase">
+        Technologies & Tools
+      </h2>
+      <div class="flex flex-wrap gap-2">
+        {
+          data.tags.map((tag) => (
+            <span class="bg-base-300/50 text-base-content/80 rounded px-3 py-1 font-mono text-xs">
+              {tag}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Case Study Body Content -->
+    <div
+      class="prose prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-base-content prose-p:text-base-content/80 prose-a:text-accent hover:prose-a:underline prose-code:font-mono prose-code:text-accent prose-pre:border prose-pre:border-base-300 prose-pre:bg-base-200 max-w-none"
+    >
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

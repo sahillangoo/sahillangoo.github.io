@@ -1,0 +1,8 @@
+# Cloudflare Pages Redirects
+# 301 redirects for trailing slashes or route aliases
+/work  /projects/  301
+/articles  /blog/  301
+/cv  /resume/  301
+/github  https://github.com/sahillangoo  302
+/linkedin  https://linkedin.com/in/sahillangoo  302
+/twitter  https://x.com/sahillangoo  302

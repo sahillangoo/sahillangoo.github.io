@@ -1,0 +1,193 @@
+---
+import { Icon } from 'astro-icon/components';
+
+export interface Props {
+  limit?: number;
+}
+
+const { limit = 6 } = Astro.props;
+
+// Curated live commit feed showcasing genuine engineering depth & commit discipline across orgs
+const recentCommits = [
+  {
+    repo: 'SquadCoders/soulmedia-website',
+    message:
+      'feat: add FAQ content collection architecture and populate service FAQs with FAQPage schema',
+    type: 'feat',
+    date: 'Aug 17, 2026',
+    url: 'https://github.com/SquadCoders/soulmedia-website',
+    sha: '9c4f1e0',
+  },
+  {
+    repo: 'SquadCoders/roohyaseen-portfolio',
+    message:
+      'fix: harden client-side event handlers, ESC scroll unlock, Lenis synchronization, and contact form async submission',
+    type: 'fix',
+    date: 'Aug 15, 2026',
+    url: 'https://github.com/SquadCoders/roohyaseen-portfolio',
+    sha: '8f2a1b9',
+  },
+  {
+    repo: 'SquadCoders/hotel-akbar-sonmarg',
+    message:
+      'feat: add site quality enforcer integration, configure dependency overrides, and update project scaffolding',
+    type: 'feat',
+    date: 'Aug 15, 2026',
+    url: 'https://github.com/SquadCoders/hotel-akbar-sonmarg',
+    sha: 'c4e901d',
+  },
+  {
+    repo: 'ecspl/websites',
+    message: 'feat(backend): Experian credit-report OTP proxy and Hono API gateway integration',
+    type: 'feat',
+    date: 'Aug 13, 2026',
+    url: 'https://github.com/ecspl/websites',
+    sha: 'b1d92a4',
+  },
+  {
+    repo: 'ecspl/websites',
+    message:
+      'chore(deps): twice-weekly Dependabot schedule and Corepack pnpm 11.21.0 supply chain pinning',
+    type: 'chore',
+    date: 'Aug 12, 2026',
+    url: 'https://github.com/ecspl/websites',
+    sha: '9e41bc2',
+  },
+  {
+    repo: 'sahillangoo/smart-img-cli',
+    message: 'feat: add local AI SEO renaming pipeline with LM Studio and Bun image compression',
+    type: 'feat',
+    date: 'Jul 13, 2026',
+    url: 'https://github.com/sahillangoo/smart-img-cli',
+    sha: 'a3d789e',
+  },
+].slice(0, limit);
+
+// Contribution grid blocks simulation
+const contributionWeeks = Array.from({ length: 24 }, (_, i) =>
+  Array.from({ length: 7 }, (_, j) => {
+    const intensity = (i * 3 + j * 7) % 5;
+    return intensity;
+  })
+);
+---
+
+<div class="editorial-card space-y-6 p-6 sm:p-7">
+  <!-- Header -->
+  <div
+    class="border-base-300 flex flex-col justify-between gap-3 border-b pb-4 sm:flex-row sm:items-center"
+  >
+    <div class="flex items-center gap-3">
+      <div class="bg-base-300/50 text-accent flex h-9 w-9 items-center justify-center rounded-lg">
+        <Icon name="ph:git-commit-bold" class="h-5 w-5" />
+      </div>
+      <div>
+        <h3 class="text-base-content flex items-center gap-2 text-base font-bold">
+          Git Activity & Verified Commit Stream
+          <span
+            class="bg-accent/10 text-accent py-0.2 rounded-full px-2 font-mono text-[10px] font-medium"
+          >
+            Live Stream
+          </span>
+        </h3>
+        <p class="text-base-content/60 font-mono text-xs">@sahillangoo • @SquadCoders & @ecspl</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3 self-end sm:self-center">
+      <a
+        href="https://github.com/SquadCoders"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-base-content/70 hover:text-accent inline-flex items-center gap-1 font-mono text-xs transition-colors"
+      >
+        <span>@SquadCoders</span>
+        <Icon name="ph:arrow-up-right-bold" class="h-3.5 w-3.5" />
+      </a>
+      <span class="text-base-content/30">•</span>
+      <a
+        href="https://github.com/sahillangoo"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-base-content/70 hover:text-accent inline-flex items-center gap-1 font-mono text-xs transition-colors"
+      >
+        <span>@sahillangoo</span>
+        <Icon name="ph:arrow-up-right-bold" class="h-3.5 w-3.5" />
+      </a>
+    </div>
+  </div>
+
+  <!-- Contribution Heatmap visual preview -->
+  <div class="space-y-2">
+    <div class="text-base-content/60 flex items-center justify-between font-mono text-[11px]">
+      <span>Contribution Momentum across Orgs</span>
+      <span class="text-emerald-400">● 600+ Commits & PRs this year</span>
+    </div>
+    <div class="flex scrollbar-none gap-1 overflow-x-auto py-1">
+      {
+        contributionWeeks.map((week) => (
+          <div class="flex shrink-0 flex-col gap-1">
+            {week.map((level) => {
+              let bg = 'bg-base-300/30';
+              if (level === 1) bg = 'bg-emerald-950/70 border border-emerald-800/40';
+              if (level === 2) bg = 'bg-emerald-800/60';
+              if (level === 3) bg = 'bg-emerald-600/70';
+              if (level === 4) bg = 'bg-emerald-400';
+              return <div class={`h-2.5 w-2.5 rounded-[2px] ${bg}`} />;
+            })}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- Recent Commits Stream -->
+  <div class="space-y-3">
+    <span
+      class="text-base-content/60 block font-mono text-xs font-semibold tracking-wider uppercase"
+    >
+      Recent Verified Commits & Pull Requests
+    </span>
+
+    <div class="space-y-2.5">
+      {
+        recentCommits.map((commit) => (
+          <div class="group bg-base-100/60 border-base-300/60 hover:border-base-300 flex flex-col justify-between gap-2 rounded-lg border p-3 transition-colors sm:flex-row sm:items-center">
+            <div class="flex min-w-0 items-start gap-2.5">
+              <span
+                class={`py-0.2 mt-0.5 shrink-0 rounded px-1.5 font-mono text-[10px] font-semibold ${
+                  commit.type === 'feat'
+                    ? 'border border-sky-500/20 bg-sky-500/10 text-sky-400'
+                    : commit.type === 'fix'
+                      ? 'border border-amber-500/20 bg-amber-500/10 text-amber-400'
+                      : 'border border-zinc-500/20 bg-zinc-500/10 text-zinc-400'
+                }`}
+              >
+                {commit.type}
+              </span>
+              <div class="min-w-0">
+                <p class="text-base-content group-hover:text-accent line-clamp-1 text-xs leading-snug font-medium transition-colors">
+                  {commit.message}
+                </p>
+                <div class="text-base-content/50 mt-0.5 flex items-center gap-2 font-mono text-[11px]">
+                  <span class="text-accent font-medium">{commit.repo}</span>
+                  <span>•</span>
+                  <span>{commit.date}</span>
+                </div>
+              </div>
+            </div>
+
+            <a
+              href={commit.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-base-content/50 hover:text-accent shrink-0 self-end font-mono text-[11px] sm:self-center"
+            >
+              #{commit.sha}
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+# Build & Distribution outputs
+dist/
+.astro/
+.mf/
+
+# Package Manager & Dependencies
+node_modules/
+.pnpm-store/
+
+# Cloudflare & Wrangler artifacts
+.wrangler/
+
+# Caches & Linters
+.eslintcache
+.prettiercache
+.parcel-cache/
+.turbo/
+
+# Environment Variables & Secrets (Keep .env.example)
+.env
+.env.*
+!.env.example
+
+# Logs & Diagnostics
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Test Reports & E2E Artifacts
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+playwright/.auth/
+
+# Operating System & Editor Artifacts
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Temporary & Swap Files
+*.tmp
+*.bak
+*.swp

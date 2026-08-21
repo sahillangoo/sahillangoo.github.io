@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+@plugin "daisyui" {
+  themes:
+    editorialDark --default,
+    editorialLight;
+}
+
+@plugin "daisyui/theme" {
+  name: 'editorialDark';
+  default: true;
+  prefersdark: true;
+  color-scheme: dark;
+
+  /* Modern Obsidian & Slate Dark Theme */
+  --color-base-100: #0c0d0f; /* Deep Obsidian Background */
+  --color-base-200: #141619; /* Panel & Card Surface */
+  --color-base-300: #24272c; /* Steel Borders & Subtle Dividers */
+  --color-base-content: #f4f4f6; /* High-contrast Crisp Foreground */
+
+  /* Primary Light Accent */
+  --color-primary: #f4f4f6;
+  --color-primary-content: #0c0d0f;
+
+  /* Secondary Muted Slate */
+  --color-secondary: #9aa0a6;
+  --color-secondary-content: #0c0d0f;
+
+  /* Subtle Warm Accent */
+  --color-accent: #38bdf8;
+  --color-accent-content: #0c0d0f;
+
+  /* Neutral Surface */
+  --color-neutral: #141619;
+  --color-neutral-content: #f4f4f6;
+
+  /* Semantic Feedback Tokens */
+  --color-info: oklch(65% 0.15 240);
+  --color-info-content: oklch(99% 0.004 240);
+  --color-success: oklch(65% 0.16 150);
+  --color-success-content: oklch(99% 0.004 150);
+  --color-warning: oklch(78% 0.15 75);
+  --color-warning-content: oklch(16% 0.03 75);
+  --color-error: oklch(60% 0.22 28);
+  --color-error-content: oklch(99% 0.004 28);
+
+  /* Minimalist Geometric Radii */
+  --radius-selector: 0.375rem;
+  --radius-field: 0.375rem;
+  --radius-box: 0.5rem;
+
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@plugin "daisyui/theme" {
+  name: 'editorialLight';
+  default: false;
+  prefersdark: false;
+  color-scheme: light;
+
+  /* Clean Editorial Paper Light Theme */
+  --color-base-100: #fafafa; /* Crisp Warm Canvas */
+  --color-base-200: #f4f4f5; /* Subtle Neutral Card Surface */
+  --color-base-300: #e4e4e7; /* Light Gray Dividers */
+  --color-base-content: #09090b; /* Deep Ink Typography */
+
+  --color-primary: #09090b;
+  --color-primary-content: #fafafa;
+
+  --color-secondary: #52525b;
+  --color-secondary-content: #fafafa;
+
+  --color-accent: #0284c7;
+  --color-accent-content: #fafafa;
+
+  --color-neutral: #e4e4e7;
+  --color-neutral-content: #09090b;
+
+  --color-info: oklch(60% 0.15 240);
+  --color-info-content: #ffffff;
+  --color-success: oklch(60% 0.16 150);
+  --color-success-content: #ffffff;
+  --color-warning: oklch(70% 0.15 75);
+  --color-warning-content: #09090b;
+  --color-error: oklch(55% 0.22 28);
+  --color-error-content: #ffffff;
+
+  --radius-selector: 0.375rem;
+  --radius-field: 0.375rem;
+  --radius-box: 0.5rem;
+
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+:root {
+  --font-sans:
+    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --ff-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --ff-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+@theme {
+  --font-sans:
+    'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Custom Color Tokens */
+  --color-obsidian: #0c0d0f;
+  --color-graphite: #141619;
+  --color-steel: #24272c;
+  --color-slate-muted: #9aa0a6;
+  --color-chalk: #f4f4f6;
+
+  /* Editorial Easing */
+  --ease-editorial: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Base resets & typography */
+html {
+  background-color: var(--color-base-100);
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+  color: var(--color-base-content);
+}
+
+body {
+  background-color: var(--color-base-100);
+  color: var(--color-base-content);
+  line-height: 1.6;
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-base-content);
+  font-weight: 700;
+  line-height: 1.2;
+  font-family: var(--font-sans);
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+p {
+  font-family: var(--font-sans);
+  text-wrap: pretty;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Micro-interaction Button Click Feedback */
+.btn,
+button,
+[role='button'],
+a.btn {
+  transition:
+    transform 160ms cubic-bezier(0.23, 1, 0.32, 1),
+    background-color 160ms ease,
+    border-color 160ms ease,
+    opacity 160ms ease !important;
+}
+
+.btn:active,
+button:active,
+[role='button']:active,
+a.btn:active {
+  transform: scale(0.98) !important;
+}
+
+/* Subtle editorial card styling */
+.editorial-card {
+  transition:
+    border-color 200ms ease,
+    transform 200ms cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 200ms ease;
+  border: 1px solid var(--color-base-300);
+  border-radius: var(--radius-box);
+  background-color: var(--color-base-200);
+}
+
+.editorial-card:hover {
+  transform: translateY(-2px);
+  border-color: oklch(50% 0.05 260 / 0.4);
+}
+
+/* Sticky Header */
+#site-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 50;
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    backdrop-filter 0.25s ease;
+  border-bottom: 1px solid transparent;
+}
+
+#site-header.is-scrolled {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-color: var(--color-base-300);
+  background-color: color-mix(in oklch, var(--color-base-100) 85%, transparent);
+}
+
+/* Zero-Layout-Shift Pure Opacity Cross-Fade for View Transitions */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 160ms;
+  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+::view-transition-old(root) {
+  animation-name: page-fade-out;
+}
+
+::view-transition-new(root) {
+  animation-name: page-fade-in;
+}
+
+@keyframes page-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}

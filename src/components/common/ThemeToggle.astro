@@ -1,0 +1,76 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<label
+  id="theme-toggle-label"
+  class="swap swap-rotate btn btn-ghost btn-sm btn-square text-base-content/80 hover:text-base-content hover:bg-base-200 rounded-md transition-transform"
+  aria-label="Toggle color theme"
+>
+  <!-- Hidden checkbox controller -->
+  <input
+    type="checkbox"
+    id="theme-toggle-checkbox"
+    class="theme-controller hidden"
+    aria-label="Toggle theme"
+  />
+
+  <!-- Sun icon (shown when dark theme is active, click to switch to light) -->
+  <span class="swap-on flex items-center justify-center">
+    <Icon name="ph:sun-bold" class="h-4 w-4" />
+  </span>
+
+  <!-- Moon icon (shown when light theme is active, click to switch to dark) -->
+  <span class="swap-off flex items-center justify-center">
+    <Icon name="ph:moon-bold" class="h-4 w-4" />
+  </span>
+</label>
+
+<script>
+  function normalizeTheme(theme: string | null): 'editorialDark' | 'editorialLight' {
+    if (theme === 'editorialLight' || theme === 'light') return 'editorialLight';
+    if (theme === 'editorialDark' || theme === 'dark') return 'editorialDark';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'editorialDark'
+      : 'editorialLight';
+  }
+
+  function syncCheckboxState() {
+    const checkbox = document.getElementById('theme-toggle-checkbox') as HTMLInputElement | null;
+    if (!checkbox) return;
+    const currentTheme = normalizeTheme(document.documentElement.getAttribute('data-theme'));
+    // Checked = dark mode (sun visible), Unchecked = light mode (moon visible)
+    checkbox.checked = currentTheme === 'editorialDark';
+  }
+
+  function toggleTheme() {
+    const rawCurrent = document.documentElement.getAttribute('data-theme');
+    const current = normalizeTheme(rawCurrent);
+    const next = current === 'editorialDark' ? 'editorialLight' : 'editorialDark';
+    document.documentElement.setAttribute('data-theme', next);
+    try {
+      localStorage.setItem('theme', next);
+    } catch {
+      // LocalStorage access may be restricted
+    }
+    syncCheckboxState();
+  }
+
+  function setupThemeToggle() {
+    const checkbox = document.getElementById('theme-toggle-checkbox') as HTMLInputElement | null;
+    if (!checkbox) return;
+
+    syncCheckboxState();
+
+    if (checkbox.dataset.bound === 'true') return;
+    checkbox.dataset.bound = 'true';
+
+    checkbox.addEventListener('change', () => {
+      toggleTheme();
+    });
+  }
+
+  setupThemeToggle();
+  document.addEventListener('astro:page-load', setupThemeToggle);
+  document.addEventListener('astro:after-swap', syncCheckboxState);
+</script>

@@ -1,0 +1,131 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { Icon } from 'astro-icon/components';
+
+const usesSections = [
+  {
+    title: 'Workstation & Hardware',
+    icon: 'ph:laptop-bold',
+    items: [
+      {
+        name: 'Custom Developer Rig',
+        description: 'Multi-core AMD Ryzen powerhouse with 32GB RAM and ultra-fast NVMe storage.',
+      },
+      {
+        name: 'Primary Display',
+        description: 'High-density 4K calibrated display with high color accuracy.',
+      },
+      {
+        name: 'Keyboards & Input',
+        description: 'Custom mechanical keyboard with tactile switches & ergonomic mouse.',
+      },
+      { name: 'Audio', description: 'Studio monitoring headphones for deep focus sessions.' },
+    ],
+  },
+  {
+    title: 'Development Environment & Software',
+    icon: 'ph:code-bold',
+    items: [
+      {
+        name: 'Editor & IDE',
+        description:
+          'VS Code & Cursor with strict TypeScript, ESLint 10, Prettier, and custom dark theme.',
+      },
+      {
+        name: 'Terminal & Shell',
+        description: 'Windows PowerShell (pwsh) + Windows Terminal with Starship prompt.',
+      },
+      {
+        name: 'Package Managers & Runtimes',
+        description: 'pnpm (strictly configured), Bun, Node.js (via nvm), and Go.',
+      },
+      {
+        name: 'Git & Version Control',
+        description: 'Git CLI with conventional commit discipline & GitHub CLI (gh).',
+      },
+    ],
+  },
+  {
+    title: 'Cloud & Infrastructure',
+    icon: 'ph:cloud-bold',
+    items: [
+      {
+        name: 'Hosting & Edge CDN',
+        description: 'Cloudflare Pages & Workers for static SSG and edge API gateways.',
+      },
+      {
+        name: 'CI/CD & Automation',
+        description: 'GitHub Actions with strict lockfile integrity checks and Dependabot.',
+      },
+      {
+        name: 'Observability & Monitoring',
+        description: 'Sentry for real-time frontend/backend exception triage and telemetry.',
+      },
+    ],
+  },
+  {
+    title: 'Design & Workflow Tools',
+    icon: 'ph:palette-bold',
+    items: [
+      {
+        name: 'Figma',
+        description: 'Interface layout, responsive design tokens, and rapid wireframing.',
+      },
+      {
+        name: 'Local AI & LLMs',
+        description: 'LM Studio with local vision and code models for offline developer workflows.',
+      },
+      {
+        name: 'Browser Suite',
+        description: 'Arc / Brave & Chrome DevTools for Core Web Vitals profiling.',
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Uses & Tech Stack — Sahil Langoo"
+  description="A comprehensive catalog of hardware, software, developer tools, and workflow setup used by Sahil Langoo."
+>
+  <div class="mx-auto max-w-4xl space-y-12 px-4 py-8 sm:px-6 sm:py-12">
+    <!-- Header -->
+    <div class="border-base-300 space-y-4 border-b pb-8">
+      <div
+        class="border-base-300 bg-base-200 text-base-content/80 inline-flex items-center gap-2 rounded-full border px-3 py-0.5 font-mono text-xs"
+      >
+        <span>Gear & Tech Stack</span>
+      </div>
+      <h1 class="text-base-content text-3xl font-extrabold tracking-tight sm:text-4xl">
+        Uses & Developer Setup
+      </h1>
+      <p class="text-base-content/75 text-base leading-relaxed">
+        A living inventory of the hardware, software, editors, terminal setup, and services I rely
+        on daily to engineer high-performance systems.
+      </p>
+    </div>
+
+    <!-- Sections -->
+    <div class="space-y-10">
+      {
+        usesSections.map((section) => (
+          <div class="space-y-4">
+            <h2 class="text-accent border-base-300/80 flex items-center gap-2 border-b pb-2 font-mono text-sm font-semibold tracking-wider uppercase">
+              <Icon name={section.icon} class="h-4 w-4" />
+              {section.title}
+            </h2>
+
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {section.items.map((item) => (
+                <div class="editorial-card space-y-1.5 p-5">
+                  <h3 class="text-base-content font-mono text-xs font-bold">{item.name}</h3>
+                  <p class="text-base-content/70 text-xs leading-relaxed">{item.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>
