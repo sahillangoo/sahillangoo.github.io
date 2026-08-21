@@ -1,8 +1,16 @@
 # Cloudflare Pages Redirects
-# 301 redirects for trailing slashes or route aliases
-/work  /projects/  301
-/articles  /blog/  301
-/cv  /resume/  301
-/github  https://github.com/sahillangoo  302
+# Canonical Domain Redirections (www -> apex domain)
+https://www.sahillangoo.in/*  https://sahillangoo.in/:splat  301
+http://www.sahillangoo.in/*   https://sahillangoo.in/:splat  301
+http://sahillangoo.in/*       https://sahillangoo.in/:splat  301
+
+# Route Aliases & Shortlinks
+/work       /projects/  301
+/articles   /blog/      301
+/cv         /resume/    301
+/notes/all  /notes/     301
+
+# External Verified Social Redirects
+/github    https://github.com/sahillangoo        302
 /linkedin  https://linkedin.com/in/sahillangoo  302
-/twitter  https://x.com/sahillangoo  302
+/twitter   https://x.com/sahillangoo            302
