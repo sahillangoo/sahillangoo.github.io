@@ -1,17 +1,41 @@
-# Automated Email Auto-Responder Template
+# Automated Email Auto-Responder & Deliverability Guide
 
-This template is designed for the automated email auto-responder / vacation reply configured on your email hosting provider (Proton Mail, Cloudflare Email Routing, Google Workspace, Fastmail, or cPanel) for `hello@sahillangoo.in`.
+This document defines the email auto-responder configuration, anti-spam audit rules, RFC 3834 compliance, and hardened templates for `hello@sahillangoo.in`.
 
 ---
 
-## 🎨 Option 1: Monochrome HTML Template (Dark & Light Mode Responsive)
+## 🛡️ Anti-Spam Audit & Deliverability Rules
 
-This template adheres to the website's **editorial monochrome palette (black, white, obsidian, and zinc)** with **zero colored tinting or purple accents**. It uses standard table-based email markup compatible with Outlook (Windows/Mac/Web), Gmail (iOS/Android/Web), Apple Mail, Proton Mail, Thunderbird, and Superhuman.
+To guarantee that auto-replies never land in **Spam / Junk** or trigger automated spam filters (SpamAssassin, Barracuda, Google Workspace AI, Microsoft SmartScreen), this template strictly avoids common email anti-patterns:
 
-### Key Architectural Details:
-- **Pure Monochromatic Palette**: High-contrast obsidian (`#090A0C` / `#121316`) on dark mode, crisp neutral (`#FFFFFF` on `#F4F4F5`) on light mode.
-- **Embedded SquadCoders Studio Link**: Explicitly highlights [@SquadCoders](https://github.com/SquadCoders) across resources and signature.
-- **Cross-Client Table Architecture**: MSO conditional blocks, fluid mobile stacking, inline CSS properties, and touch targets $\ge 44\text{px}$.
+### 1. RFC 3834 & Header Compliance
+When setting up automated responses in your email hosting or worker script:
+- **`Auto-Submitted: auto-replied`**: (MANDATORY) Signals to recipient mail servers that this message is a generated acknowledgment, suppressing bounce loops.
+- **`X-Auto-Response-Suppress: All`**: (MANDATORY for Microsoft Exchange) Prevents infinite out-of-office bounce chains.
+- **`Precedence: auto_reply`** / **`Precedence: bulk`**: Prevents auto-responders from triggering vacation replies on mailing lists.
+
+### 2. Elimination of Spam Filter Anti-Patterns
+- ❌ **No Zero-Font or Hidden Text (`font-size: 0px; opacity: 0; display: none;`)**: Triggers SpamAssassin `HTML_FONT_LOW_CONTRAST` and `ZERO_FONT_SIZE`. Replaced with safe natural preheaders.
+- ❌ **No Zero-Width Obfuscation (`&zwnj; &shy; &#847;` flooding)**: Spammer evasion heuristics flag repeated zero-width character sequences as obfuscation attempts. Removed completely.
+- ❌ **No Generic Phishing Triggers ("Click Here", "Act Now", "Free")**: All anchor links use descriptive semantic labels (`Selected Projects`, `Technical Journal`).
+- ❌ **No URL Mismatch**: Displayed text and `href` targets match identical canonical hostnames (`https://sahillangoo.in` and `https://github.com/SquadCoders`), preventing `PHISHING_URL_MISMATCH` heuristics.
+- ❌ **No Excessive Punctuation or All-Caps**: Headings use natural sentence casing without trailing exclamation marks.
+- ❌ **100% Text-to-HTML Ratio**: No tracking pixels or external imagery that trigger "images blocked" warnings or low text-to-image ratios.
+
+### 3. DNS Authentication Checklist
+Ensure your DNS records at Cloudflare have:
+- **SPF**: `v=spf1 include:_spf.mx.cloudflare.net ~all` (or your mail host's SPF record).
+- **DKIM**: 2048-bit cryptographic key published in your DNS.
+- **DMARC**: `v=DMARC1; p=quarantine; rua=mailto:hello@sahillangoo.in; pct=100; adkim=r; aspf=r;`
+
+---
+
+## 🎨 Option 1: Hardened Monochrome HTML Template
+
+### Subject Line:
+```text
+Receipt Confirmation — Sahil Langoo
+```
 
 ### HTML Code:
 
@@ -25,7 +49,7 @@ This template adheres to the website's **editorial monochrome palette (black, wh
   <meta name="x-apple-disable-message-reformatting">
   <meta name="color-scheme" content="light dark">
   <meta name="supported-color-schemes" content="light dark">
-  <title>Thanks for reaching out — Sahil Langoo</title>
+  <title>Receipt Confirmation — Sahil Langoo</title>
   <!--[if mso]>
   <xml>
     <o:OfficeDocumentSettings>
@@ -103,7 +127,7 @@ This template adheres to the website's **editorial monochrome palette (black, wh
       }
     }
 
-    /* Dark Mode Overrides (Monochrome Obsidian Aesthetic) */
+    /* Dark Mode Overrides (Strict High-Contrast Monochrome) */
     @media (prefers-color-scheme: dark) {
       body, .email-bg {
         background-color: #090A0C !important;
@@ -172,26 +196,29 @@ This template adheres to the website's **editorial monochrome palette (black, wh
 </head>
 <body class="email-bg" style="margin: 0; padding: 32px 12px; background-color: #F4F4F5; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased;">
 
-  <!-- Outer Center Table -->
+  <!-- Outer Container Table -->
   <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" class="email-bg" style="background-color: #F4F4F5;">
     <tr>
       <td align="center" style="padding: 0 8px;">
 
-        <!-- Hidden Preheader for Inbox Snippet Previews -->
-        <div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
-          Thanks for getting in touch! Your message was received at hello@sahillangoo.in. I'll get back to you within 24–48 hours.
-          &#847; &zwnj; &nbsp; &#8199; &shy; &#847; &zwnj; &nbsp; &#8199; &shy; &#847; &zwnj; &nbsp; &#8199; &shy;
-        </div>
+        <!-- Spam-Safe Natural Preheader (No zero-font or hidden character flooding) -->
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 580px; margin-bottom: 8px;">
+          <tr>
+            <td align="right" class="text-muted" style="font-size: 11px; color: #8E8E93; font-family: 'SFMono-Regular', Consolas, Monaco, monospace;">
+              Auto-Reply &bull; Direct inquiry received
+            </td>
+          </tr>
+        </table>
 
-        <!-- Main Card (Max Width 580px) -->
+        <!-- Main Content Card (Max Width 580px) -->
         <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" class="email-card" style="max-width: 580px; width: 100%; background-color: #FFFFFF; border: 1px solid #E4E4E7; border-radius: 8px; overflow: hidden;">
           
-          <!-- Top Header: Monogram Avatar + Title + Availability Status -->
+          <!-- Top Header: Monogram Avatar + Title + Status -->
           <tr>
             <td style="padding: 24px 28px 18px 28px; border-bottom: 1px solid #E4E4E7;" class="border-divider">
               <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0">
                 <tr>
-                  <!-- Left: SL Monogram & Brand -->
+                  <!-- Left: SL Monogram & Identity -->
                   <td align="left" style="vertical-align: middle;">
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                       <tr>
@@ -212,11 +239,11 @@ This template adheres to the website's **editorial monochrome palette (black, wh
                     </table>
                   </td>
 
-                  <!-- Right: Availability Pill -->
+                  <!-- Right: Status Indicator -->
                   <td align="right" style="vertical-align: middle;">
                     <div class="tag-pill" style="display: inline-block; padding: 4px 9px; background-color: #F4F4F5; border: 1px solid #E4E4E7; border-radius: 4px; font-family: 'SFMono-Regular', Consolas, Monaco, monospace; font-size: 11px; font-weight: 600; color: #09090B;">
                       <span style="display: inline-block; width: 6px; height: 6px; background-color: #10B981; border-radius: 50%; margin-right: 4px; vertical-align: middle;"></span>
-                      Available
+                      Online
                     </div>
                   </td>
                 </tr>
@@ -224,38 +251,38 @@ This template adheres to the website's **editorial monochrome palette (black, wh
             </td>
           </tr>
 
-          <!-- Main Content Area -->
+          <!-- Main Body Copy -->
           <tr>
             <td style="padding: 28px 28px 24px 28px;">
               
-              <!-- Eyebrow Badge -->
-              <div class="text-muted" style="font-family: 'SFMono-Regular', Consolas, Monaco, monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; color: #71717A; font-weight: 600; margin-bottom: 8px;">
-                AUTOMATED CONFIRMATION
+              <!-- Semantic Eyebrow -->
+              <div class="text-muted" style="font-family: 'SFMono-Regular', Consolas, Monaco, monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: #71717A; font-weight: 600; margin-bottom: 8px;">
+                Receipt Confirmation
               </div>
 
               <!-- Main Heading -->
-              <h1 class="text-primary" style="margin: 0 0 16px 0; font-size: 22px; line-height: 1.25; font-weight: 700; color: #09090B; letter-spacing: -0.025em;">
-                Thanks for reaching out!
+              <h1 class="text-primary" style="margin: 0 0 16px 0; font-size: 20px; line-height: 1.3; font-weight: 700; color: #09090B; letter-spacing: -0.02em;">
+                Thank you for your message.
               </h1>
 
-              <!-- Message Body -->
+              <!-- Message Body Paragraphs -->
               <p class="text-secondary" style="margin: 0 0 14px 0; font-size: 14px; line-height: 1.65; color: #3F3F46;">
-                Your message has reached my primary inbox at <strong class="text-primary" style="color: #09090B; font-weight: 600;">hello@sahillangoo.in</strong>.
+                Your inquiry has been received at <strong class="text-primary" style="color: #09090B; font-weight: 600;">hello@sahillangoo.in</strong>.
               </p>
 
               <p class="text-secondary" style="margin: 0 0 24px 0; font-size: 14px; line-height: 1.65; color: #3F3F46;">
-                I typically review and reply to all inquiries within <strong>24–48 hours</strong> (Monday through Friday). If your message is regarding a new web platform, architecture consulting, or engineering collaboration with <strong class="text-primary" style="color: #09090B;">SquadCoders</strong>, I will follow up with details and next steps shortly.
+                I review incoming correspondence regularly and typically reply within <strong>24 to 48 business hours</strong>. If your message is regarding web systems engineering, consulting, or collaboration with <strong class="text-primary" style="color: #09090B;">SquadCoders</strong>, I will follow up with detailed next steps shortly.
               </p>
 
-              <!-- Selected Work & Resources Header -->
+              <!-- Section Divider -->
               <div class="text-muted" style="font-family: 'SFMono-Regular', Consolas, Monaco, monospace; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #71717A; margin-bottom: 12px; border-top: 1px solid #E4E4E7; padding-top: 20px;" class="border-divider">
                 Selected Work & Systems
               </div>
 
-              <!-- 2-Column Resource Grid (Monochrome) -->
+              <!-- 2-Column Resource Grid -->
               <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0">
                 <tr>
-                  <!-- Card 1: Case Studies -->
+                  <!-- Tile 1: Case Studies -->
                   <td width="48%" class="col-half" style="vertical-align: top; padding-bottom: 10px;">
                     <a href="https://sahillangoo.in/projects/" class="email-subcard" style="display: block; padding: 12px 14px; background-color: #FAFAFA; border: 1px solid #E4E4E7; border-radius: 6px; text-decoration: none;">
                       <div class="card-link-title" style="font-size: 13px; font-weight: 700; color: #09090B; font-family: 'SFMono-Regular', Consolas, monospace;">
@@ -269,7 +296,7 @@ This template adheres to the website's **editorial monochrome palette (black, wh
 
                   <td width="4%" class="col-space">&nbsp;</td>
 
-                  <!-- Card 2: Engineering Essays -->
+                  <!-- Tile 2: Engineering Essays -->
                   <td width="48%" class="col-half" style="vertical-align: top; padding-bottom: 10px;">
                     <a href="https://sahillangoo.in/blog/" class="email-subcard" style="display: block; padding: 12px 14px; background-color: #FAFAFA; border: 1px solid #E4E4E7; border-radius: 6px; text-decoration: none;">
                       <div class="card-link-title" style="font-size: 13px; font-weight: 700; color: #09090B; font-family: 'SFMono-Regular', Consolas, monospace;">
@@ -283,7 +310,7 @@ This template adheres to the website's **editorial monochrome palette (black, wh
                 </tr>
 
                 <tr>
-                  <!-- Card 3: SquadCoders Studio -->
+                  <!-- Tile 3: SquadCoders Studio -->
                   <td width="48%" class="col-half" style="vertical-align: top; padding-bottom: 10px;">
                     <a href="https://github.com/SquadCoders" class="email-subcard" style="display: block; padding: 12px 14px; background-color: #FAFAFA; border: 1px solid #E4E4E7; border-radius: 6px; text-decoration: none;">
                       <div class="card-link-title" style="font-size: 13px; font-weight: 700; color: #09090B; font-family: 'SFMono-Regular', Consolas, monospace;">
@@ -297,7 +324,7 @@ This template adheres to the website's **editorial monochrome palette (black, wh
 
                   <td width="4%" class="col-space">&nbsp;</td>
 
-                  <!-- Card 4: Digital Garden -->
+                  <!-- Tile 4: Digital Garden -->
                   <td width="48%" class="col-half" style="vertical-align: top; padding-bottom: 10px;">
                     <a href="https://sahillangoo.in/notes/" class="email-subcard" style="display: block; padding: 12px 14px; background-color: #FAFAFA; border: 1px solid #E4E4E7; border-radius: 6px; text-decoration: none;">
                       <div class="card-link-title" style="font-size: 13px; font-weight: 700; color: #09090B; font-family: 'SFMono-Regular', Consolas, monospace;">
@@ -311,7 +338,7 @@ This template adheres to the website's **editorial monochrome palette (black, wh
                 </tr>
               </table>
 
-              <!-- CTA Actions Row -->
+              <!-- Action Links Row -->
               <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="margin-top: 14px;" class="btn-row">
                 <tr>
                   <td align="left">
@@ -332,12 +359,12 @@ This template adheres to the website's **editorial monochrome palette (black, wh
             </td>
           </tr>
 
-          <!-- Footer Signature with Verified Links -->
+          <!-- Footer Signature -->
           <tr>
             <td style="padding: 18px 28px; background-color: #FAFAFA; border-top: 1px solid #E4E4E7;" class="email-subcard border-divider">
               <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0">
                 <tr>
-                  <!-- Left: Signature -->
+                  <!-- Left: Author Profile -->
                   <td align="left" style="vertical-align: middle;">
                     <div class="text-primary" style="font-size: 13px; font-weight: 700; color: #09090B;">
                       Sahil Langoo
@@ -347,7 +374,7 @@ This template adheres to the website's **editorial monochrome palette (black, wh
                     </div>
                   </td>
 
-                  <!-- Right: Social Links -->
+                  <!-- Right: Verified Profiles -->
                   <td align="right" style="vertical-align: middle;">
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                       <tr>
@@ -378,11 +405,11 @@ This template adheres to the website's **editorial monochrome palette (black, wh
 
         </table>
 
-        <!-- Sub-footer Notice -->
+        <!-- Legitimate Auto-Responder Notice (Suppresses Spam Traps) -->
         <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" style="max-width: 580px; margin-top: 14px;">
           <tr>
-            <td align="center" class="text-muted" style="font-size: 10px; color: #A1A1AA; font-family: 'SFMono-Regular', Consolas, monospace; line-height: 1.5;">
-              Automated confirmation sent to acknowledge receipt at hello@sahillangoo.in.
+            <td align="center" class="text-muted" style="font-size: 10px; color: #8E8E93; font-family: 'SFMono-Regular', Consolas, monospace; line-height: 1.5;">
+              This is an automated acknowledgment sent in response to your email to hello@sahillangoo.in.
             </td>
           </tr>
         </table>
@@ -397,20 +424,20 @@ This template adheres to the website's **editorial monochrome palette (black, wh
 
 ---
 
-## ✉️ Option 2: Clean Plain-Text Template (For Simple Auto-Responders)
+## ✉️ Option 2: Hardened Plain-Text Template
 
 ### Subject Line:
 ```text
-Thanks for reaching out — Sahil Langoo
+Receipt Confirmation — Sahil Langoo
 ```
 
 ### Body:
 ```text
 Hi there,
 
-Thanks for reaching out! This is an automated confirmation to let you know that your message has landed safely in my primary inbox at hello@sahillangoo.in.
+Thank you for your message. This is an automated confirmation to let you know that your email has been received at hello@sahillangoo.in.
 
-I typically review and reply to all emails within 24–48 hours (Monday through Friday). If your inquiry is regarding a new web platform, architecture consulting, or engineering collaboration with SquadCoders, I will get back to you with next steps as soon as possible.
+I review incoming correspondence regularly and typically reply within 24 to 48 business hours. If your message is regarding a new web platform, architecture consulting, or engineering collaboration with SquadCoders, I will follow up with detailed next steps shortly.
 
 In the meantime, feel free to explore:
 • Case Studies & Engineered Systems: https://sahillangoo.in/projects/
@@ -418,8 +445,6 @@ In the meantime, feel free to explore:
 • Digital Garden & TIL Notes: https://sahillangoo.in/notes/
 • SquadCoders Studio: https://github.com/SquadCoders
 • Verified Code & Repositories: https://github.com/sahillangoo
-
-Looking forward to speaking with you!
 
 Best regards,
 
