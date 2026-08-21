@@ -1,5 +1,5 @@
 # ==============================================================================
-# Cloudflare Pages Headers - Sahil Langoo Portfolio
+# Cloudflare Pages Headers - Sahil Langoo Portfolio (sahillangoo.in)
 # Security, Caching, Anti-Crawling on Preview & Production Header Configuration
 # ==============================================================================
 
@@ -70,6 +70,11 @@ https://sahillangoo-portfolio.pages.dev/*
   Content-Type: application/xml; charset=utf-8
 
 /llms.txt
+  Cache-Control: public, max-age=86400, stale-while-revalidate=43200
+  Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/llms-full.txt
   Cache-Control: public, max-age=86400, stale-while-revalidate=43200
   Content-Type: text/plain; charset=utf-8
   Access-Control-Allow-Origin: *

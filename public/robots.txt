@@ -1,4 +1,4 @@
-# Robots.txt for sahillangoo.com
+# Robots.txt for sahillangoo.in
 User-agent: *
 Allow: /
 
@@ -39,5 +39,5 @@ Disallow: /api/
 Disallow: /private/
 
 # XML Sitemaps
-Sitemap: https://sahillangoo.com/sitemap-index.xml
-Sitemap: https://sahillangoo.com/sitemap-0.xml
+Sitemap: https://sahillangoo.in/sitemap-index.xml
+Sitemap: https://sahillangoo.in/sitemap-0.xml

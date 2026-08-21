@@ -6,13 +6,13 @@
 - **Organization**: @SquadCoders (Co-Founder & Lead Software Engineer)
 - **Enterprise Engineering**: Contributor to high-throughput monorepos at @ecspl
 - **Location**: Kashmir, India (Working globally across IST, UTC, and EST timezones)
-- **Primary Website**: https://sahillangoo.com
+- **Primary Website**: https://sahillangoo.in
 - **Verified Repositories**: https://github.com/sahillangoo
 - **LinkedIn**: https://linkedin.com/in/sahillangoo
 - **Twitter / X**: https://twitter.com/kashurgeek
 - **DEV Community**: https://dev.to/sahillangoo
 - **Daily.dev**: https://app.daily.dev/sahillangoo
-- **Direct Email**: hey@sahillangoo.com
+- **Direct Email**: hey@sahillangoo.in
 
 ---
 

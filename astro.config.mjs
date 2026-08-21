@@ -8,7 +8,7 @@ import { NON_INDEXABLE_PATHS } from './src/const/site.ts';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://sahillangoo.com',
+  site: 'https://sahillangoo.in',
   trailingSlash: 'always',
   output: 'static',
   prefetch: {

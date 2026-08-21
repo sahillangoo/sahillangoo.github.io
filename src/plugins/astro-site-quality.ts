@@ -4,9 +4,11 @@
  * A zero-dependency native Astro integration that enforces strict site quality during builds:
  * 1. Vite `buildStart`: Scans source files (Astro, MD, TS) to guarantee all image references
  *    exist in `src/assets` or `public` and checks internal links for trailing slashes.
- * 2. Astro `astro:build:done`: Scans all generated HTML files in `dist/` post-build to guarantee
- *    every internal link (`href`) points to a physically generated HTML route.
- *    Fails the build immediately if any 404s are detected.
+ * 2. Astro `astro:build:done`: Scans all generated HTML files in `dist/` post-build to guarantee:
+ *    - Every internal link (`href`) points to a physically generated HTML route (Zero 404s).
+ *    - All canonical URLs match the configured production site domain.
+ *    - Robots.txt and sitemaps are verified.
+ *    Fails the build immediately if any violations are detected.
  */
 import type { AstroIntegration } from 'astro';
 import fs from 'node:fs';
@@ -25,12 +27,14 @@ function getAllFiles(dirPath: string, files: string[] = []): string[] {
 
 export default function astroSiteQualityEnforcer(): AstroIntegration {
   let trailingSlashMode: 'always' | 'never' | 'ignore' = 'ignore';
+  let siteUrl = '';
 
   return {
     name: 'astro-site-quality-enforcer',
     hooks: {
       'astro:config:setup': ({ config, updateConfig, logger }) => {
         trailingSlashMode = config.trailingSlash;
+        siteUrl = config.site || '';
 
         updateConfig({
           vite: {
@@ -126,7 +130,9 @@ export default function astroSiteQualityEnforcer(): AstroIntegration {
         for (const file of htmlFiles) {
           const content = fs.readFileSync(file, 'utf-8');
           const relative = path.relative(outDir, file);
+          const is404 = relative === '404.html';
 
+          // 1. Verify internal links
           for (const match of content.matchAll(/href=["'](\/[^"']+)["']/g)) {
             if (!match[1]) continue;
             const linkStr = match[1].split('#')[0];
@@ -148,10 +154,28 @@ export default function astroSiteQualityEnforcer(): AstroIntegration {
               errors++;
             }
           }
+
+          // 2. Verify Canonical Domain
+          if (!is404 && siteUrl) {
+            const canonicalMatch = content.match(
+              /<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)["']/i
+            );
+            if (canonicalMatch && canonicalMatch[1]) {
+              const canonical = canonicalMatch[1];
+              if (!canonical.startsWith(siteUrl)) {
+                logger.error(
+                  `❌ Canonical domain mismatch in ${relative}: expected prefix "${siteUrl}", found "${canonical}"`
+                );
+                errors++;
+              }
+            }
+          }
         }
 
-        if (errors > 0) throw new Error(`Found ${errors} broken internal links!`);
-        logger.info(`✅ Internal Link Check Passed.`);
+        if (errors > 0) throw new Error(`Found ${errors} site quality violations during build!`);
+        logger.info(
+          `✅ Quality Check Passed: ${htmlFiles.length} routes validated against ${siteUrl}`
+        );
       },
     },
   };

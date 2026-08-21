@@ -2,7 +2,7 @@
 
 Ultra-fast, high-performance static website, digital garden, and engineering portfolio built with [Astro 7.2](https://astro.build), [Tailwind CSS v4](https://tailwindcss.com), [daisyUI 5](https://daisyui.com), and TypeScript. Deployed globally to [Cloudflare Pages](https://pages.cloudflare.com).
 
-[![Live Site](https://img.shields.io/badge/Live%20Site-sahillangoo.com-38bdf8?style=flat-square&logo=cloudflare)](https://sahillangoo.com)
+[![Live Site](https://img.shields.io/badge/Live%20Site-sahillangoo.in-38bdf8?style=flat-square&logo=cloudflare)](https://sahillangoo.in)
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg?style=flat-square)](LICENSE)
 [![Built with Astro](https://img.shields.io/badge/Astro-7.2.x-orange.svg?style=flat-square&logo=astro)](https://astro.build)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4.3-38bdf8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
@@ -107,4 +107,4 @@ For in-depth specifications, refer to [docs/](file:///d:/sandbox/work-box/sahill
 
 ## 📜 License
 
-MIT © [Sahil Langoo](https://sahillangoo.com)
+MIT © [Sahil Langoo](https://sahillangoo.in)

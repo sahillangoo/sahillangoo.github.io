@@ -7,42 +7,42 @@
 - **Role**: Full Stack Systems Engineer & Creative Technologist
 - **Affiliation**: @SquadCoders (Co-Founder & Lead Engineer)
 - **Location**: Kashmir, India (Open to global remote engineering & architecture consulting)
-- **Website**: https://sahillangoo.com
+- **Website**: https://sahillangoo.in
 - **GitHub**: https://github.com/sahillangoo
 - **Twitter / X**: https://twitter.com/kashurgeek
 - **DEV Community**: https://dev.to/sahillangoo
 - **LinkedIn**: https://linkedin.com/in/sahillangoo
-- **Email**: hey@sahillangoo.com
+- **Email**: hey@sahillangoo.in
 
 ## Production Projects & Systems
-- [Enterprise Lead Funnels & Edge Proxies](https://sahillangoo.com/projects/enterprise-lead-funnels/): Distributed Hono API proxies, Experian credit-report OTP verification, and server-side Meta CAPI event routing.
-- [smart-img-cli](https://sahillangoo.com/projects/smart-img-cli/): High-throughput image compression and local vision SLM (Gemma 2B via LM Studio) alt-text generation built with Bun.
-- [SoulMedia Agency Platform](https://sahillangoo.com/projects/soulmedia-website/): Creative media platform with Strapi CMS, automated Schema.org structured data, and Cloudflare R2 asset storage.
-- [Hotel Akbar Sonmarg](https://sahillangoo.com/projects/hotel-akbar-sonmarg/): Luxury hospitality portal built with Astro 7.2, DaisyUI v5, and zero-dependency build-time quality hooks.
-- [Rooh Yaseen Editorial Portfolio](https://sahillangoo.com/projects/roohyaseen-portfolio/): High-end photography & cinematography portfolio for UK DoP Rooh Yaseen with zero-CLS video facades.
-- [HackForce Tactical Storefront](https://sahillangoo.com/projects/hackforce-storefront/): Cybersecurity platform with static Pagefind client search indexing.
-- [template-astro-daisy](https://sahillangoo.com/projects/template-astro-daisy/): Open-source developer template with daisyUI 5 and Tailwind v4.
-- [KU Result Daemon](https://sahillangoo.com/projects/ku-result/): Automated Python daemon for university exam notifications.
-- [Travel Kit Websites](https://sahillangoo.com/projects/travel-kit-websites/): Modular booking inquiry engine for destination tour operators.
+- [Enterprise Lead Funnels & Edge Proxies](https://sahillangoo.in/projects/enterprise-lead-funnels/): Distributed Hono API proxies, Experian credit-report OTP verification, and server-side Meta CAPI event routing.
+- [smart-img-cli](https://sahillangoo.in/projects/smart-img-cli/): High-throughput image compression and local vision SLM (Gemma 2B via LM Studio) alt-text generation built with Bun.
+- [SoulMedia Agency Platform](https://sahillangoo.in/projects/soulmedia-website/): Creative media platform with Strapi CMS, automated Schema.org structured data, and Cloudflare R2 asset storage.
+- [Hotel Akbar Sonmarg](https://sahillangoo.in/projects/hotel-akbar-sonmarg/): Luxury hospitality portal built with Astro 7.2, DaisyUI v5, and zero-dependency build-time quality hooks.
+- [Rooh Yaseen Editorial Portfolio](https://sahillangoo.in/projects/roohyaseen-portfolio/): High-end photography & cinematography portfolio for UK DoP Rooh Yaseen with zero-CLS video facades.
+- [HackForce Tactical Storefront](https://sahillangoo.in/projects/hackforce-storefront/): Cybersecurity platform with static Pagefind client search indexing.
+- [template-astro-daisy](https://sahillangoo.in/projects/template-astro-daisy/): Open-source developer template with daisyUI 5 and Tailwind v4.
+- [KU Result Daemon](https://sahillangoo.in/projects/ku-result/): Automated Python daemon for university exam notifications.
+- [Travel Kit Websites](https://sahillangoo.in/projects/travel-kit-websites/): Modular booking inquiry engine for destination tour operators.
 
 ## Technical Writing & Essays
-- [Server-Side Meta CAPI with Cloudflare Workers](https://sahillangoo.com/blog/server-side-capi-cloudflare-workers/): Resilient event pipelines, SHA-256 Web Crypto hashing, and bypassing browser ad-blocker signal loss.
-- [Offloading Third-Party Scripts with Partytown](https://sahillangoo.com/blog/offloading-third-party-scripts-partytown-astro/): Preserving 0ms TBT and 100 Lighthouse Performance by delegating GTM and Meta Pixel to Web Workers.
-- [Local SLM Vision Pipelines with Bun and Gemma](https://sahillangoo.com/blog/local-slm-vision-pipelines-bun-gemma/): Running offline Gemma 2B vision inference with LM Studio and Bun for private, zero-cost SEO image tagging.
-- [Eliminating Bot Spam with Cloudflare Turnstile](https://sahillangoo.com/blog/hardening-edge-security-turnstile-astro/): Privacy-preserving CAPTCHA replacement with serverless edge validation in Hono.
-- [Architecting Ultra-Fast Static Systems with Astro](https://sahillangoo.com/blog/architecting-modern-astro-systems/): Islands architecture, zero-JS baseline, and content collections.
-- [The Lost Art of Minimalist Software Engineering](https://sahillangoo.com/blog/the-lost-art-of-minimalist-engineering/): Why KISS and YAGNI are superpower engineering advantages.
-- [Type-Safe Content Pipelines with Zod & Astro](https://sahillangoo.com/blog/type-safe-content-pipelines/): Catching schema drift and broken frontmatter at build time.
+- [Server-Side Meta CAPI with Cloudflare Workers](https://sahillangoo.in/blog/server-side-capi-cloudflare-workers/): Resilient event pipelines, SHA-256 Web Crypto hashing, and bypassing browser ad-blocker signal loss.
+- [Offloading Third-Party Scripts with Partytown](https://sahillangoo.in/blog/offloading-third-party-scripts-partytown-astro/): Preserving 0ms TBT and 100 Lighthouse Performance by delegating GTM and Meta Pixel to Web Workers.
+- [Local SLM Vision Pipelines with Bun and Gemma](https://sahillangoo.in/blog/local-slm-vision-pipelines-bun-gemma/): Running offline Gemma 2B vision inference with LM Studio and Bun for private, zero-cost SEO image tagging.
+- [Eliminating Bot Spam with Cloudflare Turnstile](https://sahillangoo.in/blog/hardening-edge-security-turnstile-astro/): Privacy-preserving CAPTCHA replacement with serverless edge validation in Hono.
+- [Architecting Ultra-Fast Static Systems with Astro](https://sahillangoo.in/blog/architecting-modern-astro-systems/): Islands architecture, zero-JS baseline, and content collections.
+- [The Lost Art of Minimalist Software Engineering](https://sahillangoo.in/blog/the-lost-art-of-minimalist-engineering/): Why KISS and YAGNI are superpower engineering advantages.
+- [Type-Safe Content Pipelines with Zod & Astro](https://sahillangoo.in/blog/type-safe-content-pipelines/): Catching schema drift and broken frontmatter at build time.
 
 ## Digital Garden Notes & Mental Models
-- [Eliminating Layout Shifts in Astro View Transitions](https://sahillangoo.com/notes/astro-view-transitions-layout-shift/): Solving scrollbar gutter pops and avoiding root scale animations.
-- [Custom OKLCH Themes with DaisyUI 5 and Tailwind v4](https://sahillangoo.com/notes/daisyui-5-oklch-theming-tailwind-v4/): CSS-first @plugin themes with perceptual uniformity.
-- [Zero-Config Offline PWA Caching Patterns](https://sahillangoo.com/notes/pwa-offline-caching-service-workers/): Stale-While-Revalidate service workers for static documentation and portfolios.
-- [Programmatic Schema.org JSON-LD Generation](https://sahillangoo.com/notes/structured-data-jsonld-pipeline/): Direct generation of TechArticle, Person, and Breadcrumbs from Zod collections.
-- [CSS Subgrid Mental Model](https://sahillangoo.com/notes/css-subgrid-mental-model/): Alignment of card children across responsive grid columns.
-- [OKLCH Color Spaces in Modern CSS](https://sahillangoo.com/notes/oklch-color-spaces/): Predictable contrast and lightness across color themes.
-- [TypeScript Utility Type Patterns](https://sahillangoo.com/notes/typescript-utility-patterns/): Advanced type transformations for backend schemas.
+- [Eliminating Layout Shifts in Astro View Transitions](https://sahillangoo.in/notes/astro-view-transitions-layout-shift/): Solving scrollbar gutter pops and avoiding root scale animations.
+- [Custom OKLCH Themes with DaisyUI 5 and Tailwind v4](https://sahillangoo.in/notes/daisyui-5-oklch-theming-tailwind-v4/): CSS-first @plugin themes with perceptual uniformity.
+- [Zero-Config Offline PWA Caching Patterns](https://sahillangoo.in/notes/pwa-offline-caching-service-workers/): Stale-While-Revalidate service workers for static documentation and portfolios.
+- [Programmatic Schema.org JSON-LD Generation](https://sahillangoo.in/notes/structured-data-jsonld-pipeline/): Direct generation of TechArticle, Person, and Breadcrumbs from Zod collections.
+- [CSS Subgrid Mental Model](https://sahillangoo.in/notes/css-subgrid-mental-model/): Alignment of card children across responsive grid columns.
+- [OKLCH Color Spaces in Modern CSS](https://sahillangoo.in/notes/oklch-color-spaces/): Predictable contrast and lightness across color themes.
+- [TypeScript Utility Type Patterns](https://sahillangoo.in/notes/typescript-utility-patterns/): Advanced type transformations for backend schemas.
 
 ## Contact & Inquiries
-- **Email**: hey@sahillangoo.com
+- **Email**: hey@sahillangoo.in
 - **Consulting**: Open for high-impact architecture, web performance, and edge systems consulting.

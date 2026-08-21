@@ -15,7 +15,8 @@
     "lint:fix": "eslint --cache --fix .",
     "pages:deploy": "wrangler pages deploy ./dist --project-name sahillangoo-portfolio",
     "preview": "astro preview",
-    "sync": "astro sync"
+    "sync": "astro sync",
+    "verify:prod": "node scripts/verify-production.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

@@ -5,10 +5,10 @@ export const SITE = {
   bio: 'A man of mystery and power, whose power is exceeded only by his mystery. I design, code & sometimes dream about making art.',
   description:
     'Personal portfolio, engineering journal, and digital garden of Sahil Langoo. Specializing in TypeScript, Astro, modern web architecture, edge systems, and minimalist UI craft.',
-  url: 'https://sahillangoo.com',
+  url: 'https://sahillangoo.in',
   author: 'Sahil Langoo',
   location: 'Kashmir, India',
-  email: 'hey@sahillangoo.com',
+  email: 'hey@sahillangoo.in',
   status: 'Open to high-impact engineering opportunities & select consulting',
   social: {
     github: 'https://github.com/sahillangoo',
@@ -16,7 +16,7 @@ export const SITE = {
     twitter: 'https://twitter.com/kashurgeek',
     devto: 'https://dev.to/sahillangoo',
     dailydev: 'https://app.daily.dev/sahillangoo',
-    email: 'mailto:hey@sahillangoo.com',
+    email: 'mailto:hey@sahillangoo.in',
     rss: '/rss.xml',
   },
   nav: [

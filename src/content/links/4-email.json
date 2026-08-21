@@ -1,8 +1,8 @@
 {
   "title": "Direct Email",
-  "url": "mailto:hey@sahillangoo.com",
+  "url": "mailto:hey@sahillangoo.in",
+  "description": "hey@sahillangoo.in",
   "category": "contact",
   "order": 4,
-  "highlight": true,
-  "description": "Send a direct message for consulting, engineering collaborations, or inquiries."
+  "highlight": true
 }
