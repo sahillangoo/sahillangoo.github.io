@@ -1,29 +1,56 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ArticleCard from '@/components/portfolio/ArticleCard.astro';
-import { getCollection } from 'astro:content';
+import Pagination from '@/components/common/Pagination.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import type { GetStaticPaths, Page } from 'astro';
 import { SITE } from '@/const/site.ts';
 import { slugify } from '@/utils/slugify';
 
-const articles = await getCollection('blog');
-const publishedArticles = articles
-  .filter((a) => !a.data.draft)
-  .sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+  const articles = await getCollection('blog');
+  const publishedArticles = articles
+    .filter((a) => !a.data.draft)
+    .sort(
+      (a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
+    );
 
-// Extract all unique categories
-const categories = [...new Set(publishedArticles.map((post) => post.data.category))];
+  return paginate(publishedArticles, { pageSize: 4 });
+};
+
+export interface Props {
+  page: Page<CollectionEntry<'blog'>>;
+}
+
+const { page } = Astro.props;
+const articles = page.data;
+
+// Extract all unique categories for topic discoverability
+const allArticles = await getCollection('blog');
+const categories = [
+  ...new Set(allArticles.filter((a) => !a.data.draft).map((post) => post.data.category)),
+];
+
+const isFirstPage = page.currentPage === 1;
+const pageTitle = isFirstPage
+  ? 'Writing & Engineering Essays'
+  : `Writing & Engineering Essays — Page ${page.currentPage}`;
+
+const pageDescription =
+  'Technical writings, edge systems architecture, performance benchmarks, and minimalist software engineering principles by Sahil Langoo.';
+
+const canonicalUrl = isFirstPage ? `${SITE.url}/blog/` : `${SITE.url}/blog/${page.currentPage}/`;
 
 const blogSchema = {
   '@type': 'Blog',
-  '@id': `${SITE.url}/blog/#blog`,
-  name: `Engineering Journal & Essays — ${SITE.name}`,
-  url: `${SITE.url}/blog/`,
-  description:
-    'Technical writings, edge systems architecture, performance analysis, and minimalist software engineering principles by Sahil Langoo.',
+  '@id': `${canonicalUrl}#blog`,
+  name: `${pageTitle} — ${SITE.name}`,
+  url: canonicalUrl,
+  description: pageDescription,
   publisher: {
     '@id': `${SITE.url}/#person`,
   },
-  blogPost: publishedArticles.map((post) => ({
+  blogPost: articles.map((post) => ({
     '@type': 'BlogPosting',
     headline: post.data.title,
     description: post.data.description,
@@ -37,13 +64,17 @@ const blogSchema = {
 
 const breadcrumbs = [
   { name: 'Home', item: '/' },
-  { name: 'Writing', item: '/blog/' },
+  {
+    name: isFirstPage ? 'Writing' : `Writing (Page ${page.currentPage})`,
+    item: isFirstPage ? '/blog/' : `/blog/${page.currentPage}/`,
+  },
 ];
 ---
 
 <BaseLayout
-  title="Writing & Engineering Essays"
-  description="Technical writings, edge systems architecture, performance benchmarks, and minimalist software engineering principles by Sahil Langoo."
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={canonicalUrl}
   breadcrumbs={breadcrumbs}
   structuredData={blogSchema}
 >
@@ -51,7 +82,7 @@ const breadcrumbs = [
     <!-- Header -->
     <div class="border-base-300 border-b pb-6">
       <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
-        Articles
+        Articles {page.lastPage > 1 && `• Page ${page.currentPage} of ${page.lastPage}`}
       </span>
       <h1 class="text-base-content mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl">
         Engineering Journal & Essays
@@ -79,7 +110,10 @@ const breadcrumbs = [
 
     <!-- Articles List -->
     <div class="space-y-6">
-      {publishedArticles.map((post) => <ArticleCard post={post} />)}
+      {articles.map((post) => <ArticleCard post={post} />)}
     </div>
+
+    <!-- Pagination Controls -->
+    <Pagination page={page} />
   </div>
 </BaseLayout>

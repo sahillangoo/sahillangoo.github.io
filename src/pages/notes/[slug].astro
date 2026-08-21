@@ -6,13 +6,21 @@ import { Icon } from 'astro-icon/components';
 
 export async function getStaticPaths() {
   const notes = await getCollection('notes');
-  return notes.map((note) => ({
+  const sorted = [...notes].sort(
+    (a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
+  );
+
+  return sorted.map((note, index) => ({
     params: { slug: note.id },
-    props: { note },
+    props: {
+      note,
+      prevNote: index < sorted.length - 1 ? sorted[index + 1] : null,
+      nextNote: index > 0 ? sorted[index - 1] : null,
+    },
   }));
 }
 
-const { note } = Astro.props;
+const { note, prevNote, nextNote } = Astro.props;
 const { data, id } = note;
 const { Content } = await render(note);
 
@@ -91,5 +99,47 @@ const breadcrumbs = [
     >
       <Content />
     </div>
+
+    <!-- Adjacent Note Navigation / Slug Pagination -->
+    {
+      (prevNote || nextNote) && (
+        <nav
+          aria-label="Adjacent Notes Navigation"
+          class="border-base-300 grid grid-cols-1 gap-4 border-t pt-8 sm:grid-cols-2"
+        >
+          {prevNote ? (
+            <a
+              href={`/notes/${prevNote.id}/`}
+              class="editorial-card group flex flex-col justify-between p-4 text-left transition-all"
+              rel="prev"
+            >
+              <span class="text-base-content/60 flex items-center gap-1 font-mono text-[11px] tracking-wider uppercase">
+                <Icon name="ph:arrow-left-bold" class="h-3 w-3" /> Previous Note
+              </span>
+              <span class="text-base-content group-hover:text-accent mt-1.5 text-xs font-bold transition-colors">
+                {prevNote.data.title}
+              </span>
+            </a>
+          ) : (
+            <div />
+          )}
+
+          {nextNote && (
+            <a
+              href={`/notes/${nextNote.id}/`}
+              class="editorial-card group flex flex-col justify-between p-4 text-right transition-all sm:col-start-2"
+              rel="next"
+            >
+              <span class="text-base-content/60 flex items-center justify-end gap-1 font-mono text-[11px] tracking-wider uppercase">
+                Next Note <Icon name="ph:arrow-right-bold" class="h-3 w-3" />
+              </span>
+              <span class="text-base-content group-hover:text-accent mt-1.5 text-xs font-bold transition-colors">
+                {nextNote.data.title}
+              </span>
+            </a>
+          )}
+        </nav>
+      )
+    }
   </article>
 </BaseLayout>

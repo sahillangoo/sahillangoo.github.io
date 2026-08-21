@@ -8,13 +8,23 @@ import { Icon } from 'astro-icon/components';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
-  return posts.map((post) => ({
+  const sorted = posts
+    .filter((p) => !p.data.draft)
+    .sort(
+      (a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
+    );
+
+  return sorted.map((post, index) => ({
     params: { slug: post.id },
-    props: { post },
+    props: {
+      post,
+      prevPost: index < sorted.length - 1 ? sorted[index + 1] : null,
+      nextPost: index > 0 ? sorted[index - 1] : null,
+    },
   }));
 }
 
-const { post } = Astro.props;
+const { post, prevPost, nextPost } = Astro.props;
 const { data, id } = post;
 const { Content } = await render(post);
 
@@ -136,6 +146,48 @@ const breadcrumbs = [
     >
       <Content />
     </div>
+
+    <!-- Adjacent Article Navigation / Slug Pagination -->
+    {
+      (prevPost || nextPost) && (
+        <nav
+          aria-label="Adjacent Articles Navigation"
+          class="border-base-300 grid grid-cols-1 gap-4 border-t pt-8 sm:grid-cols-2"
+        >
+          {prevPost ? (
+            <a
+              href={`/blog/${prevPost.id}/`}
+              class="editorial-card group flex flex-col justify-between p-5 text-left transition-all"
+              rel="prev"
+            >
+              <span class="text-base-content/60 flex items-center gap-1 font-mono text-[11px] tracking-wider uppercase">
+                <Icon name="ph:arrow-left-bold" class="h-3 w-3" /> Previous Article
+              </span>
+              <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
+                {prevPost.data.title}
+              </span>
+            </a>
+          ) : (
+            <div />
+          )}
+
+          {nextPost && (
+            <a
+              href={`/blog/${nextPost.id}/`}
+              class="editorial-card group flex flex-col justify-between p-5 text-right transition-all sm:col-start-2"
+              rel="next"
+            >
+              <span class="text-base-content/60 flex items-center justify-end gap-1 font-mono text-[11px] tracking-wider uppercase">
+                Next Article <Icon name="ph:arrow-right-bold" class="h-3 w-3" />
+              </span>
+              <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
+                {nextPost.data.title}
+              </span>
+            </a>
+          )}
+        </nav>
+      )
+    }
 
     <!-- Article Footer / Author Box -->
     <footer class="border-base-300 mt-12 border-t pt-8">

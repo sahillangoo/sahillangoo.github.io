@@ -7,13 +7,19 @@ import { Icon } from 'astro-icon/components';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
-  return projects.map((project) => ({
+  const sorted = [...projects].sort((a, b) => a.data.order - b.data.order);
+
+  return sorted.map((project, index) => ({
     params: { slug: project.id },
-    props: { project },
+    props: {
+      project,
+      prevProject: index > 0 ? sorted[index - 1] : null,
+      nextProject: index < sorted.length - 1 ? sorted[index + 1] : null,
+    },
   }));
 }
 
-const { project } = Astro.props;
+const { project, prevProject, nextProject } = Astro.props;
 const { data, id } = project;
 const { Content } = await render(project);
 
@@ -135,5 +141,47 @@ const breadcrumbs = [
     >
       <Content />
     </div>
+
+    <!-- Adjacent Project Navigation / Slug Pagination -->
+    {
+      (prevProject || nextProject) && (
+        <nav
+          aria-label="Adjacent Projects Navigation"
+          class="border-base-300 grid grid-cols-1 gap-4 border-t pt-8 sm:grid-cols-2"
+        >
+          {prevProject ? (
+            <a
+              href={`/projects/${prevProject.id}/`}
+              class="editorial-card group flex flex-col justify-between p-5 text-left transition-all"
+              rel="prev"
+            >
+              <span class="text-base-content/60 flex items-center gap-1 font-mono text-[11px] tracking-wider uppercase">
+                <Icon name="ph:arrow-left-bold" class="h-3 w-3" /> Previous Project
+              </span>
+              <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
+                {prevProject.data.title}
+              </span>
+            </a>
+          ) : (
+            <div />
+          )}
+
+          {nextProject && (
+            <a
+              href={`/projects/${nextProject.id}/`}
+              class="editorial-card group flex flex-col justify-between p-5 text-right transition-all sm:col-start-2"
+              rel="next"
+            >
+              <span class="text-base-content/60 flex items-center justify-end gap-1 font-mono text-[11px] tracking-wider uppercase">
+                Next Project <Icon name="ph:arrow-right-bold" class="h-3 w-3" />
+              </span>
+              <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
+                {nextProject.data.title}
+              </span>
+            </a>
+          )}
+        </nav>
+      )
+    }
   </article>
 </BaseLayout>

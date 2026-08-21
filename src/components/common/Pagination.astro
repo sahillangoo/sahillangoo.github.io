@@ -1,0 +1,114 @@
+---
+import type { Page } from 'astro';
+import { Icon } from 'astro-icon/components';
+
+export interface Props {
+  page: Page<unknown>;
+  baseUrl?: string;
+}
+
+const { page } = Astro.props;
+
+// If there's only 1 page or fewer, do not render pagination controls
+if (page.lastPage <= 1) {
+  return;
+}
+
+const { currentPage, lastPage } = page;
+
+// Build range of page numbers to show
+const pages = Array.from({ length: lastPage }, (_, i) => i + 1);
+
+// Helper to calculate target URL
+function getPageUrl(pageNum: number): string {
+  if (pageNum === 1) {
+    // Return base route with trailing slash (e.g., /blog/ or /notes/)
+    const currentUrl = page.url.current;
+    // Strip trailing page number if present (e.g. /blog/2/ -> /blog/)
+    const cleanUrl = currentUrl.replace(/\/\d+\/?$/, '/');
+    return cleanUrl.endsWith('/') ? cleanUrl : `${cleanUrl}/`;
+  }
+  const currentUrl = page.url.current;
+  const base = currentUrl.replace(/\/\d+\/?$/, '').replace(/\/$/, '');
+  return `${base}/${pageNum}/`;
+}
+---
+
+<nav
+  aria-label="Pagination Navigation"
+  class="border-base-300 flex flex-wrap items-center justify-between gap-4 border-t pt-8 font-mono text-xs"
+>
+  <!-- Previous Button -->
+  <div>
+    {
+      page.url.prev ? (
+        <a
+          href={page.url.prev.endsWith('/') ? page.url.prev : `${page.url.prev}/`}
+          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 text-base-content flex items-center gap-1.5 rounded-md"
+          rel="prev"
+        >
+          <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" />
+          <span>Previous</span>
+        </a>
+      ) : (
+        <button
+          disabled
+          class="btn btn-sm btn-outline border-base-300/40 text-base-content/30 cursor-not-allowed rounded-md opacity-40"
+          aria-disabled="true"
+        >
+          <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" />
+          <span>Previous</span>
+        </button>
+      )
+    }
+  </div>
+
+  <!-- Page Numbers -->
+  <div class="flex items-center gap-1">
+    {
+      pages.map((num) => {
+        const isCurrent = num === currentPage;
+        const url = getPageUrl(num);
+        return (
+          <a
+            href={url}
+            class={`flex h-8 w-8 items-center justify-center rounded-md text-xs font-semibold transition-colors ${
+              isCurrent
+                ? 'bg-base-content text-base-100 font-bold'
+                : 'text-base-content/70 hover:bg-base-200 hover:text-base-content'
+            }`}
+            aria-current={isCurrent ? 'page' : undefined}
+            aria-label={`Go to page ${num}`}
+          >
+            {num}
+          </a>
+        );
+      })
+    }
+  </div>
+
+  <!-- Next Button -->
+  <div>
+    {
+      page.url.next ? (
+        <a
+          href={page.url.next.endsWith('/') ? page.url.next : `${page.url.next}/`}
+          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 text-base-content flex items-center gap-1.5 rounded-md"
+          rel="next"
+        >
+          <span>Next</span>
+          <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
+        </a>
+      ) : (
+        <button
+          disabled
+          class="btn btn-sm btn-outline border-base-300/40 text-base-content/30 cursor-not-allowed rounded-md opacity-40"
+          aria-disabled="true"
+        >
+          <span>Next</span>
+          <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
+        </button>
+      )
+    }
+  </div>
+</nav>

@@ -1,0 +1,85 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import NoteCard from '@/components/portfolio/NoteCard.astro';
+import Pagination from '@/components/common/Pagination.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import type { GetStaticPaths, Page } from 'astro';
+import { SITE } from '@/const/site.ts';
+
+export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
+  const notes = await getCollection('notes');
+  const sortedNotes = [...notes].sort(
+    (a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
+  );
+
+  return paginate(sortedNotes, { pageSize: 6 });
+};
+
+export interface Props {
+  page: Page<CollectionEntry<'notes'>>;
+}
+
+const { page } = Astro.props;
+const notes = page.data;
+
+const isFirstPage = page.currentPage === 1;
+const pageTitle = isFirstPage
+  ? 'Digital Garden & Notes'
+  : `Digital Garden & Notes — Page ${page.currentPage}`;
+
+const pageDescription =
+  'Atomic notes, TILs, code patterns, and architectural mental models by Sahil Langoo.';
+
+const canonicalUrl = isFirstPage ? `${SITE.url}/notes/` : `${SITE.url}/notes/${page.currentPage}/`;
+
+const notesSchema = {
+  '@type': 'CollectionPage',
+  '@id': `${canonicalUrl}#collectionpage`,
+  name: `${pageTitle} — ${SITE.name}`,
+  url: canonicalUrl,
+  description: pageDescription,
+  mainEntity: {
+    '@id': `${SITE.url}/#person`,
+  },
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  {
+    name: isFirstPage ? 'Garden Notes' : `Garden Notes (Page ${page.currentPage})`,
+    item: isFirstPage ? '/notes/' : `/notes/${page.currentPage}/`,
+  },
+];
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={canonicalUrl}
+  breadcrumbs={breadcrumbs}
+  structuredData={notesSchema}
+>
+  <div class="mx-auto max-w-5xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">
+    <!-- Header -->
+    <div class="border-base-300 max-w-2xl border-b pb-6">
+      <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
+        Digital Garden {page.lastPage > 1 && `• Page ${page.currentPage} of ${page.lastPage}`}
+      </span>
+      <h1 class="text-base-content mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl">
+        Notes, Snippets & TILs
+      </h1>
+      <p class="text-base-content/75 mt-3 text-sm leading-relaxed sm:text-base">
+        A lightweight digital garden for atomic thoughts, technical snippets, learning notes, and
+        mental models.
+      </p>
+    </div>
+
+    <!-- Notes Grid -->
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {notes.map((note) => <NoteCard note={note} />)}
+    </div>
+
+    <!-- Pagination Controls -->
+    <Pagination page={page} />
+  </div>
+</BaseLayout>
