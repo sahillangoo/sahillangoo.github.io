@@ -55,6 +55,9 @@ const {
     noindex={noindex}
   />
   <body class="bg-base-100 text-base-content relative flex min-h-screen flex-col antialiased">
+    <!-- Non-intrusive Tactile Noise Texture Overlay -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+
     {!hideNav && <NavigationBar />}
     <MobileNavigation />
     <CommandPalette />
