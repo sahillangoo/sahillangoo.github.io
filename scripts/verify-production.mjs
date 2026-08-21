@@ -180,6 +180,17 @@ for (const htmlFile of htmlFiles) {
       );
     }
 
+    // Check all internal href attributes for trailing slashes
+    for (const match of content.matchAll(/href=["'](\/[^"']+)["']/g)) {
+      if (!match[1]) continue;
+      const linkStr = match[1].split('#')[0].split('?')[0];
+      if (linkStr === '/' || linkStr.includes('.')) continue;
+      assert(
+        linkStr.endsWith('/'),
+        `Internal link "${linkStr}" in ${relativePath} must have a trailing slash`
+      );
+    }
+
     // Check JSON-LD Structured Data
     const jsonLdMatch = content.match(
       /<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/i
