@@ -9,7 +9,7 @@ This document captures the synthesized intelligence gathered from GitHub (`@sahi
 - **Full Name**: Sahil Langoo
 - **Online Handles**: `sahillangoo` (GitHub, DEV, Daily.dev), `kashurgeek` (Twitter/X)
 - **Location**: Kashmir, India (Open to global remote engineering & consulting)
-- **Email**: `hey@sahillangoo.in` / `sahillangoo@pm.com`
+- **Email**: `hello@sahillangoo.in` / `sahillangoo@pm.com`
 - **Core Organizations**:
   - **`@SquadCoders`**: Co-Founder & Lead Software Engineer (Srinagar, Kashmir).
   - **`@ecspl`**: Systems & Backend Integration Engineer (Enterprise Monorepos).

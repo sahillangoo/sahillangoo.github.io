@@ -12,7 +12,7 @@
 - **Twitter / X**: https://twitter.com/kashurgeek
 - **DEV Community**: https://dev.to/sahillangoo
 - **LinkedIn**: https://linkedin.com/in/sahillangoo
-- **Email**: hey@sahillangoo.in
+- **Email**: hello@sahillangoo.in
 
 ## Production Projects & Systems
 - [Enterprise Lead Funnels & Edge Proxies](https://sahillangoo.in/projects/enterprise-lead-funnels/): Distributed Hono API proxies, Experian credit-report OTP verification, and server-side Meta CAPI event routing.
@@ -44,5 +44,5 @@
 - [TypeScript Utility Type Patterns](https://sahillangoo.in/notes/typescript-utility-patterns/): Advanced type transformations for backend schemas.
 
 ## Contact & Inquiries
-- **Email**: hey@sahillangoo.in
+- **Email**: hello@sahillangoo.in
 - **Consulting**: Open for high-impact architecture, web performance, and edge systems consulting.

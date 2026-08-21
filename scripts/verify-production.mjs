@@ -95,6 +95,10 @@ if (fs.existsSync(llmsPath)) {
   const llmsContent = fs.readFileSync(llmsPath, 'utf-8');
   assert(llmsContent.includes(TARGET_DOMAIN), `llms.txt references ${TARGET_DOMAIN}`);
   assert(!llmsContent.includes('sahillangoo.com'), 'llms.txt has zero sahillangoo.com references');
+  assert(
+    llmsContent.includes('hello@sahillangoo.in'),
+    'llms.txt has active hello@sahillangoo.in email'
+  );
 }
 if (fs.existsSync(llmsFullPath)) {
   const llmsFullContent = fs.readFileSync(llmsFullPath, 'utf-8');
@@ -102,6 +106,10 @@ if (fs.existsSync(llmsFullPath)) {
   assert(
     !llmsFullContent.includes('sahillangoo.com'),
     'llms-full.txt has zero sahillangoo.com references'
+  );
+  assert(
+    llmsFullContent.includes('hello@sahillangoo.in'),
+    'llms-full.txt has active hello@sahillangoo.in email'
   );
 }
 

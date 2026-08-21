@@ -8,7 +8,7 @@ export const SITE = {
   url: 'https://sahillangoo.in',
   author: 'Sahil Langoo',
   location: 'Kashmir, India',
-  email: 'hey@sahillangoo.in',
+  email: 'hello@sahillangoo.in',
   status: 'Open to high-impact engineering opportunities & select consulting',
   social: {
     github: 'https://github.com/sahillangoo',
@@ -16,7 +16,7 @@ export const SITE = {
     twitter: 'https://twitter.com/kashurgeek',
     devto: 'https://dev.to/sahillangoo',
     dailydev: 'https://app.daily.dev/sahillangoo',
-    email: 'mailto:hey@sahillangoo.in',
+    email: 'mailto:hello@sahillangoo.in',
     rss: '/rss.xml',
   },
   nav: [
