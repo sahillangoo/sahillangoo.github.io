@@ -7,6 +7,9 @@ import astroSiteQualityEnforcer from './src/plugins/astro-site-quality.ts';
 import { NON_INDEXABLE_PATHS } from './src/const/site.ts';
 import { createSitemapSerializer } from './src/utils/sitemap.ts';
 
+const BUILD_TIME = new Date().toISOString();
+const BUILD_DATE = BUILD_TIME.split('T')[0];
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://sahillangoo.in',
@@ -29,6 +32,10 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    define: {
+      __BUILD_TIME__: JSON.stringify(BUILD_TIME),
+      __BUILD_DATE__: JSON.stringify(BUILD_DATE),
+    },
     optimizeDeps: {
       include: ['motion'],
       exclude: ['@astrojs/sitemap', 'sharp'],
@@ -72,7 +79,7 @@ export default defineConfig({
             page.match(/\/blog\/\d+\/?$/) ||
             page.match(/\/notes\/\d+\/?$/)
         ),
-      serialize: createSitemapSerializer(),
+      serialize: createSitemapSerializer(BUILD_DATE),
     }),
     astroSiteQualityEnforcer(),
   ],
