@@ -6,11 +6,29 @@ import { Icon } from 'astro-icon/components';
 
 const siteData = await getEntry('site', 'profile');
 const profile = siteData?.data;
+
+const aboutSchema = {
+  '@type': 'ProfilePage',
+  '@id': `${SITE.url}/about/#profilepage`,
+  name: `About ${SITE.name}`,
+  url: `${SITE.url}/about/`,
+  mainEntity: {
+    '@id': `${SITE.url}/#person`,
+  },
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'About', item: '/about/' },
+];
 ---
 
 <BaseLayout
   title="About Me"
-  description="Learn more about Sahil Langoo, background in software engineering, technical philosophy, and internet presence."
+  description="Full Stack Systems Engineer and Co-Founder at SquadCoders. Discover my technical background, core engineering philosophy, and toolchain."
+  breadcrumbs={breadcrumbs}
+  structuredData={aboutSchema}
+  type="profile"
 >
   <div class="mx-auto max-w-3xl space-y-12 px-4 py-8 sm:px-6 sm:py-12">
     <!-- Header -->

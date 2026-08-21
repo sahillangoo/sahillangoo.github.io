@@ -8,11 +8,29 @@ import { Icon } from 'astro-icon/components';
 const experiences = await getCollection('experience');
 const siteData = await getEntry('site', 'profile');
 const skills = siteData?.data.skills;
+
+const resumeSchema = {
+  '@type': 'ProfilePage',
+  '@id': `${SITE.url}/resume/#profilepage`,
+  name: `Resume & CV — ${SITE.name}`,
+  url: `${SITE.url}/resume/`,
+  mainEntity: {
+    '@id': `${SITE.url}/#person`,
+  },
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'Resume & CV', item: '/resume/' },
+];
 ---
 
 <BaseLayout
   title="Resume & Curriculum Vitae"
-  description="Professional resume, technical background, experience timeline, and engineering skill set of Sahil Langoo."
+  description="Professional engineering resume, verified career experience at SquadCoders and ECSPL, core technical competencies, and architectural timeline of Sahil Langoo."
+  breadcrumbs={breadcrumbs}
+  structuredData={resumeSchema}
+  type="profile"
 >
   <div class="mx-auto max-w-4xl space-y-12 px-4 py-8 sm:px-6 sm:py-12">
     <!-- Header with Actions -->
@@ -27,7 +45,7 @@ const skills = siteData?.data.skills;
           {SITE.name}
         </h1>
         <p class="text-base-content/80 mt-1 text-sm font-medium">
-          Full Stack Engineer & Creative Technologist • {SITE.location}
+          Full Stack Systems Engineer & Co-Founder • {SITE.location}
         </p>
       </div>
 
@@ -52,9 +70,7 @@ const skills = siteData?.data.skills;
 
     <!-- Summary -->
     <section class="space-y-3">
-      <h2
-        class="text-base-content text-accent font-mono text-lg text-xs font-bold tracking-wider uppercase"
-      >
+      <h2 class="text-accent font-mono text-xs font-bold tracking-widest uppercase">
         Executive Summary
       </h2>
       <p class="text-base-content/80 text-sm leading-relaxed sm:text-base">
@@ -64,9 +80,7 @@ const skills = siteData?.data.skills;
 
     <!-- Work Experience -->
     <section class="space-y-6">
-      <h2
-        class="text-base-content text-accent font-mono text-lg text-xs font-bold tracking-wider uppercase"
-      >
+      <h2 class="text-accent font-mono text-xs font-bold tracking-widest uppercase">
         Professional Experience
       </h2>
       <div class="editorial-card p-6 sm:p-8">
@@ -78,7 +92,7 @@ const skills = siteData?.data.skills;
     {
       skills && (
         <section class="space-y-6">
-          <h2 class="text-base-content text-accent font-mono text-lg text-xs font-bold tracking-wider uppercase">
+          <h2 class="text-accent font-mono text-xs font-bold tracking-widest uppercase">
             Technical Core Competencies
           </h2>
 

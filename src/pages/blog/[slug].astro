@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ReadingProgressBar from '@/components/common/ReadingProgressBar.astro';
 import { getCollection, render } from 'astro:content';
+import { SITE } from '@/const/site.ts';
 import { Icon } from 'astro-icon/components';
 
 export async function getStaticPaths() {
@@ -13,7 +14,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { data } = post;
+const { data, id } = post;
 const { Content } = await render(post);
 
 const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
@@ -22,6 +23,37 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
   day: 'numeric',
   timeZone: 'UTC',
 });
+
+const pageUrl = `${SITE.url}/blog/${id}/`;
+
+const articleSchema = {
+  '@type': 'TechArticle',
+  '@id': `${pageUrl}#article`,
+  headline: data.title,
+  description: data.description,
+  url: pageUrl,
+  datePublished: data.publishDate,
+  dateModified: data.updatedDate || data.publishDate,
+  author: {
+    '@id': `${SITE.url}/#person`,
+  },
+  publisher: {
+    '@id': `${SITE.url}/#person`,
+  },
+  inLanguage: 'en-US',
+  articleSection: data.category,
+  keywords: data.tags.join(', '),
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': pageUrl,
+  },
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'Writing', item: '/blog/' },
+  { name: data.title, item: `/blog/${id}/` },
+];
 ---
 
 <BaseLayout
@@ -29,6 +61,9 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
   description={data.description}
   type="article"
   publishDate={data.publishDate}
+  updatedDate={data.updatedDate}
+  breadcrumbs={breadcrumbs}
+  structuredData={articleSchema}
 >
   <ReadingProgressBar />
 

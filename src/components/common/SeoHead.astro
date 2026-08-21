@@ -2,6 +2,11 @@
 import { SITE } from '@/const/site.ts';
 import { ClientRouter } from 'astro:transitions';
 
+export interface BreadcrumbItem {
+  name: string;
+  item: string;
+}
+
 export interface Props {
   title?: string;
   description?: string;
@@ -9,6 +14,10 @@ export interface Props {
   canonicalUrl?: string;
   type?: 'website' | 'article' | 'profile';
   publishDate?: string;
+  updatedDate?: string;
+  breadcrumbs?: BreadcrumbItem[];
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
+  noindex?: boolean;
 }
 
 const {
@@ -18,7 +27,15 @@ const {
   canonicalUrl = Astro.url.href,
   type = 'website',
   publishDate,
+  updatedDate,
+  breadcrumbs,
+  structuredData,
+  noindex = false,
 } = Astro.props;
+
+// Ensure trailing slash consistency for canonical URLs (unless file with extension)
+const formattedCanonical =
+  canonicalUrl.endsWith('/') || canonicalUrl.includes('.') ? canonicalUrl : `${canonicalUrl}/`;
 
 const formattedTitle = title === SITE.title ? title : `${title} — ${SITE.name}`;
 const siteUrl = SITE.url;
@@ -26,21 +43,81 @@ const ogImage = image.startsWith('http')
   ? image
   : `${siteUrl}${image.startsWith('/') ? '' : '/'}${image}`;
 
+// Core Schema: Person & WebSite
 const personSchema = {
-  '@context': 'https://schema.org',
   '@type': 'Person',
+  '@id': `${siteUrl}/#person`,
   name: SITE.name,
   url: SITE.url,
-  jobTitle: 'Full Stack Engineer & Creative Technologist',
-  sameAs: [SITE.social.github, SITE.social.linkedin, SITE.social.twitter],
+  image: `${siteUrl}/favicon.svg`,
+  jobTitle: 'Full Stack Systems Engineer & Co-Founder',
+  worksFor: {
+    '@type': 'Organization',
+    name: 'SquadCoders',
+    url: 'https://github.com/SquadCoders',
+  },
+  sameAs: [
+    SITE.social.github,
+    SITE.social.linkedin,
+    SITE.social.twitter,
+    SITE.social.devto,
+    SITE.social.dailydev,
+  ],
+  knowsAbout: [
+    'TypeScript',
+    'Astro',
+    'Next.js',
+    'React',
+    'Cloudflare Workers',
+    'Meta Conversions API (CAPI)',
+    'Cloudflare Turnstile',
+    'Partytown',
+    'Tailwind CSS',
+    'daisyUI',
+    'Bun',
+    'Web Performance',
+    'Distributed Systems',
+  ],
 };
 
 const webSiteSchema = {
-  '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': `${siteUrl}/#website`,
   name: SITE.name,
   url: SITE.url,
   description: SITE.description,
+  publisher: {
+    '@id': `${siteUrl}/#person`,
+  },
+  inLanguage: 'en-US',
+};
+
+// Breadcrumb Schema
+const breadcrumbSchema =
+  breadcrumbs && breadcrumbs.length > 0
+    ? {
+        '@type': 'BreadcrumbList',
+        '@id': `${formattedCanonical}#breadcrumb`,
+        itemListElement: breadcrumbs.map((crumb, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: crumb.name,
+          item: crumb.item.startsWith('http')
+            ? crumb.item
+            : `${siteUrl}${crumb.item.startsWith('/') ? '' : '/'}${crumb.item}`,
+        })),
+      }
+    : null;
+
+// Graph aggregation
+const schemaGraph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    personSchema,
+    webSiteSchema,
+    ...(breadcrumbSchema ? [breadcrumbSchema] : []),
+    ...(Array.isArray(structuredData) ? structuredData : structuredData ? [structuredData] : []),
+  ],
 };
 ---
 
@@ -48,8 +125,18 @@ const webSiteSchema = {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="canonical" href={canonicalUrl} />
+  <link rel="canonical" href={formattedCanonical} />
   <meta name="generator" content={Astro.generator} />
+
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  {
+    !noindex && (
+      <meta
+        name="robots"
+        content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+      />
+    )
+  }
 
   <!-- Astro View Transitions Router -->
   <ClientRouter />
@@ -62,23 +149,27 @@ const webSiteSchema = {
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content={type} />
-  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:url" content={formattedCanonical} />
   <meta property="og:title" content={formattedTitle} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={ogImage} />
   <meta property="og:site_name" content={SITE.name} />
+  <meta property="og:locale" content="en_US" />
   {publishDate && <meta property="article:published_time" content={publishDate} />}
+  {updatedDate && <meta property="article:modified_time" content={updatedDate} />}
+  {publishDate && <meta property="article:author" content={SITE.name} />}
 
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content={canonicalUrl} />
-  <meta property="twitter:title" content={formattedTitle} />
-  <meta property="twitter:description" content={description} />
-  <meta property="twitter:image" content={ogImage} />
+  <!-- Twitter / X Cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@kashurgeek" />
+  <meta name="twitter:creator" content="@kashurgeek" />
+  <meta name="twitter:url" content={formattedCanonical} />
+  <meta name="twitter:title" content={formattedTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
 
-  <!-- Structured Data (JSON-LD) -->
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(webSiteSchema)} />
+  <!-- Linked Data Structured Schema (JSON-LD) -->
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
 
   <!-- Theme script for anti-flash and View Transitions sync -->
   <script is:inline>

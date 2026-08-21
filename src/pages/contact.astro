@@ -3,11 +3,28 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import ContactForm from '@/components/portfolio/ContactForm.astro';
 import { SITE } from '@/const/site.ts';
 import { Icon } from 'astro-icon/components';
+
+const contactSchema = {
+  '@type': 'ContactPage',
+  '@id': `${SITE.url}/contact/#contactpage`,
+  name: `Contact — ${SITE.name}`,
+  url: `${SITE.url}/contact/`,
+  mainEntity: {
+    '@id': `${SITE.url}/#person`,
+  },
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'Contact', item: '/contact/' },
+];
 ---
 
 <BaseLayout
-  title="Contact & Inquiries"
-  description="Connect with Sahil Langoo for software engineering, system architecture, consulting, or project inquiries."
+  title="Contact & Engineering Inquiries"
+  description="Get in touch with Sahil Langoo for software engineering, system architecture consulting, open-source collaboration, or project inquiries."
+  breadcrumbs={breadcrumbs}
+  structuredData={contactSchema}
 >
   <div class="mx-auto max-w-4xl space-y-12 px-4 py-8 sm:px-6 sm:py-12">
     <!-- Header -->

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { SITE } from '@/const/site.ts';
 import { Icon } from 'astro-icon/components';
 
 const usesSections = [
@@ -82,11 +83,30 @@ const usesSections = [
     ],
   },
 ];
+
+const usesSchema = {
+  '@type': 'WebPage',
+  '@id': `${SITE.url}/uses/#webpage`,
+  name: `Uses & Developer Setup — ${SITE.name}`,
+  url: `${SITE.url}/uses/`,
+  description:
+    'A comprehensive catalog of hardware, software, developer tools, and workflow setup used by Sahil Langoo.',
+  mainEntity: {
+    '@id': `${SITE.url}/#person`,
+  },
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'Uses', item: '/uses/' },
+];
 ---
 
 <BaseLayout
-  title="Uses & Tech Stack — Sahil Langoo"
-  description="A comprehensive catalog of hardware, software, developer tools, and workflow setup used by Sahil Langoo."
+  title="Uses & Developer Setup"
+  description="A living inventory of hardware, software, editors, terminal tools, and cloud services used daily by Sahil Langoo."
+  breadcrumbs={breadcrumbs}
+  structuredData={usesSchema}
 >
   <div class="mx-auto max-w-4xl space-y-12 px-4 py-8 sm:px-6 sm:py-12">
     <!-- Header -->

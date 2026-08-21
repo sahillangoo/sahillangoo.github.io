@@ -2,16 +2,43 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ArticleCard from '@/components/portfolio/ArticleCard.astro';
 import { getCollection } from 'astro:content';
+import { SITE } from '@/const/site.ts';
 
 const articles = await getCollection('blog');
 const publishedArticles = articles
   .filter((a) => !a.data.draft)
   .sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
+
+const blogSchema = {
+  '@type': 'Blog',
+  '@id': `${SITE.url}/blog/#blog`,
+  name: `Engineering Journal & Essays — ${SITE.name}`,
+  url: `${SITE.url}/blog/`,
+  description:
+    'Technical writings, edge systems architecture, performance analysis, and minimalist software engineering principles by Sahil Langoo.',
+  publisher: {
+    '@id': `${SITE.url}/#person`,
+  },
+  blogPost: publishedArticles.map((post) => ({
+    '@type': 'BlogPosting',
+    headline: post.data.title,
+    description: post.data.description,
+    url: `${SITE.url}/blog/${post.id}/`,
+    datePublished: post.data.publishDate,
+  })),
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'Writing', item: '/blog/' },
+];
 ---
 
 <BaseLayout
-  title="Writing & Articles"
-  description="Technical writings, software architecture deep dives, performance analysis, and engineering reflections by Sahil Langoo."
+  title="Writing & Engineering Essays"
+  description="Technical writings, edge systems architecture, performance benchmarks, and minimalist software engineering principles by Sahil Langoo."
+  breadcrumbs={breadcrumbs}
+  structuredData={blogSchema}
 >
   <div class="mx-auto max-w-4xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">
     <!-- Header -->

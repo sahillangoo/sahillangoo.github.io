@@ -2,16 +2,36 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import NoteCard from '@/components/portfolio/NoteCard.astro';
 import { getCollection } from 'astro:content';
+import { SITE } from '@/const/site.ts';
 
 const notes = await getCollection('notes');
 const sortedNotes = [...notes].sort(
   (a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
 );
+
+const notesSchema = {
+  '@type': 'CollectionPage',
+  '@id': `${SITE.url}/notes/#collectionpage`,
+  name: `Digital Garden & Notes — ${SITE.name}`,
+  url: `${SITE.url}/notes/`,
+  description:
+    'Atomic notes, TILs, code patterns, and architectural mental models by Sahil Langoo.',
+  mainEntity: {
+    '@id': `${SITE.url}/#person`,
+  },
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'Garden Notes', item: '/notes/' },
+];
 ---
 
 <BaseLayout
   title="Digital Garden & Notes"
-  description="Atomic notes, TILs, code patterns, and architectural thoughts by Sahil Langoo."
+  description="Atomic notes, TILs, code patterns, and architectural mental models by Sahil Langoo."
+  breadcrumbs={breadcrumbs}
+  structuredData={notesSchema}
 >
   <div class="mx-auto max-w-5xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">
     <!-- Header -->

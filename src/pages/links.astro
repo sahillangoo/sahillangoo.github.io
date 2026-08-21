@@ -6,12 +6,28 @@ import { Icon } from 'astro-icon/components';
 
 const links = await getCollection('links');
 const sortedLinks = [...links].sort((a, b) => a.data.order - b.data.order);
+
+const linksSchema = {
+  '@type': 'ProfilePage',
+  '@id': `${SITE.url}/links/#profilepage`,
+  name: `Verified Links & Profiles — ${SITE.name}`,
+  url: `${SITE.url}/links/`,
+  mainEntity: {
+    '@id': `${SITE.url}/#person`,
+  },
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'Links', item: '/links/' },
+];
 ---
 
 <BaseLayout
-  title="Links & Profiles"
-  description="Quick access links to Sahil Langoo's profiles, repositories, articles, and resume."
-  hideFooter={false}
+  title="Links & Verified Profiles"
+  description="Quick access links to Sahil Langoo's official profiles, repositories, technical essays, and portfolio."
+  breadcrumbs={breadcrumbs}
+  structuredData={linksSchema}
 >
   <div class="mx-auto max-w-lg space-y-8 px-4 py-8 text-center sm:py-12">
     <!-- Header -->

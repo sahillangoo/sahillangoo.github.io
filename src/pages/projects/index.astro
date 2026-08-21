@@ -1,11 +1,31 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ProjectFilter from '@/components/portfolio/ProjectFilter.astro';
+import { SITE } from '@/const/site.ts';
+
+const collectionSchema = {
+  '@type': 'CollectionPage',
+  '@id': `${SITE.url}/projects/#collectionpage`,
+  name: `Projects & Engineering Systems — ${SITE.name}`,
+  url: `${SITE.url}/projects/`,
+  description:
+    'Catalog of software projects, developer tools, CLI utilities, and open source systems engineered by Sahil Langoo.',
+  mainEntity: {
+    '@id': `${SITE.url}/#person`,
+  },
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'Work', item: '/projects/' },
+];
 ---
 
 <BaseLayout
-  title="Projects & Engineering Systems — Sahil Langoo"
-  description="Catalog of software projects, developer tools, CLI utilities, and open source systems engineered by Sahil Langoo."
+  title="Projects & Engineering Systems"
+  description="Catalog of production web applications, open source developer tools, CLI utilities, and distributed systems engineered by Sahil Langoo."
+  breadcrumbs={breadcrumbs}
+  structuredData={collectionSchema}
 >
   <div class="mx-auto max-w-6xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">
     <!-- Header -->

@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ReadingProgressBar from '@/components/common/ReadingProgressBar.astro';
 import { getCollection, render } from 'astro:content';
+import { SITE } from '@/const/site.ts';
 import { Icon } from 'astro-icon/components';
 
 export async function getStaticPaths() {
@@ -13,11 +14,41 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
-const { data } = project;
+const { data, id } = project;
 const { Content } = await render(project);
+
+const pageUrl = `${SITE.url}/projects/${id}/`;
+
+const projectSchema = {
+  '@type': 'SoftwareApplication',
+  '@id': `${pageUrl}#software`,
+  name: data.title,
+  description: data.description,
+  url: pageUrl,
+  applicationCategory: data.category === 'cli-tool' ? 'DeveloperApplication' : 'WebApplication',
+  operatingSystem: 'Cross-platform',
+  author: {
+    '@id': `${SITE.url}/#person`,
+  },
+  keywords: data.tags.join(', '),
+  ...(data.liveUrl ? { installUrl: data.liveUrl } : {}),
+  ...(data.githubUrl ? { codeRepository: data.githubUrl } : {}),
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'Work', item: '/projects/' },
+  { name: data.title, item: `/projects/${id}/` },
+];
 ---
 
-<BaseLayout title={data.title} description={data.description} publishDate={data.publishDate}>
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  publishDate={data.publishDate}
+  breadcrumbs={breadcrumbs}
+  structuredData={projectSchema}
+>
   <ReadingProgressBar />
 
   <article class="mx-auto max-w-4xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">

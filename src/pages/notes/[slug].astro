@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
+import { SITE } from '@/const/site.ts';
 import { Icon } from 'astro-icon/components';
 
 export async function getStaticPaths() {
@@ -12,7 +13,7 @@ export async function getStaticPaths() {
 }
 
 const { note } = Astro.props;
-const { data } = note;
+const { data, id } = note;
 const { Content } = await render(note);
 
 const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
@@ -20,12 +21,37 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
   month: 'short',
   day: 'numeric',
 });
+
+const pageUrl = `${SITE.url}/notes/${id}/`;
+
+const noteSchema = {
+  '@type': 'TechArticle',
+  '@id': `${pageUrl}#article`,
+  headline: data.title,
+  description: data.description || `Digital garden note by Sahil Langoo on ${data.topic}`,
+  url: pageUrl,
+  datePublished: data.publishDate,
+  author: {
+    '@id': `${SITE.url}/#person`,
+  },
+  keywords: data.tags.join(', '),
+  inLanguage: 'en-US',
+  articleSection: data.topic,
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'Garden Notes', item: '/notes/' },
+  { name: data.title, item: `/notes/${id}/` },
+];
 ---
 
 <BaseLayout
   title={data.title}
   description={data.description || `Digital note by Sahil Langoo on ${data.topic}`}
   publishDate={data.publishDate}
+  breadcrumbs={breadcrumbs}
+  structuredData={noteSchema}
 >
   <article class="mx-auto max-w-2xl space-y-8 px-4 py-8 sm:px-6 sm:py-12">
     <!-- Back Link -->

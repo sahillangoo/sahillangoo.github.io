@@ -1,9 +1,16 @@
 ---
 title: 'Smart Image CLI (AI-Powered Image Optimizer & SEO Renamer)'
-description: 'Lightning-fast image compression and local AI-powered SEO image renaming CLI built on Bun and LM Studio.'
+description: 'Lightning-fast image compression and local vision AI SEO renaming CLI built with Bun, TypeScript, and LM Studio.'
 summary: 'Local AI-powered image optimization and semantic SEO file renaming tool running on Bun.'
 category: 'cli-tool'
-tags: ['Bun', 'TypeScript', 'LM Studio', 'Local AI', 'Image Optimization', 'CLI']
+tags:
+  - bun
+  - typescript
+  - lm-studio
+  - local-ai
+  - gemma
+  - image-optimization
+  - cli
 featured: true
 year: 2024
 role: 'Creator & Lead Developer'
@@ -13,13 +20,40 @@ liveUrl: 'https://github.com/sahillangoo/smart-img-cli'
 githubUrl: 'https://github.com/sahillangoo/smart-img-cli'
 ---
 
-## Overview
+## The Challenge
 
-`smart-img-cli` is an open-source command-line tool that solves two major frontend performance and asset management bottlenecks: aggressive multi-threaded image compression and automated, intelligent SEO renaming powered by local AI vision models.
+Frontend developers and content editors frequently face two time-consuming image bottlenecks:
 
-## Architectural Design
+1. Compressing high-resolution PNGs/JPEGs into modern WebP/AVIF formats without visual degradation.
+2. Manually writing descriptive, SEO-optimized alt text and renaming non-descriptive files like `IMG_9482.png` into search-friendly slugs like `hotel-sonmarg-snow-suite.webp`.
 
-- **Local LLM Vision Integration**: Connects to local **LM Studio** inference endpoints to visually inspect image content, generate descriptive keyword-rich filenames, and craft semantic alt-text without sending private media to cloud APIs.
-- **Ultra-Fast Bun Runtime**: Leverages Bun's native multi-core execution and high-throughput file system APIs for sub-second batch processing.
-- **Modern Next-Gen Formats**: Supports perceptual and lossless WebP and AVIF conversions with customizable compression quality presets.
-- **Zero Cloud Billing / 100% Offline**: Operates entirely on-device, ensuring complete privacy, zero external API latency, and zero per-request costs.
+Cloud vision APIs (OpenAI, Google Cloud Vision) solve the labeling problem but introduce recurring API costs, network latency, and privacy compliance issues when processing confidential client assets.
+
+---
+
+## The Solution & Architecture
+
+`smart-img-cli` is an open-source command-line tool built on the **Bun** runtime that integrates with **offline Small Language Models (SLMs)** running via **LM Studio**:
+
+```
+[Raw Photos / Screenshots] ──> [smart-img-cli @ Bun]
+                                     │
+                 ┌───────────────────┴───────────────────┐
+                 ▼                                       ▼
+    [Local Gemma 2B Vision]                 [Multi-Core Image Engine]
+    (LM Studio OpenAI Endpoint)             (Sharp / WebP Compression)
+                 │                                       │
+                 ▼                                       ▼
+    "alt: Modern dark-mode UI..."           "compressed: 4.2MB -> 180KB"
+                 │                                       │
+                 └───────────────────┬───────────────────┘
+                                     ▼
+                      [Optimized & Renamed Assets]
+```
+
+### Key Engineering Features
+
+- **Local SLM Vision Pipeline**: Connects to local OpenAI-compatible inference endpoints (`http://127.0.0.1:1234/v1`) running Google's **Gemma 2B Vision** model, generating accurate 15-word alt tags and slugified filenames in ~60ms per image.
+- **Bun Zero-Copy File I/O**: Takes advantage of Bun's native process spawning and memory-mapped file buffers for fast batch transformations.
+- **Next-Gen WebP/AVIF Encoding**: Converts raw assets with configurable perceptual quality presets while preserving color profiles and aspect ratios.
+- **100% Privacy & Zero API Cost**: Runs entirely on local machine hardware with no outbound internet traffic and $0.00 cloud fees.

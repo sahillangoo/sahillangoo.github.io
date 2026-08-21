@@ -1,5 +1,5 @@
 ---
-import SeoHead from '@/components/common/SeoHead.astro';
+import SeoHead, { type BreadcrumbItem } from '@/components/common/SeoHead.astro';
 import NavigationBar from '@/components/common/NavigationBar.astro';
 import MobileNavigation from '@/components/common/MobileNavigation.astro';
 import SiteFooter from '@/components/common/SiteFooter.astro';
@@ -16,6 +16,10 @@ export interface Props {
   canonicalUrl?: string;
   type?: 'website' | 'article' | 'profile';
   publishDate?: string;
+  updatedDate?: string;
+  breadcrumbs?: BreadcrumbItem[];
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
+  noindex?: boolean;
   hideFooter?: boolean;
   hideNav?: boolean;
 }
@@ -27,6 +31,10 @@ const {
   canonicalUrl,
   type,
   publishDate,
+  updatedDate,
+  breadcrumbs,
+  structuredData,
+  noindex,
   hideFooter = false,
   hideNav = false,
 } = Astro.props;
@@ -41,6 +49,10 @@ const {
     canonicalUrl={canonicalUrl}
     type={type}
     publishDate={publishDate}
+    updatedDate={updatedDate}
+    breadcrumbs={breadcrumbs}
+    structuredData={structuredData}
+    noindex={noindex}
   />
   <body class="bg-base-100 text-base-content relative flex min-h-screen flex-col antialiased">
     {!hideNav && <NavigationBar />}

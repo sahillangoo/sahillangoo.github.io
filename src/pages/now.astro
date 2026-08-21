@@ -30,11 +30,30 @@ const nowItems = [
     ],
   },
 ];
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'Now', item: '/now/' },
+];
+
+const nowSchema = {
+  '@type': 'WebPage',
+  '@id': `${SITE.url}/now/#webpage`,
+  name: `What I'm Doing Now — ${SITE.name}`,
+  url: `${SITE.url}/now/`,
+  description:
+    'A live snapshot of what Sahil Langoo is currently working on, studying, reading, and building.',
+  mainEntity: {
+    '@id': `${SITE.url}/#person`,
+  },
+};
 ---
 
 <BaseLayout
-  title="Now — What I'm Doing Now — Sahil Langoo"
-  description="A live snapshot of what Sahil Langoo is currently working on, studying, reading, and building."
+  title="Now — Current Priorities & Focus"
+  description="A live snapshot of what Sahil Langoo is currently working on, engineering architectures, studying, reading, and building."
+  breadcrumbs={breadcrumbs}
+  structuredData={nowSchema}
 >
   <div class="mx-auto max-w-4xl space-y-12 px-4 py-8 sm:px-6 sm:py-12">
     <!-- Header -->

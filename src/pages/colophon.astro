@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { SITE } from '@/const/site.ts';
 import { Icon } from 'astro-icon/components';
 
 const specs = [
@@ -16,11 +17,30 @@ const specs = [
   { label: 'Runtime Client JS', value: '0.00 KB on initial render (Hydration only on demand)' },
   { label: 'Cumulative Layout Shift', value: '0.00 CLS guaranteed' },
 ];
+
+const colophonSchema = {
+  '@type': 'WebPage',
+  '@id': `${SITE.url}/colophon/#webpage`,
+  name: `Colophon — Technical Specifications — ${SITE.name}`,
+  url: `${SITE.url}/colophon/`,
+  description:
+    'Technical colophon detailing the typography, color science, build architecture, and performance standards of this website.',
+  mainEntity: {
+    '@id': `${SITE.url}/#person`,
+  },
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'Colophon', item: '/colophon/' },
+];
 ---
 
 <BaseLayout
-  title="Colophon — Engineering & Design Specifications — Sahil Langoo"
-  description="Technical colophon detailing the typography, color science, build architecture, and performance standards of this website."
+  title="Colophon — Technical Specifications"
+  description="Technical colophon detailing the typography, OKLCH color science, build architecture, and performance standards of this website."
+  breadcrumbs={breadcrumbs}
+  structuredData={colophonSchema}
 >
   <div class="mx-auto max-w-4xl space-y-12 px-4 py-8 sm:px-6 sm:py-12">
     <!-- Header -->
