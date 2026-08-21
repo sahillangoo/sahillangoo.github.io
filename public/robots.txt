@@ -1,6 +1,12 @@
 # Robots.txt for sahillangoo.in
+# Production SEO & AI Discovery Policy
+
 User-agent: *
 Allow: /
+Disallow: /404/
+Disallow: /api/
+Disallow: /private/
+Disallow: /blog/tag/
 
 # Explicit Search Engine Crawlers
 User-agent: Googlebot
@@ -15,7 +21,7 @@ Allow: /
 User-agent: DuckDuckBot
 Allow: /
 
-# AI Search & Retrieval Crawlers (Allowed for citations and AI search engine visibility)
+# AI Search & Retrieval Crawlers (Authorized for citations and LLM grounding)
 User-agent: GPTBot
 Allow: /
 
@@ -34,10 +40,7 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-# Private API & Build Directories
-Disallow: /api/
-Disallow: /private/
-
 # XML Sitemaps
 Sitemap: https://sahillangoo.in/sitemap-index.xml
 Sitemap: https://sahillangoo.in/sitemap-0.xml
+Sitemap: https://sahillangoo.in/sitemap.xml

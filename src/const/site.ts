@@ -29,4 +29,4 @@ export const SITE = {
   ],
 } as const;
 
-export const NON_INDEXABLE_PATHS = ['/404/'] as const;
+export const NON_INDEXABLE_PATHS = ['/404/', '/rss.xml', '/blog/tag/'] as const;

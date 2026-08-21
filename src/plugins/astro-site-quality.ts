@@ -4,16 +4,23 @@
  * A zero-dependency native Astro integration that enforces strict site quality during builds:
  * 1. Vite `buildStart`: Scans source files (Astro, MD, TS) to guarantee all image references
  *    exist in `src/assets` or `public` and checks internal links for trailing slashes.
- * 2. Astro `astro:build:done`: Scans all generated HTML files in `dist/` post-build to guarantee:
- *    - Every internal link (`href`) points to a physically generated HTML route (Zero 404s).
- *    - All canonical URLs match the configured production site domain.
- *    - Robots.txt and sitemaps are verified.
- *    Fails the build immediately if any violations are detected.
+ * 2. Astro `astro:build:done`:
+ *    - Scans all generated HTML files in `dist/` post-build to guarantee zero broken internal links and canonical domain match.
+ *    - Parses, sorts (priority descending, lastmod date descending), formats, and validates XML sitemaps.
+ *    - Syncs `sitemap-0.xml` and `sitemap.xml`.
+ *    - Verifies robots.txt alignment.
  */
 import type { AstroIntegration } from 'astro';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+
+interface SitemapEntry {
+  loc: string;
+  lastmod?: string;
+  changefreq?: string;
+  priority?: number;
+}
 
 function getAllFiles(dirPath: string, files: string[] = []): string[] {
   if (!fs.existsSync(dirPath)) return files;
@@ -23,6 +30,52 @@ function getAllFiles(dirPath: string, files: string[] = []): string[] {
     else files.push(full);
   }
   return files;
+}
+
+function sortAndFormatSitemap(xmlContent: string): string {
+  const urlMatches = xmlContent.match(/<url>[\s\S]*?<\/url>/g) || [];
+  const entries: SitemapEntry[] = [];
+
+  for (const urlBlock of urlMatches) {
+    const locMatch = urlBlock.match(/<loc>([^<]+)<\/loc>/);
+    const lastmodMatch = urlBlock.match(/<lastmod>([^<]+)<\/lastmod>/);
+    const changefreqMatch = urlBlock.match(/<changefreq>([^<]+)<\/changefreq>/);
+    const priorityMatch = urlBlock.match(/<priority>([^<]+)<\/priority>/);
+
+    const loc = locMatch?.[1];
+    if (loc) {
+      const cleanLastmod = lastmodMatch?.[1] ? lastmodMatch[1].split('T')[0] : undefined;
+      const priority = priorityMatch?.[1] ? parseFloat(priorityMatch[1]) : 0.5;
+      entries.push({
+        loc,
+        lastmod: cleanLastmod,
+        changefreq: changefreqMatch?.[1],
+        priority,
+      });
+    }
+  }
+
+  // Sort by priority (descending), then lastmod (descending), then loc (ascending)
+  entries.sort((a, b) => {
+    if ((b.priority ?? 0) !== (a.priority ?? 0)) {
+      return (b.priority ?? 0) - (a.priority ?? 0);
+    }
+    if ((b.lastmod ?? '') !== (a.lastmod ?? '')) {
+      return (b.lastmod ?? '').localeCompare(a.lastmod ?? '');
+    }
+    return a.loc.localeCompare(b.loc);
+  });
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+${entries
+  .map(
+    (e) => `  <url>
+    <loc>${e.loc}</loc>${e.lastmod ? `\n    <lastmod>${e.lastmod}</lastmod>` : ''}${e.changefreq ? `\n    <changefreq>${e.changefreq}</changefreq>` : ''}${e.priority !== undefined ? `\n    <priority>${e.priority.toFixed(2)}</priority>` : ''}
+  </url>`
+  )
+  .join('\n')}
+</urlset>\n`;
 }
 
 export default function astroSiteQualityEnforcer(): AstroIntegration {
@@ -173,6 +226,22 @@ export default function astroSiteQualityEnforcer(): AstroIntegration {
         }
 
         if (errors > 0) throw new Error(`Found ${errors} site quality violations during build!`);
+
+        // 3. Re-sort, format, and synchronize XML sitemaps
+        const sitemap0Path = path.join(outDir, 'sitemap-0.xml');
+        const sitemapPath = path.join(outDir, 'sitemap.xml');
+
+        if (fs.existsSync(sitemap0Path)) {
+          const rawSitemap = fs.readFileSync(sitemap0Path, 'utf-8');
+          const formattedSitemap = sortAndFormatSitemap(rawSitemap);
+
+          fs.writeFileSync(sitemap0Path, formattedSitemap, 'utf-8');
+          fs.writeFileSync(sitemapPath, formattedSitemap, 'utf-8');
+
+          const entryCount = (formattedSitemap.match(/<url>/g) || []).length;
+          logger.info(`🗺️ Sitemap Processed & Sorted: ${entryCount} URLs with priorities & dates.`);
+        }
+
         logger.info(
           `✅ Quality Check Passed: ${htmlFiles.length} routes validated against ${siteUrl}`
         );

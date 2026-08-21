@@ -5,6 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import astroSiteQualityEnforcer from './src/plugins/astro-site-quality.ts';
 import { NON_INDEXABLE_PATHS } from './src/const/site.ts';
+import { createSitemapSerializer } from './src/utils/sitemap.ts';
 
 // https://astro.build/config
 export default defineConfig({
@@ -52,7 +53,6 @@ export default defineConfig({
     },
   ],
   integrations: [
-    astroSiteQualityEnforcer(),
     icon({
       include: {
         lucide: ['*'],
@@ -67,8 +67,13 @@ export default defineConfig({
             page === p ||
             page === p.slice(0, -1) ||
             page.endsWith(p) ||
-            page.endsWith(p.slice(0, -1))
+            page.endsWith(p.slice(0, -1)) ||
+            page.includes('/blog/tag/') ||
+            page.match(/\/blog\/\d+\/?$/) ||
+            page.match(/\/notes\/\d+\/?$/)
         ),
+      serialize: createSitemapSerializer(),
     }),
+    astroSiteQualityEnforcer(),
   ],
 });
