@@ -3,11 +3,15 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import ArticleCard from '@/components/portfolio/ArticleCard.astro';
 import { getCollection } from 'astro:content';
 import { SITE } from '@/const/site.ts';
+import { slugify } from '@/utils/slugify';
 
 const articles = await getCollection('blog');
 const publishedArticles = articles
   .filter((a) => !a.data.draft)
   .sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime());
+
+// Extract all unique categories
+const categories = [...new Set(publishedArticles.map((post) => post.data.category))];
 
 const blogSchema = {
   '@type': 'Blog',
@@ -25,6 +29,9 @@ const blogSchema = {
     description: post.data.description,
     url: `${SITE.url}/blog/${post.id}/`,
     datePublished: post.data.publishDate,
+    author: {
+      '@id': `${SITE.url}/#person`,
+    },
   })),
 };
 
@@ -53,6 +60,21 @@ const breadcrumbs = [
         Deep dives into static architecture, type safety, performance benchmarks, and minimalist
         software engineering principles.
       </p>
+
+      <!-- Category Filter Pills -->
+      <div class="flex flex-wrap items-center gap-2 pt-6">
+        <span class="text-base-content/50 font-mono text-xs tracking-wider uppercase">Topics:</span>
+        {
+          categories.map((category) => (
+            <a
+              href={`/blog/category/${slugify(category)}/`}
+              class="bg-base-200 border-base-300 text-base-content/75 hover:border-accent/40 hover:text-accent rounded-full border px-3 py-1 font-mono text-xs transition-colors"
+            >
+              {category}
+            </a>
+          ))
+        }
+      </div>
     </div>
 
     <!-- Articles List -->

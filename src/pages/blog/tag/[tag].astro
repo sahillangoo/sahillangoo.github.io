@@ -1,0 +1,109 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ArticleCard from '@/components/portfolio/ArticleCard.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { slugify } from '@/utils/slugify';
+import { SITE } from '@/const/site.ts';
+import { Icon } from 'astro-icon/components';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  const publishedPosts = allPosts.filter((post) => !post.data.draft);
+
+  // Extract all unique tags
+  const tagsSet = new Set<string>();
+  publishedPosts.forEach((post) => {
+    post.data.tags.forEach((tag) => tagsSet.add(tag));
+  });
+
+  const tags = Array.from(tagsSet);
+
+  return tags.map((tag) => {
+    const tagSlug = slugify(tag);
+    const tagPosts = publishedPosts
+      .filter((post) => post.data.tags.map((t) => slugify(t)).includes(tagSlug))
+      .sort(
+        (a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
+      );
+
+    return {
+      params: { tag: tagSlug },
+      props: {
+        tagName: tag,
+        tagSlug,
+        posts: tagPosts,
+      },
+    };
+  });
+}
+
+export interface Props {
+  tagName: string;
+  tagSlug: string;
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { tagName, tagSlug, posts } = Astro.props;
+
+const pageUrl = `${SITE.url}/blog/tag/${tagSlug}/`;
+
+const tagSchema = {
+  '@type': 'CollectionPage',
+  '@id': `${pageUrl}#collectionpage`,
+  name: `#${tagName} Articles — ${SITE.name}`,
+  url: pageUrl,
+  description: `Technical articles and notes tagged #${tagName} by Sahil Langoo.`,
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: posts.map((post, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: post.data.title,
+      url: `${SITE.url}/blog/${post.id}/`,
+    })),
+  },
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'Writing', item: '/blog/' },
+  { name: `#${tagName}`, item: `/blog/tag/${tagSlug}/` },
+];
+---
+
+<BaseLayout
+  title={`#${tagName} Articles`}
+  description={`Browse technical articles and engineering deep-dives tagged #${tagName} by Sahil Langoo.`}
+  breadcrumbs={breadcrumbs}
+  structuredData={tagSchema}
+>
+  <div class="mx-auto max-w-4xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">
+    <!-- Back Link -->
+    <a
+      href="/blog/"
+      class="text-base-content/60 hover:text-accent inline-flex items-center gap-1.5 font-mono text-xs transition-colors"
+    >
+      <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Back to all writing
+    </a>
+
+    <!-- Header -->
+    <div class="border-base-300 border-b pb-6">
+      <div class="text-accent flex items-center gap-2 font-mono text-xs">
+        <span class="tracking-widest uppercase">Tag</span>
+        <span>•</span>
+        <span>{posts.length} {posts.length === 1 ? 'Article' : 'Articles'}</span>
+      </div>
+      <h1 class="text-base-content mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">
+        #{tagName}
+      </h1>
+      <p class="text-base-content/75 mt-3 text-sm leading-relaxed sm:text-base">
+        All technical essays, architecture guides, and benchmarks discussing #{tagName}.
+      </p>
+    </div>
+
+    <!-- Posts Grid -->
+    <div class="space-y-6">
+      {posts.map((post) => <ArticleCard post={post} />)}
+    </div>
+  </div>
+</BaseLayout>

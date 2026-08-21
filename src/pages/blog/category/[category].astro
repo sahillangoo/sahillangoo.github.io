@@ -1,0 +1,106 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ArticleCard from '@/components/portfolio/ArticleCard.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { slugify } from '@/utils/slugify';
+import { SITE } from '@/const/site.ts';
+import { Icon } from 'astro-icon/components';
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection('blog');
+  const publishedPosts = allPosts.filter((post) => !post.data.draft);
+
+  // Extract all unique categories
+  const categories = [...new Set(publishedPosts.map((post) => post.data.category))];
+
+  return categories.map((category) => {
+    const categorySlug = slugify(category);
+    const categoryPosts = publishedPosts
+      .filter((post) => post.data.category === category)
+      .sort(
+        (a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
+      );
+
+    return {
+      params: { category: categorySlug },
+      props: {
+        categoryName: category,
+        categorySlug,
+        posts: categoryPosts,
+      },
+    };
+  });
+}
+
+export interface Props {
+  categoryName: string;
+  categorySlug: string;
+  posts: CollectionEntry<'blog'>[];
+}
+
+const { categoryName, categorySlug, posts } = Astro.props;
+
+const pageUrl = `${SITE.url}/blog/category/${categorySlug}/`;
+
+const categorySchema = {
+  '@type': 'CollectionPage',
+  '@id': `${pageUrl}#collectionpage`,
+  name: `${categoryName} Articles — ${SITE.name}`,
+  url: pageUrl,
+  description: `Technical essays and architecture deep-dives by Sahil Langoo in the ${categoryName} category.`,
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: posts.map((post, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: post.data.title,
+      url: `${SITE.url}/blog/${post.id}/`,
+    })),
+  },
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'Writing', item: '/blog/' },
+  { name: categoryName, item: `/blog/category/${categorySlug}/` },
+];
+---
+
+<BaseLayout
+  title={`${categoryName} Articles`}
+  description={`Browse technical articles, benchmarks, and engineering deep-dives in ${categoryName} by Sahil Langoo.`}
+  breadcrumbs={breadcrumbs}
+  structuredData={categorySchema}
+>
+  <div class="mx-auto max-w-4xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">
+    <!-- Back Link -->
+    <a
+      href="/blog/"
+      class="text-base-content/60 hover:text-accent inline-flex items-center gap-1.5 font-mono text-xs transition-colors"
+    >
+      <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Back to all writing
+    </a>
+
+    <!-- Header -->
+    <div class="border-base-300 border-b pb-6">
+      <div class="text-accent flex items-center gap-2 font-mono text-xs">
+        <span class="tracking-widest uppercase">Category</span>
+        <span>•</span>
+        <span>{posts.length} {posts.length === 1 ? 'Article' : 'Articles'}</span>
+      </div>
+      <h1 class="text-base-content mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">
+        {categoryName}
+      </h1>
+      <p class="text-base-content/75 mt-3 text-sm leading-relaxed sm:text-base">
+        Curated engineering essays and architecture breakdowns focusing on {
+          categoryName.toLowerCase()
+        }.
+      </p>
+    </div>
+
+    <!-- Posts Grid -->
+    <div class="space-y-6">
+      {posts.map((post) => <ArticleCard post={post} />)}
+    </div>
+  </div>
+</BaseLayout>

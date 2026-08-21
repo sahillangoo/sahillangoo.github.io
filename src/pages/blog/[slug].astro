@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import ReadingProgressBar from '@/components/common/ReadingProgressBar.astro';
 import { getCollection, render } from 'astro:content';
 import { SITE } from '@/const/site.ts';
+import { slugify } from '@/utils/slugify';
 import { Icon } from 'astro-icon/components';
 
 export async function getStaticPaths() {
@@ -25,6 +26,7 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
 });
 
 const pageUrl = `${SITE.url}/blog/${id}/`;
+const categorySlug = slugify(data.category);
 
 const articleSchema = {
   '@type': 'TechArticle',
@@ -35,7 +37,12 @@ const articleSchema = {
   datePublished: data.publishDate,
   dateModified: data.updatedDate || data.publishDate,
   author: {
+    '@type': 'Person',
     '@id': `${SITE.url}/#person`,
+    name: SITE.name,
+    url: `${SITE.url}/about/`,
+    jobTitle: 'Full Stack Systems Engineer',
+    sameAs: [SITE.social.github, SITE.social.linkedin, SITE.social.twitter, SITE.social.devto],
   },
   publisher: {
     '@id': `${SITE.url}/#person`,
@@ -52,6 +59,7 @@ const articleSchema = {
 const breadcrumbs = [
   { name: 'Home', item: '/' },
   { name: 'Writing', item: '/blog/' },
+  { name: data.category, item: `/blog/category/${categorySlug}/` },
   { name: data.title, item: `/blog/${id}/` },
 ];
 ---
@@ -78,8 +86,13 @@ const breadcrumbs = [
 
     <!-- Article Header -->
     <header class="border-base-300 space-y-4 border-b pb-8">
-      <div class="text-base-content/60 flex items-center gap-3 font-mono text-xs">
-        <span class="text-accent font-semibold">{data.category}</span>
+      <div class="text-base-content/60 flex flex-wrap items-center gap-3 font-mono text-xs">
+        <a
+          href={`/blog/category/${categorySlug}/`}
+          class="bg-accent/10 text-accent hover:bg-accent/20 rounded px-2.5 py-0.5 font-semibold transition-colors"
+        >
+          {data.category}
+        </a>
         <span>•</span>
         <time datetime={data.publishDate}>{formattedDate}</time>
         {
@@ -102,12 +115,16 @@ const breadcrumbs = [
         {data.description}
       </p>
 
+      <!-- Tags with linked routes -->
       <div class="flex flex-wrap gap-2 pt-2">
         {
           data.tags.map((tag) => (
-            <span class="bg-base-200 border-base-300 text-base-content/70 rounded border px-2.5 py-0.5 font-mono text-xs">
+            <a
+              href={`/blog/tag/${slugify(tag)}/`}
+              class="bg-base-200 border-base-300 text-base-content/70 hover:border-accent/40 hover:text-accent rounded border px-2.5 py-0.5 font-mono text-xs transition-colors"
+            >
               #{tag}
-            </span>
+            </a>
           ))
         }
       </div>
@@ -123,14 +140,59 @@ const breadcrumbs = [
     <!-- Article Footer / Author Box -->
     <footer class="border-base-300 mt-12 border-t pt-8">
       <div
-        class="editorial-card flex flex-col justify-between gap-4 p-6 sm:flex-row sm:items-center"
+        class="editorial-card flex flex-col justify-between gap-6 p-6 sm:flex-row sm:items-center"
       >
-        <div>
-          <h4 class="text-base-content font-bold">Written by Sahil Langoo</h4>
-          <p class="text-base-content/70 mt-0.5 text-xs">
-            Full stack engineer focused on resilient systems, performance, and minimalist UI craft.
-          </p>
+        <div class="flex items-start gap-4">
+          <!-- Author Avatar / Badge -->
+          <div
+            class="bg-base-300 border-base-300/80 text-accent flex h-12 w-12 shrink-0 items-center justify-center rounded-full border font-mono text-base font-bold shadow-xs"
+          >
+            SL
+          </div>
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <h4 class="text-base-content font-bold">
+                <a href="/about/" class="hover:text-accent transition-colors">
+                  {SITE.name}
+                </a>
+              </h4>
+              <span class="bg-accent/15 text-accent py-0.2 rounded px-1.5 font-mono text-[10px]">
+                Author
+              </span>
+            </div>
+            <p class="text-base-content/70 max-w-md text-xs leading-relaxed">
+              Full Stack Systems Engineer & Co-Founder at @SquadCoders. Writing on resilient
+              architectures, TypeScript, edge proxies, and minimalist UI craft.
+            </p>
+            <div class="flex items-center gap-3 pt-1 text-xs">
+              <a
+                href={SITE.social.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-base-content/60 hover:text-accent flex items-center gap-1 transition-colors"
+              >
+                <Icon name="ph:github-logo-bold" class="h-3.5 w-3.5" /> GitHub
+              </a>
+              <a
+                href={SITE.social.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-base-content/60 hover:text-accent flex items-center gap-1 transition-colors"
+              >
+                <Icon name="ph:linkedin-logo-bold" class="h-3.5 w-3.5" /> LinkedIn
+              </a>
+              <a
+                href={SITE.social.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-base-content/60 hover:text-accent flex items-center gap-1 transition-colors"
+              >
+                <Icon name="ph:x-logo-bold" class="h-3.5 w-3.5" /> X
+              </a>
+            </div>
+          </div>
         </div>
+
         <a
           href="/contact/"
           class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 flex shrink-0 items-center gap-1.5 self-start rounded-md font-mono text-xs sm:self-auto"
