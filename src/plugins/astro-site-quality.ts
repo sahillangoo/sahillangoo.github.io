@@ -122,7 +122,9 @@ export default function astroSiteQualityEnforcer(): AstroIntegration {
                         match[1].startsWith('http://') ||
                         match[1].startsWith('https://') ||
                         match[1].startsWith('//') ||
-                        match[1].startsWith('data:')
+                        match[1].startsWith('data:') ||
+                        match[1].startsWith('/og/') ||
+                        match[1].includes('/og/')
                       )
                         continue;
                       const filename = path.basename(match[1]);

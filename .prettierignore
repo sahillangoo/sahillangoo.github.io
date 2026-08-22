@@ -3,6 +3,7 @@ dist/
 .astro/
 .wrangler/
 .mf/
+.agents/
 
 # Dependencies & Lockfiles
 node_modules/

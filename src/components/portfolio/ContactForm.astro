@@ -8,12 +8,10 @@ import { Icon } from 'astro-icon/components';
     <h3 class="text-base-content text-xl font-bold">Get in Touch</h3>
     <p class="text-base-content/70 mt-1 text-sm">
       Have an engineering project, consulting request, or open source initiative? Send a note
-      directly or reach out via <a
-        href={`mailto:${SITE.email}`}
-        class="text-accent font-medium underline"
-      >
+      directly or reach out via <!--email_off-->
+      <a href={`mailto:${SITE.email}`} class="text-accent font-medium underline">
         {SITE.email}
-      </a>.
+      </a><!--/email_off-->.
     </p>
   </div>
 
@@ -91,7 +89,7 @@ import { Icon } from 'astro-icon/components';
       <button
         type="submit"
         id="contact-submit-btn"
-        class="btn bg-base-content text-base-100 hover:bg-base-content/90 flex items-center gap-2 rounded-md border-0 px-6 font-mono text-xs font-medium tracking-wider uppercase"
+        class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-6 font-mono text-xs font-medium tracking-wider uppercase"
       >
         <Icon name="ph:paper-plane-tilt-bold" class="h-3.5 w-3.5" />
         <span id="contact-btn-text">Send Message</span>

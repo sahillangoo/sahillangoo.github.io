@@ -1,0 +1,92 @@
+---
+/**
+ * Cloudflare Email Protection Decoder for Astro View Transitions
+ *
+ * Cloudflare Pages ScrapeShield replaces email strings with XOR-encoded hex strings
+ * and injects `email-decode.min.js`. However, on Astro client-side page transitions
+ * (ClientRouter / View Transitions), Cloudflare's script does not automatically re-run.
+ *
+ * This component listens to `astro:page-load` and `astro:after-swap` lifecycle events,
+ * detecting and decoding all `.__cf_email__`, `[data-cfemail]`, and `/cdn-cgi/l/email-protection`
+ * elements back to standard clickable mailto links and readable text.
+ */
+---
+
+<script>
+  function decodeCfEmail(encoded: string): string {
+    let email = '';
+    const key = parseInt(encoded.substring(0, 2), 16);
+    for (let i = 2; i < encoded.length; i += 2) {
+      const charCode = parseInt(encoded.substring(i, i + 2), 16) ^ key;
+      email += String.fromCharCode(charCode);
+    }
+    return email;
+  }
+
+  function resolveCloudflareEmails() {
+    // 1. Resolve elements with data-cfemail attribute or class .__cf_email__
+    const cfElements = document.querySelectorAll<HTMLElement>('[data-cfemail], .__cf_email__');
+    cfElements.forEach((el) => {
+      const encoded = el.getAttribute('data-cfemail') || el.dataset.cfemail;
+      if (!encoded) return;
+
+      const email = decodeCfEmail(encoded);
+      if (!email) return;
+
+      if (el.tagName.toLowerCase() === 'a') {
+        const anchor = el as HTMLAnchorElement;
+        anchor.href = `mailto:${email}`;
+        if (
+          !anchor.textContent ||
+          anchor.textContent.includes('[email') ||
+          anchor.textContent.trim() === ''
+        ) {
+          anchor.textContent = email;
+        }
+      } else {
+        // If element is a span or text node inside an anchor
+        const parentAnchor = el.closest('a');
+        if (
+          parentAnchor &&
+          (parentAnchor.href.includes('/cdn-cgi/l/email-protection') ||
+            parentAnchor.href.startsWith('mailto:'))
+        ) {
+          parentAnchor.href = `mailto:${email}`;
+        }
+        if (!el.textContent || el.textContent.includes('[email') || el.textContent.trim() === '') {
+          el.textContent = email;
+        }
+      }
+      el.removeAttribute('data-cfemail');
+      el.classList.remove('__cf_email__');
+    });
+
+    // 2. Resolve anchor tags with Cloudflare email protection URLs in href
+    const cfAnchors = document.querySelectorAll<HTMLAnchorElement>(
+      'a[href*="/cdn-cgi/l/email-protection"]'
+    );
+    cfAnchors.forEach((anchor) => {
+      const href = anchor.getAttribute('href') || '';
+      const match = href.match(/#([a-fA-F0-9]+)$/);
+      if (match && match[1]) {
+        const email = decodeCfEmail(match[1]);
+        if (email) {
+          anchor.href = `mailto:${email}`;
+          if (anchor.textContent && anchor.textContent.includes('[email')) {
+            anchor.textContent = email;
+          }
+        }
+      }
+    });
+  }
+
+  // Execute on initial load and on every Astro View Transition cycle
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', resolveCloudflareEmails);
+  } else {
+    resolveCloudflareEmails();
+  }
+
+  document.addEventListener('astro:page-load', resolveCloudflareEmails);
+  document.addEventListener('astro:after-swap', resolveCloudflareEmails);
+</script>

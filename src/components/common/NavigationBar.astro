@@ -1,6 +1,7 @@
 ---
 import { SITE } from '@/const/site.ts';
 import ThemeToggle from '@/components/common/ThemeToggle.astro';
+import AudioToggle from '@/components/common/AudioToggle.astro';
 import { Icon } from 'astro-icon/components';
 
 const currentPath = Astro.url.pathname;
@@ -52,7 +53,7 @@ function isActive(href: string): boolean {
               data-nav-link={item.href}
               class={`nav-item rounded-full px-3.5 py-1 text-xs font-medium transition-all ${
                 active
-                  ? 'bg-base-content text-base-100 font-semibold shadow-xs'
+                  ? 'bg-base-content text-base-100 hover:text-base-100 hover:bg-base-content/90 font-semibold shadow-xs'
                   : 'text-base-content/70 hover:text-base-content hover:bg-base-300/50'
               }`}
             >
@@ -66,7 +67,7 @@ function isActive(href: string): boolean {
         data-nav-link="/now/"
         class={`nav-item rounded-full px-3.5 py-1 text-xs font-medium transition-all flex items-center gap-1.5 ${
           isActive('/now/')
-            ? 'bg-base-content text-base-100 font-semibold shadow-xs'
+            ? 'bg-base-content text-base-100 font-semibold shadow-xs hover:text-base-100 hover:bg-base-content/90'
             : 'text-base-content/70 hover:text-base-content hover:bg-base-300/50'
         }`}
       >
@@ -103,6 +104,7 @@ function isActive(href: string): boolean {
         <Icon name="ph:magnifying-glass-bold" class="h-4 w-4" />
       </button>
 
+      <AudioToggle />
       <ThemeToggle />
 
       <!-- Mobile Menu Button -->
@@ -141,11 +143,33 @@ function isActive(href: string): boolean {
       const target = link.getAttribute('data-nav-link');
       const isCurrentActive = target === '/' ? current === '/' : current.startsWith(target || '');
       if (isCurrentActive) {
-        link.classList.add('bg-base-content', 'text-base-100', 'font-semibold', 'shadow-xs');
-        link.classList.remove('text-base-content/70', 'hover:bg-base-300/50');
+        link.classList.add(
+          'bg-base-content',
+          'text-base-100',
+          'font-semibold',
+          'shadow-xs',
+          'hover:text-base-100',
+          'hover:bg-base-content/90'
+        );
+        link.classList.remove(
+          'text-base-content/70',
+          'hover:bg-base-300/50',
+          'hover:text-base-content'
+        );
       } else {
-        link.classList.remove('bg-base-content', 'text-base-100', 'font-semibold', 'shadow-xs');
-        link.classList.add('text-base-content/70');
+        link.classList.remove(
+          'bg-base-content',
+          'text-base-100',
+          'font-semibold',
+          'shadow-xs',
+          'hover:text-base-100',
+          'hover:bg-base-content/90'
+        );
+        link.classList.add(
+          'text-base-content/70',
+          'hover:text-base-content',
+          'hover:bg-base-300/50'
+        );
       }
     });
   }

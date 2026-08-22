@@ -1,6 +1,7 @@
 ---
 import { SITE } from '@/const/site.ts';
 import TimeAvailabilityWidget from '@/components/common/TimeAvailabilityWidget.astro';
+import SpotifyWidget from '@/components/common/SpotifyWidget.astro';
 import { Icon } from 'astro-icon/components';
 
 const currentYear = new Date().getFullYear();
@@ -29,8 +30,9 @@ const footerLinks = [
         <p class="text-base-content/60 text-xs leading-relaxed">
           {SITE.tagline}
         </p>
-        <div class="pt-2">
+        <div class="flex flex-col gap-2 pt-2">
           <TimeAvailabilityWidget variant="compact" />
+          <SpotifyWidget variant="compact" />
         </div>
       </div>
 

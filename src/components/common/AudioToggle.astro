@@ -1,0 +1,66 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<button
+  id="audio-toggle-btn"
+  type="button"
+  class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content hover:bg-base-200 transition-colors active:scale-95"
+  title="Toggle UI Sound Effects (Procedural Web Audio)"
+  aria-label="Toggle UI Sound Effects"
+>
+  <Icon
+    id="audio-icon-unmuted"
+    name="ph:speaker-high-bold"
+    class="hidden h-4 w-4 text-emerald-400"
+  />
+  <Icon id="audio-icon-muted" name="ph:speaker-slash-bold" class="h-4 w-4" />
+</button>
+
+<script>
+  import { audioEngine } from '../../utils/audioEngine';
+
+  function updateAudioToggleUI() {
+    const unmutedIcon = document.getElementById('audio-icon-unmuted');
+    const mutedIcon = document.getElementById('audio-icon-muted');
+    const btn = document.getElementById('audio-toggle-btn');
+    if (!unmutedIcon || !mutedIcon || !btn) return;
+
+    const isMuted = audioEngine.isMutedState();
+    if (isMuted) {
+      unmutedIcon.classList.add('hidden');
+      mutedIcon.classList.remove('hidden');
+      btn.setAttribute('title', 'Sound Effects: Off (Click to enable)');
+    } else {
+      unmutedIcon.classList.remove('hidden');
+      mutedIcon.classList.add('hidden');
+      btn.setAttribute('title', 'Sound Effects: On (Click to mute)');
+    }
+  }
+
+  function setupAudioToggle() {
+    const btn = document.getElementById('audio-toggle-btn');
+    if (!btn) return;
+
+    updateAudioToggleUI();
+
+    btn.onclick = () => {
+      audioEngine.toggleMute();
+      updateAudioToggleUI();
+    };
+
+    // Attach global subtle audio click to interactive elements when unmuted
+    document.querySelectorAll('a, button, input[type="checkbox"]').forEach((el) => {
+      if ((el as HTMLElement).dataset.audioBound) return;
+      (el as HTMLElement).dataset.audioBound = 'true';
+      el.addEventListener('click', () => {
+        if (!audioEngine.isMutedState()) {
+          audioEngine.playClick('soft');
+        }
+      });
+    });
+  }
+
+  setupAudioToggle();
+  document.addEventListener('astro:page-load', setupAudioToggle);
+</script>

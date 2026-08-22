@@ -51,6 +51,7 @@ const breadcrumbs = [
 <BaseLayout
   title={data.title}
   description={data.description}
+  image={`/og/projects/${id}.png`}
   publishDate={data.publishDate}
   breadcrumbs={breadcrumbs}
   structuredData={projectSchema}
@@ -98,7 +99,7 @@ const breadcrumbs = [
               href={data.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              class="btn btn-sm bg-base-content text-base-100 hover:bg-base-content/90 flex items-center gap-2 rounded-md border-0 font-mono text-xs tracking-wider uppercase"
+              class="btn btn-sm bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 font-mono text-xs tracking-wider uppercase"
             >
               <Icon name="ph:github-logo-bold" class="h-4 w-4" /> Source Code
             </a>

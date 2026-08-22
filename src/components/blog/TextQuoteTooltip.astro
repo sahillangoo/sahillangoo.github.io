@@ -1,0 +1,150 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<div
+  id="text-quote-tooltip"
+  class="border-base-300 bg-base-300/95 animate-in fade-in zoom-in-95 pointer-events-auto fixed z-50 hidden -translate-x-1/2 -translate-y-full rounded-lg border p-1 text-xs shadow-2xl backdrop-blur-md transition-all duration-150"
+  role="tooltip"
+  aria-hidden="true"
+>
+  <div class="flex items-center gap-1">
+    <button
+      id="quote-copy-link-btn"
+      type="button"
+      class="btn btn-ghost btn-xs text-base-content hover:bg-base-100/80 flex items-center gap-1.5 px-2.5 font-mono text-[11px] active:scale-95"
+      title="Copy direct link to highlighted passage"
+    >
+      <Icon name="ph:link-bold" class="text-accent h-3.5 w-3.5" />
+      <span id="quote-btn-label">Copy Quote Link</span>
+    </button>
+
+    <div class="bg-base-content/20 h-3 w-[1px]"></div>
+
+    <button
+      id="quote-share-x-btn"
+      type="button"
+      class="btn btn-ghost btn-xs text-base-content hover:text-accent hover:bg-base-100/80 flex items-center gap-1 px-2 active:scale-95"
+      title="Share quote on X (Twitter)"
+      aria-label="Share quote on X"
+    >
+      <Icon name="ph:x-logo-bold" class="h-3.5 w-3.5" />
+    </button>
+  </div>
+  <!-- Pointer Arrow -->
+  <div
+    class="border-base-300 bg-base-300 absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 rotate-45 border-r border-b"
+  >
+  </div>
+</div>
+
+<script>
+  import { audioEngine } from '../../utils/audioEngine';
+
+  function setupQuoteTooltip() {
+    const tooltip = document.getElementById('text-quote-tooltip');
+    const copyBtn = document.getElementById('quote-copy-link-btn');
+    const labelSpan = document.getElementById('quote-btn-label');
+    const shareXBtn = document.getElementById('quote-share-x-btn');
+
+    if (!tooltip || !copyBtn) return;
+
+    let selectedText = '';
+
+    function handleSelection() {
+      const selection = window.getSelection();
+      if (!selection || selection.isCollapsed || !selection.rangeCount) {
+        hideTooltip();
+        return;
+      }
+
+      const text = selection.toString().trim();
+      if (text.length < 6 || text.length > 300) {
+        hideTooltip();
+        return;
+      }
+
+      // Ensure selection is inside article or content
+      const anchorNode = selection.anchorNode;
+      const articleEl = anchorNode?.parentElement?.closest('article, .prose');
+      if (!articleEl) {
+        hideTooltip();
+        return;
+      }
+
+      if (!tooltip) return;
+
+      selectedText = text;
+      const range = selection.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+
+      // Position tooltip centered above the selection
+      tooltip.style.left = `${rect.left + rect.width / 2}px`;
+      tooltip.style.top = `${rect.top - 8}px`;
+      tooltip.classList.remove('hidden');
+      tooltip.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideTooltip() {
+      if (tooltip) {
+        tooltip.classList.add('hidden');
+        tooltip.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    copyBtn.onclick = async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (!selectedText) return;
+
+      // Generate standard W3C Text Fragment URL
+      const encodedFragment = encodeURIComponent(selectedText.replace(/[\n\r]+/g, ' '));
+      const targetUrl = `${window.location.origin}${window.location.pathname}#:~:text=${encodedFragment}`;
+
+      try {
+        await navigator.clipboard.writeText(targetUrl);
+        audioEngine.playClick('soft');
+
+        if (labelSpan) {
+          labelSpan.textContent = 'Copied!';
+          setTimeout(() => {
+            if (labelSpan) labelSpan.textContent = 'Copy Quote Link';
+            hideTooltip();
+          }, 1200);
+        }
+      } catch {
+        // Fallback
+      }
+    };
+
+    if (shareXBtn) {
+      shareXBtn.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!selectedText) return;
+        audioEngine.playClick('soft');
+
+        const excerpt =
+          selectedText.length > 180 ? selectedText.slice(0, 177) + '...' : selectedText;
+        const tweetText = `"${excerpt}"\n\nby @kashurgeek`;
+        const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(window.location.href)}`;
+        window.open(tweetUrl, '_blank', 'noopener,noreferrer,width=550,height=420');
+        hideTooltip();
+      };
+    }
+
+    document.addEventListener('mouseup', () => setTimeout(handleSelection, 20));
+    document.addEventListener('touchend', () => setTimeout(handleSelection, 20));
+    document.addEventListener('scroll', hideTooltip, { passive: true });
+    document.addEventListener('mousedown', (e) => {
+      if (!tooltip.contains(e.target as Node)) {
+        hideTooltip();
+      }
+    });
+  }
+
+  setupQuoteTooltip();
+  document.addEventListener('astro:page-load', setupQuoteTooltip);
+</script>

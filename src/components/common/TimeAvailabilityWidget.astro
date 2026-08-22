@@ -3,13 +3,14 @@ import { Icon } from 'astro-icon/components';
 
 export interface Props {
   variant?: 'compact' | 'full';
+  showWeather?: boolean;
 }
 
-const { variant = 'compact' } = Astro.props;
+const { variant = 'compact', showWeather = true } = Astro.props;
 ---
 
 <div
-  class={`inline-flex items-center gap-3 font-mono text-xs ${variant === 'full' ? 'editorial-card p-4 sm:p-5' : ''}`}
+  class={`inline-flex flex-wrap items-center gap-2.5 font-mono text-xs ${variant === 'full' ? 'editorial-card p-4 sm:p-5' : ''}`}
 >
   <div class="flex items-center gap-2">
     <span class="relative flex h-2 w-2">
@@ -21,6 +22,26 @@ const { variant = 'compact' } = Astro.props;
     </span>
     <span class="text-base-content/80 font-medium">Kashmir, India</span>
   </div>
+
+  {
+    showWeather && (
+      <>
+        <span class="text-base-content/30">•</span>
+        <div
+          id="live-weather-badge"
+          class="text-base-content/70 flex items-center gap-1.5 transition-opacity duration-300"
+        >
+          <Icon id="weather-icon-sun" name="ph:sun-bold" class="h-3.5 w-3.5 text-amber-400" />
+          <span id="weather-temp-text" class="font-medium tabular-nums">
+            --°C
+          </span>
+          <span id="weather-desc-text" class="text-base-content/50 hidden text-[11px] sm:inline">
+            Loading...
+          </span>
+        </div>
+      </>
+    )
+  }
 
   <span class="text-base-content/30">•</span>
 
@@ -39,6 +60,8 @@ const { variant = 'compact' } = Astro.props;
 </div>
 
 <script>
+  import { fetchLiveWeather } from '../../utils/weather';
+
   let clockInterval: ReturnType<typeof setInterval> | null = null;
 
   function updateKashmirClock() {
@@ -61,17 +84,33 @@ const { variant = 'compact' } = Astro.props;
     }
   }
 
-  function setupClock() {
+  async function updateWeatherTelemetry() {
+    const tempEl = document.getElementById('weather-temp-text');
+    const descEl = document.getElementById('weather-desc-text');
+    if (!tempEl) return;
+
+    const weather = await fetchLiveWeather();
+    if (weather) {
+      tempEl.textContent = `${weather.temp}°C`;
+      if (descEl) descEl.textContent = weather.description;
+    } else {
+      tempEl.textContent = '22°C';
+      if (descEl) descEl.textContent = 'Clear';
+    }
+  }
+
+  function setupWidgets() {
     if (clockInterval) {
       clearInterval(clockInterval);
       clockInterval = null;
     }
     updateKashmirClock();
     clockInterval = setInterval(updateKashmirClock, 1000);
+    updateWeatherTelemetry();
   }
 
-  setupClock();
-  document.addEventListener('astro:page-load', setupClock);
+  setupWidgets();
+  document.addEventListener('astro:page-load', setupWidgets);
   document.addEventListener('astro:before-swap', () => {
     if (clockInterval) {
       clearInterval(clockInterval);

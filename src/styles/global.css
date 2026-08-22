@@ -210,6 +210,22 @@ a.btn:active {
   transform: scale(0.98) !important;
 }
 
+/* Navigation & Pill Active State Contrast Lock */
+.nav-item.bg-base-content,
+.nav-item.bg-base-content:hover,
+.filter-btn.bg-base-content,
+.filter-btn.bg-base-content:hover,
+.btn.bg-base-content,
+.btn.bg-base-content:hover {
+  color: var(--color-base-100) !important;
+}
+
+.nav-item.bg-base-content:hover,
+.filter-btn.bg-base-content:hover,
+.btn.bg-base-content:hover {
+  background-color: color-mix(in oklch, var(--color-base-content) 90%, transparent) !important;
+}
+
 /* Subtle editorial card styling */
 .editorial-card {
   transition:

@@ -6,6 +6,8 @@ import SiteFooter from '@/components/common/SiteFooter.astro';
 import CommandPalette from '@/components/common/CommandPalette.astro';
 import BackToTop from '@/components/common/BackToTop.astro';
 import CodeCopyScript from '@/components/common/CodeCopyScript.astro';
+import TextQuoteTooltip from '@/components/blog/TextQuoteTooltip.astro';
+import CloudflareEmailDecoder from '@/components/common/CloudflareEmailDecoder.astro';
 import '@/styles/global.css';
 import 'lenis/dist/lenis.css';
 
@@ -63,6 +65,8 @@ const {
     <CommandPalette />
     <BackToTop />
     <CodeCopyScript />
+    <TextQuoteTooltip />
+    <CloudflareEmailDecoder />
 
     <main class={`w-full flex-grow ${hideNav ? 'pt-0' : 'pt-20 md:pt-24'}`}>
       <slot />

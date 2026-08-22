@@ -57,6 +57,7 @@ const breadcrumbs = [
 <BaseLayout
   title={data.title}
   description={data.description || `Digital note by Sahil Langoo on ${data.topic}`}
+  image={`/og/notes/${id}.png`}
   publishDate={data.publishDate}
   breadcrumbs={breadcrumbs}
   structuredData={noteSchema}

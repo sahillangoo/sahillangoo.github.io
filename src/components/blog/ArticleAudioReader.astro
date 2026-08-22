@@ -1,0 +1,363 @@
+---
+import { Icon } from 'astro-icon/components';
+
+export interface Props {
+  articleSelector?: string;
+  readingTime?: string;
+  articleTitle?: string;
+}
+
+const {
+  articleSelector = '#article-content',
+  readingTime = '5 min read',
+  articleTitle = 'Article Narration',
+} = Astro.props;
+---
+
+<!-- In-Article Audio Player Card -->
+<div
+  id="article-audio-player"
+  class="editorial-card border-base-300/80 bg-base-200/50 my-6 flex flex-wrap items-center justify-between gap-4 p-3.5 transition-all duration-200 sm:p-4"
+  data-target={articleSelector}
+  data-title={articleTitle}
+  aria-label="Article Audio Reader"
+>
+  <div class="flex items-center gap-3">
+    <button
+      id="audio-play-btn"
+      type="button"
+      class="btn btn-sm btn-circle bg-accent text-accent-content border-0 shadow-sm transition-transform hover:opacity-90 active:scale-90"
+      aria-label="Play article audio"
+      title="Listen to this article"
+    >
+      <Icon id="audio-play-icon" name="ph:play-fill" class="ml-0.5 h-4 w-4" />
+      <Icon id="audio-pause-icon" name="ph:pause-fill" class="hidden h-4 w-4" />
+    </button>
+
+    <div class="flex flex-col">
+      <div class="flex items-center gap-2">
+        <span class="text-base-content text-xs font-semibold tracking-tight">Audio Narration</span>
+        <span class="bg-base-300 py-0.2 text-base-content/70 rounded px-1.5 font-mono text-[10px]">
+          AI Voice (Web Speech)
+        </span>
+      </div>
+      <span id="audio-status-text" class="text-base-content/60 font-mono text-[11px]">
+        Listen to this essay ({readingTime})
+      </span>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <!-- Playback Rate Controls -->
+    <div class="join border-base-300 bg-base-100/60 rounded-md border">
+      <button
+        type="button"
+        class="audio-rate-btn join-item btn btn-xs btn-ghost active-rate bg-base-content text-base-100 font-mono text-[10px] font-bold"
+        data-rate="1"
+      >
+        1x
+      </button>
+      <button
+        type="button"
+        class="audio-rate-btn join-item btn btn-xs btn-ghost font-mono text-[10px]"
+        data-rate="1.25"
+      >
+        1.25x
+      </button>
+      <button
+        type="button"
+        class="audio-rate-btn join-item btn btn-xs btn-ghost font-mono text-[10px]"
+        data-rate="1.5"
+      >
+        1.5x
+      </button>
+    </div>
+
+    <!-- Stop / Reset button -->
+    <button
+      id="audio-stop-btn"
+      type="button"
+      class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:text-base-content"
+      aria-label="Stop audio"
+      title="Stop and reset speech"
+    >
+      <Icon name="ph:stop-fill" class="h-3.5 w-3.5" />
+    </button>
+  </div>
+</div>
+
+<!-- Floating PiP Mini Player Dock (Appears bottom-right when playing) -->
+<div
+  id="audio-pip-dock"
+  class="border-base-300 bg-base-100/95 animate-in fade-in slide-in-from-bottom-4 fixed right-5 bottom-5 z-40 hidden max-w-sm rounded-xl border p-3 shadow-2xl backdrop-blur-md transition-all duration-300"
+  role="region"
+  aria-label="Floating Audio Player"
+>
+  <div class="flex items-center gap-3">
+    <button
+      id="pip-play-btn"
+      type="button"
+      class="btn btn-xs btn-circle bg-accent text-accent-content border-0 shadow-xs active:scale-90"
+      aria-label="Play/Pause narration"
+    >
+      <Icon id="pip-play-icon" name="ph:play-fill" class="ml-0.5 h-3 w-3" />
+      <Icon id="pip-pause-icon" name="ph:pause-fill" class="hidden h-3 w-3" />
+    </button>
+
+    <div class="flex min-w-0 flex-1 flex-col">
+      <span class="text-base-content truncate text-[11px] font-semibold" id="pip-title">
+        {articleTitle}
+      </span>
+      <div class="flex items-center gap-2">
+        <div class="bg-base-300 h-1 w-full overflow-hidden rounded-full">
+          <div
+            id="pip-progress-bar"
+            class="bg-accent h-1 rounded-full transition-all duration-300"
+            style="width: 0%"
+          >
+          </div>
+        </div>
+        <span id="pip-percent" class="text-base-content/60 shrink-0 font-mono text-[9px]">0%</span>
+      </div>
+    </div>
+
+    <button
+      id="pip-close-btn"
+      type="button"
+      class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:text-base-content"
+      title="Stop and close player"
+      aria-label="Close audio player"
+    >
+      <Icon name="ph:x-bold" class="h-3 w-3" />
+    </button>
+  </div>
+</div>
+
+<script>
+  function setupArticleAudio() {
+    const player = document.getElementById('article-audio-player');
+    const pipDock = document.getElementById('audio-pip-dock');
+    if (!player) return;
+
+    const playBtn = document.getElementById('audio-play-btn');
+    const playIcon = document.getElementById('audio-play-icon');
+    const pauseIcon = document.getElementById('audio-pause-icon');
+    const stopBtn = document.getElementById('audio-stop-btn');
+    const statusText = document.getElementById('audio-status-text');
+    const rateBtns = document.querySelectorAll<HTMLButtonElement>('.audio-rate-btn');
+
+    // PiP Controls
+    const pipPlayBtn = document.getElementById('pip-play-btn');
+    const pipPlayIcon = document.getElementById('pip-play-icon');
+    const pipPauseIcon = document.getElementById('pip-pause-icon');
+    const pipCloseBtn = document.getElementById('pip-close-btn');
+    const pipProgressBar = document.getElementById('pip-progress-bar');
+    const pipPercent = document.getElementById('pip-percent');
+
+    if (!('speechSynthesis' in window)) {
+      player.classList.add('hidden');
+      if (pipDock) pipDock.classList.add('hidden');
+      return;
+    }
+
+    const synth = window.speechSynthesis;
+    let isPlaying = false;
+    let isPaused = false;
+    let playbackRate = 1;
+    let textChunks: string[] = [];
+    let currentChunkIndex = 0;
+
+    function extractReadableText(): string[] {
+      const targetSelector = player?.getAttribute('data-target') || '#article-content';
+      const container = document.querySelector(targetSelector);
+      if (!container) return [];
+
+      const clone = container.cloneNode(true) as HTMLElement;
+      // Remove code blocks, tables, images, and non-prose elements
+      clone
+        .querySelectorAll('pre, code, table, svg, figure, .not-prose, button')
+        .forEach((el) => el.remove());
+
+      const paragraphs = Array.from(clone.querySelectorAll('p, h2, h3, li'));
+      const textArray: string[] = [];
+
+      paragraphs.forEach((p) => {
+        const text = p.textContent?.trim();
+        if (text && text.length > 3) {
+          const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
+          sentences.forEach((s) => textArray.push(s.trim()));
+        }
+      });
+
+      return textArray;
+    }
+
+    function updateUIState() {
+      if (isPlaying && !isPaused) {
+        playIcon?.classList.add('hidden');
+        pauseIcon?.classList.remove('hidden');
+        pipPlayIcon?.classList.add('hidden');
+        pipPauseIcon?.classList.remove('hidden');
+        pipDock?.classList.remove('hidden');
+      } else {
+        playIcon?.classList.remove('hidden');
+        pauseIcon?.classList.add('hidden');
+        pipPlayIcon?.classList.remove('hidden');
+        pipPauseIcon?.classList.add('hidden');
+        if (!isPlaying && !isPaused) {
+          pipDock?.classList.add('hidden');
+        }
+      }
+
+      const total = Math.max(1, textChunks.length);
+      const progress = Math.min(100, Math.round((currentChunkIndex / total) * 100));
+      if (pipProgressBar) pipProgressBar.style.width = `${progress}%`;
+      if (pipPercent) pipPercent.textContent = `${progress}%`;
+    }
+
+    function speakNextChunk() {
+      if (!isPlaying || isPaused || currentChunkIndex >= textChunks.length) {
+        if (currentChunkIndex >= textChunks.length && isPlaying) {
+          stopPlayback();
+          if (statusText) statusText.textContent = 'Finished reading.';
+        }
+        return;
+      }
+
+      const text = textChunks[currentChunkIndex];
+      if (!text) {
+        currentChunkIndex++;
+        speakNextChunk();
+        return;
+      }
+
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = playbackRate;
+
+      const voices = synth.getVoices();
+      const naturalVoice = voices.find(
+        (v) =>
+          v.lang.startsWith('en') &&
+          (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Samantha'))
+      );
+      if (naturalVoice) utterance.voice = naturalVoice;
+
+      utterance.onend = () => {
+        if (!isPlaying || isPaused) return;
+        currentChunkIndex++;
+        updateUIState();
+        speakNextChunk();
+      };
+
+      utterance.onerror = (event) => {
+        // Critical guard: If speech was intentionally canceled or navigated away, DO NOT continue reading!
+        if (!isPlaying || isPaused || event.error === 'canceled' || event.error === 'interrupted') {
+          return;
+        }
+        currentChunkIndex++;
+        updateUIState();
+        speakNextChunk();
+      };
+
+      if (statusText) {
+        const progress = Math.round((currentChunkIndex / Math.max(1, textChunks.length)) * 100);
+        statusText.textContent = `Reading... ${progress}%`;
+      }
+
+      updateUIState();
+      synth.speak(utterance);
+    }
+
+    function startPlayback() {
+      if (textChunks.length === 0) {
+        textChunks = extractReadableText();
+        currentChunkIndex = 0;
+      }
+
+      if (isPaused) {
+        synth.resume();
+        isPaused = false;
+        isPlaying = true;
+      } else {
+        synth.cancel();
+        isPlaying = true;
+        isPaused = false;
+        speakNextChunk();
+      }
+
+      updateUIState();
+      if (statusText) statusText.textContent = 'Playing narration...';
+    }
+
+    function pausePlayback() {
+      if (synth.speaking) {
+        synth.pause();
+        isPaused = true;
+        isPlaying = false;
+        updateUIState();
+        if (statusText) statusText.textContent = 'Paused narration.';
+      }
+    }
+
+    function stopPlayback() {
+      isPlaying = false;
+      isPaused = false;
+      currentChunkIndex = 0;
+      synth.cancel();
+      updateUIState();
+      pipDock?.classList.add('hidden');
+      if (statusText) statusText.textContent = 'Audio stopped.';
+    }
+
+    if (playBtn) {
+      playBtn.onclick = () => {
+        if (isPlaying) {
+          pausePlayback();
+        } else {
+          startPlayback();
+        }
+      };
+    }
+
+    if (pipPlayBtn) {
+      pipPlayBtn.onclick = () => {
+        if (isPlaying) {
+          pausePlayback();
+        } else {
+          startPlayback();
+        }
+      };
+    }
+
+    if (stopBtn) stopBtn.onclick = stopPlayback;
+    if (pipCloseBtn) pipCloseBtn.onclick = stopPlayback;
+
+    rateBtns.forEach((btn) => {
+      btn.onclick = () => {
+        const rate = parseFloat(btn.dataset.rate || '1');
+        playbackRate = rate;
+        rateBtns.forEach((b) =>
+          b.classList.remove('bg-base-content', 'text-base-100', 'font-bold')
+        );
+        btn.classList.add('bg-base-content', 'text-base-100', 'font-bold');
+
+        if (isPlaying) {
+          synth.cancel();
+          speakNextChunk();
+        }
+      };
+    });
+
+    // Ensure audio stops immediately if the user leaves the page
+    const handlePageTeardown = () => {
+      stopPlayback();
+    };
+
+    document.addEventListener('astro:before-swap', handlePageTeardown, { once: true });
+    window.addEventListener('pagehide', handlePageTeardown, { once: true });
+    window.addEventListener('popstate', handlePageTeardown, { once: true });
+  }
+
+  setupArticleAudio();
+  document.addEventListener('astro:page-load', setupArticleAudio);
+</script>

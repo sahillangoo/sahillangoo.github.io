@@ -1,0 +1,164 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getFeaturedTrack } from '@/utils/spotify.ts';
+
+export interface Props {
+  variant?: 'card' | 'compact' | 'footer';
+  class?: string;
+}
+
+const { variant = 'compact', class: className = '' } = Astro.props;
+const defaultTrack = getFeaturedTrack(0);
+---
+
+<div
+  id="spotify-widget-container"
+  class={`group inline-flex items-center justify-between gap-3 rounded-lg border border-base-300 bg-base-200/50 px-3.5 py-2 text-xs transition-all duration-200 hover:border-emerald-500/40 hover:bg-base-200/80 shadow-xs ${
+    variant === 'footer' ? 'w-full sm:w-auto' : ''
+  } ${className}`}
+>
+  <a
+    id="spotify-widget-link"
+    href={defaultTrack.songUrl}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="flex min-w-0 flex-1 items-center gap-3"
+    title={`Listen to ${defaultTrack.title} by ${defaultTrack.artist} on Spotify`}
+    aria-label="Spotify listening status"
+  >
+    <!-- Animated 3-Bar Equalizer -->
+    <div class="relative flex h-3.5 w-3.5 shrink-0 items-end justify-center gap-[2px]">
+      <span
+        class="w-[2.5px] animate-[equalizer_1.2s_ease-in-out_infinite] rounded-full bg-emerald-500"
+        style="height: 12px; animation-delay: 0.1s;"
+      >
+      </span>
+      <span
+        class="w-[2.5px] animate-[equalizer_1.2s_ease-in-out_infinite] rounded-full bg-emerald-500"
+        style="height: 16px; animation-delay: 0.3s;"
+      >
+      </span>
+      <span
+        class="w-[2.5px] animate-[equalizer_1.2s_ease-in-out_infinite] rounded-full bg-emerald-500"
+        style="height: 8px; animation-delay: 0.2s;"
+      >
+      </span>
+    </div>
+
+    <!-- Track Metadata Column -->
+    <div class="flex min-w-0 flex-col">
+      <div class="flex items-center gap-1.5">
+        <span class="font-mono text-[10px] font-semibold tracking-wider text-emerald-500 uppercase">
+          Listening
+        </span>
+        <span class="relative flex h-1.5 w-1.5">
+          <span
+            class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
+          >
+          </span>
+          <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+        </span>
+        <span
+          id="spotify-track-tag"
+          class="py-0.2 hidden rounded bg-emerald-500/10 px-1 font-mono text-[9px] font-medium text-emerald-400 sm:inline"
+        >
+          {defaultTrack.albumTag || 'Coke Studio'}
+        </span>
+      </div>
+
+      <div class="flex items-center gap-1.5 truncate">
+        <span
+          id="spotify-track-title"
+          class="text-base-content truncate font-medium transition-colors group-hover:text-emerald-400"
+        >
+          {defaultTrack.title}
+        </span>
+        <span class="text-base-content/30">•</span>
+        <span id="spotify-track-artist" class="text-base-content/60 truncate font-mono text-[11px]">
+          {defaultTrack.artist}
+        </span>
+      </div>
+    </div>
+  </a>
+
+  <!-- Action buttons: Skip / Next Song & Deep Link -->
+  <div class="flex shrink-0 items-center gap-1">
+    <button
+      id="spotify-skip-btn"
+      type="button"
+      class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:bg-base-300/50 rounded transition-transform hover:text-emerald-400 active:scale-90"
+      title="Skip to next curated song"
+      aria-label="Skip to next curated song"
+    >
+      <Icon name="ph:skip-forward-bold" class="h-3.5 w-3.5" />
+    </button>
+
+    <a
+      id="spotify-open-link"
+      href={defaultTrack.songUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-base-content/40 p-1 transition-colors hover:text-emerald-400"
+      title="Open in Spotify"
+      aria-label="Open track in Spotify"
+    >
+      <Icon
+        name="ph:arrow-up-right-bold"
+        class="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+      />
+    </a>
+  </div>
+</div>
+
+<style>
+  @keyframes equalizer {
+    0%,
+    100% {
+      height: 4px;
+    }
+    50% {
+      height: 14px;
+    }
+  }
+</style>
+
+<script>
+  import { SPOTIFY_TRACKS, type SpotifyTrack } from '../../utils/spotify';
+
+  let currentTrackIdx = 0;
+
+  function updateSpotifyDisplay(track: SpotifyTrack) {
+    const titleEl = document.getElementById('spotify-track-title');
+    const artistEl = document.getElementById('spotify-track-artist');
+    const tagEl = document.getElementById('spotify-track-tag');
+    const linkEl = document.getElementById('spotify-widget-link') as HTMLAnchorElement | null;
+    const openLinkEl = document.getElementById('spotify-open-link') as HTMLAnchorElement | null;
+
+    if (!titleEl || !artistEl || !linkEl) return;
+
+    titleEl.textContent = track.title;
+    artistEl.textContent = track.artist;
+    if (tagEl && track.albumTag) tagEl.textContent = track.albumTag;
+    linkEl.href = track.songUrl;
+    linkEl.title = `Listen to ${track.title} by ${track.artist} on Spotify`;
+    if (openLinkEl) openLinkEl.href = track.songUrl;
+  }
+
+  function setupSpotifyWidget() {
+    const skipBtn = document.getElementById('spotify-skip-btn');
+    if (!skipBtn) return;
+
+    skipBtn.onclick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      currentTrackIdx = (currentTrackIdx + 1) % SPOTIFY_TRACKS.length;
+      const nextTrack = SPOTIFY_TRACKS[currentTrackIdx];
+      if (nextTrack) {
+        updateSpotifyDisplay(nextTrack);
+      }
+    };
+  }
+
+  setupSpotifyWidget();
+  document.addEventListener('astro:page-load', setupSpotifyWidget);
+</script>

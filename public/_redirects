@@ -18,4 +18,5 @@ http://sahillangoo.in/*       https://sahillangoo.in/:splat  301
 # External Verified Social Redirects
 /github    https://github.com/sahillangoo        302
 /linkedin  https://linkedin.com/in/sahillangoo  302
-/twitter   https://x.com/sahillangoo            302
+/twitter   https://x.com/kashurgeek            302
+/x         https://x.com/kashurgeek            302
