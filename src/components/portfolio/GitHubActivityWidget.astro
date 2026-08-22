@@ -9,7 +9,7 @@ export interface Props {
 
 const { username = 'sahillangoo', limit = 6 } = Astro.props;
 
-// Fetch live build-time GitHub contributions and verified commits (with persistent cache fallback)
+// Fetch live build-time GitHub contributions and verified commits
 const { totalContributions, contributionWeeks, recentCommits } = await getGitHubActivity(
   username,
   limit
@@ -27,134 +27,200 @@ function formatTooltipDate(dateStr: string): string {
     return dateStr;
   }
 }
+
+// Compute month labels aligned to start of months across the 53 weeks
+let lastMonth = -1;
+const monthLabels: { index: number; label: string }[] = [];
+
+contributionWeeks.forEach((week, index) => {
+  if (!week[0]?.date) return;
+  const d = new Date(week[0].date);
+  const m = d.getMonth();
+  if (m !== lastMonth) {
+    // Only display label if at least 3 columns apart to prevent overlapping
+    const lastEntry = monthLabels[monthLabels.length - 1];
+    if (!lastEntry || index - lastEntry.index >= 3) {
+      monthLabels.push({
+        index,
+        label: d.toLocaleDateString('en-US', { month: 'short' }),
+      });
+      lastMonth = m;
+    }
+  }
+});
 ---
 
 <div class="editorial-card space-y-6 p-6 sm:p-7">
-  <!-- Header -->
+  <!-- Widget Header (Authentic GitHub Style) -->
   <div
-    class="border-base-300 flex flex-col justify-between gap-3 border-b pb-4 sm:flex-row sm:items-center"
+    class="border-base-300/80 flex flex-col justify-between gap-4 border-b pb-5 sm:flex-row sm:items-center"
   >
-    <div class="flex items-center gap-3">
-      <div class="bg-base-300/50 text-accent flex h-9 w-9 items-center justify-center rounded-lg">
-        <Icon name="ph:git-commit-bold" class="h-5 w-5" />
+    <div class="flex items-center gap-3.5">
+      <div
+        class="bg-base-300/40 text-base-content flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/5 shadow-inner"
+      >
+        <Icon name="ph:git-commit-bold" class="h-5 w-5 text-[#39d353]" />
       </div>
       <div>
-        <h2 class="text-base-content flex items-center gap-2 text-base font-bold">
-          Git Activity & Verified Commit Stream
+        <div class="flex flex-wrap items-center gap-2">
+          <h2 class="text-base-content text-base font-bold tracking-tight sm:text-lg">
+            {totalContributions.toLocaleString()} contributions in the last year
+          </h2>
           <span
-            class="bg-accent/10 text-accent py-0.2 rounded-full px-2 font-mono text-[10px] font-medium"
+            class="rounded-full border border-[#39d353]/30 bg-[#39d353]/10 px-2 py-0.5 font-mono text-[10px] font-medium text-[#39d353]"
           >
-            Live Stream
+            Verified Stream
           </span>
-        </h2>
-        <p class="text-base-content/60 font-mono text-xs">@sahillangoo • @SquadCoders & @ecspl</p>
+        </div>
+        <p class="text-base-content/60 font-mono text-xs">
+          @{username} • Full Stack Architecture & Open-Source Engineering
+        </p>
       </div>
     </div>
 
-    <div class="flex items-center gap-3 self-end sm:self-center">
+    <!-- Quick Org & Profile Links -->
+    <div class="flex items-center gap-2.5 self-end sm:self-center">
       <a
         href="https://github.com/SquadCoders"
         target="_blank"
         rel="noopener noreferrer"
-        class="text-base-content/70 hover:text-accent inline-flex items-center gap-1 font-mono text-xs transition-colors"
+        class="border-base-300/80 bg-base-200/50 hover:border-accent/40 text-base-content/75 hover:text-base-content inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 font-mono text-xs transition-colors"
       >
         <span>@SquadCoders</span>
-        <Icon name="ph:arrow-up-right-bold" class="h-3.5 w-3.5" />
+        <Icon name="ph:arrow-up-right-bold" class="h-3 w-3 opacity-60" />
       </a>
-      <span class="text-base-content/30">•</span>
       <a
         href={`https://github.com/${username}`}
         target="_blank"
         rel="noopener noreferrer"
-        class="text-base-content/70 hover:text-accent inline-flex items-center gap-1 font-mono text-xs transition-colors"
+        class="border-base-300/80 bg-base-200/50 hover:border-accent/40 text-base-content/75 hover:text-base-content inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 font-mono text-xs transition-colors"
       >
+        <Icon name="ph:github-logo-fill" class="h-3.5 w-3.5 opacity-80" />
         <span>@{username}</span>
-        <Icon name="ph:arrow-up-right-bold" class="h-3.5 w-3.5" />
+        <Icon name="ph:arrow-up-right-bold" class="h-3 w-3 opacity-60" />
       </a>
     </div>
   </div>
 
-  <!-- Real GitHub Green Contribution Heatmap -->
-  <div class="space-y-2.5">
-    <div class="text-base-content/60 flex items-center justify-between font-mono text-[11px]">
-      <span>Contribution Momentum across Orgs</span>
-      <span class="font-medium text-emerald-400">
-        ● {totalContributions.toLocaleString()}+ Commits & PRs in the last year
+  <!-- Real GitHub Green Contribution Heatmap Graph -->
+  <div class="space-y-2">
+    <div class="text-base-content/70 flex items-center justify-between font-mono text-[11px]">
+      <span class="font-medium tracking-wide">Contribution Activity Calendar</span>
+      <span class="flex items-center gap-1.5 font-medium text-[#39d353]">
+        <span class="h-1.5 w-1.5 rounded-full bg-[#39d353] shadow-[0_0_8px_#39d353]"></span>
+        Live Graph
       </span>
     </div>
 
-    <div class="bg-base-200/40 border-base-300/60 rounded-lg border p-3">
-      <!-- Scrollable Heatmap Grid Container -->
-      <div class="flex scrollbar-none gap-1 overflow-x-auto py-1">
-        {
-          contributionWeeks.map((week) => (
-            <div class="flex shrink-0 flex-col gap-1">
-              {week.map((day) => {
-                let bg = 'bg-base-300/40 dark:bg-base-300/25';
-                if (day.level === 1) bg = 'bg-emerald-950/80 border border-emerald-800/40';
-                if (day.level === 2) bg = 'bg-emerald-800/80';
-                if (day.level === 3) bg = 'bg-emerald-600/90';
-                if (day.level === 4) bg = 'bg-emerald-400';
-
-                const tooltip =
-                  day.count === 0
-                    ? `No contributions on ${formatTooltipDate(day.date)}`
-                    : `${day.count} contribution${day.count > 1 ? 's' : ''} on ${formatTooltipDate(day.date)}`;
-
+    <!-- Outer Graph Container -->
+    <div class="border-base-300/80 bg-base-200/30 rounded-xl border p-4 sm:p-5">
+      <div class="scrollbar-none overflow-x-auto pb-1">
+        <div class="inline-block min-w-[700px]">
+          <!-- Month Labels Row -->
+          <div class="text-base-content/50 mb-1.5 flex pl-8 font-mono text-[10px]">
+            {
+              contributionWeeks.map((_, i) => {
+                const match = monthLabels.find((m) => m.index === i);
                 return (
-                  <div
-                    class={`h-2.5 w-2.5 rounded-[2px] transition-transform hover:scale-125 ${bg}`}
-                    title={tooltip}
-                  />
+                  <div class="w-[10px] shrink-0 sm:w-[11px]">
+                    {match ? <span class="block whitespace-nowrap">{match.label}</span> : null}
+                  </div>
                 );
-              })}
+              })
+            }
+          </div>
+
+          <!-- Heatmap Main Rows with Weekday Column -->
+          <div class="flex items-start gap-2">
+            <!-- Weekday Labels (Mon, Wed, Fri) -->
+            <div
+              class="text-base-content/40 flex flex-col justify-between font-mono text-[9px] select-none"
+            >
+              <span class="h-[10px] leading-[10px] sm:h-[11px] sm:leading-[11px]"></span>
+              <span class="h-[10px] leading-[10px] sm:h-[11px] sm:leading-[11px]">Mon</span>
+              <span class="h-[10px] leading-[10px] sm:h-[11px] sm:leading-[11px]"></span>
+              <span class="h-[10px] leading-[10px] sm:h-[11px] sm:leading-[11px]">Wed</span>
+              <span class="h-[10px] leading-[10px] sm:h-[11px] sm:leading-[11px]"></span>
+              <span class="h-[10px] leading-[10px] sm:h-[11px] sm:leading-[11px]">Fri</span>
+              <span class="h-[10px] leading-[10px] sm:h-[11px] sm:leading-[11px]"></span>
             </div>
-          ))
-        }
+
+            <!-- Contribution Grid Columns -->
+            <div class="flex gap-[3px]">
+              {
+                contributionWeeks.map((week) => (
+                  <div class="flex flex-col gap-[3px]">
+                    {week.map((day) => {
+                      const countText =
+                        day.count === 0
+                          ? `No contributions on ${formatTooltipDate(day.date)}`
+                          : `${day.count} contribution${day.count === 1 ? '' : 's'} on ${formatTooltipDate(day.date)}`;
+
+                      return (
+                        <div
+                          class={`gh-cell-${day.level} h-[10px] w-[10px] rounded-[2px] transition-transform duration-100 hover:scale-125 sm:h-[11px] sm:w-[11px]`}
+                          title={countText}
+                        />
+                      );
+                    })}
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Heatmap Legend -->
+      <!-- Graph Footer & Color Scale Legend -->
       <div
-        class="border-base-300/40 text-base-content/50 mt-2.5 flex items-center justify-between border-t pt-2 font-mono text-[10px]"
+        class="border-base-300/60 text-base-content/50 mt-3 flex flex-col justify-between gap-2 border-t pt-3 font-mono text-[11px] sm:flex-row sm:items-center"
       >
-        <span class="hidden sm:inline">365-Day Activity Vector</span>
+        <a
+          href="https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/managing-contribution-settings-on-your-profile/why-are-my-contributions-not-showing-up-on-my-profile"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-accent inline-flex items-center gap-1 transition-colors"
+        >
+          <span>Learn how contributions are counted</span>
+          <Icon name="ph:arrow-up-right-bold" class="h-2.5 w-2.5 opacity-60" />
+        </a>
+
         <div class="flex items-center gap-1.5 self-end sm:self-auto">
-          <span>Less</span>
-          <div class="bg-base-300/40 h-2 w-2 rounded-[2px]" title="0 contributions"></div>
-          <div
-            class="h-2 w-2 rounded-[2px] border border-emerald-800/40 bg-emerald-950/80"
-            title="1-3 contributions"
-          >
-          </div>
-          <div class="h-2 w-2 rounded-[2px] bg-emerald-800/80" title="4-8 contributions"></div>
-          <div class="h-2 w-2 rounded-[2px] bg-emerald-600/90" title="9-15 contributions"></div>
-          <div class="h-2 w-2 rounded-[2px] bg-emerald-400" title="16+ contributions"></div>
-          <span>More</span>
+          <span class="text-[10px]">Less</span>
+          <div class="gh-cell-0 h-[10px] w-[10px] rounded-[2px]" title="0 contributions"></div>
+          <div class="gh-cell-1 h-[10px] w-[10px] rounded-[2px]" title="1-3 contributions"></div>
+          <div class="gh-cell-2 h-[10px] w-[10px] rounded-[2px]" title="4-8 contributions"></div>
+          <div class="gh-cell-3 h-[10px] w-[10px] rounded-[2px]" title="9-15 contributions"></div>
+          <div class="gh-cell-4 h-[10px] w-[10px] rounded-[2px]" title="16+ contributions"></div>
+          <span class="text-[10px]">More</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Recent Commits Stream -->
-  <div class="space-y-3">
-    <span
-      class="text-base-content/60 block font-mono text-xs font-semibold tracking-wider uppercase"
-    >
-      Recent Verified Commits & Pull Requests
-    </span>
+  <!-- Recent Commits Feed Section -->
+  <div class="space-y-3 pt-1">
+    <div class="flex items-center justify-between">
+      <span
+        class="text-base-content/70 block font-mono text-xs font-semibold tracking-wider uppercase"
+      >
+        Recent Verified Commits & Pull Requests
+      </span>
+      <span class="text-base-content/40 font-mono text-[11px]">Latest verified commits</span>
+    </div>
 
-    <div class="space-y-2.5">
+    <div class="space-y-2">
       {
         recentCommits.map((commit) => (
-          <div class="group bg-base-100/60 border-base-300/60 hover:border-base-300 flex flex-col justify-between gap-2 rounded-lg border p-3 transition-colors sm:flex-row sm:items-center">
-            <div class="flex min-w-0 items-start gap-2.5">
+          <div class="group border-base-300/80 bg-base-100/60 hover:border-base-content/20 flex flex-col justify-between gap-2.5 rounded-lg border p-3.5 transition-all sm:flex-row sm:items-center">
+            <div class="flex min-w-0 items-start gap-3">
               <span
-                class={`py-0.2 mt-0.5 shrink-0 rounded px-1.5 font-mono text-[10px] font-semibold ${
+                class={`mt-0.5 shrink-0 rounded px-1.5 py-0.5 font-mono text-[10px] font-semibold ${
                   commit.type === 'feat'
-                    ? 'border border-sky-500/20 bg-sky-500/10 text-sky-400'
+                    ? 'border border-[#39d353]/30 bg-[#39d353]/10 text-[#39d353]'
                     : commit.type === 'fix'
-                      ? 'border border-amber-500/20 bg-amber-500/10 text-amber-400'
-                      : 'border border-zinc-500/20 bg-zinc-500/10 text-zinc-400'
+                      ? 'border border-amber-500/30 bg-amber-500/10 text-amber-400'
+                      : 'border border-zinc-500/30 bg-zinc-500/10 text-zinc-400'
                 }`}
               >
                 {commit.type}
@@ -163,9 +229,9 @@ function formatTooltipDate(dateStr: string): string {
                 <p class="text-base-content group-hover:text-accent line-clamp-1 text-xs leading-snug font-medium transition-colors">
                   {commit.message}
                 </p>
-                <div class="text-base-content/50 mt-0.5 flex items-center gap-2 font-mono text-[11px]">
-                  <span class="text-accent font-medium">{commit.repo}</span>
-                  <span>•</span>
+                <div class="text-base-content/50 mt-1 flex flex-wrap items-center gap-2 font-mono text-[11px]">
+                  <span class="text-accent/90 font-medium">{commit.repo}</span>
+                  <span class="opacity-40">•</span>
                   <span>{commit.date}</span>
                 </div>
               </div>
@@ -175,7 +241,7 @@ function formatTooltipDate(dateStr: string): string {
               href={commit.url}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-base-content/50 hover:text-accent shrink-0 self-end font-mono text-[11px] sm:self-center"
+              class="border-base-300/80 bg-base-200/40 text-base-content/60 shrink-0 self-end rounded px-2 py-0.5 font-mono text-[11px] transition-colors hover:border-[#39d353]/40 hover:text-[#39d353] sm:self-center"
             >
               #{commit.sha}
             </a>
@@ -185,3 +251,50 @@ function formatTooltipDate(dateStr: string): string {
     </div>
   </div>
 </div>
+
+<style>
+  /* Exact GitHub Contribution Green Color Matrix */
+  .gh-cell-0 {
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+    background-color: #ebedf0;
+  }
+  :global([data-theme='dark']) .gh-cell-0,
+  :global(.dark) .gh-cell-0 {
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    background-color: #161b22;
+  }
+
+  .gh-cell-1 {
+    background-color: #9be9a8;
+  }
+  :global([data-theme='dark']) .gh-cell-1,
+  :global(.dark) .gh-cell-1 {
+    box-shadow: inset 0 0 0 1px rgba(0, 109, 50, 0.3);
+    background-color: #0e4429;
+  }
+
+  .gh-cell-2 {
+    background-color: #40c463;
+  }
+  :global([data-theme='dark']) .gh-cell-2,
+  :global(.dark) .gh-cell-2 {
+    background-color: #006d32;
+  }
+
+  .gh-cell-3 {
+    background-color: #30a14e;
+  }
+  :global([data-theme='dark']) .gh-cell-3,
+  :global(.dark) .gh-cell-3 {
+    background-color: #26a641;
+  }
+
+  .gh-cell-4 {
+    background-color: #216e39;
+  }
+  :global([data-theme='dark']) .gh-cell-4,
+  :global(.dark) .gh-cell-4 {
+    box-shadow: 0 0 6px rgba(57, 211, 83, 0.35);
+    background-color: #39d353;
+  }
+</style>
