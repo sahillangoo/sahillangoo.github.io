@@ -45,53 +45,54 @@ export function renderTypstSource(data: ResumeData): string {
   let typstCode = `
 #set page(
   paper: "us-letter",
-  margin: (x: 0.42in, top: 0.36in, bottom: 0.36in),
+  margin: (x: 0.55in, top: 0.5in, bottom: 0.5in),
 )
 
 #set text(
-  font: ("Latin Modern Roman", "Liberation Serif", "Times New Roman"),
-  size: 8.9pt,
+  font: ("New Computer Modern", "Latin Modern Roman", "Liberation Serif", "Times New Roman"),
+  size: 10pt,
   lang: "en",
+  spacing: 100%,
 )
 
 #set par(
   justify: true,
-  leading: 0.44em,
+  leading: 0.62em,
 )
 
-// Section Heading Macro
+// Section Heading Macro (Jake's Resume Gold Standard)
 #let section(title) = {
+  v(8pt)
+  text(weight: "bold", size: 12pt, smallcaps(title))
+  v(-4pt)
+  line(length: 100%, stroke: 0.6pt + black)
   v(3pt)
-  text(weight: "bold", size: 10.2pt, smallcaps(title))
-  v(-3.5pt)
-  line(length: 100%, stroke: 0.45pt + black)
-  v(1.5pt)
 }
 
-// Experience / Subheading Macro
+// Experience / Education Subheading Macro
 #let entry(title, location, subtitle, dates, bullets) = {
   block(width: 100%, breakable: false)[
     #grid(
       columns: (1fr, auto),
-      text(weight: "bold", size: 9.2pt)[#title],
-      text(weight: "bold", size: 8.9pt)[#location],
+      text(weight: "bold", size: 10.5pt)[#title],
+      text(weight: "bold", size: 10pt)[#location],
     )
-    #v(-2.2pt)
+    #v(-2pt)
     #grid(
       columns: (1fr, auto),
-      text(style: "italic", size: 8.7pt)[#subtitle],
-      text(style: "italic", size: 8.7pt)[#dates],
+      text(style: "italic", size: 10pt)[#subtitle],
+      text(style: "italic", size: 9.5pt)[#dates],
     )
-    #v(-2.8pt)
+    #v(-2pt)
     #for b in bullets [
-      #v(1.4pt)
+      #v(2.5pt)
       #grid(
-        columns: (8pt, 1fr),
+        columns: (10pt, 1fr),
         [•],
-        [#text(size: 8.7pt)[#b]]
+        [#text(size: 9.8pt)[#b]]
       )
     ]
-    #v(0.5pt)
+    #v(3pt)
   ]
 }
 
@@ -101,38 +102,38 @@ export function renderTypstSource(data: ResumeData): string {
     #grid(
       columns: (1fr, auto),
       [
-        #text(weight: "bold", size: 9.2pt)[#title]
-        #text(style: "italic", size: 8.5pt)[ | #tech]
+        #text(weight: "bold", size: 10.5pt)[#title]
+        #text(style: "italic", size: 9.5pt)[ | #tech]
         #if url != none [
-          #text(size: 8.3pt)[ (#link(url)[#url.replace("https://", "")]) ]
+          #text(size: 9pt)[ (#link(url)[#url.replace("https://", "")]) ]
         ]
       ],
-      text(style: "italic", size: 8.7pt)[#dates],
+      text(style: "italic", size: 9.5pt)[#dates],
     )
-    #v(-2.8pt)
+    #v(-2pt)
     #for b in bullets [
-      #v(1.4pt)
+      #v(2.5pt)
       #grid(
-        columns: (8pt, 1fr),
+        columns: (10pt, 1fr),
         [•],
-        [#text(size: 8.7pt)[#b]]
+        [#text(size: 9.8pt)[#b]]
       )
     ]
-    #v(0.5pt)
+    #v(3pt)
   ]
 }
 
 // --- HEADER ---
 #align(center)[
-  #text(weight: "bold", size: 17.5pt, smallcaps("${escapeTypst(contact.name)}")) \\
-  #v(1.5pt)
-  #text(size: 8.5pt)[
+  #text(weight: "bold", size: 22pt, smallcaps("${escapeTypst(contact.name)}")) \\
+  #v(2pt)
+  #text(size: 9.5pt)[
     ${escapeTypst(contact.location)} $|$ ${escapeTypst(contact.phone)} $|$ #link("mailto:${contact.email}")[#text("${contact.email}")] \\
-    #v(1.5pt)
+    #v(2pt)
     #link("${contact.website}")[#text("${webDisplay}")] $|$ #link("${contact.linkedin}")[#text("${liDisplay}")] $|$ #link("${contact.github}")[#text("${ghDisplay}")]
   ]
 ]
-#v(0.5pt)
+#v(2pt)
 
 // --- EDUCATION ---
 #section("Education")
@@ -143,7 +144,8 @@ export function renderTypstSource(data: ResumeData): string {
     if (edu.coursework && edu.coursework.length > 0) {
       bullets.push(`*Relevant Coursework:* ${edu.coursework.map(escapeTypst).join(', ')}.`);
     }
-    const bulletsParam = bullets.length > 0 ? `(${bullets.map(b => `[${b}]`).join(', ')},)` : '()';
+    const bulletsParam =
+      bullets.length > 0 ? `(${bullets.map((b) => `[${b}]`).join(', ')},)` : '()';
     typstCode += `
 #entry(
   "${escapeTypst(edu.institution)}",
@@ -159,11 +161,11 @@ export function renderTypstSource(data: ResumeData): string {
 // --- TECHNICAL SKILLS ---
 #section("Technical Skills")
 #block(width: 100%)[
-  #set text(size: 8.7pt)
+  #set text(size: 9.8pt)
   #grid(
     columns: (auto, 1fr),
-    row-gutter: 1.8pt,
-    column-gutter: 4.5pt,
+    row-gutter: 3pt,
+    column-gutter: 6pt,
     [*Languages & Scripting:*], [${skills.languages.map(escapeTypst).join(', ')}],
     [*Frameworks & UI:*], [${skills.frameworks.map(escapeTypst).join(', ')}],
     [*Cloud & DevOps:*], [${skills.cloud.map(escapeTypst).join(', ')}],
@@ -176,7 +178,7 @@ export function renderTypstSource(data: ResumeData): string {
 `;
 
   for (const exp of experience) {
-    const bullets = exp.highlights.map(h => `[${escapeTypst(h)}]`);
+    const bullets = exp.highlights.map((h) => `[${escapeTypst(h)}]`);
     typstCode += `
 #entry(
   "${escapeTypst(exp.company)}",
@@ -194,7 +196,7 @@ export function renderTypstSource(data: ResumeData): string {
 `;
 
   for (const proj of projects) {
-    const bullets = proj.highlights.map(h => `[${escapeTypst(h)}]`);
+    const bullets = proj.highlights.map((h) => `[${escapeTypst(h)}]`);
     const urlParam = proj.link ? `url: "${proj.link}"` : 'url: none';
     typstCode += `
 #project(
@@ -212,12 +214,12 @@ export function renderTypstSource(data: ResumeData): string {
 // --- CERTIFICATIONS ---
 #section("Certifications")
 #block(width: 100%)[
-  #set text(size: 8.5pt)
+  #set text(size: 9.5pt)
   #grid(
     columns: (1fr, 1fr),
-    row-gutter: 1.8pt,
-    column-gutter: 12pt,
-    ${certifications.map(c => `[*${escapeTypst(c.name)}* — _${escapeTypst(c.issuer)}_]`).join(',\n    ')}
+    row-gutter: 3pt,
+    column-gutter: 14pt,
+    ${certifications.map((c) => `[*${escapeTypst(c.name)}* — _${escapeTypst(c.issuer)}_]`).join(',\n    ')}
   )
 ]
 `;
@@ -281,7 +283,9 @@ export async function generateAllResumes(): Promise<string[]> {
     const written = safeWriteFileSync(targetPath, Buffer.from(pdfBuffer));
     if (written) {
       generatedFiles.push(targetPath);
-      console.log(`✓ Generated: ${roleProfile.filename} (${(pdfBuffer.length / 1024).toFixed(1)} KB)`);
+      console.log(
+        `✓ Generated: ${roleProfile.filename} (${(pdfBuffer.length / 1024).toFixed(1)} KB)`
+      );
     }
 
     // If this is fullstack, also write the canonical Resume-Sahil-Langoo.pdf

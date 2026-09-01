@@ -13,26 +13,26 @@
   prefersdark: true;
   color-scheme: dark;
 
-  /* Modern Obsidian & Slate Dark Theme */
-  --color-base-100: #0c0d0f; /* Deep Obsidian Background */
-  --color-base-200: #141619; /* Panel & Card Surface */
-  --color-base-300: #24272c; /* Steel Borders & Subtle Dividers */
+  /* Modern Midnight Slate Dark Theme */
+  --color-base-100: #0d151c; /* Requested Midnight Slate Background */
+  --color-base-200: #131d27; /* Panel & Card Surface */
+  --color-base-300: #223242; /* Steel Borders & Subtle Dividers */
   --color-base-content: #f4f4f6; /* High-contrast Crisp Foreground */
 
   /* Primary Light Accent */
   --color-primary: #f4f4f6;
-  --color-primary-content: #0c0d0f;
+  --color-primary-content: #0d151c;
 
   /* Secondary Muted Slate */
   --color-secondary: #9aa0a6;
-  --color-secondary-content: #0c0d0f;
+  --color-secondary-content: #0d151c;
 
   /* Subtle Warm Accent */
   --color-accent: #38bdf8;
-  --color-accent-content: #0c0d0f;
+  --color-accent-content: #0d151c;
 
   /* Neutral Surface */
-  --color-neutral: #141619;
+  --color-neutral: #131d27;
   --color-neutral-content: #f4f4f6;
 
   /* Semantic Feedback Tokens */
@@ -115,9 +115,9 @@
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
   /* Custom Color Tokens */
-  --color-obsidian: #0c0d0f;
-  --color-graphite: #141619;
-  --color-steel: #24272c;
+  --color-obsidian: #0d151c;
+  --color-graphite: #131d27;
+  --color-steel: #223242;
   --color-slate-muted: #9aa0a6;
   --color-chalk: #f4f4f6;
 

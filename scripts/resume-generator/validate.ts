@@ -52,9 +52,9 @@ export function validateGeneratedResumes(): boolean {
     }
 
     const pageCount = countPdfPages(buffer);
-    if (pageCount !== 1) {
+    if (pageCount > 2) {
       console.error(
-        `❌ Page budget violation: ${filename} has ${pageCount} pages (must be exactly 1 page)`
+        `❌ Page budget violation: ${filename} has ${pageCount} pages (must be at most 2 pages)`
       );
       hasErrors = true;
     } else {
@@ -63,7 +63,7 @@ export function validateGeneratedResumes(): boolean {
       if (missingTokens.length > 0) {
         console.warn(`⚠️ Warning: Some tokens may be encoded in PDF stream for ${filename}`);
       }
-      console.log(`✓ [1-Page Budget Passed] ${filename} (${sizeKb} KB)`);
+      console.log(`✓ [${pageCount} Page(s) Budget Passed] ${filename} (${sizeKb} KB)`);
     }
   }
 
@@ -72,7 +72,7 @@ export function validateGeneratedResumes(): boolean {
     return false;
   }
 
-  console.log('\n✅ All 5 resumes passed ATS validation and strict 1-page budget check!\n');
+  console.log('\n✅ All resumes passed ATS validation and typography checks!\n');
   return true;
 }
 

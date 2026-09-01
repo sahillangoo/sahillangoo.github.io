@@ -31,8 +31,18 @@
       "dates": "2023 — Present",
       "highlights": [
         "Architected multi-stage Docker deployment pipelines and automated GitHub Actions workflows, deploying static web platforms to Cloudflare Pages with zero-downtime rollouts.",
-        "Engineered custom pre-flight build-time quality hooks in Node.js, eliminating broken links, missing assets, and unoptimized payloads before artifact publishing.",
+        "Engineered custom pre-flight build-time quality hooks in Node.js (astroSiteQualityEnforcer), eliminating broken links, missing assets, and unoptimized payloads before artifact publishing.",
         "Configured Cloudflare edge rules, SSL/TLS strict policies, and Turnstile bot protection, achieving 99.99% availability and sub-50ms global TTFB."
+      ]
+    },
+    {
+      "role": "DevOps & Infrastructure Developer",
+      "company": "Taffin.Tech",
+      "location": "Remote, Srinagar",
+      "dates": "Apr 2024 — Present",
+      "highlights": [
+        "Configured continuous integration pipelines and automated quality lint gates for recruitment platform microservices.",
+        "Implemented GDPR compliance security measures and automated error alerting thresholds with Sentry."
       ]
     },
     {
@@ -49,7 +59,7 @@
     {
       "role": "Infrastructure & Web Trainee",
       "company": "Elance Technologies",
-      "location": "Kashmir, India",
+      "location": "Srinagar, Kashmir",
       "dates": "Jan 2023 — Jun 2023",
       "highlights": [
         "Managed Linux server environments, Apache/Nginx web server configurations, and database backup routines with automated shell scripts."
@@ -76,6 +86,15 @@
         "Enforced zero-warning linting, formatting, and strict type-checking gates in GitHub Actions."
       ],
       "link": "https://sahillangoo.in"
+    },
+    {
+      "name": "Smart IMG CLI",
+      "tech": "Node.js, Sharp, TypeScript, CLI Tooling",
+      "dates": "2024",
+      "highlights": [
+        "Built high-speed CLI utility for batch image optimization and WebP/AVIF conversions, reducing media asset weights by 70% in build pipelines."
+      ],
+      "link": "https://github.com/sahillangoo"
     }
   ]
 }

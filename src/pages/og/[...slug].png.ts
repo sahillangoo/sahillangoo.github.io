@@ -210,8 +210,8 @@ export const GET: APIRoute = async ({ props }) => {
 <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0c0d12" />
-      <stop offset="100%" stop-color="#07080a" />
+      <stop offset="0%" stop-color="#0d151c" />
+      <stop offset="100%" stop-color="#080e14" />
     </linearGradient>
     <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
       <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.75" opacity="0.4" />

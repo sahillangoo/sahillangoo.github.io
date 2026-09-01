@@ -23,7 +23,7 @@
       "Trusted Web Activities (TWA)"
     ],
     "databasesAndTools": [
-      "Git",
+      "Git & GitHub CLI",
       "Figma",
       "Playwright",
       "Sentry Telemetry",
@@ -46,6 +46,16 @@
       ]
     },
     {
+      "role": "Frontend Developer",
+      "company": "Taffin.Tech",
+      "location": "Remote, Srinagar",
+      "dates": "Apr 2024 — Present",
+      "highlights": [
+        "Engineered responsive UI architectures using Tailwind CSS, React, and Twig templating for an AI-integrated recruitment platform, cutting initial render times by 40%.",
+        "Delivered pixel-perfect mobile-first components with WCAG 2.1 AA accessibility compliance and micro-interaction states."
+      ]
+    },
+    {
       "role": "Frontend Integration Engineer",
       "company": "Enterprise Web Systems (@ecspl)",
       "location": "Remote",
@@ -59,7 +69,7 @@
     {
       "role": "Web Development Trainee",
       "company": "Elance Technologies",
-      "location": "Kashmir, India",
+      "location": "Srinagar, Kashmir",
       "dates": "Jan 2023 — Jun 2023",
       "highlights": [
         "Implemented WCAG 2.1 AA accessibility standards and responsive grid refactors across legacy web portals, increasing mobile user engagement by 40%."
@@ -86,6 +96,15 @@
         "Packaged and deployed application as a Progressive Web App (PWA) and Trusted Web Activity (TWA) across Android Play Store."
       ],
       "link": "https://breedershub.in"
+    },
+    {
+      "name": "Portfolio & Minimalist UI System",
+      "tech": "Astro 7, TypeScript, Tailwind CSS v4, daisyUI 5",
+      "dates": "2024",
+      "highlights": [
+        "Architected editorial portfolio featuring dark/light OKLCH themes, view transitions, zero layout shifts (CLS = 0.00), and sub-800ms LCP."
+      ],
+      "link": "https://sahillangoo.in"
     }
   ]
 }

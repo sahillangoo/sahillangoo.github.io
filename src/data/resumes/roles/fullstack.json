@@ -4,7 +4,15 @@
   "filename": "Resume-Sahil-Langoo-FullStack.pdf",
   "summary": "Full Stack Systems Engineer and Co-Founder specializing in high-throughput web systems, distributed edge proxies, and end-to-end type safety. Proven track record architecting zero-JS Astro static platforms, Cloudflare Worker proxies (Hono, Meta CAPI, Turnstile), and automated build-time verification pipelines.",
   "skills": {
-    "languages": ["TypeScript", "JavaScript", "Go", "Python", "SQL", "HTML5 / CSS3"],
+    "languages": [
+      "TypeScript",
+      "JavaScript (ES2024+)",
+      "Go",
+      "Python",
+      "SQL",
+      "PHP",
+      "HTML5 / CSS3"
+    ],
     "frameworks": [
       "Astro 7",
       "React 19",
@@ -20,15 +28,16 @@
       "Cloudflare R2 & KV",
       "Cloudflare Turnstile",
       "Vercel",
-      "Docker"
+      "Docker",
+      "REST / GraphQL"
     ],
     "databasesAndTools": [
       "PostgreSQL",
       "SQLite / D1",
       "Redis",
-      "Git",
+      "Git & GitHub CLI",
       "Playwright",
-      "Sentry",
+      "Sentry Telemetry",
       "Zod",
       "Wrangler"
     ]
@@ -46,6 +55,17 @@
       ]
     },
     {
+      "role": "Full Stack Developer",
+      "company": "Taffin.Tech",
+      "location": "Remote, Srinagar",
+      "dates": "Apr 2024 — Present",
+      "highlights": [
+        "Spearheaded development of an AI-integrated job board platform for a French startup, increasing user engagement by 25% and implementing EU GDPR-compliant privacy standards.",
+        "Engineered responsive user interfaces with Tailwind CSS, React, and Twig templating integrated with Symfony backend, slashing initial page load times by 40%.",
+        "Configured dynamic SEO indexing strategies and structured schema pipelines, boosting organic search traffic by 30%."
+      ]
+    },
+    {
       "role": "Systems & Backend Integration Engineer",
       "company": "Enterprise Web Systems (@ecspl)",
       "location": "Remote",
@@ -57,12 +77,13 @@
       ]
     },
     {
-      "role": "Full Stack Trainee",
+      "role": "Full Stack Industrial Trainee",
       "company": "Elance Technologies",
-      "location": "Kashmir, India",
+      "location": "Srinagar, Kashmir",
       "dates": "Jan 2023 — Jun 2023",
       "highlights": [
-        "Completed 6-month intensive full-stack development curriculum, building REST APIs and interactive interfaces with PHP, JavaScript, and MariaDB."
+        "Completed 6-month intensive full-stack development curriculum, building secure RESTful APIs and dynamic interfaces with PHP, JavaScript, and MariaDB.",
+        "Collaborated on accessibility and responsive grid refactoring across client platforms, increasing mobile user traffic by 40%."
       ]
     }
   ],
@@ -76,6 +97,16 @@
         "Delivered sub-15ms search and filter response times across 500+ localized verified business listings."
       ],
       "link": "https://listify.sahillangoo.com"
+    },
+    {
+      "name": "BreedersHub",
+      "tech": "React, Tailwind CSS, PWA, TWA, Webpack",
+      "dates": "2023",
+      "highlights": [
+        "Designed mobile-first e-commerce frontend supporting 1,000+ SKU catalog with sub-3s 3G network loads using asset compression and lazy hydration.",
+        "Packaged and deployed application as a Progressive Web App (PWA) and Trusted Web Activity (TWA) across Android Play Store."
+      ],
+      "link": "https://breedershub.in"
     },
     {
       "name": "XpressSys Logistics",
