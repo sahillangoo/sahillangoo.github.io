@@ -1,5 +1,7 @@
+# ==============================================================================
 # Robots.txt for sahillangoo.in
-# Production SEO & AI Discovery Policy
+# Production SEO, AI LLM Citations & Social Preview Policy
+# ==============================================================================
 
 User-agent: *
 Allow: /
@@ -8,7 +10,9 @@ Disallow: /api/
 Disallow: /private/
 Disallow: /blog/tag/
 
-# Explicit Search Engine Crawlers
+# ------------------------------------------------------------------------------
+# 1. Traditional Search Engines
+# ------------------------------------------------------------------------------
 User-agent: Googlebot
 Allow: /
 
@@ -21,11 +25,19 @@ Allow: /
 User-agent: DuckDuckBot
 Allow: /
 
-# AI Search & Retrieval Crawlers (Authorized for citations and LLM grounding)
+User-agent: YandexBot
+Allow: /
+
+# ------------------------------------------------------------------------------
+# 2. AI Search, Retrieval & LLM Grounding Crawlers (Authorized for Citations)
+# ------------------------------------------------------------------------------
 User-agent: GPTBot
 Allow: /
 
 User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: PerplexityBot
@@ -40,7 +52,47 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-# XML Sitemaps
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# ------------------------------------------------------------------------------
+# 3. Social Media & Professional Link Preview Crawlers
+# ------------------------------------------------------------------------------
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Facebot
+Allow: /
+
+User-agent: Slackbot
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+User-agent: Discordbot
+Allow: /
+
+# ------------------------------------------------------------------------------
+# 4. Sitemaps
+# ------------------------------------------------------------------------------
 Sitemap: https://sahillangoo.in/sitemap-index.xml
-Sitemap: https://sahillangoo.in/sitemap-0.xml
 Sitemap: https://sahillangoo.in/sitemap.xml

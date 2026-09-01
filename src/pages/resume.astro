@@ -3,21 +3,40 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import ExperienceTimeline from '@/components/portfolio/ExperienceTimeline.astro';
 import { getCollection, getEntry } from 'astro:content';
 import { SITE } from '@/const/site.ts';
+import { resumeCopy } from '@/data/copy/resume.ts';
 import { Icon } from 'astro-icon/components';
 
 const experiences = await getCollection('experience');
 const siteData = await getEntry('site', 'profile');
 const skills = siteData?.data.skills;
 
-const resumeSchema = {
-  '@type': 'ProfilePage',
-  '@id': `${SITE.url}/resume/#profilepage`,
-  name: `Resume & CV — ${SITE.name}`,
-  url: `${SITE.url}/resume/`,
-  mainEntity: {
-    '@id': `${SITE.url}/#person`,
+const resumeSchema = [
+  {
+    '@type': 'ProfilePage',
+    '@id': `${SITE.url}/resume/#profilepage`,
+    name: `${resumeCopy.header.eyebrow} — ${SITE.name}`,
+    url: `${SITE.url}/resume/`,
+    mainEntity: {
+      '@id': `${SITE.url}/#person`,
+    },
   },
-};
+  {
+    '@type': 'Occupation',
+    '@id': `${SITE.url}/resume/#occupation`,
+    name: 'Full Stack Systems Engineer & Systems Architect',
+    description:
+      'Engineering high-throughput web systems, distributed edge proxies, and minimalist user interfaces.',
+    skills: skills
+      ? Object.values(skills).flat()
+      : ['TypeScript', 'Astro', 'Cloudflare Workers', 'Distributed Systems', 'Tailwind CSS'],
+    occupationLocation: {
+      '@type': 'City',
+      name: 'Kashmir',
+      addressRegion: 'Jammu and Kashmir',
+      addressCountry: 'India',
+    },
+  },
+];
 
 const breadcrumbs = [
   { name: 'Home', item: '/' },
@@ -26,9 +45,9 @@ const breadcrumbs = [
 ---
 
 <BaseLayout
-  title="Resume & Curriculum Vitae"
-  description="Professional engineering resume, verified career experience at SquadCoders and ECSPL, core technical competencies, and architectural timeline of Sahil Langoo."
-  image="/og/resume.png"
+  title={resumeCopy.seo.title}
+  description={resumeCopy.seo.description}
+  image={resumeCopy.seo.image}
   breadcrumbs={breadcrumbs}
   structuredData={resumeSchema}
   type="profile"
@@ -40,31 +59,40 @@ const breadcrumbs = [
     >
       <div>
         <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
-          Curriculum Vitae
+          {resumeCopy.header.eyebrow}
         </span>
         <h1 class="text-base-content mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl">
           {SITE.name}
         </h1>
         <p class="text-base-content/80 mt-1 text-sm font-medium">
-          Full Stack Systems Engineer & Co-Founder • {SITE.location}
+          {resumeCopy.header.roleSubtitle}
         </p>
       </div>
 
       <div class="flex flex-wrap items-center gap-3">
         <a
-          href="/contact/"
+          href={resumeCopy.header.contactCta.href}
           class="btn btn-sm bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-1.5 rounded-md border-0 font-mono text-xs tracking-wider uppercase"
         >
-          <Icon name="ph:paper-plane-tilt-bold" class="h-3.5 w-3.5" />
-          Contact Me
+          {
+            resumeCopy.header.contactCta.icon && (
+              <Icon name={resumeCopy.header.contactCta.icon} class="h-3.5 w-3.5" />
+            )
+          }
+          {resumeCopy.header.contactCta.label}
         </a>
         <a
-          href="https://github.com/sahillangoo"
+          href={resumeCopy.header.githubCta.href}
           target="_blank"
           rel="noopener noreferrer"
           class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 flex items-center gap-1.5 rounded-md font-mono text-xs tracking-wider uppercase"
         >
-          <Icon name="ph:github-logo-bold" class="h-3.5 w-3.5" /> GitHub
+          {
+            resumeCopy.header.githubCta.icon && (
+              <Icon name={resumeCopy.header.githubCta.icon} class="h-3.5 w-3.5" />
+            )
+          }
+          {resumeCopy.header.githubCta.label}
         </a>
       </div>
     </div>
@@ -72,7 +100,7 @@ const breadcrumbs = [
     <!-- Summary -->
     <section class="space-y-3">
       <h2 class="text-accent font-mono text-xs font-bold tracking-widest uppercase">
-        Executive Summary
+        {resumeCopy.sections.executiveSummary}
       </h2>
       <p class="text-base-content/80 text-sm leading-relaxed sm:text-base">
         {siteData?.data.about}
@@ -82,7 +110,7 @@ const breadcrumbs = [
     <!-- Work Experience -->
     <section class="space-y-6">
       <h2 class="text-accent font-mono text-xs font-bold tracking-widest uppercase">
-        Professional Experience
+        {resumeCopy.sections.professionalExperience}
       </h2>
       <div class="editorial-card p-6 sm:p-8">
         <ExperienceTimeline experiences={experiences} />
@@ -94,13 +122,13 @@ const breadcrumbs = [
       skills && (
         <section class="space-y-6">
           <h2 class="text-accent font-mono text-xs font-bold tracking-widest uppercase">
-            Technical Core Competencies
+            {resumeCopy.sections.coreCompetencies}
           </h2>
 
           <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div class="editorial-card space-y-2 p-5">
               <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
-                Languages
+                {resumeCopy.sections.languagesTitle}
               </h3>
               <div class="flex flex-wrap gap-1.5">
                 {skills.languages.map((item) => (
@@ -113,7 +141,7 @@ const breadcrumbs = [
 
             <div class="editorial-card space-y-2 p-5">
               <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
-                Frameworks & Libraries
+                {resumeCopy.sections.frameworksTitle}
               </h3>
               <div class="flex flex-wrap gap-1.5">
                 {skills.frameworks.map((item) => (
@@ -126,7 +154,7 @@ const breadcrumbs = [
 
             <div class="editorial-card space-y-2 p-5">
               <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
-                Cloud & Edge Architecture
+                {resumeCopy.sections.cloudTitle}
               </h3>
               <div class="flex flex-wrap gap-1.5">
                 {skills.cloud.map((item) => (
@@ -139,7 +167,7 @@ const breadcrumbs = [
 
             <div class="editorial-card space-y-2 p-5">
               <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
-                Databases & Tools
+                {resumeCopy.sections.databasesToolsTitle}
               </h3>
               <div class="flex flex-wrap gap-1.5">
                 {[...skills.databases, ...skills.tools].map((item) => (
