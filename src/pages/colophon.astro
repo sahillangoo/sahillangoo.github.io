@@ -1,30 +1,24 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { SITE } from '@/const/site.ts';
+import { colophonCopy } from '@/data/copy/colophon.ts';
 import { Icon } from 'astro-icon/components';
 
-const specs = [
-  { label: 'Framework', value: 'Astro 7.2 (Static Site Generation)' },
-  { label: 'Styling Architecture', value: 'Tailwind CSS v4 + daisyUI 5' },
-  { label: 'Color System', value: 'OKLCH (editorialDark & editorialLight)' },
-  { label: 'Primary Typeface', value: 'Plus Jakarta Sans (Variable)' },
-  { label: 'Monospace Typeface', value: 'JetBrains Mono' },
-  { label: 'Motion & Scroll', value: 'Lenis Smooth Scroll + Hardware Transforms' },
-  { label: 'Hosting & CDN', value: 'Cloudflare Pages Global Edge' },
-  { label: 'Asset Verification', value: 'astroSiteQualityEnforcer (Zero 404s)' },
-  { label: 'Package Manager', value: 'pnpm v11+ with strict lockfile' },
-  { label: 'Linter & Quality', value: 'ESLint 10 Flat Config + Prettier' },
-  { label: 'Runtime Client JS', value: '0.00 KB on initial render (Hydration only on demand)' },
-  { label: 'Cumulative Layout Shift', value: '0.00 CLS guaranteed' },
+const colophonKeywords = [
+  'Website Colophon',
+  'Astro 7 Architecture',
+  'Tailwind CSS v4 Spec',
+  'daisyUI 5 Theming',
+  'Typography JetBrains Mono',
+  'Cloudflare Pages Deployment',
 ];
 
 const colophonSchema = {
   '@type': 'WebPage',
   '@id': `${SITE.url}/colophon/#webpage`,
-  name: `Colophon — Technical Specifications — ${SITE.name}`,
+  name: `${colophonCopy.header.title} — ${SITE.name}`,
   url: `${SITE.url}/colophon/`,
-  description:
-    'Technical colophon detailing the typography, color science, build architecture, and performance standards of this website.',
+  description: colophonCopy.seo.description,
   mainEntity: {
     '@id': `${SITE.url}/#person`,
   },
@@ -37,9 +31,10 @@ const breadcrumbs = [
 ---
 
 <BaseLayout
-  title="Colophon — Technical Specifications"
-  description="Technical colophon detailing the typography, OKLCH color science, build architecture, and performance standards of this website."
-  image="/og/colophon.png"
+  title={colophonCopy.seo.title}
+  description={colophonCopy.seo.description}
+  keywords={colophonKeywords}
+  image={colophonCopy.seo.image}
   breadcrumbs={breadcrumbs}
   structuredData={colophonSchema}
 >
@@ -49,14 +44,13 @@ const breadcrumbs = [
       <div
         class="border-base-300 bg-base-200 text-base-content/80 inline-flex items-center gap-2 rounded-full border px-3 py-0.5 font-mono text-xs"
       >
-        <span>Site Anatomy</span>
+        <span>{colophonCopy.header.badge}</span>
       </div>
       <h1 class="text-base-content text-3xl font-extrabold tracking-tight sm:text-4xl">
-        Technical Colophon
+        {colophonCopy.header.title}
       </h1>
       <p class="text-base-content/75 text-base leading-relaxed">
-        An exhaustive disclosure of the typography, color science, software dependencies, and design
-        principles behind this site.
+        {colophonCopy.header.description}
       </p>
     </div>
 
@@ -66,12 +60,12 @@ const breadcrumbs = [
         class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase"
       >
         <Icon name="ph:cpu-bold" class="h-4 w-4" />
-        System Specifications
+        {colophonCopy.sections.specificationsTitle}
       </h2>
 
       <div class="divide-base-300/80 divide-y">
         {
-          specs.map((item) => (
+          colophonCopy.sections.specifications.map((item) => (
             <div class="flex flex-col gap-1 py-3 text-xs sm:flex-row sm:items-center sm:justify-between">
               <span class="text-base-content/60 font-mono font-medium">{item.label}</span>
               <span class="text-base-content font-mono font-semibold">{item.value}</span>
@@ -87,33 +81,20 @@ const breadcrumbs = [
         class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase"
       >
         <Icon name="ph:paint-brush-broad-bold" class="h-4 w-4" />
-        Design & Performance Principles
+        {colophonCopy.sections.principlesTitle}
       </h2>
 
       <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-        <div class="editorial-card space-y-3 p-6">
-          <h3 class="text-accent font-mono text-xs font-bold tracking-wider uppercase">
-            Typography & Color Science
-          </h3>
-          <p class="text-base-content/75 text-xs leading-relaxed">
-            Set in <strong>Plus Jakarta Sans</strong> for clean editorial hierarchy and <strong>
-              JetBrains Mono
-            </strong> for code snippets. The color scheme is calibrated in perceptual <strong>
-              OKLCH space
-            </strong> for consistent visual contrast across light and dark modes.
-          </p>
-        </div>
-
-        <div class="editorial-card space-y-3 p-6">
-          <h3 class="text-accent font-mono text-xs font-bold tracking-wider uppercase">
-            Zero-Dependency Quality Hook
-          </h3>
-          <p class="text-base-content/75 text-xs leading-relaxed">
-            Integrated with a custom build-time plugin (<code>astroSiteQualityEnforcer</code>) that
-            crawls all rendered HTML in <code>dist/</code> to prevent broken links, missing assets, and
-            trailing slash violations before deployment.
-          </p>
-        </div>
+        {
+          colophonCopy.sections.principles.map((principle) => (
+            <div class="editorial-card space-y-3 p-6">
+              <h3 class="text-accent font-mono text-xs font-bold tracking-wider uppercase">
+                {principle.title}
+              </h3>
+              <p class="text-base-content/75 text-xs leading-relaxed">{principle.description}</p>
+            </div>
+          ))
+        }
       </div>
     </div>
   </div>

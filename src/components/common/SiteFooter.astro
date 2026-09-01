@@ -1,22 +1,11 @@
 ---
 import { SITE } from '@/const/site.ts';
+import { navigationCopy } from '@/data/copy/navigation.ts';
 import TimeAvailabilityWidget from '@/components/common/TimeAvailabilityWidget.astro';
 import SpotifyWidget from '@/components/common/SpotifyWidget.astro';
 import { Icon } from 'astro-icon/components';
 
 const currentYear = new Date().getFullYear();
-
-const footerLinks = [
-  { label: 'Work', href: '/projects/' },
-  { label: 'Writing', href: '/blog/' },
-  { label: 'Garden', href: '/notes/' },
-  { label: 'Resume', href: '/resume/' },
-  { label: 'Now', href: '/now/' },
-  { label: 'Uses', href: '/uses/' },
-  { label: 'Colophon', href: '/colophon/' },
-  { label: 'Links', href: '/links/' },
-  { label: 'Contact', href: '/contact/' },
-];
 ---
 
 <footer
@@ -29,10 +18,10 @@ const footerLinks = [
       <!-- Brand & Tagline -->
       <div class="flex max-w-sm flex-col gap-2">
         <span class="text-base-content font-mono text-sm font-bold tracking-tight">
-          {SITE.name}
+          {navigationCopy.brand.name}
         </span>
         <p class="text-base-content/60 text-xs leading-relaxed">
-          {SITE.tagline}
+          {navigationCopy.brand.tagline}
         </p>
         <div class="flex flex-col gap-2 pt-2">
           <TimeAvailabilityWidget variant="compact" />
@@ -43,7 +32,7 @@ const footerLinks = [
       <!-- Footer Quick Links Grid -->
       <div class="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-xs">
         {
-          footerLinks.map((item) => (
+          navigationCopy.footerNav.map((item) => (
             <a href={item.href} class="hover:text-accent transition-colors">
               {item.label}
             </a>
@@ -119,8 +108,8 @@ const footerLinks = [
     <div
       class="border-base-300/60 text-base-content/50 flex flex-col items-center justify-between gap-2 border-t pt-6 text-[11px] sm:flex-row"
     >
-      <span>© {currentYear} {SITE.name}. Built statically with Astro 7.2 & Tailwind CSS v4.</span>
-      <span class="font-mono text-[10px]">0.00 CLS • Sub-50ms TTFB • Cloudflare Edge</span>
+      <span>{navigationCopy.footerTelemetry.copyright(currentYear)}</span>
+      <span class="font-mono text-[10px]">{navigationCopy.footerTelemetry.metrics}</span>
     </div>
   </div>
 </footer>

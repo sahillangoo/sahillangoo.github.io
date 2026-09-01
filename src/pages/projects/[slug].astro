@@ -25,27 +25,43 @@ const { Content } = await render(project);
 
 const pageUrl = `${SITE.url}/projects/${id}/`;
 
-const projectSchema = {
-  '@type': 'SoftwareApplication',
-  '@id': `${pageUrl}#software`,
-  name: data.title,
-  description: data.description,
-  url: pageUrl,
-  image: `${SITE.url}/og/projects/${id}.png`,
-  applicationCategory: data.category === 'cli-tool' ? 'DeveloperApplication' : 'WebApplication',
-  operatingSystem: 'Cross-platform',
-  offers: {
-    '@type': 'Offer',
-    price: '0',
-    priceCurrency: 'USD',
+const projectSchema = [
+  {
+    '@type': 'SoftwareApplication',
+    '@id': `${pageUrl}#software`,
+    name: data.title,
+    description: data.description,
+    url: pageUrl,
+    image: `${SITE.url}/og/projects/${id}.png`,
+    applicationCategory: data.category === 'cli-tool' ? 'DeveloperApplication' : 'WebApplication',
+    operatingSystem: 'Cross-platform',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    author: {
+      '@id': `${SITE.url}/#person`,
+    },
+    keywords: data.tags.join(', '),
+    ...(data.liveUrl ? { installUrl: data.liveUrl } : {}),
+    ...(data.githubUrl ? { codeRepository: data.githubUrl } : {}),
   },
-  author: {
-    '@id': `${SITE.url}/#person`,
-  },
-  keywords: data.tags.join(', '),
-  ...(data.liveUrl ? { installUrl: data.liveUrl } : {}),
-  ...(data.githubUrl ? { codeRepository: data.githubUrl } : {}),
-};
+  ...(data.githubUrl
+    ? [
+        {
+          '@type': 'SoftwareSourceCode',
+          '@id': `${pageUrl}#sourcecode`,
+          name: `${data.title} Source Repository`,
+          codeRepository: data.githubUrl,
+          programmingLanguage: data.tags,
+          author: {
+            '@id': `${SITE.url}/#person`,
+          },
+        },
+      ]
+    : []),
+];
 
 const breadcrumbs = [
   { name: 'Home', item: '/' },
@@ -57,6 +73,7 @@ const breadcrumbs = [
 <BaseLayout
   title={data.title}
   description={data.description}
+  keywords={data.tags}
   image={`/og/projects/${id}.png`}
   publishDate={data.publishDate}
   breadcrumbs={breadcrumbs}

@@ -2,20 +2,43 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { SITE } from '@/const/site.ts';
+import { linksCopy } from '@/data/copy/links.ts';
 import { Icon } from 'astro-icon/components';
 
 const links = await getCollection('links');
 const sortedLinks = [...links].sort((a, b) => a.data.order - b.data.order);
 
-const linksSchema = {
-  '@type': 'ProfilePage',
-  '@id': `${SITE.url}/links/#profilepage`,
-  name: `Verified Links & Profiles — ${SITE.name}`,
-  url: `${SITE.url}/links/`,
-  mainEntity: {
-    '@id': `${SITE.url}/#person`,
+const linksKeywords = [
+  'Sahil Langoo Links',
+  'Social Profiles',
+  'GitHub Profile',
+  'LinkedIn Profile',
+  'Twitter X Profile',
+  'SquadCoders Link',
+];
+
+const linksSchema = [
+  {
+    '@type': 'ProfilePage',
+    '@id': `${SITE.url}/links/#profilepage`,
+    name: `${linksCopy.seo.title}`,
+    url: `${SITE.url}/links/`,
+    mainEntity: {
+      '@id': `${SITE.url}/#person`,
+    },
   },
-};
+  {
+    '@type': 'ItemList',
+    '@id': `${SITE.url}/links/#itemlist`,
+    name: 'Verified Social & Career Profiles',
+    itemListElement: sortedLinks.map((link, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: link.data.title,
+      url: link.data.url,
+    })),
+  },
+];
 
 const breadcrumbs = [
   { name: 'Home', item: '/' },
@@ -24,9 +47,10 @@ const breadcrumbs = [
 ---
 
 <BaseLayout
-  title="Links & Verified Profiles"
-  description="Quick access links to Sahil Langoo's official profiles, repositories, technical essays, and portfolio."
-  image="/og/links.png"
+  title={linksCopy.seo.title}
+  description={linksCopy.seo.description}
+  keywords={linksKeywords}
+  image={linksCopy.seo.image}
   breadcrumbs={breadcrumbs}
   structuredData={linksSchema}
 >
@@ -36,7 +60,7 @@ const breadcrumbs = [
       <div
         class="bg-base-200 border-base-300 text-accent mx-auto flex h-16 w-16 items-center justify-center rounded-full border font-mono text-xl font-bold shadow-md"
       >
-        SL
+        {linksCopy.header.initials}
       </div>
       <h1 class="text-base-content text-2xl font-extrabold tracking-tight">
         {SITE.name}
@@ -80,17 +104,17 @@ const breadcrumbs = [
       }
 
       <a
-        href="/"
+        href={linksCopy.mainSiteCard.href}
         class="editorial-card group border-base-300/80 hover:border-base-300 flex items-center justify-between border-dashed p-4"
       >
         <div>
           <div
             class="text-base-content group-hover:text-accent text-sm font-semibold transition-colors"
           >
-            Main Website & Portfolio
+            {linksCopy.mainSiteCard.title}
           </div>
           <p class="text-base-content/60 mt-0.5 text-xs">
-            Explore the full personal portfolio and engineering notes
+            {linksCopy.mainSiteCard.description}
           </p>
         </div>
         <Icon

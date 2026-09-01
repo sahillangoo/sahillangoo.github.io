@@ -69,6 +69,10 @@ const articleSchema = {
   inLanguage: 'en-US',
   articleSection: data.category,
   keywords: data.tags.join(', '),
+  speakable: {
+    '@type': 'SpeakableSpecification',
+    cssSelector: ['article header h1', 'article .prose'],
+  },
   mainEntityOfPage: {
     '@type': 'WebPage',
     '@id': pageUrl,
@@ -86,6 +90,7 @@ const breadcrumbs = [
 <BaseLayout
   title={data.title}
   description={data.description}
+  keywords={data.tags}
   image={`/og/blog/${id}.png`}
   type="article"
   publishDate={data.publishDate}
@@ -228,8 +233,7 @@ const breadcrumbs = [
               </span>
             </div>
             <p class="text-base-content/70 max-w-md text-xs leading-relaxed">
-              Full Stack Systems Engineer & Co-Founder at @SquadCoders. Writing on resilient
-              architectures, TypeScript, edge proxies, and minimalist UI craft.
+              {SITE.bio}
             </p>
             <div class="flex items-center gap-3 pt-1 text-xs">
               <a

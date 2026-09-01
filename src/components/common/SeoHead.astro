@@ -10,6 +10,7 @@ export interface BreadcrumbItem {
 export interface Props {
   title?: string;
   description?: string;
+  keywords?: string | string[];
   image?: string;
   canonicalUrl?: string;
   type?: 'website' | 'article' | 'profile';
@@ -23,6 +24,7 @@ export interface Props {
 const {
   title = SITE.title,
   description = SITE.description,
+  keywords,
   image = '/og/default.png',
   canonicalUrl = Astro.url.href,
   type = 'website',
@@ -33,11 +35,18 @@ const {
   noindex = false,
 } = Astro.props;
 
+// Format keywords
+const formattedKeywords = Array.isArray(keywords)
+  ? keywords.join(', ')
+  : keywords ||
+    'Sahil Langoo, Full Stack Engineer, Systems Architect, Astro 7, TypeScript, Cloudflare Workers, Hono, Web Performance, SquadCoders, Distributed Edge Systems';
+
 // Ensure trailing slash consistency for canonical URLs (unless file with extension)
 const formattedCanonical =
   canonicalUrl.endsWith('/') || canonicalUrl.includes('.') ? canonicalUrl : `${canonicalUrl}/`;
 
-const formattedTitle = title === SITE.title ? title : `${title} — ${SITE.name}`;
+const formattedTitle =
+  title === SITE.title || title.endsWith(SITE.name) ? title : `${title} — ${SITE.name}`;
 const siteUrl = SITE.url;
 const ogImage = image.startsWith('http')
   ? image
@@ -55,6 +64,16 @@ const personSchema = {
     '@type': 'Organization',
     name: 'SquadCoders',
     url: 'https://github.com/SquadCoders',
+  },
+  hasOccupation: {
+    '@type': 'Occupation',
+    name: 'Full Stack Systems Engineer & Systems Architect',
+    description:
+      'Designing high-performance web systems, distributed edge proxies on Cloudflare Workers, and minimalist UI craft.',
+  },
+  alumniOf: {
+    '@type': 'EducationalOrganization',
+    name: 'University of Kashmir',
   },
   sameAs: [
     SITE.social.github,
@@ -79,6 +98,7 @@ const personSchema = {
     'Bun',
     'Web Performance',
     'Distributed Systems',
+    'Zod Type Safety',
   ],
 };
 
@@ -92,6 +112,14 @@ const webSiteSchema = {
     '@id': `${siteUrl}/#person`,
   },
   inLanguage: 'en-US',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${siteUrl}/blog/?q={search_term_string}`,
+    },
+    'query-input': 'required name=search_term_string',
+  },
 };
 
 // Breadcrumb Schema
@@ -172,6 +200,7 @@ const schemaGraph = {
   <title>{formattedTitle}</title>
   <meta name="title" content={formattedTitle} />
   <meta name="description" content={description} />
+  <meta name="keywords" content={formattedKeywords} />
   <meta name="author" content={SITE.author} />
 
   <!-- Open Graph / Facebook -->

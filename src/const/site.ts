@@ -1,10 +1,11 @@
 export const SITE = {
   name: 'Sahil Langoo',
-  title: 'Sahil Langoo — Full Stack Engineer & Creative Technologist',
-  tagline: 'Engineering high-performance web systems, creative interfaces, and robust software.',
-  bio: 'A man of mystery and power, whose power is exceeded only by his mystery. I design, code & sometimes dream about making art.',
+  title: 'Sahil Langoo — Full Stack Systems Engineer & Systems Architect',
+  tagline:
+    'Engineering resilient edge systems, high-throughput web architectures & minimalist interfaces.',
+  bio: 'Full Stack Systems Engineer and Co-Founder at @SquadCoders. Specializing in TypeScript, Astro static architectures, distributed edge proxies, and minimalist UI craft.',
   description:
-    'Personal portfolio, engineering journal, and digital garden of Sahil Langoo. Specializing in TypeScript, Astro, modern web architecture, edge systems, and minimalist UI craft.',
+    'Personal portfolio, engineering journal, and systems catalog of Sahil Langoo. Specializing in TypeScript, Astro 7, modern web architecture, edge proxies, and minimalist UI craft.',
   url: 'https://sahillangoo.in',
   author: 'Sahil Langoo',
   location: 'Kashmir, India',

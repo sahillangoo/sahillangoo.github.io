@@ -3,47 +3,28 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import TimeAvailabilityWidget from '@/components/common/TimeAvailabilityWidget.astro';
 import SpotifyWidget from '@/components/common/SpotifyWidget.astro';
 import { SITE } from '@/const/site.ts';
+import { nowCopy } from '@/data/copy/now.ts';
 import { Icon } from 'astro-icon/components';
-
-const nowItems = [
-  {
-    category: 'Engineering & Client Architecture',
-    items: [
-      'Architecting ultra-fast, zero-JS Astro static systems and e-commerce storefronts at SquadCoders.',
-      'Refining zero-dependency build-time quality gates (verifying asset references, internal links, and SEO redirects).',
-      'Implementing resilient edge proxies and payment integrations on Cloudflare Workers and Hono.',
-    ],
-  },
-  {
-    category: 'Exploring & Learning',
-    items: [
-      'Deepening systems programming with Go (concurrent network APIs and CLI tooling).',
-      'Local AI workflows: Experimenting with LM Studio vision models and offline embeddings running on Bun.',
-      'CSS Subgrid patterns and fine-tuning OKLCH multi-tier color spaces in Tailwind CSS v4.',
-    ],
-  },
-  {
-    category: 'Reading & Media',
-    items: [
-      'Designing Data-Intensive Applications by Martin Kleppmann.',
-      'Refactoring UI by Adam Wathan & Steve Schoger.',
-      'Engineering leadership and distributed systems architecture papers.',
-    ],
-  },
-];
 
 const breadcrumbs = [
   { name: 'Home', item: '/' },
   { name: 'Now', item: '/now/' },
 ];
 
+const nowKeywords = [
+  'Now Page',
+  'Current Projects',
+  'Active Engineering Focus',
+  'Software Systems in Progress',
+  'SquadCoders Roadmap',
+];
+
 const nowSchema = {
   '@type': 'WebPage',
   '@id': `${SITE.url}/now/#webpage`,
-  name: `What I'm Doing Now — ${SITE.name}`,
+  name: `${nowCopy.header.title} — ${SITE.name}`,
   url: `${SITE.url}/now/`,
-  description:
-    'A live snapshot of what Sahil Langoo is currently working on, studying, reading, and building.',
+  description: nowCopy.seo.description,
   mainEntity: {
     '@id': `${SITE.url}/#person`,
   },
@@ -51,9 +32,10 @@ const nowSchema = {
 ---
 
 <BaseLayout
-  title="Now — Current Priorities & Focus"
-  description="A live snapshot of what Sahil Langoo is currently working on, engineering architectures, studying, reading, and building."
-  image="/og/now.png"
+  title={nowCopy.seo.title}
+  description={nowCopy.seo.description}
+  keywords={nowKeywords}
+  image={nowCopy.seo.image}
   breadcrumbs={breadcrumbs}
   structuredData={nowSchema}
 >
@@ -64,14 +46,13 @@ const nowSchema = {
         class="border-base-300 bg-base-200 text-base-content/80 inline-flex items-center gap-2 rounded-full border px-3 py-0.5 font-mono text-xs"
       >
         <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400"></span>
-        <span>Now Page (Inspired by Derek Sivers)</span>
+        <span>{nowCopy.header.badge}</span>
       </div>
       <h1 class="text-base-content text-3xl font-extrabold tracking-tight sm:text-4xl">
-        What I'm Doing Right Now
+        {nowCopy.header.title}
       </h1>
       <p class="text-base-content/75 text-base leading-relaxed">
-        This is a public declaration of my current priorities, active projects, learning quests, and
-        focus areas.
+        {nowCopy.header.description}
       </p>
       <div class="flex flex-wrap items-center gap-3 pt-2">
         <TimeAvailabilityWidget variant="compact" />
@@ -82,10 +63,10 @@ const nowSchema = {
     <!-- Content Sections -->
     <div class="space-y-10">
       {
-        nowItems.map((section) => (
+        nowCopy.sections.map((section) => (
           <div class="editorial-card space-y-4 p-6 sm:p-8">
             <h2 class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase">
-              <Icon name="ph:sparkle-bold" class="h-4 w-4" />
+              <Icon name={section.icon} class="h-4 w-4" />
               {section.category}
             </h2>
             <ul class="text-base-content/80 space-y-3 text-sm leading-relaxed">
@@ -106,17 +87,21 @@ const nowSchema = {
       class="border-base-300/80 bg-base-200/50 flex flex-col justify-between gap-4 rounded-xl border p-6 sm:flex-row sm:items-center"
     >
       <div>
-        <h2 class="text-base-content text-sm font-bold">Based in {SITE.location}</h2>
+        <h2 class="text-base-content text-sm font-bold">{nowCopy.availabilityCard.title}</h2>
         <p class="text-base-content/60 mt-0.5 text-xs">
-          Operating globally across UTC+5:30 (IST), UTC, and EST time zones.
+          {nowCopy.availabilityCard.description}
         </p>
       </div>
       <a
-        href="/contact/"
+        href={nowCopy.availabilityCard.cta.href}
         class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 self-start rounded-md border-0 px-4 font-mono text-xs tracking-wider uppercase sm:self-auto"
       >
-        <Icon name="ph:paper-plane-tilt-bold" class="h-3.5 w-3.5" />
-        Inquire Availability
+        {
+          nowCopy.availabilityCard.cta.icon && (
+            <Icon name={nowCopy.availabilityCard.cta.icon} class="h-3.5 w-3.5" />
+          )
+        }
+        {nowCopy.availabilityCard.cta.label}
       </a>
     </div>
   </div>

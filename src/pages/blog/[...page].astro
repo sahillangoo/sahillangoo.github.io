@@ -5,6 +5,7 @@ import Pagination from '@/components/common/Pagination.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { GetStaticPaths, Page } from 'astro';
 import { SITE } from '@/const/site.ts';
+import { blogCopy } from '@/data/copy/blog.ts';
 import { slugify } from '@/utils/slugify';
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
@@ -33,18 +34,28 @@ const categories = [
 
 const isFirstPage = page.currentPage === 1;
 const pageTitle = isFirstPage
-  ? 'Writing & Engineering Essays'
-  : `Writing & Engineering Essays — Page ${page.currentPage}`;
+  ? blogCopy.seo.title
+  : `${blogCopy.seo.title}${blogCopy.seo.pageTitleSuffix(page.currentPage)}`;
 
-const pageDescription =
-  'Technical writings, edge systems architecture, performance benchmarks, and minimalist software engineering principles by Sahil Langoo.';
+const pageDescription = blogCopy.seo.description;
 
 const canonicalUrl = isFirstPage ? `${SITE.url}/blog/` : `${SITE.url}/blog/${page.currentPage}/`;
+
+const blogKeywords = [
+  'Engineering Journal',
+  'Software Architecture Essays',
+  'Astro 7 Tutorials',
+  'Cloudflare Workers Guide',
+  'Server-Side Meta CAPI',
+  'Local SLM Pipelines',
+  'Web Performance Optimization',
+  'TypeScript Best Practices',
+];
 
 const blogSchema = {
   '@type': 'Blog',
   '@id': `${canonicalUrl}#blog`,
-  name: `${pageTitle} — ${SITE.name}`,
+  name: pageTitle,
   url: canonicalUrl,
   description: pageDescription,
   publisher: {
@@ -75,6 +86,7 @@ const breadcrumbs = [
 <BaseLayout
   title={pageTitle}
   description={pageDescription}
+  keywords={blogKeywords}
   image="/og/blog.png"
   canonicalUrl={canonicalUrl}
   breadcrumbs={breadcrumbs}
@@ -84,19 +96,21 @@ const breadcrumbs = [
     <!-- Header -->
     <div class="border-base-300 border-b pb-6">
       <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
-        Articles {page.lastPage > 1 && `• Page ${page.currentPage} of ${page.lastPage}`}
+        {blogCopy.header.badgePrefix}
+        {page.lastPage > 1 && ` • Page ${page.currentPage} of ${page.lastPage}`}
       </span>
       <h1 class="text-base-content mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl">
-        Engineering Journal & Essays
+        {blogCopy.header.title}
       </h1>
       <p class="text-base-content/75 mt-3 text-sm leading-relaxed sm:text-base">
-        Deep dives into static architecture, type safety, performance benchmarks, and minimalist
-        software engineering principles.
+        {blogCopy.header.description}
       </p>
 
       <!-- Category Filter Pills -->
       <div class="flex flex-wrap items-center gap-2 pt-6">
-        <span class="text-base-content/50 font-mono text-xs tracking-wider uppercase">Topics:</span>
+        <span class="text-base-content/50 font-mono text-xs tracking-wider uppercase">
+          {blogCopy.header.topicsLabel}
+        </span>
         {
           categories.map((category) => (
             <a

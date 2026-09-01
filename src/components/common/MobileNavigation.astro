@@ -1,5 +1,6 @@
 ---
 import { SITE } from '@/const/site.ts';
+import { navigationCopy } from '@/data/copy/navigation.ts';
 import { Icon } from 'astro-icon/components';
 
 const currentPath = Astro.url.pathname;
@@ -8,12 +9,8 @@ function isActive(href: string): boolean {
   return currentPath.startsWith(href);
 }
 
-const extraLinks = [
-  { label: 'Now Focus', href: '/now/' },
-  { label: 'Uses & Stack', href: '/uses/' },
-  { label: 'Colophon', href: '/colophon/' },
-  { label: 'Links Hub', href: '/links/' },
-];
+const primaryNavHrefs = new Set<string>(SITE.nav.map((item) => item.href));
+const extraLinks = navigationCopy.footerNav.filter((item) => !primaryNavHrefs.has(item.href));
 ---
 
 <div id="mobile-drawer" class="fixed inset-0 z-50 hidden md:hidden">

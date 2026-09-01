@@ -1,25 +1,31 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { notFoundCopy } from '@/data/copy/not-found.ts';
 import { Icon } from 'astro-icon/components';
 ---
 
 <BaseLayout
-  title="404 — Page Not Found"
-  description="The page you are looking for does not exist or has moved."
-  noindex={true}
+  title={notFoundCopy.seo.title}
+  description={notFoundCopy.seo.description}
+  noindex={notFoundCopy.seo.noindex}
 >
   <div class="mx-auto max-w-md space-y-6 px-4 py-24 text-center">
-    <div class="text-accent font-mono text-5xl font-black">404</div>
-    <h1 class="text-base-content text-2xl font-bold tracking-tight">Route Not Found</h1>
+    <div class="text-accent font-mono text-5xl font-black">{notFoundCopy.code}</div>
+    <h1 class="text-base-content text-2xl font-bold tracking-tight">{notFoundCopy.title}</h1>
     <p class="text-base-content/70 text-sm">
-      The requested document or resource could not be located in this namespace.
+      {notFoundCopy.description}
     </p>
     <div class="pt-2">
       <a
-        href="/"
+        href={notFoundCopy.homeButton.href}
         class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 inline-flex items-center gap-2 rounded-md border-0 font-mono text-xs tracking-wider uppercase"
       >
-        <Icon name="ph:house-bold" class="h-3.5 w-3.5" /> Return Home
+        {
+          notFoundCopy.homeButton.icon && (
+            <Icon name={notFoundCopy.homeButton.icon} class="h-3.5 w-3.5" />
+          )
+        }
+        {notFoundCopy.homeButton.label}
       </a>
     </div>
   </div>

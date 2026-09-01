@@ -2,17 +2,36 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ContactForm from '@/components/portfolio/ContactForm.astro';
 import { SITE } from '@/const/site.ts';
+import { contactCopy } from '@/data/copy/contact.ts';
 import { Icon } from 'astro-icon/components';
 
-const contactSchema = {
-  '@type': 'ContactPage',
-  '@id': `${SITE.url}/contact/#contactpage`,
-  name: `Contact — ${SITE.name}`,
-  url: `${SITE.url}/contact/`,
-  mainEntity: {
-    '@id': `${SITE.url}/#person`,
+const contactKeywords = [
+  'Contact Sahil Langoo',
+  'Hire Full Stack Engineer',
+  'Software Architecture Consulting',
+  'SquadCoders Inquiries',
+  'Cloudflare Workers Consulting',
+];
+
+const contactSchema = [
+  {
+    '@type': 'ContactPage',
+    '@id': `${SITE.url}/contact/#contactpage`,
+    name: `${contactCopy.header.title} — ${SITE.name}`,
+    url: `${SITE.url}/contact/`,
+    description: contactCopy.header.description,
+    mainEntity: {
+      '@id': `${SITE.url}/#person`,
+    },
   },
-};
+  {
+    '@type': 'ContactPoint',
+    '@id': `${SITE.url}/contact/#contactpoint`,
+    email: SITE.email,
+    contactType: 'Engineering Inquiries & Consulting',
+    availableLanguage: ['en'],
+  },
+];
 
 const breadcrumbs = [
   { name: 'Home', item: '/' },
@@ -21,9 +40,10 @@ const breadcrumbs = [
 ---
 
 <BaseLayout
-  title="Contact & Engineering Inquiries"
-  description="Get in touch with Sahil Langoo for software engineering, system architecture consulting, open-source collaboration, or project inquiries."
-  image="/og/contact.png"
+  title={contactCopy.seo.title}
+  description={contactCopy.seo.description}
+  keywords={contactKeywords}
+  image={contactCopy.seo.image}
   breadcrumbs={breadcrumbs}
   structuredData={contactSchema}
 >
@@ -31,14 +51,13 @@ const breadcrumbs = [
     <!-- Header -->
     <div class="border-base-300 max-w-2xl border-b pb-6">
       <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
-        Contact
+        {contactCopy.header.eyebrow}
       </span>
       <h1 class="text-base-content mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl">
-        Start a Conversation
+        {contactCopy.header.title}
       </h1>
       <p class="text-base-content/75 mt-3 text-sm leading-relaxed sm:text-base">
-        Whether you have an upcoming engineering project, want to collaborate on open-source
-        systems, or simply wish to connect — feel free to drop a message.
+        {contactCopy.header.description}
       </p>
     </div>
 
@@ -49,7 +68,7 @@ const breadcrumbs = [
         <div class="editorial-card space-y-4 p-5">
           <div>
             <span class="text-base-content/60 font-mono text-xs tracking-wider uppercase">
-              Email
+              {contactCopy.sidebar.emailLabel}
             </span>
             <p class="text-base-content mt-0.5 text-sm font-semibold">
               <!--email_off-->
@@ -62,7 +81,7 @@ const breadcrumbs = [
 
           <div>
             <span class="text-base-content/60 font-mono text-xs tracking-wider uppercase">
-              Location
+              {contactCopy.sidebar.locationLabel}
             </span>
             <p class="text-base-content mt-0.5 text-sm font-medium">
               {SITE.location}
@@ -71,7 +90,7 @@ const breadcrumbs = [
 
           <div>
             <span class="text-base-content/60 font-mono text-xs tracking-wider uppercase">
-              Status
+              {contactCopy.sidebar.statusLabel}
             </span>
             <p class="mt-0.5 flex items-center gap-1.5 font-mono text-xs text-emerald-400">
               <span class="h-2 w-2 animate-pulse rounded-full bg-emerald-500"></span>
@@ -82,7 +101,7 @@ const breadcrumbs = [
 
         <div class="editorial-card space-y-3 p-5">
           <span class="text-base-content/60 font-mono text-xs tracking-wider uppercase">
-            Verified Profiles
+            {contactCopy.sidebar.verifiedProfilesLabel}
           </span>
           <div class="flex flex-col gap-2.5 text-xs">
             <a

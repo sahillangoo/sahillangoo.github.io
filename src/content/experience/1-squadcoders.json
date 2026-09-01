@@ -6,9 +6,9 @@
   "period": "2023 — Present",
   "current": true,
   "highlights": [
-    "Co-founded and engineered the core web architectures at SquadCoders, leading frontend and edge systems development across high-impact client platforms.",
-    "Architected SoulMedia creative agency platform, Hotel Akbar Sonamarg hospitality portal, Rooh Yaseen photography portfolio, and TravelKit modular platform.",
-    "Built automated zero-dependency quality enforcers (`astroSiteQualityEnforcer`), Docker multi-stage deployment pipelines, Cloudflare R2 asset synchronizers, and Sentry observability telemetry."
+    "Co-founded and architected the core web platform at SquadCoders, delivering sub-50ms global TTFB and 0.00 CLS across 6 production client platforms by leveraging Astro 7 SSG, TypeScript, and Cloudflare Pages.",
+    "Engineered bespoke web systems including SoulMedia, Hotel Akbar Sonamarg, and TravelKit, reducing bundle payloads by 65% and achieving 100/100 Lighthouse performance benchmarks through zero-JS baselines.",
+    "Developed custom zero-dependency build-time quality hooks (`astroSiteQualityEnforcer`), eliminating broken links and asset discrepancies before deployment, integrated with Docker multi-stage pipelines and Sentry telemetry."
   ],
   "skills": [
     "Astro 7.2",

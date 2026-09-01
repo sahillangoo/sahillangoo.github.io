@@ -2,20 +2,42 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getEntry } from 'astro:content';
 import { SITE } from '@/const/site.ts';
+import { aboutCopy } from '@/data/copy/about.ts';
 import { Icon } from 'astro-icon/components';
 
 const siteData = await getEntry('site', 'profile');
 const profile = siteData?.data;
 
-const aboutSchema = {
-  '@type': 'ProfilePage',
-  '@id': `${SITE.url}/about/#profilepage`,
-  name: `About ${SITE.name}`,
-  url: `${SITE.url}/about/`,
-  mainEntity: {
-    '@id': `${SITE.url}/#person`,
+const aboutKeywords = [
+  'About Sahil Langoo',
+  'Software Engineer Biography',
+  'SquadCoders Co-Founder',
+  'Systems Engineering Philosophy',
+  'Full Stack Architect',
+  'Kashmir Software Developer',
+];
+
+const aboutSchema = [
+  {
+    '@type': 'AboutPage',
+    '@id': `${SITE.url}/about/#aboutpage`,
+    name: `About ${SITE.name} — Engineering Background & Philosophy`,
+    url: `${SITE.url}/about/`,
+    description: aboutCopy.seo.description,
+    mainEntity: {
+      '@id': `${SITE.url}/#person`,
+    },
   },
-};
+  {
+    '@type': 'ProfilePage',
+    '@id': `${SITE.url}/about/#profilepage`,
+    name: `Profile of ${SITE.name}`,
+    url: `${SITE.url}/about/`,
+    mainEntity: {
+      '@id': `${SITE.url}/#person`,
+    },
+  },
+];
 
 const breadcrumbs = [
   { name: 'Home', item: '/' },
@@ -24,9 +46,10 @@ const breadcrumbs = [
 ---
 
 <BaseLayout
-  title="About Me"
-  description="Full Stack Systems Engineer and Co-Founder at SquadCoders. Discover my technical background, core engineering philosophy, and toolchain."
-  image="/og/about.png"
+  title={aboutCopy.seo.title}
+  description={aboutCopy.seo.description}
+  keywords={aboutKeywords}
+  image={aboutCopy.seo.image}
   breadcrumbs={breadcrumbs}
   structuredData={aboutSchema}
   type="profile"
@@ -34,28 +57,17 @@ const breadcrumbs = [
   <div class="mx-auto max-w-3xl space-y-12 px-4 py-8 sm:px-6 sm:py-12">
     <!-- Header -->
     <div class="border-base-300 border-b pb-6">
-      <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">About</span>
+      <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
+        {aboutCopy.hero.eyebrow}
+      </span>
       <h1 class="text-base-content mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl">
-        Engineering with Intent & Craft
+        {aboutCopy.hero.headline}
       </h1>
     </div>
 
     <!-- Bio Narrative -->
     <section class="text-base-content/80 space-y-4 text-base leading-relaxed sm:text-lg">
-      <p>
-        Hello! I'm <strong class="text-base-content">{SITE.name}</strong>, a Software Engineer and
-        Creative Technologist based in {SITE.location}.
-      </p>
-      <p>
-        I focus on building resilient web applications, developer tooling, and distributed edge
-        architectures. I believe software should be fast by default, respectful of user privacy and
-        resources, and crafted with high aesthetic standards.
-      </p>
-      <p>
-        When building systems, my default bias is towards simplicity (KISS), shipping minimal client
-        JavaScript, using static generation where possible, and structuring code that is easy to
-        reason about and maintain.
-      </p>
+      {aboutCopy.hero.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
     </section>
 
     <!-- Principles Grid -->
@@ -63,7 +75,7 @@ const breadcrumbs = [
       profile?.principles && (
         <section class="border-base-300 space-y-4 border-t pt-8">
           <h2 class="text-base-content text-xl font-bold tracking-tight">
-            Core Operating Principles
+            {aboutCopy.principles.title}
           </h2>
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {profile.principles.map((principle) => (
@@ -81,33 +93,20 @@ const breadcrumbs = [
 
     <!-- Workspace & Setup -->
     <section class="border-base-300 space-y-4 border-t pt-8">
-      <h2 class="text-base-content text-xl font-bold tracking-tight">Daily Tools & Tech Stack</h2>
+      <h2 class="text-base-content text-xl font-bold tracking-tight">
+        {aboutCopy.dailyStack.title}
+      </h2>
       <div class="editorial-card text-base-content/80 space-y-3 p-6 text-sm">
-        <div class="flex items-start gap-2">
-          <span class="text-accent font-mono">›</span>
-          <span>
-            <strong>Frameworks & Languages:</strong> TypeScript, Astro, Next.js, React, Node.js, Go, Python.
-          </span>
-        </div>
-        <div class="flex items-start gap-2">
-          <span class="text-accent font-mono">›</span>
-          <span>
-            <strong>CSS & Design:</strong> Tailwind CSS v4, DaisyUI 5, OKLCH color spaces, Figma.
-          </span>
-        </div>
-        <div class="flex items-start gap-2">
-          <span class="text-accent font-mono">›</span>
-          <span>
-            <strong>Cloud & Infrastructure:</strong> Cloudflare Pages & Workers, Vercel, Docker, PostgreSQL,
-            D1.
-          </span>
-        </div>
-        <div class="flex items-start gap-2">
-          <span class="text-accent font-mono">›</span>
-          <span>
-            <strong>Editor & Terminal:</strong> VS Code / Cursor, Windows PowerShell / Zsh, pnpm.
-          </span>
-        </div>
+        {
+          aboutCopy.dailyStack.groups.map((group) => (
+            <div class="flex items-start gap-2">
+              <span class="text-accent font-mono select-none">›</span>
+              <span>
+                <strong>{group.label}:</strong> {group.value}
+              </span>
+            </div>
+          ))
+        }
       </div>
     </section>
 
@@ -116,17 +115,21 @@ const breadcrumbs = [
       class="border-base-300 flex flex-col items-center justify-between gap-4 border-t pt-8 sm:flex-row"
     >
       <div>
-        <h2 class="text-base-content font-bold">Want to work together?</h2>
+        <h2 class="text-base-content font-bold">{aboutCopy.connectCta.title}</h2>
         <p class="text-base-content/70 text-xs">
-          Let's discuss architecture, open-source, or new projects.
+          {aboutCopy.connectCta.description}
         </p>
       </div>
       <a
-        href="/contact/"
+        href={aboutCopy.connectCta.cta.href}
         class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-4 font-mono text-xs tracking-wider uppercase"
       >
-        <Icon name="ph:paper-plane-tilt-bold" class="h-3.5 w-3.5" />
-        Get in Touch
+        {
+          aboutCopy.connectCta.cta.icon && (
+            <Icon name={aboutCopy.connectCta.cta.icon} class="h-3.5 w-3.5" />
+          )
+        }
+        {aboutCopy.connectCta.cta.label}
       </a>
     </section>
   </div>

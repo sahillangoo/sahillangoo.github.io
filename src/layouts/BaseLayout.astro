@@ -14,6 +14,7 @@ import 'lenis/dist/lenis.css';
 export interface Props {
   title?: string;
   description?: string;
+  keywords?: string | string[];
   image?: string;
   canonicalUrl?: string;
   type?: 'website' | 'article' | 'profile';
@@ -29,6 +30,7 @@ export interface Props {
 const {
   title,
   description,
+  keywords,
   image,
   canonicalUrl,
   type,
@@ -47,6 +49,7 @@ const {
   <SeoHead
     title={title}
     description={description}
+    keywords={keywords}
     image={image}
     canonicalUrl={canonicalUrl}
     type={type}

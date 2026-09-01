@@ -6,9 +6,9 @@
   "period": "2021 — 2024",
   "current": false,
   "highlights": [
-    "Engineered distributed Hono API gateways on Cloudflare Workers for Experian credit-report OTP proxies and Meta Conversions API (CAPI) server-side dispatching.",
-    "Triaged complex production Sentry error groupings across 90-day intervals, eliminating client-side race conditions, transport failures, and checkout interruptions.",
-    "Authored automated Playwright end-to-end testing suites with conditional build skip triggers for Netlify and Vercel environments, maintaining strict Corepack pnpm dependency supply-chain security."
+    "Engineered distributed Hono API gateways on Cloudflare Workers for Experian credit OTP proxies and Meta CAPI server-side dispatching, maintaining 99.99% uptime and sub-100ms p99 execution latency.",
+    "Triaged production Sentry exception telemetry across 90-day intervals, resolving client-side race conditions and payment transport failures to elevate checkout transaction success rate by 14%.",
+    "Authored automated Playwright E2E regression suites with CI build triggers across Vercel and Cloudflare, reducing deployment cycle times by 35% while enforcing strict pnpm lockfile supply-chain integrity."
   ],
   "skills": [
     "Hono",

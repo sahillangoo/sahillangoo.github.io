@@ -1,8 +1,8 @@
 {
   "name": "Sahil Langoo",
-  "title": "Full Stack Engineer & Systems Architect",
-  "bio": "A man of mystery and power, whose power is exceeded only by his mystery. <I design, code & sometimes dream about making art./>",
-  "about": "I am a Full Stack Systems Engineer and Co-Founder at @SquadCoders, actively contributing to enterprise systems at @ecspl and open source. Based in Kashmir, India, I specialize in architecting ultra-fast static web architectures (Astro, Next.js, React, TypeScript, Tailwind CSS v4, daisyUI 5), distributed edge proxies (Hono, Cloudflare Workers & R2, Meta CAPI, Turnstile, Partytown), local AI workflows (Bun, Gemma SLMs, LM Studio), and production observability pipelines (Sentry, Playwright). I believe in building software that is fast by default, zero-waste, and designed with high aesthetic discipline.",
+  "title": "Full Stack Systems Engineer & Systems Architect",
+  "bio": "Full Stack Systems Engineer and Co-Founder at @SquadCoders. Architecting ultra-fast static web architectures, distributed edge proxies, and local AI pipelines.",
+  "about": "Full Stack Systems Engineer and Co-Founder at SquadCoders, specializing in static-first web architectures, distributed edge computing, and local AI workflows. Proven track record architecting zero-JS Astro static platforms, high-concurrency Cloudflare Worker proxies (Hono, Meta CAPI, Turnstile), and build-time quality verification pipelines. Dedicated to building software that is fast by default (sub-50ms TTFB, 0.00 CLS), zero-waste, and engineered with end-to-end type safety.",
   "skills": {
     "languages": ["TypeScript", "JavaScript", "Go", "Python", "HTML5", "CSS3 / OKLCH", "SQL"],
     "frameworks": [

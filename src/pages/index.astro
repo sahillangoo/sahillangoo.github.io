@@ -7,6 +7,7 @@ import ExperienceTimeline from '@/components/portfolio/ExperienceTimeline.astro'
 import GitHubActivityWidget from '@/components/portfolio/GitHubActivityWidget.astro';
 import { getCollection, getEntry } from 'astro:content';
 import { SITE } from '@/const/site.ts';
+import { homeCopy } from '@/data/copy/home.ts';
 import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
 import sahilHeroImage from '@/assets/images/IMG_20260510_183207.jpg';
@@ -31,9 +32,60 @@ const recentNotes = notes
 const experiences = await getCollection('experience');
 const siteData = await getEntry('site', 'profile');
 const principles = siteData?.data.principles || [];
+
+const homeKeywords = [
+  'Sahil Langoo',
+  'Full Stack Systems Engineer',
+  'Systems Architect',
+  'Astro 7',
+  'TypeScript',
+  'Cloudflare Workers',
+  'Hono Edge Proxies',
+  'Meta CAPI Architecture',
+  'daisyUI 5',
+  'Tailwind CSS v4',
+  'SquadCoders',
+  'Web Performance Optimization',
+  'Minimalist Software Engineering',
+];
+
+const homeSchema = [
+  {
+    '@type': 'ItemList',
+    '@id': `${SITE.url}/#featured-projects`,
+    name: 'Featured Production Systems & Open-Source Engineering',
+    description:
+      'High-throughput architectures, distributed edge proxies, and systems engineered by Sahil Langoo.',
+    itemListElement: featuredProjects.map((p, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: p.data.title,
+      description: p.data.description,
+      url: `${SITE.url}/projects/${p.id}/`,
+    })),
+  },
+  {
+    '@type': 'ItemList',
+    '@id': `${SITE.url}/#recent-writing`,
+    name: 'Recent Engineering Essays & Architecture Deconstructions',
+    itemListElement: recentArticles.map((a, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: a.data.title,
+      description: a.data.description,
+      url: `${SITE.url}/blog/${a.id}/`,
+    })),
+  },
+];
 ---
 
-<BaseLayout>
+<BaseLayout
+  title={homeCopy.seo.title}
+  description={homeCopy.seo.description}
+  keywords={homeKeywords}
+  image={homeCopy.seo.image}
+  structuredData={homeSchema}
+>
   <div class="mx-auto max-w-6xl space-y-20 px-4 py-8 sm:space-y-28 sm:px-6 sm:py-12">
     <!-- Hero Section -->
     <section class="hero justify-start pt-4 sm:pt-8">
@@ -45,18 +97,18 @@ const principles = siteData?.data.principles || [];
             class="border-base-300 bg-base-200/80 text-base-content/80 inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-xs"
           >
             <span class="bg-accent h-1.5 w-1.5 animate-pulse rounded-full"></span>
-            <span>Software Engineer & Creative Technologist</span>
+            <span>{homeCopy.hero.badge}</span>
           </div>
 
           <h1
             class="text-base-content text-4xl leading-[1.1] font-extrabold tracking-tight sm:text-5xl lg:text-6xl"
           >
-            Building resilient web systems & crafted digital interfaces.
+            {homeCopy.hero.headline}
           </h1>
 
           <p class="text-base-content/75 text-base leading-relaxed sm:text-lg">
             I am <strong class="text-base-content font-semibold">{SITE.name}</strong>, based in {
-              SITE.location
+              homeCopy.hero.locationText
             }. I engineer high-performance web applications, developer tooling, and distributed edge
             architectures with <a
               href="https://github.com/SquadCoders"
@@ -69,27 +121,23 @@ const principles = siteData?.data.principles || [];
           </p>
 
           <div class="flex flex-wrap items-center gap-3 pt-2">
-            <a
-              href="/projects/"
-              class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-5 font-mono text-xs tracking-wider uppercase"
-            >
-              <Icon name="ph:folder-notch-bold" class="h-3.5 w-3.5" />
-              View Projects
-            </a>
-            <a
-              href="/resume/"
-              class="btn btn-outline border-base-300 hover:bg-base-200 hover:text-base-content flex items-center gap-2 rounded-md px-5 font-mono text-xs tracking-wider uppercase"
-            >
-              <Icon name="ph:file-text-bold" class="h-3.5 w-3.5" />
-              Resume & CV
-            </a>
-            <a
-              href="/contact/"
-              class="btn btn-ghost hover:bg-base-200/60 text-base-content/80 flex items-center gap-2 rounded-md px-4 font-mono text-xs tracking-wider uppercase"
-            >
-              <Icon name="ph:paper-plane-tilt-bold" class="h-3.5 w-3.5" />
-              Get in Touch
-            </a>
+            {
+              homeCopy.hero.ctas.map((cta) => (
+                <a
+                  href={cta.href}
+                  class={
+                    cta.variant === 'primary'
+                      ? 'btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-5 font-mono text-xs tracking-wider uppercase'
+                      : cta.variant === 'outline'
+                        ? 'btn btn-outline border-base-300 hover:bg-base-200 hover:text-base-content flex items-center gap-2 rounded-md px-5 font-mono text-xs tracking-wider uppercase'
+                        : 'btn btn-ghost hover:bg-base-200/60 text-base-content/80 flex items-center gap-2 rounded-md px-4 font-mono text-xs tracking-wider uppercase'
+                  }
+                >
+                  {cta.icon && <Icon name={cta.icon} class="h-3.5 w-3.5" />}
+                  {cta.label}
+                </a>
+              ))
+            }
           </div>
         </div>
 
@@ -101,7 +149,7 @@ const principles = siteData?.data.principles || [];
             >
               <Image
                 src={sahilHeroImage}
-                alt={`${SITE.name} — Software Engineer & Creative Technologist`}
+                alt={homeCopy.hero.imageAlt}
                 width={640}
                 height={800}
                 quality={90}
@@ -121,9 +169,9 @@ const principles = siteData?.data.principles || [];
               <span class="inline-flex items-center gap-1.5">
                 <span class="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500">
                 </span>
-                <span>Available for work</span>
+                <span>{homeCopy.hero.statusText}</span>
               </span>
-              <span class="text-base-content/50">{SITE.location}</span>
+              <span class="text-base-content/50">{homeCopy.hero.locationText}</span>
             </div>
           </div>
         </div>
@@ -135,17 +183,18 @@ const principles = siteData?.data.principles || [];
       <div class="border-base-300 flex items-end justify-between border-b pb-4">
         <div>
           <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
-            Selected Work
+            {homeCopy.sections.selectedWork.eyebrow}
           </span>
           <h2 class="text-base-content mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
-            Engineered Projects & Systems
+            {homeCopy.sections.selectedWork.title}
           </h2>
         </div>
         <a
           href="/projects/"
           class="text-base-content/70 hover:text-accent hidden items-center gap-1.5 font-mono text-xs font-medium transition-colors sm:inline-flex"
         >
-          All Projects <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
+          {homeCopy.sections.selectedWork.viewAllText}
+          <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
         </a>
       </div>
 
@@ -163,7 +212,7 @@ const principles = siteData?.data.principles || [];
           class="btn btn-sm btn-outline border-base-300 flex w-full items-center justify-center gap-2 font-mono text-xs"
         >
           <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
-          View All Projects
+          {homeCopy.sections.selectedWork.viewAllText}
         </a>
       </div>
     </section>
@@ -178,17 +227,18 @@ const principles = siteData?.data.principles || [];
       <div class="border-base-300 flex items-end justify-between border-b pb-4">
         <div>
           <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
-            Career History
+            {homeCopy.sections.careerHistory.eyebrow}
           </span>
           <h2 class="text-base-content mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
-            Experience & Roles
+            {homeCopy.sections.careerHistory.title}
           </h2>
         </div>
         <a
           href="/resume/"
           class="text-base-content/70 hover:text-accent hidden items-center gap-1.5 font-mono text-xs font-medium transition-colors sm:inline-flex"
         >
-          Complete Resume <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
+          {homeCopy.sections.careerHistory.viewAllText}
+          <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
         </a>
       </div>
 
@@ -202,8 +252,12 @@ const principles = siteData?.data.principles || [];
       <!-- Writing Column -->
       <div class="space-y-6">
         <div class="border-base-300 flex items-center justify-between border-b pb-3">
-          <h2 class="text-base-content text-xl font-bold tracking-tight">Recent Articles</h2>
-          <a href="/blog/" class="text-accent font-mono text-xs hover:underline">All Writing ›</a>
+          <h2 class="text-base-content text-xl font-bold tracking-tight">
+            {homeCopy.sections.recentWriting.title}
+          </h2>
+          <a href="/blog/" class="text-accent font-mono text-xs hover:underline">
+            {homeCopy.sections.recentWriting.viewAllText}
+          </a>
         </div>
         <div class="space-y-4">
           {recentArticles.map((post) => <ArticleCard post={post} headingLevel="h3" />)}
@@ -213,8 +267,12 @@ const principles = siteData?.data.principles || [];
       <!-- Notes Column -->
       <div class="space-y-6">
         <div class="border-base-300 flex items-center justify-between border-b pb-3">
-          <h2 class="text-base-content text-xl font-bold tracking-tight">Digital Garden Notes</h2>
-          <a href="/notes/" class="text-accent font-mono text-xs hover:underline">All Notes ›</a>
+          <h2 class="text-base-content text-xl font-bold tracking-tight">
+            {homeCopy.sections.digitalGarden.title}
+          </h2>
+          <a href="/notes/" class="text-accent font-mono text-xs hover:underline">
+            {homeCopy.sections.digitalGarden.viewAllText}
+          </a>
         </div>
         <div class="space-y-4">
           {recentNotes.map((note) => <NoteCard note={note} headingLevel="h3" />)}
@@ -228,10 +286,10 @@ const principles = siteData?.data.principles || [];
         <section class="space-y-8">
           <div class="border-base-300 border-b pb-4">
             <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
-              Philosophy
+              {homeCopy.sections.philosophy.eyebrow}
             </span>
             <h2 class="text-base-content mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
-              Engineering Principles
+              {homeCopy.sections.philosophy.title}
             </h2>
           </div>
 
@@ -252,29 +310,29 @@ const principles = siteData?.data.principles || [];
     <!-- Presence & CTA Banner -->
     <section class="editorial-card space-y-4 p-8 text-center sm:p-10">
       <h2 class="text-base-content text-2xl font-bold tracking-tight sm:text-3xl">
-        Let's build something remarkable.
+        {homeCopy.sections.ctaBanner.title}
       </h2>
       <p class="text-base-content/70 mx-auto max-w-xl text-sm">
-        I am available for high-impact software engineering roles, web architecture design, and
-        select technical consulting.
+        {homeCopy.sections.ctaBanner.description}
       </p>
       <div class="flex flex-wrap items-center justify-center gap-4 pt-3">
-        <a
-          href="/contact/"
-          class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-6 font-mono text-xs tracking-wider uppercase"
-        >
-          <Icon name="ph:paper-plane-tilt-bold" class="h-3.5 w-3.5" />
-          Start a Conversation
-        </a>
-        <a
-          href={SITE.social.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn btn-outline border-base-300 hover:bg-base-200 hover:text-base-content flex items-center gap-2 rounded-md px-6 font-mono text-xs tracking-wider uppercase"
-        >
-          <Icon name="ph:github-logo-bold" class="h-3.5 w-3.5" />
-          Explore GitHub
-        </a>
+        {
+          homeCopy.sections.ctaBanner.ctas.map((cta) => (
+            <a
+              href={cta.href}
+              target={cta.external ? '_blank' : undefined}
+              rel={cta.external ? 'noopener noreferrer' : undefined}
+              class={
+                cta.variant === 'primary'
+                  ? 'btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-6 font-mono text-xs tracking-wider uppercase'
+                  : 'btn btn-outline border-base-300 hover:bg-base-200 hover:text-base-content flex items-center gap-2 rounded-md px-6 font-mono text-xs tracking-wider uppercase'
+              }
+            >
+              {cta.icon && <Icon name={cta.icon} class="h-3.5 w-3.5" />}
+              {cta.label}
+            </a>
+          ))
+        }
       </div>
     </section>
   </div>

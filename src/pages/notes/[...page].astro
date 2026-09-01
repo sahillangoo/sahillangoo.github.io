@@ -5,6 +5,7 @@ import Pagination from '@/components/common/Pagination.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { GetStaticPaths, Page } from 'astro';
 import { SITE } from '@/const/site.ts';
+import { notesCopy } from '@/data/copy/notes.ts';
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
   const notes = await getCollection('notes');
@@ -24,24 +25,48 @@ const notes = page.data;
 
 const isFirstPage = page.currentPage === 1;
 const pageTitle = isFirstPage
-  ? 'Digital Garden & Notes'
-  : `Digital Garden & Notes — Page ${page.currentPage}`;
+  ? notesCopy.seo.title
+  : `${notesCopy.seo.title}${notesCopy.seo.pageTitleSuffix(page.currentPage)}`;
 
-const pageDescription =
-  'Atomic notes, TILs, code patterns, and architectural mental models by Sahil Langoo.';
+const pageDescription = notesCopy.seo.description;
 
 const canonicalUrl = isFirstPage ? `${SITE.url}/notes/` : `${SITE.url}/notes/${page.currentPage}/`;
 
-const notesSchema = {
-  '@type': 'CollectionPage',
-  '@id': `${canonicalUrl}#collectionpage`,
-  name: `${pageTitle} — ${SITE.name}`,
-  url: canonicalUrl,
-  description: pageDescription,
-  mainEntity: {
-    '@id': `${SITE.url}/#person`,
+const notesKeywords = [
+  'Digital Garden',
+  'Technical Notes',
+  'Astro View Transitions',
+  'daisyUI 5 OKLCH Theming',
+  'CSS Subgrid',
+  'TypeScript Patterns',
+  'PWA Service Workers',
+  'JSON-LD Structured Data',
+];
+
+const notesSchema = [
+  {
+    '@type': 'CollectionPage',
+    '@id': `${canonicalUrl}#collectionpage`,
+    name: pageTitle,
+    url: canonicalUrl,
+    description: pageDescription,
+    mainEntity: {
+      '@id': `${SITE.url}/#person`,
+    },
   },
-};
+  {
+    '@type': 'ItemList',
+    '@id': `${canonicalUrl}#itemlist`,
+    name: 'Digital Garden Technical Notes',
+    itemListElement: notes.map((note, idx) => ({
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: note.data.title,
+      description: note.data.description,
+      url: `${SITE.url}/notes/${note.id}/`,
+    })),
+  },
+];
 
 const breadcrumbs = [
   { name: 'Home', item: '/' },
@@ -55,6 +80,7 @@ const breadcrumbs = [
 <BaseLayout
   title={pageTitle}
   description={pageDescription}
+  keywords={notesKeywords}
   image="/og/notes.png"
   canonicalUrl={canonicalUrl}
   breadcrumbs={breadcrumbs}
@@ -64,14 +90,14 @@ const breadcrumbs = [
     <!-- Header -->
     <div class="border-base-300 max-w-2xl border-b pb-6">
       <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
-        Digital Garden {page.lastPage > 1 && `• Page ${page.currentPage} of ${page.lastPage}`}
+        {notesCopy.header.badgePrefix}
+        {page.lastPage > 1 && ` • Page ${page.currentPage} of ${page.lastPage}`}
       </span>
       <h1 class="text-base-content mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl">
-        Notes, Snippets & TILs
+        {notesCopy.header.title}
       </h1>
       <p class="text-base-content/75 mt-3 text-sm leading-relaxed sm:text-base">
-        A lightweight digital garden for atomic thoughts, technical snippets, learning notes, and
-        mental models.
+        {notesCopy.header.description}
       </p>
     </div>
 
