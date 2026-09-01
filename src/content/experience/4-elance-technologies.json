@@ -1,0 +1,14 @@
+{
+  "role": "Full Stack Trainee",
+  "company": "Elance Technologies",
+  "location": "Srinagar, Kashmir, India",
+  "period": "Jan 2023 — Jun 2023",
+  "current": false,
+  "highlights": [
+    "Completed an intensive 6-month full-stack development curriculum mastering HTML5, CSS3, JavaScript, PHP, Bootstrap, and MariaDB.",
+    "Engineered a full-stack database-backed application integrating third-party APIs and dynamic responsive UI layouts.",
+    "Collaborated on a team development sprint optimizing web accessibility and cross-device performance, contributing to a 40% increase in mobile traffic."
+  ],
+  "skills": ["PHP", "JavaScript", "MariaDB", "Bootstrap", "HTML5 / CSS3", "REST APIs"],
+  "order": 4
+}

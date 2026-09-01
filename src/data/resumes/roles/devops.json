@@ -1,0 +1,81 @@
+{
+  "id": "devops",
+  "roleTitle": "Cloud & CI/CD DevOps Engineer",
+  "filename": "Resume-Sahil-Langoo-DevOps.pdf",
+  "summary": "Cloud & DevOps Systems Engineer with deep expertise in edge serverless infrastructure, automated CI/CD pipelines, containerization, and production reliability. Specializing in Cloudflare (Workers, Pages, R2), GitHub Actions automation, Docker multi-stage workflows, and supply-chain lockfile security.",
+  "skills": {
+    "languages": ["Bash / Shell Scripting", "TypeScript", "Python", "Go", "YAML", "SQL"],
+    "frameworks": ["Node.js", "Docker", "Hono", "Playwright", "Vitest", "Astro SSG"],
+    "cloud": [
+      "Cloudflare (Workers, Pages, R2, KV, Turnstile, WAF)",
+      "Vercel",
+      "GitHub Actions CI/CD",
+      "AWS (S3, CloudFront)"
+    ],
+    "databasesAndTools": [
+      "Git & GitHub CLI",
+      "pnpm Lockfile Integrity",
+      "Sentry Telemetry",
+      "Wrangler",
+      "Linux / POSIX",
+      "PostgreSQL",
+      "SQLite / D1",
+      "ESLint / Prettier"
+    ]
+  },
+  "experience": [
+    {
+      "role": "Lead DevOps & Systems Engineer",
+      "company": "SquadCoders",
+      "location": "Kashmir, India",
+      "dates": "2023 — Present",
+      "highlights": [
+        "Architected multi-stage Docker deployment pipelines and automated GitHub Actions workflows, deploying static web platforms to Cloudflare Pages with zero-downtime rollouts.",
+        "Engineered custom pre-flight build-time quality hooks in Node.js, eliminating broken links, missing assets, and unoptimized payloads before artifact publishing.",
+        "Configured Cloudflare edge rules, SSL/TLS strict policies, and Turnstile bot protection, achieving 99.99% availability and sub-50ms global TTFB."
+      ]
+    },
+    {
+      "role": "DevOps & Edge Infrastructure Engineer",
+      "company": "Enterprise Web Systems (@ecspl)",
+      "location": "Remote",
+      "dates": "2021 — 2024",
+      "highlights": [
+        "Deployed and maintained serverless Hono API gateways on Cloudflare Workers, handling 15K+ daily requests with sub-100ms execution latency.",
+        "Automated Playwright end-to-end regression suites integrated with GitHub Actions CI, reducing release cycle duration by 35% while enforcing pnpm lockfile supply-chain verification.",
+        "Managed centralized Sentry error tracking pipelines across microservices, establishing automated alerting thresholds and reducing Mean Time to Resolution (MTTR) by 40%."
+      ]
+    },
+    {
+      "role": "Infrastructure & Web Trainee",
+      "company": "Elance Technologies",
+      "location": "Kashmir, India",
+      "dates": "Jan 2023 — Jun 2023",
+      "highlights": [
+        "Managed Linux server environments, Apache/Nginx web server configurations, and database backup routines with automated shell scripts."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "XpressSys Cloud Security",
+      "tech": "Cloudflare Pages, Cloudflare WAF, DNS, Node.js",
+      "dates": "2023",
+      "highlights": [
+        "Architected edge security architecture leveraging Cloudflare WAF and custom rate-limiting rules, mitigating 100% of brute-force spam traffic.",
+        "Configured automated DNS routing and SSL certificate provisioning across staging and production environments."
+      ],
+      "link": "https://xpresssys.com"
+    },
+    {
+      "name": "Portfolio Automated CI/CD Engine",
+      "tech": "Astro 7, TypeScript, GitHub Actions, Wrangler, Cloudflare",
+      "dates": "2024",
+      "highlights": [
+        "Constructed automated static site generation pipeline with Astro 7, TypeScript, and Wrangler, publishing immutable edge builds via Cloudflare Pages in under 60 seconds.",
+        "Enforced zero-warning linting, formatting, and strict type-checking gates in GitHub Actions."
+      ],
+      "link": "https://sahillangoo.in"
+    }
+  ]
+}

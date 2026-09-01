@@ -1,0 +1,91 @@
+{
+  "id": "frontend",
+  "roleTitle": "Frontend Systems Engineer & UI Architect",
+  "filename": "Resume-Sahil-Langoo-Frontend.pdf",
+  "summary": "Frontend Systems Engineer with 3+ years experience building zero-JS baseline architectures, high-performance web applications, and accessible design systems. Proven track record achieving sub-50ms TTFB, 0.00 CLS, and 100/100 Lighthouse performance metrics across production platforms.",
+  "skills": {
+    "languages": ["TypeScript", "JavaScript (ES2024+)", "HTML5", "CSS3 / OKLCH", "SQL", "Go"],
+    "frameworks": [
+      "React 19",
+      "Next.js",
+      "Astro 7",
+      "Tailwind CSS v4",
+      "daisyUI 5",
+      "Vite",
+      "TanStack Query",
+      "TanStack Router"
+    ],
+    "cloud": [
+      "Cloudflare Pages & Workers",
+      "Vercel",
+      "Cloudflare Turnstile",
+      "PWA / Service Workers",
+      "Trusted Web Activities (TWA)"
+    ],
+    "databasesAndTools": [
+      "Git",
+      "Figma",
+      "Playwright",
+      "Sentry Telemetry",
+      "ESLint 10",
+      "Prettier",
+      "Postman",
+      "Responsive Design"
+    ]
+  },
+  "experience": [
+    {
+      "role": "Lead Frontend Engineer & Co-Founder",
+      "company": "SquadCoders",
+      "location": "Kashmir, India",
+      "dates": "2023 — Present",
+      "highlights": [
+        "Architected static-first web platforms for 6+ client systems using Astro 7, TypeScript, and Tailwind CSS v4, delivering sub-50ms global TTFB and strict 0.00 Cumulative Layout Shift (CLS).",
+        "Engineered component design systems with daisyUI 5 and OKLCH color palettes, cutting client bundle payloads by 65% and attaining 100/100 Lighthouse benchmarks across mobile viewports.",
+        "Constructed automated pre-flight quality enforcement hooks in Node.js to validate link integrity, metadata parity, and image layout bounds prior to static artifact generation."
+      ]
+    },
+    {
+      "role": "Frontend Integration Engineer",
+      "company": "Enterprise Web Systems (@ecspl)",
+      "location": "Remote",
+      "dates": "2021 — 2024",
+      "highlights": [
+        "Developed high-concurrency client interfaces and checkout flows integrated with Hono proxy gateways, handling 15K daily transactions with sub-800ms Largest Contentful Paint (LCP).",
+        "Instrumented real-time Sentry frontend telemetry and exception monitoring, triaging UI race conditions and reducing customer-facing checkout errors by 14%.",
+        "Authored comprehensive Playwright end-to-end regression suites integrated into CI pipelines, eliminating cross-browser layout discrepancies across Chromium, Firefox, and WebKit."
+      ]
+    },
+    {
+      "role": "Web Development Trainee",
+      "company": "Elance Technologies",
+      "location": "Kashmir, India",
+      "dates": "Jan 2023 — Jun 2023",
+      "highlights": [
+        "Implemented WCAG 2.1 AA accessibility standards and responsive grid refactors across legacy web portals, increasing mobile user engagement by 40%."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Listify",
+      "tech": "JavaScript, CSS3, HTML5, MariaDB, Leaflet.js",
+      "dates": "2023",
+      "highlights": [
+        "Built interactive geospatial discovery UI using Leaflet.js, vanilla JavaScript, and modern CSS, rendering 500+ localized map pins with zero main-thread jank.",
+        "Engineered client-side search indexing and asynchronous filtering, achieving instant query latency under 15ms."
+      ],
+      "link": "https://listify.sahillangoo.com"
+    },
+    {
+      "name": "BreedersHub",
+      "tech": "React, Tailwind CSS, PWA, TWA, Webpack",
+      "dates": "2023",
+      "highlights": [
+        "Designed mobile-first e-commerce frontend supporting 1,000+ SKU catalog with sub-3s 3G network loads using asset compression and lazy hydration.",
+        "Packaged and deployed application as a Progressive Web App (PWA) and Trusted Web Activity (TWA) across Android Play Store."
+      ],
+      "link": "https://breedershub.in"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "id": "fullstack",
+  "roleTitle": "Full Stack Systems Engineer & Architect",
+  "filename": "Resume-Sahil-Langoo-FullStack.pdf",
+  "summary": "Full Stack Systems Engineer and Co-Founder specializing in high-throughput web systems, distributed edge proxies, and end-to-end type safety. Proven track record architecting zero-JS Astro static platforms, Cloudflare Worker proxies (Hono, Meta CAPI, Turnstile), and automated build-time verification pipelines.",
+  "skills": {
+    "languages": ["TypeScript", "JavaScript", "Go", "Python", "SQL", "HTML5 / CSS3"],
+    "frameworks": [
+      "Astro 7",
+      "React 19",
+      "Next.js",
+      "Hono",
+      "Node.js",
+      "Tailwind CSS v4",
+      "daisyUI 5",
+      "Express"
+    ],
+    "cloud": [
+      "Cloudflare Pages & Workers",
+      "Cloudflare R2 & KV",
+      "Cloudflare Turnstile",
+      "Vercel",
+      "Docker"
+    ],
+    "databasesAndTools": [
+      "PostgreSQL",
+      "SQLite / D1",
+      "Redis",
+      "Git",
+      "Playwright",
+      "Sentry",
+      "Zod",
+      "Wrangler"
+    ]
+  },
+  "experience": [
+    {
+      "role": "Lead Software Engineer & Co-Founder",
+      "company": "SquadCoders",
+      "location": "Kashmir, India",
+      "dates": "2023 — Present",
+      "highlights": [
+        "Co-founded and architected core web platform at SquadCoders, delivering sub-50ms global TTFB and 0.00 CLS across 6 production client platforms by leveraging Astro 7 SSG, TypeScript, and Cloudflare Pages.",
+        "Engineered bespoke web systems including SoulMedia, Hotel Akbar, and TravelKit, reducing bundle payloads by 65% and achieving 100/100 Lighthouse performance benchmarks through zero-JS baselines.",
+        "Developed custom zero-dependency build-time quality hooks in Node.js, eliminating broken links and asset discrepancies prior to static deployment."
+      ]
+    },
+    {
+      "role": "Systems & Backend Integration Engineer",
+      "company": "Enterprise Web Systems (@ecspl)",
+      "location": "Remote",
+      "dates": "2021 — 2024",
+      "highlights": [
+        "Engineered distributed Hono API gateways on Cloudflare Workers for Experian credit OTP proxies and Meta CAPI server-side dispatching, maintaining 99.99% uptime and sub-100ms p99 execution latency.",
+        "Triaged production Sentry exception telemetry across 90-day intervals, resolving client-side race conditions and payment transport failures to elevate checkout transaction success rate by 14%.",
+        "Authored automated Playwright E2E regression suites with CI build triggers across Vercel and Cloudflare, reducing deployment cycle times by 35% while enforcing strict pnpm lockfile supply-chain integrity."
+      ]
+    },
+    {
+      "role": "Full Stack Trainee",
+      "company": "Elance Technologies",
+      "location": "Kashmir, India",
+      "dates": "Jan 2023 — Jun 2023",
+      "highlights": [
+        "Completed 6-month intensive full-stack development curriculum, building REST APIs and interactive interfaces with PHP, JavaScript, and MariaDB."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Listify",
+      "tech": "PHP, MariaDB, JavaScript, Leaflet.js, HTML5/CSS3",
+      "dates": "2023",
+      "highlights": [
+        "Architected full-stack business directory with PHP, MariaDB, and Leaflet.js, incorporating secure session authentication and spatial indexing.",
+        "Delivered sub-15ms search and filter response times across 500+ localized verified business listings."
+      ],
+      "link": "https://listify.sahillangoo.com"
+    },
+    {
+      "name": "XpressSys Logistics",
+      "tech": "Cloudflare Pages, Node.js, JavaScript, Cloudflare WAF",
+      "dates": "2023",
+      "highlights": [
+        "Developed logistics dispatch platform enabling automated parcel tracking, delivery pin-code routing, and Cloudflare WAF anti-bot mitigation.",
+        "Reduced malicious spam requests by 99% via edge security rules and Cloudflare DNS proxies."
+      ],
+      "link": "https://xpresssys.com"
+    }
+  ]
+}

@@ -8,10 +8,11 @@
   "highlights": [
     "Co-founded and architected the core web platform at SquadCoders, delivering sub-50ms global TTFB and 0.00 CLS across 6 production client platforms by leveraging Astro 7 SSG, TypeScript, and Cloudflare Pages.",
     "Engineered bespoke web systems including SoulMedia, Hotel Akbar Sonamarg, and TravelKit, reducing bundle payloads by 65% and achieving 100/100 Lighthouse performance benchmarks through zero-JS baselines.",
-    "Developed custom zero-dependency build-time quality hooks (`astroSiteQualityEnforcer`), eliminating broken links and asset discrepancies before deployment, integrated with Docker multi-stage pipelines and Sentry telemetry."
+    "Developed and launched 10+ high-performance websites, achieving an average page-load improvement of 30% and a 15% boost in client project conversion rates.",
+    "Developed custom zero-dependency build-time quality hooks in Node.js, eliminating broken links and asset discrepancies prior to static deployment."
   ],
   "skills": [
-    "Astro 7.2",
+    "Astro 7",
     "TypeScript",
     "Tailwind CSS v4",
     "daisyUI 5",
@@ -19,8 +20,7 @@
     "Zod",
     "Sentry",
     "Docker",
-    "Lenis",
-    "Motion"
+    "Lenis"
   ],
   "order": 1
 }

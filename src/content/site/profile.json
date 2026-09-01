@@ -2,41 +2,70 @@
   "name": "Sahil Langoo",
   "title": "Full Stack Systems Engineer & Systems Architect",
   "bio": "Full Stack Systems Engineer and Co-Founder at @SquadCoders. Architecting ultra-fast static web architectures, distributed edge proxies, and local AI pipelines.",
-  "about": "Full Stack Systems Engineer and Co-Founder at SquadCoders, specializing in static-first web architectures, distributed edge computing, and local AI workflows. Proven track record architecting zero-JS Astro static platforms, high-concurrency Cloudflare Worker proxies (Hono, Meta CAPI, Turnstile), and build-time quality verification pipelines. Dedicated to building software that is fast by default (sub-50ms TTFB, 0.00 CLS), zero-waste, and engineered with end-to-end type safety.",
+  "about": "Innovative Full Stack Systems Engineer with a B.Tech in Computer Science Engineering (CGPA: 7.07) from the University of Kashmir and co-founder at SquadCoders. Proven expertise in crafting high-performance, responsive web architectures, distributed edge computing proxies, and AI integrations. Demonstrated ability to boost website performance by 30-40% (sub-50ms TTFB, 0.00 CLS) and increase organic reach and user engagement by 20-30%. Dedicated to building software that is fast by default, zero-waste, and engineered with strict type safety.",
   "skills": {
-    "languages": ["TypeScript", "JavaScript", "Go", "Python", "HTML5", "CSS3 / OKLCH", "SQL"],
+    "languages": [
+      "TypeScript",
+      "JavaScript (ES2023+)",
+      "PHP",
+      "Python",
+      "SQL",
+      "Go",
+      "C",
+      "C++",
+      "HTML5",
+      "CSS3 / SASS / OKLCH",
+      "Bash"
+    ],
     "frameworks": [
-      "Astro",
+      "Astro 7",
+      "React 19",
       "Next.js",
-      "React",
-      "Tailwind CSS v4",
-      "daisyUI 5",
       "Hono",
       "Node.js",
-      "Partytown"
+      "Express",
+      "Tailwind CSS v4",
+      "daisyUI 5",
+      "Twig",
+      "Symfony",
+      "TanStack Router",
+      "TanStack Query",
+      "Partytown",
+      "WordPress"
     ],
-    "databases": ["PostgreSQL", "SQLite / D1", "Cloudflare KV", "Redis", "MongoDB"],
+    "databases": [
+      "PostgreSQL",
+      "SQLite / Cloudflare D1",
+      "MariaDB",
+      "Cloudflare KV",
+      "Redis",
+      "MongoDB"
+    ],
     "cloud": [
       "Cloudflare Pages & Workers",
       "Cloudflare Turnstile",
       "Cloudflare R2",
+      "Cloudflare WAF & DNS",
       "Meta CAPI Gateways",
       "Vercel",
       "Docker",
+      "Azure",
       "GitHub Actions CI/CD"
     ],
     "tools": [
       "Git & GitHub CLI",
       "pnpm",
       "Bun",
-      "LM Studio / Local SLMs (Gemma)",
       "Wrangler",
-      "ESLint 10",
-      "Prettier",
       "Playwright",
       "Sentry",
+      "Postman",
+      "Zod",
       "Figma",
-      "PWA / Service Workers"
+      "Adobe Photoshop",
+      "Adobe Illustrator",
+      "PWA / TWA",
+      "LM Studio / Local SLMs (Gemma)"
     ]
   },
   "principles": [

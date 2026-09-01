@@ -36,6 +36,16 @@ const resumeSchema = [
       addressCountry: 'India',
     },
   },
+  ...SITE.certifications.map((c, idx) => ({
+    '@type': 'EducationalOccupationalCredential',
+    '@id': `${SITE.url}/resume/#credential-${idx + 1}`,
+    name: c.name,
+    credentialCategory: 'Professional Certificate',
+    recognizedBy: {
+      '@type': 'Organization',
+      name: c.issuer,
+    },
+  })),
 ];
 
 const breadcrumbs = [
@@ -70,9 +80,24 @@ const breadcrumbs = [
       </div>
 
       <div class="flex flex-wrap items-center gap-3">
+        {
+          resumeCopy.header.downloadCta && (
+            <a
+              href={resumeCopy.header.downloadCta.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-sm bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-1.5 rounded-md border-0 font-mono text-xs tracking-wider uppercase"
+            >
+              {resumeCopy.header.downloadCta.icon && (
+                <Icon name={resumeCopy.header.downloadCta.icon} class="h-3.5 w-3.5" />
+              )}
+              {resumeCopy.header.downloadCta.label}
+            </a>
+          )
+        }
         <a
           href={resumeCopy.header.contactCta.href}
-          class="btn btn-sm bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-1.5 rounded-md border-0 font-mono text-xs tracking-wider uppercase"
+          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 flex items-center gap-1.5 rounded-md font-mono text-xs tracking-wider uppercase"
         >
           {
             resumeCopy.header.contactCta.icon && (
@@ -181,5 +206,120 @@ const breadcrumbs = [
         </section>
       )
     }
+
+    <!-- Education Section -->
+    <section class="space-y-6">
+      <h2 class="text-accent font-mono text-xs font-bold tracking-widest uppercase">
+        {resumeCopy.sections.educationTitle}
+      </h2>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+        {
+          SITE.education.map((edu) => (
+            <div class="editorial-card flex flex-col justify-between space-y-4 p-6">
+              <div class="space-y-2">
+                <div class="flex items-start justify-between gap-2">
+                  <span class="bg-base-300/40 text-accent rounded px-2 py-0.5 font-mono text-xs font-bold">
+                    CGPA: {edu.cgpa}
+                  </span>
+                  <span class="text-base-content/60 font-mono text-xs">{edu.period}</span>
+                </div>
+                <h3 class="text-base-content text-base font-bold tracking-tight">
+                  {edu.institution}
+                </h3>
+                <p class="text-base-content/80 text-xs font-medium">{edu.degree}</p>
+                <p class="text-base-content/60 font-mono text-xs">{edu.location}</p>
+              </div>
+
+              {edu.coursework && (
+                <div class="border-base-300/60 border-t pt-3">
+                  <span class="text-base-content/60 block font-mono text-xs">Key Coursework:</span>
+                  <div class="mt-1.5 flex flex-wrap gap-1">
+                    {edu.coursework.map((c) => (
+                      <span class="bg-base-200 text-base-content/70 rounded px-1.5 py-0.5 font-mono text-[11px]">
+                        {c}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Professional Certifications -->
+    <section class="space-y-6">
+      <h2 class="text-accent font-mono text-xs font-bold tracking-widest uppercase">
+        {resumeCopy.sections.certificationsTitle}
+      </h2>
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          SITE.certifications.map((cert) => (
+            <div class="editorial-card flex flex-col justify-between space-y-3 p-5">
+              <div class="space-y-1">
+                <div class="flex items-center justify-between">
+                  <span class="text-accent font-mono text-xs font-medium">{cert.issuer}</span>
+                  <span class="text-base-content/50 font-mono text-xs">{cert.year}</span>
+                </div>
+                <h3 class="text-base-content text-xs leading-snug font-bold">{cert.name}</h3>
+              </div>
+              <div class="text-base-content/60 flex items-center gap-1 font-mono text-[11px]">
+                <Icon name="ph:seal-check-bold" class="text-accent h-3.5 w-3.5" />
+                <span>Verified Credential</span>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Alternate Resumes Download Bar -->
+    <section class="border-base-300 bg-base-200/50 space-y-3 rounded-lg border p-5">
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
+            Curated PDF Resumes
+          </h3>
+          <p class="text-base-content/70 text-xs">
+            Download tailored versions optimized for specific engineering tracks.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <a
+            href="/resumes/Resume-Sahil-2025.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-xs bg-base-content text-base-100 hover:bg-base-content/90 font-mono text-xs"
+          >
+            2025 Master Resume
+          </a>
+          <a
+            href="/resumes/Resume-Sahil-Langoo-FullStack.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-xs btn-outline border-base-300 font-mono text-xs"
+          >
+            Full Stack Focus
+          </a>
+          <a
+            href="/resumes/Resume-Sahil-Langoo-Frontend.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-xs btn-outline border-base-300 font-mono text-xs"
+          >
+            Frontend Focus
+          </a>
+          <a
+            href="/resumes/Resume-Sahil-2024.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-xs btn-outline border-base-300 font-mono text-xs"
+          >
+            2024 Archive
+          </a>
+        </div>
+      </div>
+    </section>
   </div>
 </BaseLayout>

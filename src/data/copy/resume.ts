@@ -10,6 +10,12 @@ export const resumeCopy: ResumePageCopy = {
   header: {
     eyebrow: 'Curriculum Vitae',
     roleSubtitle: 'Full Stack Systems Engineer & Co-Founder • Kashmir, India',
+    downloadCta: {
+      label: 'Download PDF',
+      href: '/resumes/Resume-Sahil-Langoo.pdf',
+      icon: 'ph:file-pdf-bold',
+      external: true,
+    },
     contactCta: {
       label: 'Contact Me',
       href: '/contact/',
@@ -30,5 +36,7 @@ export const resumeCopy: ResumePageCopy = {
     frameworksTitle: 'Frameworks & Web Architecture',
     cloudTitle: 'Cloud & Edge Infrastructure',
     databasesToolsTitle: 'Databases, Storage & Quality Tooling',
+    educationTitle: 'Education & Academic Credentials',
+    certificationsTitle: 'Professional Certifications & Accreditations',
   },
 };

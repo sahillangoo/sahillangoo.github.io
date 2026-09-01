@@ -11,9 +11,9 @@ export const aboutCopy: AboutPageCopy = {
     eyebrow: 'About',
     headline: 'Engineering with Intent, Precision & Craft',
     paragraphs: [
-      'I am Sahil Langoo, a Full Stack Systems Engineer and Co-Founder at SquadCoders based in Kashmir, India. I specialize in architecting high-throughput static web architectures, distributed edge proxies, and local AI pipelines.',
+      'I am Sahil Langoo, a Full Stack Systems Engineer and Co-Founder at SquadCoders based in Kashmir, India. I hold a Bachelor of Technology in Computer Science Engineering (CGPA: 7.07) from the University of Kashmir and a 3-Year Diploma in Computer Science Engineering from Kashmir Govt Polytechnic.',
       'My engineering philosophy is rooted in minimalism: building software that is fast by default, respectful of user resources, and designed with zero unnecessary runtime bloat. I prioritize static generation first, minimal client-side JavaScript, and strict end-to-end type safety.',
-      'At SquadCoders and across enterprise consulting systems (@ecspl), I have engineered high-concurrency API gateways, server-side Meta Conversions API pipelines on Cloudflare Workers, and zero-dependency build-time quality gates.',
+      'Across SquadCoders, Taffin.Tech, and enterprise consulting systems, I have engineered AI-integrated applications, high-concurrency Cloudflare Worker API gateways (Hono, Meta CAPI, Turnstile), and zero-dependency build-time quality verification pipelines.',
     ],
   },
   principles: {

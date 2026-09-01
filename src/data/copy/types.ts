@@ -220,6 +220,7 @@ export interface ResumePageCopy {
   header: {
     eyebrow: string;
     roleSubtitle: string;
+    downloadCta?: CtaButton;
     contactCta: CtaButton;
     githubCta: CtaButton;
   };
@@ -231,6 +232,8 @@ export interface ResumePageCopy {
     frameworksTitle: string;
     cloudTitle: string;
     databasesToolsTitle: string;
+    educationTitle: string;
+    certificationsTitle: string;
   };
 }
 

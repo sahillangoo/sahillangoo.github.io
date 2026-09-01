@@ -11,6 +11,7 @@
     "dev": "astro dev",
     "format": "prettier --cache --write .",
     "format:check": "prettier --cache --check .",
+    "generate:resumes": "node --experimental-strip-types scripts/resume-generator/generate.ts",
     "lint": "eslint --cache .",
     "lint:fix": "eslint --cache --fix .",
     "pages:deploy": "wrangler pages deploy ./dist --project-name sahillangoo-portfolio",
@@ -38,6 +39,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@eslint/js": "^10.0.1",
+    "@myriaddreamin/typst-ts-node-compiler": "^0.7.0",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
     "astro-eslint-parser": "^3.1.0",

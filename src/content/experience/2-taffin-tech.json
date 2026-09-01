@@ -1,0 +1,24 @@
+{
+  "role": "Full Stack Developer",
+  "company": "Taffin.Tech",
+  "companyUrl": "https://taffin.tech",
+  "location": "Remote, Srinagar, Kashmir",
+  "period": "2024 — Present",
+  "current": true,
+  "highlights": [
+    "Spearheading the engineering of an AI-integrated job board platform for a French startup, driving a 25% increase in user engagement.",
+    "Architecting high-performance responsive web user interfaces using Tailwind CSS, Twig, and React integrated with a Symfony backend, reducing page-load times by 40%.",
+    "Implementing strict EU-compliant GDPR privacy protocols and dynamic SEO rendering pipelines, boosting organic search traffic by 30%."
+  ],
+  "skills": [
+    "React",
+    "Tailwind CSS",
+    "Twig",
+    "Symfony",
+    "PHP",
+    "AI Integration",
+    "Dynamic SEO",
+    "GDPR Compliance"
+  ],
+  "order": 2
+}
