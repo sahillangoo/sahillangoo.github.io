@@ -8,6 +8,8 @@ import GitHubActivityWidget from '@/components/portfolio/GitHubActivityWidget.as
 import { getCollection, getEntry } from 'astro:content';
 import { SITE } from '@/const/site.ts';
 import { Icon } from 'astro-icon/components';
+import { Image } from 'astro:assets';
+import sahilHeroImage from '@/assets/images/IMG_20260510_183207.jpg';
 
 const projects = await getCollection('projects');
 const featuredProjects = projects
@@ -34,56 +36,97 @@ const principles = siteData?.data.principles || [];
 <BaseLayout>
   <div class="mx-auto max-w-6xl space-y-20 px-4 py-8 sm:space-y-28 sm:px-6 sm:py-12">
     <!-- Hero Section -->
-    <section class="max-w-3xl space-y-6 pt-4 sm:pt-8">
+    <section class="hero justify-start pt-4 sm:pt-8">
       <div
-        class="border-base-300 bg-base-200/80 text-base-content/80 inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-xs"
+        class="hero-content w-full max-w-none flex-col items-center justify-between gap-10 p-0 lg:flex-row lg:items-start lg:gap-14"
       >
-        <span class="bg-accent h-1.5 w-1.5 animate-pulse rounded-full"></span>
-        <span>Software Engineer & Creative Technologist</span>
-      </div>
+        <div class="max-w-2xl space-y-6">
+          <div
+            class="border-base-300 bg-base-200/80 text-base-content/80 inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-xs"
+          >
+            <span class="bg-accent h-1.5 w-1.5 animate-pulse rounded-full"></span>
+            <span>Software Engineer & Creative Technologist</span>
+          </div>
 
-      <h1
-        class="text-base-content text-4xl leading-[1.1] font-extrabold tracking-tight sm:text-5xl lg:text-6xl"
-      >
-        Building resilient web systems & crafted digital interfaces.
-      </h1>
+          <h1
+            class="text-base-content text-4xl leading-[1.1] font-extrabold tracking-tight sm:text-5xl lg:text-6xl"
+          >
+            Building resilient web systems & crafted digital interfaces.
+          </h1>
 
-      <p class="text-base-content/75 text-base leading-relaxed sm:text-lg">
-        I am <strong class="text-base-content font-semibold">{SITE.name}</strong>, based in {
-          SITE.location
-        }. I engineer high-performance web applications, developer tooling, and distributed edge
-        architectures with <a
-          href="https://github.com/SquadCoders"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="text-accent font-semibold hover:underline"
-        >
-          @SquadCoders
-        </a> and open source.
-      </p>
+          <p class="text-base-content/75 text-base leading-relaxed sm:text-lg">
+            I am <strong class="text-base-content font-semibold">{SITE.name}</strong>, based in {
+              SITE.location
+            }. I engineer high-performance web applications, developer tooling, and distributed edge
+            architectures with <a
+              href="https://github.com/SquadCoders"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-accent font-semibold hover:underline"
+            >
+              @SquadCoders
+            </a> and open source.
+          </p>
 
-      <div class="flex flex-wrap items-center gap-3 pt-2">
-        <a
-          href="/projects/"
-          class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-5 font-mono text-xs tracking-wider uppercase"
-        >
-          <Icon name="ph:folder-notch-bold" class="h-3.5 w-3.5" />
-          View Projects
-        </a>
-        <a
-          href="/resume/"
-          class="btn btn-outline border-base-300 hover:bg-base-200 hover:text-base-content flex items-center gap-2 rounded-md px-5 font-mono text-xs tracking-wider uppercase"
-        >
-          <Icon name="ph:file-text-bold" class="h-3.5 w-3.5" />
-          Resume & CV
-        </a>
-        <a
-          href="/contact/"
-          class="btn btn-ghost hover:bg-base-200/60 text-base-content/80 flex items-center gap-2 rounded-md px-4 font-mono text-xs tracking-wider uppercase"
-        >
-          <Icon name="ph:paper-plane-tilt-bold" class="h-3.5 w-3.5" />
-          Get in Touch
-        </a>
+          <div class="flex flex-wrap items-center gap-3 pt-2">
+            <a
+              href="/projects/"
+              class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-5 font-mono text-xs tracking-wider uppercase"
+            >
+              <Icon name="ph:folder-notch-bold" class="h-3.5 w-3.5" />
+              View Projects
+            </a>
+            <a
+              href="/resume/"
+              class="btn btn-outline border-base-300 hover:bg-base-200 hover:text-base-content flex items-center gap-2 rounded-md px-5 font-mono text-xs tracking-wider uppercase"
+            >
+              <Icon name="ph:file-text-bold" class="h-3.5 w-3.5" />
+              Resume & CV
+            </a>
+            <a
+              href="/contact/"
+              class="btn btn-ghost hover:bg-base-200/60 text-base-content/80 flex items-center gap-2 rounded-md px-4 font-mono text-xs tracking-wider uppercase"
+            >
+              <Icon name="ph:paper-plane-tilt-bold" class="h-3.5 w-3.5" />
+              Get in Touch
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Portrait Image Presentation -->
+        <div class="relative shrink-0 self-center lg:self-start">
+          <div class="editorial-card group relative overflow-hidden rounded-2xl p-2 sm:p-2.5">
+            <div
+              class="bg-base-300 relative aspect-4/5 w-60 overflow-hidden rounded-xl sm:w-64 md:w-72 lg:w-80"
+            >
+              <Image
+                src={sahilHeroImage}
+                alt={`${SITE.name} — Software Engineer & Creative Technologist`}
+                width={640}
+                height={800}
+                quality={90}
+                loading="eager"
+                fetchpriority="high"
+                class="h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
+              />
+              <div
+                class="from-base-100/40 pointer-events-none absolute inset-0 bg-gradient-to-t via-transparent to-transparent opacity-60"
+              >
+              </div>
+            </div>
+
+            <div
+              class="text-base-content/70 mt-2 flex items-center justify-between px-1 font-mono text-[11px]"
+            >
+              <span class="inline-flex items-center gap-1.5">
+                <span class="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500">
+                </span>
+                <span>Available for work</span>
+              </span>
+              <span class="text-base-content/50">{SITE.location}</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -109,7 +152,7 @@ const principles = siteData?.data.principles || [];
       <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
         {
           featuredProjects.map((project, idx) => (
-            <ProjectCard project={project} featured={idx === 0} />
+            <ProjectCard project={project} featured={idx === 0} headingLevel="h3" />
           ))
         }
       </div>
@@ -163,7 +206,7 @@ const principles = siteData?.data.principles || [];
           <a href="/blog/" class="text-accent font-mono text-xs hover:underline">All Writing ›</a>
         </div>
         <div class="space-y-4">
-          {recentArticles.map((post) => <ArticleCard post={post} />)}
+          {recentArticles.map((post) => <ArticleCard post={post} headingLevel="h3" />)}
         </div>
       </div>
 
@@ -174,7 +217,7 @@ const principles = siteData?.data.principles || [];
           <a href="/notes/" class="text-accent font-mono text-xs hover:underline">All Notes ›</a>
         </div>
         <div class="space-y-4">
-          {recentNotes.map((note) => <NoteCard note={note} />)}
+          {recentNotes.map((note) => <NoteCard note={note} headingLevel="h3" />)}
         </div>
       </div>
     </section>

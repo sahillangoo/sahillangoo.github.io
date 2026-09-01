@@ -17,79 +17,155 @@ const {
 <!-- In-Article Audio Player Card -->
 <div
   id="article-audio-player"
-  class="editorial-card border-base-300/80 bg-base-200/50 my-6 flex flex-wrap items-center justify-between gap-4 p-3.5 transition-all duration-200 sm:p-4"
+  class="editorial-card border-base-300/80 bg-base-200/50 my-6 flex flex-col gap-3.5 p-4 transition-all duration-200 sm:p-5"
   data-target={articleSelector}
   data-title={articleTitle}
+  data-reading-time={readingTime}
   aria-label="Article Audio Reader"
 >
-  <div class="flex items-center gap-3">
-    <button
-      id="audio-play-btn"
-      type="button"
-      class="btn btn-sm btn-circle bg-accent text-accent-content border-0 shadow-sm transition-transform hover:opacity-90 active:scale-90"
-      aria-label="Play article audio"
-      title="Listen to this article"
-    >
-      <Icon id="audio-play-icon" name="ph:play-fill" class="ml-0.5 h-4 w-4" />
-      <Icon id="audio-pause-icon" name="ph:pause-fill" class="hidden h-4 w-4" />
-    </button>
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <!-- Left Section: Play Button & Meta -->
+    <div class="flex items-center gap-3.5">
+      <button
+        id="audio-play-btn"
+        type="button"
+        class="btn btn-md btn-circle bg-accent text-accent-content hover:bg-accent/90 relative border-0 shadow-md transition-all duration-150 active:scale-95"
+        aria-label="Play article audio narration"
+        title="Listen to this article"
+      >
+        <Icon id="audio-play-icon" name="ph:play-fill" class="ml-0.5 h-5 w-5" />
+        <Icon id="audio-pause-icon" name="ph:pause-fill" class="hidden h-5 w-5" />
+      </button>
 
-    <div class="flex flex-col">
-      <div class="flex items-center gap-2">
-        <span class="text-base-content text-xs font-semibold tracking-tight">Audio Narration</span>
-        <span class="bg-base-300 py-0.2 text-base-content/70 rounded px-1.5 font-mono text-[10px]">
-          AI Voice (Web Speech)
+      <div class="flex flex-col">
+        <div class="flex items-center gap-2">
+          <span class="text-base-content text-xs font-bold tracking-tight">Audio Narration</span>
+          <span
+            id="audio-voice-badge"
+            class="bg-accent/10 text-accent rounded px-1.5 py-0.5 font-mono text-[10px] font-medium"
+          >
+            Neural AI Voice
+          </span>
+          <!-- Audio Waveform Animation (Visible when playing) -->
+          <div id="audio-waveform" class="hidden items-center gap-0.5" aria-hidden="true">
+            <span class="bg-accent h-3 w-0.5 animate-pulse rounded-full"></span>
+            <span
+              class="bg-accent h-4.5 w-0.5 animate-pulse rounded-full"
+              style="animation-delay: 150ms;"
+            >
+            </span>
+            <span
+              class="bg-accent h-2 w-0.5 animate-pulse rounded-full"
+              style="animation-delay: 300ms;"
+            >
+            </span>
+            <span
+              class="bg-accent h-4 w-0.5 animate-pulse rounded-full"
+              style="animation-delay: 75ms;"
+            >
+            </span>
+          </div>
+        </div>
+        <span id="audio-status-text" class="text-base-content/65 font-mono text-[11px]">
+          Listen to this article ({readingTime})
         </span>
       </div>
-      <span id="audio-status-text" class="text-base-content/60 font-mono text-[11px]">
-        Listen to this essay ({readingTime})
-      </span>
+    </div>
+
+    <!-- Right Section: Speed, Voice & Controls -->
+    <div class="flex flex-wrap items-center gap-2">
+      <!-- Playback Speed -->
+      <div class="join border-base-300 bg-base-100/70 rounded-lg border shadow-xs">
+        <button
+          type="button"
+          class="audio-rate-btn join-item btn btn-xs btn-ghost active-rate bg-base-content text-base-100 font-mono text-[10px] font-bold"
+          data-rate="1"
+        >
+          1x
+        </button>
+        <button
+          type="button"
+          class="audio-rate-btn join-item btn btn-xs btn-ghost font-mono text-[10px]"
+          data-rate="1.25"
+        >
+          1.25x
+        </button>
+        <button
+          type="button"
+          class="audio-rate-btn join-item btn btn-xs btn-ghost font-mono text-[10px]"
+          data-rate="1.5"
+        >
+          1.5x
+        </button>
+      </div>
+
+      <!-- Skip Backward / Forward -->
+      <div class="flex items-center gap-1">
+        <button
+          id="audio-skip-back-btn"
+          type="button"
+          class="btn btn-ghost btn-xs btn-square text-base-content/60 hover:text-base-content"
+          aria-label="Rewind 1 sentence"
+          title="Previous sentence"
+        >
+          <Icon name="ph:skip-back-bold" class="h-3.5 w-3.5" />
+        </button>
+        <button
+          id="audio-skip-fwd-btn"
+          type="button"
+          class="btn btn-ghost btn-xs btn-square text-base-content/60 hover:text-base-content"
+          aria-label="Skip forward 1 sentence"
+          title="Next sentence"
+        >
+          <Icon name="ph:skip-forward-bold" class="h-3.5 w-3.5" />
+        </button>
+      </div>
+
+      <!-- Voice Selector Dropdown -->
+      <select
+        id="audio-voice-select"
+        class="select select-xs border-base-300 bg-base-100/80 text-base-content font-mono text-[11px] focus:outline-hidden"
+        aria-label="Select Narration Voice"
+      >
+        <option value="auto">Auto (Best Natural)</option>
+      </select>
+
+      <!-- Stop / Reset button -->
+      <button
+        id="audio-stop-btn"
+        type="button"
+        class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:text-base-content"
+        aria-label="Stop audio"
+        title="Stop and reset speech"
+      >
+        <Icon name="ph:stop-fill" class="h-3.5 w-3.5" />
+      </button>
     </div>
   </div>
 
-  <div class="flex items-center gap-2">
-    <!-- Playback Rate Controls -->
-    <div class="join border-base-300 bg-base-100/60 rounded-md border">
-      <button
-        type="button"
-        class="audio-rate-btn join-item btn btn-xs btn-ghost active-rate bg-base-content text-base-100 font-mono text-[10px] font-bold"
-        data-rate="1"
+  <!-- Progress Bar & Reading Position -->
+  <div class="flex items-center gap-3 pt-1">
+    <div class="bg-base-300/80 relative h-1.5 w-full overflow-hidden rounded-full">
+      <div
+        id="audio-progress-bar"
+        class="bg-accent h-1.5 rounded-full transition-all duration-200"
+        style="width: 0%"
       >
-        1x
-      </button>
-      <button
-        type="button"
-        class="audio-rate-btn join-item btn btn-xs btn-ghost font-mono text-[10px]"
-        data-rate="1.25"
-      >
-        1.25x
-      </button>
-      <button
-        type="button"
-        class="audio-rate-btn join-item btn btn-xs btn-ghost font-mono text-[10px]"
-        data-rate="1.5"
-      >
-        1.5x
-      </button>
+      </div>
     </div>
-
-    <!-- Stop / Reset button -->
-    <button
-      id="audio-stop-btn"
-      type="button"
-      class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:text-base-content"
-      aria-label="Stop audio"
-      title="Stop and reset speech"
+    <span
+      id="audio-progress-text"
+      class="text-base-content/60 shrink-0 font-mono text-[10px] tabular-nums"
     >
-      <Icon name="ph:stop-fill" class="h-3.5 w-3.5" />
-    </button>
+      0%
+    </span>
   </div>
 </div>
 
 <!-- Floating PiP Mini Player Dock (Appears bottom-right when playing) -->
 <div
   id="audio-pip-dock"
-  class="border-base-300 bg-base-100/95 animate-in fade-in slide-in-from-bottom-4 fixed right-5 bottom-5 z-40 hidden max-w-sm rounded-xl border p-3 shadow-2xl backdrop-blur-md transition-all duration-300"
+  class="border-base-300 bg-base-100/95 animate-in fade-in slide-in-from-bottom-4 fixed right-5 bottom-5 z-40 hidden max-w-sm rounded-xl border p-3.5 shadow-2xl backdrop-blur-md transition-all duration-300"
   role="region"
   aria-label="Floating Audio Player"
 >
@@ -134,6 +210,92 @@ const {
 </div>
 
 <script>
+  interface ParsedChunk {
+    text: string;
+    spokenText: string;
+    element: HTMLElement | null;
+  }
+
+  // Phonetic & Technical Acronym Normalization Dictionary
+  const PHONETIC_REPLACEMENTS: [RegExp, string][] = [
+    [/\be\.g\.,?\b/gi, 'for example,'],
+    [/\bi\.e\.,?\b/gi, 'that is,'],
+    [/\bvs\.?\b/gi, 'versus'],
+    [/\betc\.?\b/gi, 'etcetera'],
+    [/\bapprox\.?\b/gi, 'approximately'],
+    [/\bTypeScript\b/g, 'Type Script'],
+    [/\bJavaScript\b/g, 'Java Script'],
+    [/\bAstro\b/g, 'As-tro'],
+    [/\bTailwind\b/g, 'Tail-wind'],
+    [/\bdaisyUI\b/gi, 'Daisy U I'],
+    [/\bAPI\b/g, 'A P I'],
+    [/\bAPIs\b/g, 'A P Is'],
+    [/\bUI\b/g, 'U I'],
+    [/\bUX\b/g, 'U X'],
+    [/\bCSS\b/g, 'C S S'],
+    [/\bHTML\b/g, 'H T M L'],
+    [/\bJSON\b/g, 'Jason'],
+    [/\bSQL\b/g, 'Sequel'],
+    [/\bCLI\b/g, 'C L I'],
+    [/\bSaaS\b/g, 'Sass'],
+    [/\bPWA\b/g, 'P W A'],
+    [/\bSSR\b/g, 'S S R'],
+    [/\bSSG\b/g, 'S S G'],
+    [/\bTTS\b/g, 'T T S'],
+    [/\bOKLCH\b/g, 'O K L C H'],
+    [/\bUUID\b/g, 'U U I D'],
+    [/\bSDK\b/g, 'S D K'],
+    [/\bDOM\b/g, 'Dom'],
+    [/\bpnpm\b/gi, 'p-n-p-m'],
+    [/\bBun\b/g, 'Bun'],
+    [/\bKISS\b/g, 'kiss principle'],
+    [/\bYAGNI\b/g, 'yag-nee'],
+    [/\bWASM\b/g, 'Waz-um'],
+    [/\bSLM\b/g, 'S L M'],
+    [/\bSLMs\b/g, 'S L Ms'],
+    [/\bLLM\b/g, 'L L M'],
+    [/\bLLMs\b/g, 'L L Ms'],
+    [/\bCAPI\b/g, 'cap-ee'],
+    [/\bGTM\b/g, 'G T M'],
+    [/\bTBT\b/g, 'Total Blocking Time'],
+    [/\bCLS\b/g, 'Cumulative Layout Shift'],
+    [/\bLCP\b/g, 'Largest Contentful Paint'],
+    [/\bINP\b/g, 'Interaction to Next Paint'],
+    [/\bTTFB\b/g, 'Time to First Byte'],
+    [/\bKV\b/g, 'K V'],
+    [/\bD1\b/g, 'D 1'],
+    [/\bR2\b/g, 'R 2'],
+    [/\bWAF\b/g, 'Waff'],
+    [/\bCDN\b/g, 'C D N'],
+    [/\bRFC\b/g, 'R F C'],
+    [/\bCloudflare\b/g, 'Cloud-flare'],
+    [/\bPartytown\b/g, 'Party-town'],
+    [/\bTurnstile\b/g, 'Turn-stile'],
+  ];
+
+  function humanizeTextForSpeech(rawText: string): string {
+    let clean = rawText
+      // Remove URLs
+      .replace(/https?:\/\/[^\s]+/g, '')
+      // Remove inline code syntax
+      .replace(/`([^`]+)`/g, '$1')
+      // Remove markdown links [text](url) -> text
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+      // Remove markdown bold/italic
+      .replace(/[*_]{1,3}([^*_]+)[*_]{1,3}/g, '$1')
+      // Clean up bullet chars
+      .replace(/^[•\-*]\s+/gm, '')
+      // Clean up hashtags
+      .replace(/#(\w+)/g, '$1');
+
+    // Apply phonetic pronunciation improvements
+    for (const [regex, replacement] of PHONETIC_REPLACEMENTS) {
+      clean = clean.replace(regex, replacement);
+    }
+
+    return clean.trim();
+  }
+
   function setupArticleAudio() {
     const player = document.getElementById('article-audio-player');
     const pipDock = document.getElementById('audio-pip-dock');
@@ -143,7 +305,14 @@ const {
     const playIcon = document.getElementById('audio-play-icon');
     const pauseIcon = document.getElementById('audio-pause-icon');
     const stopBtn = document.getElementById('audio-stop-btn');
+    const skipBackBtn = document.getElementById('audio-skip-back-btn');
+    const skipFwdBtn = document.getElementById('audio-skip-fwd-btn');
+    const voiceSelect = document.getElementById('audio-voice-select') as HTMLSelectElement | null;
+    const voiceBadge = document.getElementById('audio-voice-badge');
     const statusText = document.getElementById('audio-status-text');
+    const waveform = document.getElementById('audio-waveform');
+    const progressBar = document.getElementById('audio-progress-bar');
+    const progressText = document.getElementById('audio-progress-text');
     const rateBtns = document.querySelectorAll<HTMLButtonElement>('.audio-rate-btn');
 
     // PiP Controls
@@ -164,32 +333,174 @@ const {
     let isPlaying = false;
     let isPaused = false;
     let playbackRate = 1;
-    let textChunks: string[] = [];
+    let chunks: ParsedChunk[] = [];
     let currentChunkIndex = 0;
+    let keepAliveInterval: ReturnType<typeof setInterval> | null = null;
+    let availableVoices: SpeechSynthesisVoice[] = [];
+    let selectedVoice: SpeechSynthesisVoice | null = null;
+    let highlightedElement: HTMLElement | null = null;
 
-    function extractReadableText(): string[] {
+    // 1. Rank and Select Natural Human Voices
+    function rankVoices(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice[] {
+      const englishVoices = voices.filter((v) => v.lang.startsWith('en'));
+      if (englishVoices.length === 0) return voices;
+
+      return englishVoices.sort((a, b) => {
+        const score = (v: SpeechSynthesisVoice) => {
+          const name = v.name.toLowerCase();
+          // Priority 1: Natural Microsoft Online voices (Windows / Edge)
+          if (name.includes('natural') || name.includes('online (natural)')) return 100;
+          // Priority 2: Apple Enhanced / Premium voices (macOS / iOS)
+          if (name.includes('premium') || name.includes('enhanced')) return 90;
+          // Priority 3: Google Chrome high-quality neural voices
+          if (name.includes('google us english') || name.includes('google uk english')) return 80;
+          if (name.includes('google')) return 70;
+          // Priority 4: Apple Siri & standard natural voices
+          if (
+            ['samantha', 'serena', 'ava', 'zoe', 'alex', 'daniel', 'guy', 'jenny', 'aria'].some(
+              (n) => name.includes(n)
+            )
+          )
+            return 60;
+          // Priority 5: Standard local voices
+          if (v.localService) return 40;
+          return 10;
+        };
+        return score(b) - score(a);
+      });
+    }
+
+    function populateVoices() {
+      const rawVoices = synth.getVoices();
+      if (rawVoices.length === 0) return;
+
+      availableVoices = rankVoices(rawVoices);
+      const topVoice = availableVoices[0];
+
+      if (voiceSelect) {
+        voiceSelect.innerHTML = '';
+        const autoOpt = document.createElement('option');
+        autoOpt.value = 'auto';
+        autoOpt.textContent = `Auto (${topVoice?.name ? topVoice.name.replace(/(Microsoft|Google|Apple)\s*/gi, '').slice(0, 20) : 'Natural'})`;
+        voiceSelect.appendChild(autoOpt);
+
+        availableVoices.slice(0, 8).forEach((v) => {
+          const opt = document.createElement('option');
+          opt.value = v.name;
+          const cleanName = v.name.replace(/(Microsoft|Google|Apple)\s*/gi, '').slice(0, 24);
+          const langCode = (v.lang?.split('-')[0] || 'en').toUpperCase();
+          opt.textContent = `${cleanName} (${langCode})`;
+          voiceSelect.appendChild(opt);
+        });
+
+        const savedVoice = localStorage.getItem('sl_tts_voice');
+        if (savedVoice) {
+          const matched = availableVoices.find((v) => v.name === savedVoice);
+          if (matched) {
+            selectedVoice = matched;
+            voiceSelect.value = savedVoice;
+          }
+        }
+      }
+
+      if (!selectedVoice && topVoice) {
+        selectedVoice = topVoice ?? null;
+      }
+
+      if (voiceBadge && selectedVoice) {
+        const isNatural =
+          selectedVoice.name.toLowerCase().includes('natural') ||
+          selectedVoice.name.toLowerCase().includes('google') ||
+          selectedVoice.name.toLowerCase().includes('premium');
+        voiceBadge.textContent = isNatural ? 'Neural Voice' : 'System Voice';
+      }
+    }
+
+    populateVoices();
+    if (synth.onvoiceschanged !== undefined) {
+      synth.onvoiceschanged = populateVoices;
+    }
+
+    if (voiceSelect) {
+      voiceSelect.onchange = () => {
+        const val = voiceSelect.value;
+        if (val === 'auto') {
+          selectedVoice = availableVoices[0] || null;
+          localStorage.removeItem('sl_tts_voice');
+        } else {
+          selectedVoice = availableVoices.find((v) => v.name === val) || null;
+          if (selectedVoice) localStorage.setItem('sl_tts_voice', selectedVoice.name);
+        }
+
+        if (isPlaying) {
+          synth.cancel();
+          speakCurrentChunk();
+        }
+      };
+    }
+
+    // 2. Pre-parse readable text immediately on idle
+    function parseArticleContent(): ParsedChunk[] {
       const targetSelector = player?.getAttribute('data-target') || '#article-content';
       const container = document.querySelector(targetSelector);
       if (!container) return [];
 
-      const clone = container.cloneNode(true) as HTMLElement;
-      // Remove code blocks, tables, images, and non-prose elements
-      clone
-        .querySelectorAll('pre, code, table, svg, figure, .not-prose, button')
-        .forEach((el) => el.remove());
-
-      const paragraphs = Array.from(clone.querySelectorAll('p, h2, h3, li'));
-      const textArray: string[] = [];
+      const parsed: ParsedChunk[] = [];
+      const paragraphs = Array.from(container.querySelectorAll('p, h2, h3, li')) as HTMLElement[];
 
       paragraphs.forEach((p) => {
+        // Skip code blocks, metadata, buttons
+        if (p.closest('pre, code, table, svg, figure, .not-prose, button')) return;
+
         const text = p.textContent?.trim();
-        if (text && text.length > 3) {
-          const sentences = text.match(/[^.!?]+[.!?]+/g) || [text];
-          sentences.forEach((s) => textArray.push(s.trim()));
+        if (text && text.length > 2) {
+          // Split into digestible sentences (10-25 words each) for natural prosody
+          const sentences = text.match(/[^.!?]+[.!?]+|\S[^.!?]+$/g) || [text];
+          sentences.forEach((s) => {
+            const raw = s.trim();
+            if (raw.length > 2) {
+              parsed.push({
+                text: raw,
+                spokenText: humanizeTextForSpeech(raw),
+                element: p,
+              });
+            }
+          });
         }
       });
 
-      return textArray;
+      return parsed;
+    }
+
+    // Parse text in background idle
+    if (typeof requestIdleCallback !== 'undefined') {
+      requestIdleCallback(() => {
+        chunks = parseArticleContent();
+      });
+    } else {
+      setTimeout(() => {
+        chunks = parseArticleContent();
+      }, 50);
+    }
+
+    function clearHighlight() {
+      if (highlightedElement) {
+        highlightedElement.classList.remove(
+          'bg-accent/10',
+          'rounded-md',
+          'transition-colors',
+          'duration-300'
+        );
+        highlightedElement = null;
+      }
+    }
+
+    function setHighlight(el: HTMLElement | null) {
+      clearHighlight();
+      if (el) {
+        el.classList.add('bg-accent/10', 'rounded-md', 'transition-colors', 'duration-300');
+        highlightedElement = el;
+      }
     }
 
     function updateUIState() {
@@ -199,69 +510,97 @@ const {
         pipPlayIcon?.classList.add('hidden');
         pipPauseIcon?.classList.remove('hidden');
         pipDock?.classList.remove('hidden');
+        waveform?.classList.remove('hidden');
+        waveform?.classList.add('flex');
       } else {
         playIcon?.classList.remove('hidden');
         pauseIcon?.classList.add('hidden');
         pipPlayIcon?.classList.remove('hidden');
         pipPauseIcon?.classList.add('hidden');
+        waveform?.classList.add('hidden');
+        waveform?.classList.remove('flex');
         if (!isPlaying && !isPaused) {
           pipDock?.classList.add('hidden');
+          clearHighlight();
         }
       }
 
-      const total = Math.max(1, textChunks.length);
+      const total = Math.max(1, chunks.length);
       const progress = Math.min(100, Math.round((currentChunkIndex / total) * 100));
+      if (progressBar) progressBar.style.width = `${progress}%`;
+      if (progressText) progressText.textContent = `${progress}%`;
       if (pipProgressBar) pipProgressBar.style.width = `${progress}%`;
       if (pipPercent) pipPercent.textContent = `${progress}%`;
     }
 
-    function speakNextChunk() {
-      if (!isPlaying || isPaused || currentChunkIndex >= textChunks.length) {
-        if (currentChunkIndex >= textChunks.length && isPlaying) {
+    // Chrome 15s keepalive pinger
+    function startKeepAlive() {
+      stopKeepAlive();
+      keepAliveInterval = setInterval(() => {
+        if (synth.speaking && isPlaying && !isPaused) {
+          synth.pause();
+          synth.resume();
+        }
+      }, 8000);
+    }
+
+    function stopKeepAlive() {
+      if (keepAliveInterval) {
+        clearInterval(keepAliveInterval);
+        keepAliveInterval = null;
+      }
+    }
+
+    function speakCurrentChunk() {
+      if (!isPlaying || isPaused || currentChunkIndex >= chunks.length) {
+        if (currentChunkIndex >= chunks.length && isPlaying) {
           stopPlayback();
-          if (statusText) statusText.textContent = 'Finished reading.';
+          if (statusText) statusText.textContent = 'Finished narration.';
         }
         return;
       }
 
-      const text = textChunks[currentChunkIndex];
-      if (!text) {
+      const current = chunks[currentChunkIndex];
+      if (!current || !current.spokenText) {
         currentChunkIndex++;
-        speakNextChunk();
+        speakCurrentChunk();
         return;
       }
 
-      const utterance = new SpeechSynthesisUtterance(text);
+      const utterance = new SpeechSynthesisUtterance(current.spokenText);
       utterance.rate = playbackRate;
+      utterance.pitch = 1.0;
 
-      const voices = synth.getVoices();
-      const naturalVoice = voices.find(
-        (v) =>
-          v.lang.startsWith('en') &&
-          (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Samantha'))
-      );
-      if (naturalVoice) utterance.voice = naturalVoice;
+      if (!selectedVoice && availableVoices.length > 0) {
+        selectedVoice = availableVoices[0] ?? null;
+      }
+      if (selectedVoice) {
+        utterance.voice = selectedVoice;
+      }
+
+      utterance.onstart = () => {
+        setHighlight(current.element);
+      };
 
       utterance.onend = () => {
         if (!isPlaying || isPaused) return;
         currentChunkIndex++;
         updateUIState();
-        speakNextChunk();
+        speakCurrentChunk();
       };
 
       utterance.onerror = (event) => {
-        // Critical guard: If speech was intentionally canceled or navigated away, DO NOT continue reading!
         if (!isPlaying || isPaused || event.error === 'canceled' || event.error === 'interrupted') {
           return;
         }
         currentChunkIndex++;
         updateUIState();
-        speakNextChunk();
+        speakCurrentChunk();
       };
 
       if (statusText) {
-        const progress = Math.round((currentChunkIndex / Math.max(1, textChunks.length)) * 100);
-        statusText.textContent = `Reading... ${progress}%`;
+        const progress = Math.round((currentChunkIndex / Math.max(1, chunks.length)) * 100);
+        statusText.textContent = `Speaking... ${progress}%`;
       }
 
       updateUIState();
@@ -269,8 +608,8 @@ const {
     }
 
     function startPlayback() {
-      if (textChunks.length === 0) {
-        textChunks = extractReadableText();
+      if (chunks.length === 0) {
+        chunks = parseArticleContent();
         currentChunkIndex = 0;
       }
 
@@ -278,11 +617,13 @@ const {
         synth.resume();
         isPaused = false;
         isPlaying = true;
+        startKeepAlive();
       } else {
         synth.cancel();
         isPlaying = true;
         isPaused = false;
-        speakNextChunk();
+        startKeepAlive();
+        speakCurrentChunk();
       }
 
       updateUIState();
@@ -294,6 +635,7 @@ const {
         synth.pause();
         isPaused = true;
         isPlaying = false;
+        stopKeepAlive();
         updateUIState();
         if (statusText) statusText.textContent = 'Paused narration.';
       }
@@ -303,13 +645,37 @@ const {
       isPlaying = false;
       isPaused = false;
       currentChunkIndex = 0;
+      stopKeepAlive();
       synth.cancel();
+      clearHighlight();
       updateUIState();
       pipDock?.classList.add('hidden');
-      if (statusText) statusText.textContent = 'Audio stopped.';
+      if (statusText)
+        statusText.textContent = `Listen to this article (${player?.getAttribute('data-reading-time') || '5 min read'})`;
     }
 
+    function skipChunk(offset: number) {
+      if (chunks.length === 0) return;
+      currentChunkIndex = Math.max(0, Math.min(chunks.length - 1, currentChunkIndex + offset));
+      if (isPlaying) {
+        synth.cancel();
+        speakCurrentChunk();
+      } else {
+        updateUIState();
+      }
+    }
+
+    // Instant Responsive Trigger (pointerdown / click for 0ms delay)
     if (playBtn) {
+      playBtn.addEventListener(
+        'pointerdown',
+        () => {
+          // Pre-warm synthesizer on pointer contact
+          if (synth.paused) synth.resume();
+        },
+        { passive: true }
+      );
+
       playBtn.onclick = () => {
         if (isPlaying) {
           pausePlayback();
@@ -331,6 +697,8 @@ const {
 
     if (stopBtn) stopBtn.onclick = stopPlayback;
     if (pipCloseBtn) pipCloseBtn.onclick = stopPlayback;
+    if (skipBackBtn) skipBackBtn.onclick = () => skipChunk(-1);
+    if (skipFwdBtn) skipFwdBtn.onclick = () => skipChunk(1);
 
     rateBtns.forEach((btn) => {
       btn.onclick = () => {
@@ -343,12 +711,12 @@ const {
 
         if (isPlaying) {
           synth.cancel();
-          speakNextChunk();
+          speakCurrentChunk();
         }
       };
     });
 
-    // Ensure audio stops immediately if the user leaves the page
+    // Cleanup on View Transitions & Page Unload
     const handlePageTeardown = () => {
       stopPlayback();
     };

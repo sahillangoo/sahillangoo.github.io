@@ -45,6 +45,7 @@ const articleSchema = {
   headline: data.title,
   description: data.description,
   url: pageUrl,
+  image: `${SITE.url}/og/blog/${id}.png`,
   datePublished: data.publishDate,
   dateModified: data.updatedDate || data.publishDate,
   author: {
@@ -52,8 +53,15 @@ const articleSchema = {
     '@id': `${SITE.url}/#person`,
     name: SITE.name,
     url: `${SITE.url}/about/`,
+    sameAs: [
+      SITE.social.github,
+      SITE.social.linkedin,
+      SITE.social.twitter,
+      SITE.social.facebook,
+      SITE.social.instagram,
+      SITE.social.devto,
+    ],
     jobTitle: 'Full Stack Systems Engineer',
-    sameAs: [SITE.social.github, SITE.social.linkedin, SITE.social.twitter, SITE.social.devto],
   },
   publisher: {
     '@id': `${SITE.url}/#person`,
@@ -118,6 +126,7 @@ const breadcrumbs = [
       </div>
 
       <h1
+        transition:name={`blog-title-${id}`}
         class="text-base-content text-3xl leading-tight font-extrabold tracking-tight sm:text-4xl lg:text-5xl"
       >
         {data.title}
@@ -209,11 +218,11 @@ const breadcrumbs = [
           </div>
           <div class="space-y-1">
             <div class="flex items-center gap-2">
-              <h4 class="text-base-content font-bold">
+              <span class="text-base-content font-bold">
                 <a href="/about/" class="hover:text-accent transition-colors">
                   {SITE.name}
                 </a>
-              </h4>
+              </span>
               <span class="bg-accent/15 text-accent py-0.2 rounded px-1.5 font-mono text-[10px]">
                 Author
               </span>

@@ -13,7 +13,9 @@ export const SITE = {
   social: {
     github: 'https://github.com/sahillangoo',
     linkedin: 'https://linkedin.com/in/sahillangoo',
-    twitter: 'https://twitter.com/kashurgeek',
+    twitter: 'https://x.com/kashurgeek',
+    facebook: 'https://www.facebook.com/sahillangoojs/',
+    instagram: 'https://www.instagram.com/sahillangoo.in',
     devto: 'https://dev.to/sahillangoo',
     dailydev: 'https://app.daily.dev/sahillangoo',
     email: 'mailto:hello@sahillangoo.in',

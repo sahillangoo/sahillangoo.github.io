@@ -4,10 +4,13 @@ import { Icon } from 'astro-icon/components';
 
 export interface Props {
   post: CollectionEntry<'blog'>;
+  headingLevel?: 'h2' | 'h3';
 }
 
-const { post } = Astro.props;
+const { post, headingLevel = 'h2' } = Astro.props;
 const { data, id } = post;
+
+const HeadingTag = headingLevel;
 
 const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
   year: 'numeric',
@@ -28,13 +31,14 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
     </div>
 
     <!-- Title -->
-    <h3
+    <HeadingTag
+      transition:name={`blog-title-${id}`}
       class="text-base-content group-hover:text-accent text-lg font-bold tracking-tight transition-colors sm:text-xl"
     >
       <a href={`/blog/${id}/`} class="after:absolute after:inset-0 focus:outline-none">
         {data.title}
       </a>
-    </h3>
+    </HeadingTag>
 
     <!-- Description -->
     <p class="text-base-content/70 mt-2 text-sm leading-relaxed">

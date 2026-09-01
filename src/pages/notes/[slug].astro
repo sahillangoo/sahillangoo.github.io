@@ -38,8 +38,13 @@ const noteSchema = {
   headline: data.title,
   description: data.description || `Digital garden note by Sahil Langoo on ${data.topic}`,
   url: pageUrl,
+  image: `${SITE.url}/og/notes/${id}.png`,
   datePublished: data.publishDate,
+  dateModified: data.publishDate,
   author: {
+    '@id': `${SITE.url}/#person`,
+  },
+  publisher: {
     '@id': `${SITE.url}/#person`,
   },
   keywords: data.tags.join(', '),
@@ -83,7 +88,10 @@ const breadcrumbs = [
         <time datetime={data.publishDate}>{formattedDate}</time>
       </div>
 
-      <h1 class="text-base-content text-2xl font-extrabold tracking-tight sm:text-3xl">
+      <h1
+        transition:name={`note-title-${id}`}
+        class="text-base-content text-2xl font-extrabold tracking-tight sm:text-3xl"
+      >
         {data.title}
       </h1>
 

@@ -31,8 +31,14 @@ const projectSchema = {
   name: data.title,
   description: data.description,
   url: pageUrl,
+  image: `${SITE.url}/og/projects/${id}.png`,
   applicationCategory: data.category === 'cli-tool' ? 'DeveloperApplication' : 'WebApplication',
   operatingSystem: 'Cross-platform',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
   author: {
     '@id': `${SITE.url}/#person`,
   },
@@ -82,6 +88,7 @@ const breadcrumbs = [
       </div>
 
       <h1
+        transition:name={`project-title-${id}`}
         class="text-base-content text-3xl leading-tight font-extrabold tracking-tight sm:text-4xl lg:text-5xl"
       >
         {data.title}

@@ -113,6 +113,35 @@ if (fs.existsSync(llmsFullPath)) {
   );
 }
 
+// 5. Verify humans.txt, security.txt, and cli.txt
+const humansPath = path.join(distDir, 'humans.txt');
+const securityPath = path.join(distDir, 'security.txt');
+const wellKnownSecurityPath = path.join(distDir, '.well-known', 'security.txt');
+const cliPath = path.join(distDir, 'cli.txt');
+const cnamePath = path.join(distDir, 'CNAME');
+
+assert(fs.existsSync(humansPath), 'humans.txt exists in dist/');
+assert(fs.existsSync(securityPath), 'security.txt exists in dist/');
+assert(fs.existsSync(wellKnownSecurityPath), '.well-known/security.txt exists in dist/');
+assert(fs.existsSync(cliPath), 'cli.txt exists in dist/');
+assert(fs.existsSync(cnamePath), 'CNAME exists in dist/');
+if (fs.existsSync(cnamePath)) {
+  const cnameContent = fs.readFileSync(cnamePath, 'utf-8').trim();
+  assert(cnameContent === 'sahillangoo.in', 'CNAME contains sahillangoo.in');
+}
+
+if (fs.existsSync(wellKnownSecurityPath)) {
+  const secContent = fs.readFileSync(wellKnownSecurityPath, 'utf-8');
+  assert(
+    secContent.includes('Contact: mailto:hello@sahillangoo.in'),
+    '.well-known/security.txt contains contact email'
+  );
+  assert(
+    secContent.includes('Expires:'),
+    '.well-known/security.txt contains RFC 9116 Expires directive'
+  );
+}
+
 // 5. Verify _headers and _redirects
 const headersPath = path.join(distDir, '_headers');
 const redirectsPath = path.join(distDir, '_redirects');

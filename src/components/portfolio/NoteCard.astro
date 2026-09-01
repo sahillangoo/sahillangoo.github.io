@@ -4,10 +4,13 @@ import { Icon } from 'astro-icon/components';
 
 export interface Props {
   note: CollectionEntry<'notes'>;
+  headingLevel?: 'h2' | 'h3';
 }
 
-const { note } = Astro.props;
+const { note, headingLevel = 'h2' } = Astro.props;
 const { data, id } = note;
+
+const HeadingTag = headingLevel;
 
 const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
   year: 'numeric',
@@ -27,13 +30,14 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
       <time datetime={data.publishDate} class="font-mono text-[11px]">{formattedDate}</time>
     </div>
 
-    <h3
+    <HeadingTag
+      transition:name={`note-title-${id}`}
       class="text-base-content group-hover:text-accent text-base font-bold tracking-tight transition-colors"
     >
       <a href={`/notes/${id}/`} class="after:absolute after:inset-0 focus:outline-none">
         {data.title}
       </a>
-    </h3>
+    </HeadingTag>
 
     {
       data.description && (

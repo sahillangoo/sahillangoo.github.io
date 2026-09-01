@@ -55,6 +55,7 @@ const blogSchema = {
     headline: post.data.title,
     description: post.data.description,
     url: `${SITE.url}/blog/${post.id}/`,
+    image: `${SITE.url}/og/blog/${post.id}.png`,
     datePublished: post.data.publishDate,
     author: {
       '@id': `${SITE.url}/#person`,
@@ -74,6 +75,7 @@ const breadcrumbs = [
 <BaseLayout
   title={pageTitle}
   description={pageDescription}
+  image="/og/blog.png"
   canonicalUrl={canonicalUrl}
   breadcrumbs={breadcrumbs}
   structuredData={blogSchema}

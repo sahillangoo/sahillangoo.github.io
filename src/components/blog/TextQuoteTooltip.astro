@@ -129,7 +129,7 @@ import { Icon } from 'astro-icon/components';
         const excerpt =
           selectedText.length > 180 ? selectedText.slice(0, 177) + '...' : selectedText;
         const tweetText = `"${excerpt}"\n\nby @kashurgeek`;
-        const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(window.location.href)}`;
+        const tweetUrl = `https://x.com/intent/post?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(window.location.href)}`;
         window.open(tweetUrl, '_blank', 'noopener,noreferrer,width=550,height=420');
         hideTooltip();
       };

@@ -19,7 +19,11 @@ const footerLinks = [
 ];
 ---
 
-<footer class="border-base-300 bg-base-100/50 text-base-content/70 w-full border-t py-12">
+<footer
+  id="site-footer"
+  class="border-base-300 bg-base-100/50 text-base-content/70 w-full border-t py-12"
+  transition:persist="site-footer"
+>
   <div class="mx-auto max-w-6xl space-y-8 px-4 sm:px-6">
     <div class="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
       <!-- Brand & Tagline -->
@@ -79,10 +83,28 @@ const footerLinks = [
           href={SITE.social.twitter}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Twitter"
+          aria-label="X (Twitter)"
           class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
         >
           <Icon name="ph:x-logo-bold" class="h-4 w-4" />
+        </a>
+        <a
+          href={SITE.social.facebook}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Facebook"
+          class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
+        >
+          <Icon name="ph:facebook-logo-bold" class="h-4 w-4" />
+        </a>
+        <a
+          href={SITE.social.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram"
+          class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
+        >
+          <Icon name="ph:instagram-logo-bold" class="h-4 w-4" />
         </a>
         <a
           href={SITE.social.email}

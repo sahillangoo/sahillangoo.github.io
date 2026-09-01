@@ -23,7 +23,7 @@ export interface Props {
 const {
   title = SITE.title,
   description = SITE.description,
-  image = '/favicon.svg',
+  image = '/og/default.png',
   canonicalUrl = Astro.url.href,
   type = 'website',
   publishDate,
@@ -49,7 +49,7 @@ const personSchema = {
   '@id': `${siteUrl}/#person`,
   name: SITE.name,
   url: SITE.url,
-  image: `${siteUrl}/favicon.svg`,
+  image: `${siteUrl}/og/default.png`,
   jobTitle: 'Full Stack Systems Engineer & Co-Founder',
   worksFor: {
     '@type': 'Organization',
@@ -60,6 +60,8 @@ const personSchema = {
     SITE.social.github,
     SITE.social.linkedin,
     SITE.social.twitter,
+    SITE.social.facebook,
+    SITE.social.instagram,
     SITE.social.devto,
     SITE.social.dailydev,
   ],
@@ -126,6 +128,10 @@ const schemaGraph = {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="canonical" href={formattedCanonical} />
+  <!-- RSS Feed Autodiscovery -->
+  <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
+  <!-- AI LLM Discovery -->
+  <link rel="alternate" type="text/markdown" title="LLM Knowledge Base" href="/llms.txt" />
   <meta name="generator" content={Astro.generator} />
 
   {noindex && <meta name="robots" content="noindex, nofollow" />}
@@ -153,6 +159,10 @@ const schemaGraph = {
   <meta property="og:title" content={formattedTitle} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content={formattedTitle} />
+  <meta property="og:image:type" content="image/png" />
   <meta property="og:site_name" content={SITE.name} />
   <meta property="og:locale" content="en_US" />
   {publishDate && <meta property="article:published_time" content={publishDate} />}
@@ -167,6 +177,7 @@ const schemaGraph = {
   <meta name="twitter:title" content={formattedTitle} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
+  <meta name="twitter:image:alt" content={formattedTitle} />
 
   <!-- Linked Data Structured Schema (JSON-LD) -->
   <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />

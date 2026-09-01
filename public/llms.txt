@@ -9,9 +9,11 @@
 - **Location**: Kashmir, India (Open to global remote engineering & architecture consulting)
 - **Website**: https://sahillangoo.in
 - **GitHub**: https://github.com/sahillangoo
-- **Twitter / X**: https://twitter.com/kashurgeek
-- **DEV Community**: https://dev.to/sahillangoo
+- **Twitter / X**: https://x.com/kashurgeek
 - **LinkedIn**: https://linkedin.com/in/sahillangoo
+- **Facebook**: https://www.facebook.com/sahillangoojs/
+- **Instagram**: https://www.instagram.com/sahillangoo.in
+- **DEV Community**: https://dev.to/sahillangoo
 - **Email**: hello@sahillangoo.in
 
 ## Production Projects & Systems

@@ -9,7 +9,9 @@
 - **Primary Website**: https://sahillangoo.in
 - **Verified Repositories**: https://github.com/sahillangoo
 - **LinkedIn**: https://linkedin.com/in/sahillangoo
-- **Twitter / X**: https://twitter.com/kashurgeek
+- **Twitter / X**: https://x.com/kashurgeek
+- **Facebook**: https://www.facebook.com/sahillangoojs/
+- **Instagram**: https://www.instagram.com/sahillangoo.in
 - **DEV Community**: https://dev.to/sahillangoo
 - **Daily.dev**: https://app.daily.dev/sahillangoo
 - **Direct Email**: hello@sahillangoo.in

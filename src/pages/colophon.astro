@@ -39,6 +39,7 @@ const breadcrumbs = [
 <BaseLayout
   title="Colophon — Technical Specifications"
   description="Technical colophon detailing the typography, OKLCH color science, build architecture, and performance standards of this website."
+  image="/og/colophon.png"
   breadcrumbs={breadcrumbs}
   structuredData={colophonSchema}
 >
@@ -81,29 +82,38 @@ const breadcrumbs = [
     </div>
 
     <!-- Design & Performance Principles -->
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-      <div class="editorial-card space-y-3 p-6">
-        <h3 class="text-accent font-mono text-xs font-bold tracking-wider uppercase">
-          Typography & Color Science
-        </h3>
-        <p class="text-base-content/75 text-xs leading-relaxed">
-          Set in <strong>Plus Jakarta Sans</strong> for clean editorial hierarchy and <strong>
-            JetBrains Mono
-          </strong> for code snippets. The color scheme is calibrated in perceptual <strong>
-            OKLCH space
-          </strong> for consistent visual contrast across light and dark modes.
-        </p>
-      </div>
+    <div class="space-y-4">
+      <h2
+        class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase"
+      >
+        <Icon name="ph:paint-brush-broad-bold" class="h-4 w-4" />
+        Design & Performance Principles
+      </h2>
 
-      <div class="editorial-card space-y-3 p-6">
-        <h3 class="text-accent font-mono text-xs font-bold tracking-wider uppercase">
-          Zero-Dependency Quality Hook
-        </h3>
-        <p class="text-base-content/75 text-xs leading-relaxed">
-          Integrated with a custom build-time plugin (<code>astroSiteQualityEnforcer</code>) that
-          crawls all rendered HTML in <code>dist/</code> to prevent broken links, missing assets, and
-          trailing slash violations before deployment.
-        </p>
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div class="editorial-card space-y-3 p-6">
+          <h3 class="text-accent font-mono text-xs font-bold tracking-wider uppercase">
+            Typography & Color Science
+          </h3>
+          <p class="text-base-content/75 text-xs leading-relaxed">
+            Set in <strong>Plus Jakarta Sans</strong> for clean editorial hierarchy and <strong>
+              JetBrains Mono
+            </strong> for code snippets. The color scheme is calibrated in perceptual <strong>
+              OKLCH space
+            </strong> for consistent visual contrast across light and dark modes.
+          </p>
+        </div>
+
+        <div class="editorial-card space-y-3 p-6">
+          <h3 class="text-accent font-mono text-xs font-bold tracking-wider uppercase">
+            Zero-Dependency Quality Hook
+          </h3>
+          <p class="text-base-content/75 text-xs leading-relaxed">
+            Integrated with a custom build-time plugin (<code>astroSiteQualityEnforcer</code>) that
+            crawls all rendered HTML in <code>dist/</code> to prevent broken links, missing assets, and
+            trailing slash violations before deployment.
+          </p>
+        </div>
       </div>
     </div>
   </div>

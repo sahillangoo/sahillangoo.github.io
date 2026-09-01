@@ -59,6 +59,66 @@ export async function getStaticPaths() {
         readingTime: 'Curriculum Vitae',
       },
     },
+    {
+      params: { slug: 'about' },
+      props: {
+        title: 'About Sahil Langoo — Engineering Philosophy & Craft',
+        category: 'ENGINEERING & PHILOSOPHY',
+        description:
+          'Full Stack Systems Engineer and Co-Founder at SquadCoders. Minimalist UI craft & edge systems.',
+        readingTime: 'About Me',
+      },
+    },
+    {
+      params: { slug: 'contact' },
+      props: {
+        title: 'Start a Conversation & Technical Consulting',
+        category: 'CONTACT & COLLABORATION',
+        description:
+          'Get in touch for software engineering, system architecture consulting, and open-source collaboration.',
+        readingTime: 'Get in Touch',
+      },
+    },
+    {
+      params: { slug: 'now' },
+      props: {
+        title: 'Now — Current Priorities & Active Projects',
+        category: 'NOW FOCUS',
+        description:
+          'Public declaration of current priorities, active projects, learning quests, and focus areas.',
+        readingTime: 'Priorities',
+      },
+    },
+    {
+      params: { slug: 'uses' },
+      props: {
+        title: 'Uses & Developer Setup — Tools & Hardware',
+        category: 'GEAR & ENVIRONMENT',
+        description:
+          'Living inventory of hardware, software, editors, terminal tools, and cloud services.',
+        readingTime: 'Developer Setup',
+      },
+    },
+    {
+      params: { slug: 'colophon' },
+      props: {
+        title: 'Technical Colophon & Architecture Specifications',
+        category: 'SITE SPECIFICATIONS',
+        description:
+          'Technical colophon detailing typography, OKLCH color science, build architecture, and performance.',
+        readingTime: 'Colophon',
+      },
+    },
+    {
+      params: { slug: 'links' },
+      props: {
+        title: 'Sahil Langoo — Verified Links & Profiles',
+        category: 'VERIFIED PROFILES',
+        description:
+          'Quick access links to official profiles, repositories, technical essays, and portfolio.',
+        readingTime: 'Links & Social',
+      },
+    },
     // Blog articles
     ...blog.map((post) => ({
       params: { slug: `blog/${post.id}` },

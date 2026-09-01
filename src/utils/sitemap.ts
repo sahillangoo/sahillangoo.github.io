@@ -17,8 +17,8 @@ function extractContentDates(contentDir: string): Map<string, string> {
     const slug = file.replace(/\.md$/, '');
     const content = fs.readFileSync(path.join(dirPath, file), 'utf-8');
 
-    const updatedMatch = content.match(/updatedDate:\s*['"]([^'"]+)['"]/);
-    const publishMatch = content.match(/publishDate:\s*['"]([^'"]+)['"]/);
+    const updatedMatch = content.match(/updatedDate:\s*['"]?([0-9]{4}-[0-9]{2}-[0-9]{2})['"]?/);
+    const publishMatch = content.match(/publishDate:\s*['"]?([0-9]{4}-[0-9]{2}-[0-9]{2})['"]?/);
 
     const date = updatedMatch?.[1] || publishMatch?.[1] || DEFAULT_BUILD_DATE;
     map.set(slug, date);

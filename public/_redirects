@@ -9,6 +9,18 @@ http://sahillangoo.in/*       https://sahillangoo.in/:splat  301
 /sitemaps.xml       /sitemap.xml  301
 /sitemap/           /sitemap.xml  301
 
+# Developer & Security Standards Redirections
+/security           /.well-known/security.txt  301
+/security.txt       /.well-known/security.txt  301
+/humans             /humans.txt                301
+/llms               /llms.txt                  301
+
+# Developer CLI & Terminal Aliases
+/cli                /cli.txt                   302
+/card               /cli.txt                   302
+/terminal           /cli.txt                   302
+/whoami             /cli.txt                   302
+
 # Route Aliases & Shortlinks
 /work       /projects/  301
 /articles   /blog/      301
@@ -16,7 +28,11 @@ http://sahillangoo.in/*       https://sahillangoo.in/:splat  301
 /notes/all  /notes/     301
 
 # External Verified Social Redirects
-/github    https://github.com/sahillangoo        302
-/linkedin  https://linkedin.com/in/sahillangoo  302
-/twitter   https://x.com/kashurgeek            302
-/x         https://x.com/kashurgeek            302
+/github     https://github.com/sahillangoo        302
+/linkedin   https://linkedin.com/in/sahillangoo  302
+/twitter    https://x.com/kashurgeek            302
+/x          https://x.com/kashurgeek            302
+/facebook  https://www.facebook.com/sahillangoojs/  302
+/instagram https://www.instagram.com/sahillangoo.in 302
+/devto      https://dev.to/sahillangoo          302
+/dailydev   https://app.daily.dev/sahillangoo   302

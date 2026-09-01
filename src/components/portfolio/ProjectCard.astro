@@ -5,10 +5,13 @@ import { Icon } from 'astro-icon/components';
 export interface Props {
   project: CollectionEntry<'projects'>;
   featured?: boolean;
+  headingLevel?: 'h2' | 'h3';
 }
 
-const { project, featured = false } = Astro.props;
+const { project, featured = false, headingLevel = 'h2' } = Astro.props;
 const { data, id } = project;
+
+const HeadingTag = headingLevel;
 ---
 
 <article
@@ -26,13 +29,14 @@ const { data, id } = project;
     </div>
 
     <!-- Title & Links -->
-    <h3
+    <HeadingTag
+      transition:name={`project-title-${id}`}
       class="text-base-content group-hover:text-accent text-xl font-bold tracking-tight transition-colors"
     >
       <a href={`/projects/${id}/`} class="after:absolute after:inset-0 focus:outline-none">
         {data.title}
       </a>
-    </h3>
+    </HeadingTag>
 
     <!-- Description -->
     <p class="text-base-content/70 mt-2.5 text-sm leading-relaxed">

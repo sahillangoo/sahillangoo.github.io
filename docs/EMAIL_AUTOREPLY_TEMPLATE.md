@@ -273,7 +273,7 @@ When you configure an autoresponder inside **Hostinger hPanel** (or Titan Email 
             </a>
             <span style="color: #cccccc;">&bull;</span>
             <a
-              href="https://twitter.com/kashurgeek"
+              href="https://x.com/kashurgeek"
               style="color: #444444; text-decoration: none; font-weight: 600;"
             >
               X
