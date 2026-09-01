@@ -8,6 +8,22 @@ const ROLES_DIR = path.resolve(process.cwd(), 'src/data/resumes/roles');
 const BASE_DATA_PATH = path.resolve(process.cwd(), 'src/data/resumes/base.json');
 const OUTPUT_DIR = path.resolve(process.cwd(), 'public/resumes');
 
+function safeWriteFileSync(filePath: string, buffer: Buffer): boolean {
+  try {
+    fs.writeFileSync(filePath, buffer);
+    return true;
+  } catch (err) {
+    const error = err as { code?: string };
+    if (error.code === 'EBUSY') {
+      console.warn(
+        `⚠️ Warning: ${path.basename(filePath)} is currently locked by another process. Skipping overwrite.`
+      );
+      return false;
+    }
+    throw err;
+  }
+}
+
 function escapeTypst(str: string): string {
   if (!str) return '';
   return str
@@ -29,27 +45,27 @@ export function renderTypstSource(data: ResumeData): string {
   let typstCode = `
 #set page(
   paper: "us-letter",
-  margin: (x: 0.38in, top: 0.32in, bottom: 0.32in),
+  margin: (x: 0.42in, top: 0.36in, bottom: 0.36in),
 )
 
 #set text(
   font: ("Latin Modern Roman", "Liberation Serif", "Times New Roman"),
-  size: 8.8pt,
+  size: 8.9pt,
   lang: "en",
 )
 
 #set par(
   justify: true,
-  leading: 0.42em,
+  leading: 0.44em,
 )
 
 // Section Heading Macro
 #let section(title) = {
-  v(2.5pt)
-  text(weight: "bold", size: 9.8pt, smallcaps(title))
+  v(3pt)
+  text(weight: "bold", size: 10.2pt, smallcaps(title))
   v(-3.5pt)
   line(length: 100%, stroke: 0.45pt + black)
-  v(1pt)
+  v(1.5pt)
 }
 
 // Experience / Subheading Macro
@@ -57,24 +73,25 @@ export function renderTypstSource(data: ResumeData): string {
   block(width: 100%, breakable: false)[
     #grid(
       columns: (1fr, auto),
-      text(weight: "bold", size: 9.1pt)[#title],
-      text(weight: "bold", size: 8.8pt)[#location],
+      text(weight: "bold", size: 9.2pt)[#title],
+      text(weight: "bold", size: 8.9pt)[#location],
     )
-    #v(-2.5pt)
+    #v(-2.2pt)
     #grid(
       columns: (1fr, auto),
-      text(style: "italic", size: 8.6pt)[#subtitle],
-      text(style: "italic", size: 8.6pt)[#dates],
+      text(style: "italic", size: 8.7pt)[#subtitle],
+      text(style: "italic", size: 8.7pt)[#dates],
     )
-    #v(-3pt)
+    #v(-2.8pt)
     #for b in bullets [
-      #v(1.2pt)
+      #v(1.4pt)
       #grid(
         columns: (8pt, 1fr),
         [•],
-        [#text(size: 8.6pt)[#b]]
+        [#text(size: 8.7pt)[#b]]
       )
     ]
+    #v(0.5pt)
   ]
 }
 
@@ -84,35 +101,38 @@ export function renderTypstSource(data: ResumeData): string {
     #grid(
       columns: (1fr, auto),
       [
-        #text(weight: "bold", size: 9.1pt)[#title]
-        #text(style: "italic", size: 8.4pt)[ | #tech]
+        #text(weight: "bold", size: 9.2pt)[#title]
+        #text(style: "italic", size: 8.5pt)[ | #tech]
         #if url != none [
-          #text(size: 8.2pt)[ (#link(url)[#url.replace("https://", "")]) ]
+          #text(size: 8.3pt)[ (#link(url)[#url.replace("https://", "")]) ]
         ]
       ],
-      text(style: "italic", size: 8.6pt)[#dates],
+      text(style: "italic", size: 8.7pt)[#dates],
     )
-    #v(-3pt)
+    #v(-2.8pt)
     #for b in bullets [
-      #v(1.2pt)
+      #v(1.4pt)
       #grid(
         columns: (8pt, 1fr),
         [•],
-        [#text(size: 8.6pt)[#b]]
+        [#text(size: 8.7pt)[#b]]
       )
     ]
+    #v(0.5pt)
   ]
 }
 
 // --- HEADER ---
 #align(center)[
-  #text(weight: "bold", size: 16pt, smallcaps("${escapeTypst(contact.name)}")) \\
-  #v(1pt)
-  #text(size: 8.3pt)[
-    ${escapeTypst(contact.location)} • ${escapeTypst(contact.phone)} • #link("mailto:${contact.email}")[#text("${contact.email}")] • #link("${contact.website}")[#text("${webDisplay}")] • #link("${contact.github}")[#text("${ghDisplay}")] • #link("${contact.linkedin}")[#text("${liDisplay}")]
+  #text(weight: "bold", size: 17.5pt, smallcaps("${escapeTypst(contact.name)}")) \\
+  #v(1.5pt)
+  #text(size: 8.5pt)[
+    ${escapeTypst(contact.location)} $|$ ${escapeTypst(contact.phone)} $|$ #link("mailto:${contact.email}")[#text("${contact.email}")] \\
+    #v(1.5pt)
+    #link("${contact.website}")[#text("${webDisplay}")] $|$ #link("${contact.linkedin}")[#text("${liDisplay}")] $|$ #link("${contact.github}")[#text("${ghDisplay}")]
   ]
 ]
-#v(-1pt)
+#v(0.5pt)
 
 // --- EDUCATION ---
 #section("Education")
@@ -123,8 +143,7 @@ export function renderTypstSource(data: ResumeData): string {
     if (edu.coursework && edu.coursework.length > 0) {
       bullets.push(`*Relevant Coursework:* ${edu.coursework.map(escapeTypst).join(', ')}.`);
     }
-    const bulletsParam =
-      bullets.length > 0 ? `(${bullets.map((b) => `[${b}]`).join(', ')},)` : '()';
+    const bulletsParam = bullets.length > 0 ? `(${bullets.map(b => `[${b}]`).join(', ')},)` : '()';
     typstCode += `
 #entry(
   "${escapeTypst(edu.institution)}",
@@ -140,12 +159,12 @@ export function renderTypstSource(data: ResumeData): string {
 // --- TECHNICAL SKILLS ---
 #section("Technical Skills")
 #block(width: 100%)[
-  #set text(size: 8.6pt)
+  #set text(size: 8.7pt)
   #grid(
     columns: (auto, 1fr),
-    row-gutter: 1.5pt,
-    column-gutter: 4pt,
-    [*Languages:*], [${skills.languages.map(escapeTypst).join(', ')}],
+    row-gutter: 1.8pt,
+    column-gutter: 4.5pt,
+    [*Languages & Scripting:*], [${skills.languages.map(escapeTypst).join(', ')}],
     [*Frameworks & UI:*], [${skills.frameworks.map(escapeTypst).join(', ')}],
     [*Cloud & DevOps:*], [${skills.cloud.map(escapeTypst).join(', ')}],
     [*Databases & Tools:*], [${skills.databasesAndTools.map(escapeTypst).join(', ')}],
@@ -157,7 +176,7 @@ export function renderTypstSource(data: ResumeData): string {
 `;
 
   for (const exp of experience) {
-    const bullets = exp.highlights.map((h) => `[${escapeTypst(h)}]`);
+    const bullets = exp.highlights.map(h => `[${escapeTypst(h)}]`);
     typstCode += `
 #entry(
   "${escapeTypst(exp.company)}",
@@ -175,7 +194,7 @@ export function renderTypstSource(data: ResumeData): string {
 `;
 
   for (const proj of projects) {
-    const bullets = proj.highlights.map((h) => `[${escapeTypst(h)}]`);
+    const bullets = proj.highlights.map(h => `[${escapeTypst(h)}]`);
     const urlParam = proj.link ? `url: "${proj.link}"` : 'url: none';
     typstCode += `
 #project(
@@ -193,12 +212,12 @@ export function renderTypstSource(data: ResumeData): string {
 // --- CERTIFICATIONS ---
 #section("Certifications")
 #block(width: 100%)[
-  #set text(size: 8.4pt)
+  #set text(size: 8.5pt)
   #grid(
     columns: (1fr, 1fr),
-    row-gutter: 1.5pt,
-    column-gutter: 10pt,
-    ${certifications.map((c) => `[*${escapeTypst(c.name)}* — _${escapeTypst(c.issuer)}_]`).join(',\n    ')}
+    row-gutter: 1.8pt,
+    column-gutter: 12pt,
+    ${certifications.map(c => `[*${escapeTypst(c.name)}* — _${escapeTypst(c.issuer)}_]`).join(',\n    ')}
   )
 ]
 `;
@@ -259,20 +278,22 @@ export async function generateAllResumes(): Promise<string[]> {
     }
 
     const targetPath = path.join(OUTPUT_DIR, roleProfile.filename);
-    fs.writeFileSync(targetPath, Buffer.from(pdfBuffer));
-    generatedFiles.push(targetPath);
-    console.log(
-      `✓ Generated: ${roleProfile.filename} (${(pdfBuffer.length / 1024).toFixed(1)} KB)`
-    );
+    const written = safeWriteFileSync(targetPath, Buffer.from(pdfBuffer));
+    if (written) {
+      generatedFiles.push(targetPath);
+      console.log(`✓ Generated: ${roleProfile.filename} (${(pdfBuffer.length / 1024).toFixed(1)} KB)`);
+    }
 
     // If this is fullstack, also write the canonical Resume-Sahil-Langoo.pdf
     if (roleProfile.id === 'fullstack') {
       const canonicalPath = path.join(OUTPUT_DIR, 'Resume-Sahil-Langoo.pdf');
-      fs.writeFileSync(canonicalPath, Buffer.from(pdfBuffer));
-      generatedFiles.push(canonicalPath);
-      console.log(
-        `✓ Generated Canonical: Resume-Sahil-Langoo.pdf (${(pdfBuffer.length / 1024).toFixed(1)} KB)`
-      );
+      const writtenCanonical = safeWriteFileSync(canonicalPath, Buffer.from(pdfBuffer));
+      if (writtenCanonical) {
+        generatedFiles.push(canonicalPath);
+        console.log(
+          `✓ Generated Canonical: Resume-Sahil-Langoo.pdf (${(pdfBuffer.length / 1024).toFixed(1)} KB)`
+        );
+      }
     }
   }
 

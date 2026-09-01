@@ -12,7 +12,7 @@ export const resumeCopy: ResumePageCopy = {
     roleSubtitle: 'Full Stack Systems Engineer & Co-Founder • Kashmir, India',
     downloadCta: {
       label: 'Download PDF',
-      href: '/resumes/Resume-Sahil-Langoo.pdf',
+      href: '/resumes/Resume-Sahil-2025.pdf',
       icon: 'ph:file-pdf-bold',
       external: true,
     },
