@@ -144,6 +144,27 @@ const schemaGraph = {
     )
   }
 
+  <!-- Duplicate Content & Crawler Shield for Preview / Secondary Subdomains -->
+  <script is:inline>
+    (() => {
+      const h = window.location.hostname;
+      if (h !== 'sahillangoo.in' && h !== 'localhost' && h !== '127.0.0.1') {
+        const meta = document.createElement('meta');
+        meta.name = 'robots';
+        meta.content = 'noindex, nofollow, noarchive';
+        document.head.appendChild(meta);
+        if (h.includes('github.io') || h.includes('pages.dev') || h.startsWith('www.')) {
+          window.location.replace(
+            'https://sahillangoo.in' +
+              window.location.pathname +
+              window.location.search +
+              window.location.hash
+          );
+        }
+      }
+    })();
+  </script>
+
   <!-- Astro View Transitions Router -->
   <ClientRouter />
 
