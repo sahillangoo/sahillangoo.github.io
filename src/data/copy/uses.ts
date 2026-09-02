@@ -2,7 +2,7 @@ import type { UsesPageCopy } from './types';
 
 export const usesCopy: UsesPageCopy = {
   seo: {
-    title: 'Uses & Developer Setup — Sahil Langoo',
+    title: 'Uses & Developer Setup | Sahil Langoo',
     description:
       'A living inventory of hardware, software, editors, terminal tools, and cloud services used daily by Sahil Langoo.',
     image: '/og/uses.png',

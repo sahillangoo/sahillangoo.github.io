@@ -1,11 +1,11 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import NoteCard from '@/components/portfolio/NoteCard.astro';
-import Pagination from '@/components/common/Pagination.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import NoteCard from '@components/portfolio/NoteCard.astro';
+import Pagination from '@components/common/Pagination.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { GetStaticPaths, Page } from 'astro';
-import { SITE } from '@/const/site.ts';
-import { notesCopy } from '@/data/copy/notes.ts';
+import { SITE } from '@const/site.ts';
+import { notesCopy } from '@copy/notes.ts';
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
   const notes = await getCollection('notes');
@@ -86,10 +86,10 @@ const breadcrumbs = [
   breadcrumbs={breadcrumbs}
   structuredData={notesSchema}
 >
-  <div class="mx-auto max-w-5xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">
+  <div class="mx-auto max-w-6xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">
     <!-- Header -->
-    <div class="border-base-300 max-w-2xl border-b pb-6">
-      <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
+    <div class="border-base-300 max-w-3xl space-y-4 border-b pb-8">
+      <span class="text-accent font-mono text-xs font-semibold tracking-widest uppercase">
         {notesCopy.header.badgePrefix}
         {page.lastPage > 1 && ` • Page ${page.currentPage} of ${page.lastPage}`}
       </span>
@@ -102,7 +102,7 @@ const breadcrumbs = [
     </div>
 
     <!-- Notes Grid -->
-    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {notes.map((note) => <NoteCard note={note} />)}
     </div>
 

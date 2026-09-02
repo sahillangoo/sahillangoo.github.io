@@ -2,8 +2,8 @@ import type { NotesPageCopy } from './types';
 
 export const notesCopy: NotesPageCopy = {
   seo: {
-    title: 'Digital Garden & Technical Notes — Sahil Langoo',
-    pageTitleSuffix: (page: number) => ` — Page ${page}`,
+    title: 'Digital Garden & Technical Notes | Sahil Langoo',
+    pageTitleSuffix: (page: number) => ` | Page ${page}`,
     description:
       'Atomic notes, TILs, code patterns, and architectural mental models by Sahil Langoo.',
   },

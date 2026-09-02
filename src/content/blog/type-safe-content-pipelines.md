@@ -100,7 +100,9 @@ const { data, id } = project;
 const isCli = data.category === 'cli-tool';
 ---
 
-<article class={`editorial-card p-6 ${featured ? 'border-accent/40' : ''}`}>
+<article
+  class={`rounded-xl border border-base-300 bg-base-200 p-6 transition-all duration-200 hover:-translate-y-0.5 ${featured ? 'border-accent/40' : ''}`}
+>
   <span class="text-accent font-mono text-xs uppercase">{data.category}</span>
   <h3 class="text-xl font-bold">{data.title}</h3>
   <p class="text-base-content/75 text-sm">{data.description}</p>

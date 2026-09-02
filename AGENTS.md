@@ -1,4 +1,4 @@
-# AGENTS.md — AI Agent Operating Directives for Sahil Langoo Portfolio
+# AGENTS.md | AI Agent Operating Directives for Sahil Langoo Portfolio
 
 This file defines the quality control workflows, safety restrictions, CLI commands, and execution gates for **AI IDEs, agents, and assistants** working on the Sahil Langoo portfolio repository.
 
@@ -8,13 +8,14 @@ This file defines the quality control workflows, safety restrictions, CLI comman
 
 For all deep technical, architectural, and design rules, refer to the corresponding documentation files under [docs/](file:///d:/sandbox/work-box/sahillangoo-portfolio/docs):
 
-| For Information On         | Refer To                                         | Summary of Contents                                                                    |
-| :------------------------- | :----------------------------------------------- | :------------------------------------------------------------------------------------- |
-| **Architecture & Stack**   | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)     | Framework details, Cloudflare Pages, Astro integrations, and directory structure.      |
-| **Content Models**         | [docs/CONTENT_MODEL.md](docs/CONTENT_MODEL.md)   | Zod schemas, Content Collections, and frontmatter definitions.                         |
-| **Design System & Tokens** | [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md)   | 60:30:10 rule, OKLCH obsidian dark/light themes, typography scale, micro-interactions. |
-| **Quality Gates**          | [docs/QUALITY_GATES.md](docs/QUALITY_GATES.md)   | Verification scripts, pre-flight checks, and build rules.                              |
-| **Developer Intelligence** | [docs/RESEARCH_NOTES.md](docs/RESEARCH_NOTES.md) | Profile research, SquadCoders background, and GitHub commit discipline.                |
+| For Information On          | Refer To                                               | Summary of Contents                                                                    |
+| :-------------------------- | :----------------------------------------------------- | :------------------------------------------------------------------------------------- |
+| **Architecture & Stack**    | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)           | Framework details, Cloudflare Pages, Astro integrations, and directory structure.      |
+| **AI Anti-Patterns & Slop** | [docs/AI_CODE_STANDARDS.md](docs/AI_CODE_STANDARDS.md) | 10 AI anti-patterns, Astro boundary rules, zero-slop standards.                        |
+| **Content Models**          | [docs/CONTENT_MODEL.md](docs/CONTENT_MODEL.md)         | Zod schemas, Content Collections, and frontmatter definitions.                         |
+| **Design System & Tokens**  | [docs/DESIGN_SYSTEM.md](docs/DESIGN_SYSTEM.md)         | 60:30:10 rule, OKLCH obsidian dark/light themes, typography scale, micro-interactions. |
+| **Quality Gates**           | [docs/QUALITY_GATES.md](docs/QUALITY_GATES.md)         | Verification scripts, pre-flight checks, and build rules.                              |
+| **Developer Intelligence**  | [docs/RESEARCH_NOTES.md](docs/RESEARCH_NOTES.md)       | Profile research, SquadCoders background, and GitHub commit discipline.                |
 
 ---
 
@@ -43,9 +44,14 @@ Before completing tasks, ensure the following scripts pass:
 
 ```powershell
 pnpm format:check  # Check formatting compliance (Prettier)
-pnpm lint          # Run ESLint 10 flat config
+pnpm lint:ox       # Oxlint ultra-fast static checks (<50ms)
+pnpm lint:deps     # Knip dead code & supply chain verification
+pnpm lint:ai       # AI slop, anti-pattern & em-dash static analyzer
+pnpm lint:eslint   # ESLint 9+ flat config with Astro & TypeScript rules
+pnpm lint          # Run unified quality linter pipeline
 pnpm check         # Run Astro TypeScript diagnostics
 pnpm build         # Run production static build & link verification
+pnpm verify:prod   # Production readiness & domain verification
 ```
 
 ---

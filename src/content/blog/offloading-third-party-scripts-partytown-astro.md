@@ -66,7 +66,7 @@ export default defineConfig({
 });
 ```
 
-The `forward` array is critical: it informs Partytown which global functions called on the main thread (like `dataLayer.push()`) must be forwarded seamlessly into the Web Worker context.
+The `forward` array is critical: it informs Partytown which global functions called on the main thread (like `dataLayer.push()`) must be proxied directly into the Web Worker execution context.
 
 ---
 

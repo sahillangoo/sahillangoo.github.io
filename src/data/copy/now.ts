@@ -2,7 +2,7 @@ import type { NowPageCopy } from './types';
 
 export const nowCopy: NowPageCopy = {
   seo: {
-    title: "Now — What I'm Doing Right Now — Sahil Langoo",
+    title: "Now | What I'm Doing Right Now | Sahil Langoo",
     description:
       'A live declaration of what Sahil Langoo is currently working on, engineering architectures, studying, reading, and building.',
     image: '/og/now.png',
@@ -15,10 +15,10 @@ export const nowCopy: NowPageCopy = {
   },
   sections: [
     {
-      category: 'Engineering & Architecture at SquadCoders',
+      category: 'Engineering & Systems Architecture at Eresolution Consultancy Services',
       icon: 'ph:code-bold',
       items: [
-        'Architecting ultra-fast, zero-JS Astro static systems and modular client platforms at SquadCoders.',
+        'Engineering distributed API gateways, edge proxies, and server-side event streaming at Eresolution Consultancy Services.',
         'Refining zero-dependency build-time quality gates (verifying asset references, internal links, and SEO redirects).',
         'Implementing resilient edge proxies and payment integrations on Cloudflare Workers and Hono.',
       ],

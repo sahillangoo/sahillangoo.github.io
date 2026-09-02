@@ -65,7 +65,7 @@ function saveCachedActivity(data: GitHubActivityData): void {
 
 /**
  * Fetches real live GitHub contributions and verified commits at build time.
- * Seamlessly falls back to local cache if network is offline or rate-limited.
+ * Falls back to local cache if network is offline or rate-limited.
  */
 export async function getGitHubActivity(
   username = 'sahillangoo',

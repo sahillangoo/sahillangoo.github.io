@@ -1,16 +1,22 @@
 ---
 import { Icon } from 'astro-icon/components';
+import { cn } from '@utils/cn.ts';
 
 export interface Props {
   variant?: 'compact' | 'full';
   showWeather?: boolean;
+  class?: string;
 }
 
-const { variant = 'compact', showWeather = true } = Astro.props;
+const { variant = 'compact', showWeather = true, class: className = '' } = Astro.props;
 ---
 
 <div
-  class={`inline-flex flex-wrap items-center gap-2.5 font-mono text-xs ${variant === 'full' ? 'editorial-card p-4 sm:p-5' : ''}`}
+  class={cn(
+    'inline-flex flex-wrap items-center gap-2.5 font-mono text-xs',
+    variant === 'full' && 'rounded-xl border border-base-300 bg-base-200 p-4 sm:p-5',
+    className
+  )}
 >
   <div class="flex items-center gap-2">
     <span class="relative flex h-2 w-2">
@@ -35,7 +41,7 @@ const { variant = 'compact', showWeather = true } = Astro.props;
           <span id="weather-temp-text" class="font-medium tabular-nums">
             --°C
           </span>
-          <span id="weather-desc-text" class="text-base-content/50 hidden text-[11px] sm:inline">
+          <span id="weather-desc-text" class="text-base-content/50 hidden text-xs sm:inline">
             Loading...
           </span>
         </div>
@@ -52,7 +58,7 @@ const { variant = 'compact', showWeather = true } = Astro.props;
 
   {
     variant === 'full' && (
-      <div class="ml-auto hidden rounded-full border border-emerald-800/40 bg-emerald-950/40 px-2.5 py-0.5 text-[11px] font-medium text-emerald-400 sm:block">
+      <div class="ml-auto hidden rounded-full border border-emerald-800/40 bg-emerald-950/40 px-2.5 py-0.5 font-mono text-xs font-medium text-emerald-400 sm:block">
         Open to Select Projects
       </div>
     )
@@ -60,8 +66,6 @@ const { variant = 'compact', showWeather = true } = Astro.props;
 </div>
 
 <script>
-  import { fetchLiveWeather } from '../../utils/weather';
-
   let clockInterval: ReturnType<typeof setInterval> | null = null;
 
   function updateKashmirClock() {
@@ -89,14 +93,20 @@ const { variant = 'compact', showWeather = true } = Astro.props;
     const descEl = document.getElementById('weather-desc-text');
     if (!tempEl) return;
 
-    const weather = await fetchLiveWeather();
-    if (weather) {
-      tempEl.textContent = `${weather.temp}°C`;
-      if (descEl) descEl.textContent = weather.description;
-    } else {
-      tempEl.textContent = '22°C';
-      if (descEl) descEl.textContent = 'Clear';
+    try {
+      const { fetchLiveWeather } = await import('@utils/weather.ts');
+      const weather = await fetchLiveWeather();
+      if (weather) {
+        tempEl.textContent = `${weather.temp}°C`;
+        if (descEl) descEl.textContent = weather.description;
+        return;
+      }
+    } catch {
+      // Fallback below
     }
+
+    tempEl.textContent = '22°C';
+    if (descEl) descEl.textContent = 'Clear';
   }
 
   function setupWidgets() {
@@ -109,7 +119,6 @@ const { variant = 'compact', showWeather = true } = Astro.props;
     updateWeatherTelemetry();
   }
 
-  setupWidgets();
   document.addEventListener('astro:page-load', setupWidgets);
   document.addEventListener('astro:before-swap', () => {
     if (clockInterval) {

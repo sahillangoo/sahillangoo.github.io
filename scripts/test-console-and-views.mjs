@@ -93,9 +93,18 @@ console.log(`🌐 Browser Binary: ${executablePath}`);
 // 2. Start local static HTTP server
 const server = http.createServer((req, res) => {
   const parsedUrl = new URL(req.url || '/', `http://${req.headers.host || 'localhost'}`);
-  let pathname = decodeURIComponent(parsedUrl.pathname);
+  const pathname = decodeURIComponent(parsedUrl.pathname);
+  const cleanPath = pathname.replace(/^\/+/, '').replace(/\/+$/, '');
 
-  let filePath = path.join(distDir, pathname);
+  let filePath = cleanPath ? path.resolve(distDir, cleanPath) : path.join(distDir, 'index.html');
+
+  // Handle favicon.ico fallback to favicon.svg
+  if (cleanPath === 'favicon.ico' && !fs.existsSync(filePath)) {
+    const svgPath = path.join(distDir, 'favicon.svg');
+    if (fs.existsSync(svgPath)) {
+      filePath = svgPath;
+    }
+  }
 
   if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
     filePath = path.join(filePath, 'index.html');
@@ -110,7 +119,12 @@ const server = http.createServer((req, res) => {
       'Content-Type': contentType,
       'Access-Control-Allow-Origin': '*',
     });
-    fs.createReadStream(filePath).pipe(res);
+    const stream = fs.createReadStream(filePath);
+    stream.on('error', () => {
+      if (!res.headersSent) res.writeHead(500);
+      res.end();
+    });
+    stream.pipe(res);
   } else {
     // 404 fallback
     const notFoundPath = path.join(distDir, '404.html');

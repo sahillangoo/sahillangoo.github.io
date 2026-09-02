@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
 import { getEntry } from 'astro:content';
-import { SITE } from '@/const/site.ts';
-import { aboutCopy } from '@/data/copy/about.ts';
+import { SITE } from '@const/site.ts';
+import { aboutCopy } from '@copy/about.ts';
 import { Icon } from 'astro-icon/components';
 
 const siteData = await getEntry('site', 'profile');
@@ -21,7 +21,7 @@ const aboutSchema = [
   {
     '@type': 'AboutPage',
     '@id': `${SITE.url}/about/#aboutpage`,
-    name: `About ${SITE.name} — Engineering Background & Philosophy`,
+    name: `About ${SITE.name} | Engineering Background & Philosophy`,
     url: `${SITE.url}/about/`,
     description: aboutCopy.seo.description,
     mainEntity: {
@@ -54,10 +54,10 @@ const breadcrumbs = [
   structuredData={aboutSchema}
   type="profile"
 >
-  <div class="mx-auto max-w-3xl space-y-12 px-4 py-8 sm:px-6 sm:py-12">
+  <div class="mx-auto max-w-4xl space-y-12 px-4 py-8 sm:px-6 sm:py-12">
     <!-- Header -->
-    <div class="border-base-300 border-b pb-6">
-      <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
+    <div class="border-base-300 border-b pb-8">
+      <span class="text-accent font-mono text-xs font-semibold tracking-widest uppercase">
         {aboutCopy.hero.eyebrow}
       </span>
       <h1 class="text-base-content mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
@@ -79,9 +79,11 @@ const breadcrumbs = [
           </h2>
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {profile.principles.map((principle) => (
-              <div class="editorial-card p-5">
-                <h3 class="text-accent font-mono text-sm font-bold">{principle.title}</h3>
-                <p class="text-base-content/75 mt-1.5 text-xs leading-relaxed">
+              <div class="border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 transition-all duration-200 hover:-translate-y-0.5 active:scale-99 sm:p-6">
+                <h3 class="text-accent font-mono text-xs font-bold tracking-wide uppercase sm:text-sm">
+                  {principle.title}
+                </h3>
+                <p class="text-base-content/75 mt-2 text-xs leading-relaxed">
                   {principle.description}
                 </p>
               </div>
@@ -96,7 +98,9 @@ const breadcrumbs = [
       <h2 class="text-base-content text-xl font-bold tracking-tight">
         {aboutCopy.dailyStack.title}
       </h2>
-      <div class="editorial-card text-base-content/80 space-y-3 p-6 text-sm">
+      <div
+        class="border-base-300 bg-base-200 text-base-content/80 space-y-3 rounded-xl border p-6 text-sm sm:p-8"
+      >
         {
           aboutCopy.dailyStack.groups.map((group) => (
             <div class="flex items-start gap-2">
@@ -112,17 +116,17 @@ const breadcrumbs = [
 
     <!-- Connect Box -->
     <section
-      class="border-base-300 flex flex-col items-center justify-between gap-4 border-t pt-8 sm:flex-row"
+      class="border-base-300/80 bg-base-200/50 flex flex-col justify-between gap-4 rounded-xl border p-6 sm:flex-row sm:items-center sm:p-8"
     >
       <div>
-        <h2 class="text-base-content font-bold">{aboutCopy.connectCta.title}</h2>
-        <p class="text-base-content/70 text-xs">
+        <h2 class="text-base-content font-bold tracking-tight">{aboutCopy.connectCta.title}</h2>
+        <p class="text-base-content/75 mt-0.5 text-xs leading-relaxed">
           {aboutCopy.connectCta.description}
         </p>
       </div>
       <a
         href={aboutCopy.connectCta.cta.href}
-        class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-4 font-mono text-xs tracking-wider uppercase"
+        class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-4 font-mono text-xs font-medium tracking-wider uppercase"
       >
         {
           aboutCopy.connectCta.cta.icon && (

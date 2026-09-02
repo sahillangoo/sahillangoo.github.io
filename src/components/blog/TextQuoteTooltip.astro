@@ -12,14 +12,14 @@ import { Icon } from 'astro-icon/components';
     <button
       id="quote-copy-link-btn"
       type="button"
-      class="btn btn-ghost btn-xs text-base-content hover:bg-base-100/80 flex items-center gap-1.5 px-2.5 font-mono text-[11px] active:scale-95"
+      class="btn btn-ghost btn-xs text-base-content hover:bg-base-100/80 flex items-center gap-1.5 px-2.5 font-mono text-xs active:scale-95"
       title="Copy direct link to highlighted passage"
     >
       <Icon name="ph:link-bold" class="text-accent h-3.5 w-3.5" />
       <span id="quote-btn-label">Copy Quote Link</span>
     </button>
 
-    <div class="bg-base-content/20 h-3 w-[1px]"></div>
+    <div class="bg-base-content/20 h-3 w-px"></div>
 
     <button
       id="quote-share-x-btn"
@@ -39,112 +39,115 @@ import { Icon } from 'astro-icon/components';
 </div>
 
 <script>
-  import { audioEngine } from '../../utils/audioEngine';
+  let selectedText = '';
 
-  function setupQuoteTooltip() {
-    const tooltip = document.getElementById('text-quote-tooltip');
-    const copyBtn = document.getElementById('quote-copy-link-btn');
-    const labelSpan = document.getElementById('quote-btn-label');
-    const shareXBtn = document.getElementById('quote-share-x-btn');
+  async function playAudioClick(type: 'soft' | 'mechanical' | 'toggle' | 'bell' = 'soft') {
+    if (typeof window !== 'undefined' && localStorage.getItem('sl_sound_effects') === 'enabled') {
+      const { audioEngine } = await import('@utils/audioEngine.ts');
+      audioEngine.playClick(type);
+    }
+  }
 
-    if (!tooltip || !copyBtn) return;
+  function getTooltip() {
+    return document.getElementById('text-quote-tooltip');
+  }
 
-    let selectedText = '';
+  function hideTooltip() {
+    const tooltip = getTooltip();
+    if (tooltip && !tooltip.classList.contains('hidden')) {
+      tooltip.classList.add('hidden');
+      tooltip.setAttribute('aria-hidden', 'true');
+    }
+  }
 
-    function handleSelection() {
-      const selection = window.getSelection();
-      if (!selection || selection.isCollapsed || !selection.rangeCount) {
-        hideTooltip();
-        return;
-      }
+  function handleSelection() {
+    const tooltip = getTooltip();
+    if (!tooltip) return;
 
-      const text = selection.toString().trim();
-      if (text.length < 6 || text.length > 300) {
-        hideTooltip();
-        return;
-      }
-
-      // Ensure selection is inside article or content
-      const anchorNode = selection.anchorNode;
-      const articleEl = anchorNode?.parentElement?.closest('article, .prose');
-      if (!articleEl) {
-        hideTooltip();
-        return;
-      }
-
-      if (!tooltip) return;
-
-      selectedText = text;
-      const range = selection.getRangeAt(0);
-      const rect = range.getBoundingClientRect();
-
-      // Position tooltip centered above the selection
-      tooltip.style.left = `${rect.left + rect.width / 2}px`;
-      tooltip.style.top = `${rect.top - 8}px`;
-      tooltip.classList.remove('hidden');
-      tooltip.setAttribute('aria-hidden', 'false');
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed || !selection.rangeCount) {
+      hideTooltip();
+      return;
     }
 
-    function hideTooltip() {
-      if (tooltip) {
-        tooltip.classList.add('hidden');
-        tooltip.setAttribute('aria-hidden', 'true');
-      }
+    const text = selection.toString().trim();
+    if (text.length < 6 || text.length > 300) {
+      hideTooltip();
+      return;
     }
 
-    copyBtn.onclick = async (e) => {
-      e.preventDefault();
-      e.stopPropagation();
+    const anchorNode = selection.anchorNode;
+    const articleEl = anchorNode?.parentElement?.closest('article, .prose');
+    if (!articleEl) {
+      hideTooltip();
+      return;
+    }
 
-      if (!selectedText) return;
+    selectedText = text;
+    const range = selection.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
 
-      // Generate standard W3C Text Fragment URL
-      const encodedFragment = encodeURIComponent(selectedText.replace(/[\n\r]+/g, ' '));
-      const targetUrl = `${window.location.origin}${window.location.pathname}#:~:text=${encodedFragment}`;
+    tooltip.style.left = `${rect.left + rect.width / 2}px`;
+    tooltip.style.top = `${rect.top - 8}px`;
+    tooltip.classList.remove('hidden');
+    tooltip.setAttribute('aria-hidden', 'false');
+  }
 
-      try {
-        await navigator.clipboard.writeText(targetUrl);
-        audioEngine.playClick('soft');
+  const win = window as unknown as Record<string, unknown>;
+  if (!win.__QUOTE_TOOLTIP_INIT__) {
+    win.__QUOTE_TOOLTIP_INIT__ = true;
 
-        if (labelSpan) {
-          labelSpan.textContent = 'Copied!';
-          setTimeout(() => {
-            if (labelSpan) labelSpan.textContent = 'Copy Quote Link';
-            hideTooltip();
-          }, 1200);
-        }
-      } catch {
-        // Fallback
+    document.addEventListener('mouseup', () => setTimeout(handleSelection, 20));
+    document.addEventListener('touchend', () => setTimeout(handleSelection, 20));
+    document.addEventListener('scroll', hideTooltip, { passive: true });
+    document.addEventListener('mousedown', (e) => {
+      const tooltip = getTooltip();
+      if (tooltip && !tooltip.contains(e.target as Node)) {
+        hideTooltip();
       }
-    };
+    });
 
-    if (shareXBtn) {
-      shareXBtn.onclick = (e) => {
+    document.addEventListener('astro:before-swap', hideTooltip);
+
+    document.addEventListener('click', async (e) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+
+      const copyBtn = target.closest('#quote-copy-link-btn');
+      if (copyBtn && selectedText) {
         e.preventDefault();
         e.stopPropagation();
+        const encodedFragment = encodeURIComponent(selectedText.replace(/[\n\r]+/g, ' '));
+        const targetUrl = `${window.location.origin}${window.location.pathname}#:~:text=${encodedFragment}`;
+        try {
+          await navigator.clipboard.writeText(targetUrl);
+          await playAudioClick('soft');
+          const labelSpan = document.getElementById('quote-btn-label');
+          if (labelSpan) {
+            labelSpan.textContent = 'Copied!';
+            setTimeout(() => {
+              if (labelSpan) labelSpan.textContent = 'Copy Quote Link';
+              hideTooltip();
+            }, 1200);
+          }
+        } catch {
+          // Clipboard fallback
+        }
+        return;
+      }
 
-        if (!selectedText) return;
-        audioEngine.playClick('soft');
-
+      const shareXBtn = target.closest('#quote-share-x-btn');
+      if (shareXBtn && selectedText) {
+        e.preventDefault();
+        e.stopPropagation();
+        await playAudioClick('soft');
         const excerpt =
           selectedText.length > 180 ? selectedText.slice(0, 177) + '...' : selectedText;
         const tweetText = `"${excerpt}"\n\nby @kashurgeek`;
         const tweetUrl = `https://x.com/intent/post?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(window.location.href)}`;
         window.open(tweetUrl, '_blank', 'noopener,noreferrer,width=550,height=420');
         hideTooltip();
-      };
-    }
-
-    document.addEventListener('mouseup', () => setTimeout(handleSelection, 20));
-    document.addEventListener('touchend', () => setTimeout(handleSelection, 20));
-    document.addEventListener('scroll', hideTooltip, { passive: true });
-    document.addEventListener('mousedown', (e) => {
-      if (!tooltip.contains(e.target as Node)) {
-        hideTooltip();
       }
     });
   }
-
-  setupQuoteTooltip();
-  document.addEventListener('astro:page-load', setupQuoteTooltip);
 </script>

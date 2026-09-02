@@ -1,23 +1,27 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { Icon } from 'astro-icon/components';
+import { cn } from '@utils/cn.ts';
 
 export interface Props {
   project: CollectionEntry<'projects'>;
   featured?: boolean;
   headingLevel?: 'h2' | 'h3';
+  class?: string;
 }
 
-const { project, featured = false, headingLevel = 'h2' } = Astro.props;
+const { project, featured = false, headingLevel = 'h2', class: className = '' } = Astro.props;
 const { data, id } = project;
 
 const HeadingTag = headingLevel;
 ---
 
 <article
-  class={`editorial-card group relative flex flex-col justify-between p-6 sm:p-7 ${
-    featured ? 'md:col-span-2' : ''
-  }`}
+  class={cn(
+    'group relative flex flex-col justify-between rounded-xl border border-base-300 bg-base-200 p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/40 active:scale-99 sm:p-7',
+    featured && 'md:col-span-2',
+    className
+  )}
 >
   <div>
     <!-- Top Metadata row -->
@@ -53,7 +57,7 @@ const HeadingTag = headingLevel;
         data.tags
           .slice(0, 4)
           .map((tag) => (
-            <span class="bg-base-300/40 text-base-content/70 rounded-md px-2 py-0.5 font-mono text-[11px]">
+            <span class="bg-base-300/40 text-base-content/70 rounded-md px-2 py-0.5 font-mono text-xs">
               {tag}
             </span>
           ))

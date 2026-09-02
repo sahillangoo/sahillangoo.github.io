@@ -1,0 +1,14 @@
+{
+  "$schema": "https://unpkg.com/knip@latest/schema.json",
+  "ignoreDependencies": [
+    "@iconify-json/*",
+    "astro-eslint-parser",
+    "@astrojs/ts-plugin",
+    "motion",
+    "daisyui",
+    "tailwindcss",
+    "@tailwindcss/typography",
+    "@tailwindcss/vite"
+  ],
+  "ignore": ["src/data/copy/index.ts", "dist/**", ".astro/**"]
+}

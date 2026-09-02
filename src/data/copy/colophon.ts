@@ -2,7 +2,7 @@ import type { ColophonPageCopy } from './types';
 
 export const colophonCopy: ColophonPageCopy = {
   seo: {
-    title: 'Colophon — Technical Specifications — Sahil Langoo',
+    title: 'Colophon | Technical Specifications | Sahil Langoo',
     description:
       'Technical colophon detailing the typography, OKLCH color science, build architecture, and performance standards of this website.',
     image: '/og/colophon.png',

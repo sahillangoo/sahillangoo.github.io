@@ -80,13 +80,5 @@
     });
   }
 
-  // Execute on initial load and on every Astro View Transition cycle
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', resolveCloudflareEmails);
-  } else {
-    resolveCloudflareEmails();
-  }
-
   document.addEventListener('astro:page-load', resolveCloudflareEmails);
-  document.addEventListener('astro:after-swap', resolveCloudflareEmails);
 </script>

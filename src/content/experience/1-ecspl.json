@@ -1,13 +1,13 @@
 {
   "role": "Systems & Backend Integration Engineer",
-  "company": "Enterprise Web Systems (@ecspl)",
+  "company": "Eresolution Consultancy Services",
   "companyUrl": "https://github.com/ecspl",
   "location": "Remote",
-  "period": "2021 — 2024",
-  "current": false,
+  "period": "Apr 2025 - Present",
+  "current": true,
   "highlights": [
     "Engineered distributed Hono API gateways on Cloudflare Workers for Experian credit OTP proxies and Meta CAPI server-side dispatching, maintaining 99.99% uptime and sub-100ms p99 execution latency.",
-    "Triaged production Sentry exception telemetry across 90-day intervals, resolving client-side race conditions and payment transport failures to elevate checkout transaction success rate by 14%.",
+    "Triaged production Sentry exception telemetry across 90-day intervals, resolving client-side race conditions and payment transport failures, improving checkout transaction success rate by 14%.",
     "Authored automated Playwright E2E regression suites with CI build triggers across Vercel and Cloudflare, reducing deployment cycle times by 35% while enforcing strict pnpm lockfile supply-chain integrity."
   ],
   "skills": [
@@ -23,5 +23,5 @@
     "Razorpay",
     "Meta CAPI"
   ],
-  "order": 3
+  "order": 1
 }

@@ -1,6 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { getGitHubActivity } from '../../utils/github';
+import { getGitHubActivity } from '@utils/github.ts';
 
 export interface Props {
   username?: string;
@@ -50,7 +50,7 @@ contributionWeeks.forEach((week, index) => {
 });
 ---
 
-<div class="editorial-card space-y-6 p-6 sm:p-7">
+<div class="border-base-300 bg-base-200 space-y-6 rounded-xl border p-6 sm:p-7">
   <!-- Widget Header (Authentic GitHub Style) -->
   <div
     class="border-base-300/80 flex flex-col justify-between gap-4 border-b pb-5 sm:flex-row sm:items-center"
@@ -59,7 +59,7 @@ contributionWeeks.forEach((week, index) => {
       <div
         class="bg-base-300/40 text-base-content flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/5 shadow-inner"
       >
-        <Icon name="ph:git-commit-bold" class="h-5 w-5 text-[#39d353]" />
+        <Icon name="ph:git-commit-bold" class="text-github-active h-5 w-5" />
       </div>
       <div>
         <div class="flex flex-wrap items-center gap-2">
@@ -67,7 +67,7 @@ contributionWeeks.forEach((week, index) => {
             {totalContributions.toLocaleString()} contributions in the last year
           </h2>
           <span
-            class="rounded-full border border-[#39d353]/30 bg-[#39d353]/10 px-2 py-0.5 font-mono text-[10px] font-medium text-[#39d353]"
+            class="border-github-active/30 bg-github-active/10 text-github-active rounded-full border px-2.5 py-0.5 font-mono text-xs font-medium"
           >
             Verified Stream
           </span>
@@ -99,15 +99,23 @@ contributionWeeks.forEach((week, index) => {
         <span>@{username}</span>
         <Icon name="ph:arrow-up-right-bold" class="h-3 w-3 opacity-60" />
       </a>
+      <div class="flex items-center gap-2">
+        <span
+          class="border-base-300 bg-base-100 text-base-content/70 hidden items-center gap-1.5 rounded-md border px-2.5 py-1 font-mono text-xs sm:inline-flex"
+        >
+          <span class="bg-github-active h-2 w-2 animate-pulse rounded-full"></span>
+          Active Profile
+        </span>
+      </div>
     </div>
   </div>
 
   <!-- Real GitHub Green Contribution Heatmap Graph -->
   <div class="space-y-2">
-    <div class="text-base-content/70 flex items-center justify-between font-mono text-[11px]">
+    <div class="text-base-content/70 flex items-center justify-between font-mono text-xs">
       <span class="font-medium tracking-wide">Contribution Activity Calendar</span>
-      <span class="flex items-center gap-1.5 font-medium text-[#39d353]">
-        <span class="h-1.5 w-1.5 rounded-full bg-[#39d353] shadow-[0_0_8px_#39d353]"></span>
+      <span class="text-github-active flex items-center gap-1.5 font-medium">
+        <span class="bg-github-active shadow-glow-github h-1.5 w-1.5 rounded-full"></span>
         Live Graph
       </span>
     </div>
@@ -115,14 +123,14 @@ contributionWeeks.forEach((week, index) => {
     <!-- Outer Graph Container -->
     <div class="border-base-300/80 bg-base-200/30 rounded-xl border p-4 sm:p-5">
       <div class="scrollbar-none overflow-x-auto pb-1">
-        <div class="inline-block min-w-[700px]">
+        <div class="inline-block min-w-max">
           <!-- Month Labels Row -->
-          <div class="text-base-content/50 mb-1.5 flex pl-8 font-mono text-[10px]">
+          <div class="text-base-content/50 mb-1.5 flex pl-8 font-mono text-xs">
             {
               contributionWeeks.map((_, i) => {
                 const match = monthLabels.find((m) => m.index === i);
                 return (
-                  <div class="w-[10px] shrink-0 sm:w-[11px]">
+                  <div class="w-2.5 shrink-0 sm:w-3">
                     {match ? <span class="block whitespace-nowrap">{match.label}</span> : null}
                   </div>
                 );
@@ -134,22 +142,22 @@ contributionWeeks.forEach((week, index) => {
           <div class="flex items-start gap-2">
             <!-- Weekday Labels (Mon, Wed, Fri) -->
             <div
-              class="text-base-content/40 flex flex-col justify-between font-mono text-[9px] select-none"
+              class="text-base-content/40 flex flex-col justify-between font-mono text-xs select-none"
             >
-              <span class="h-[10px] leading-[10px] sm:h-[11px] sm:leading-[11px]"></span>
-              <span class="h-[10px] leading-[10px] sm:h-[11px] sm:leading-[11px]">Mon</span>
-              <span class="h-[10px] leading-[10px] sm:h-[11px] sm:leading-[11px]"></span>
-              <span class="h-[10px] leading-[10px] sm:h-[11px] sm:leading-[11px]">Wed</span>
-              <span class="h-[10px] leading-[10px] sm:h-[11px] sm:leading-[11px]"></span>
-              <span class="h-[10px] leading-[10px] sm:h-[11px] sm:leading-[11px]">Fri</span>
-              <span class="h-[10px] leading-[10px] sm:h-[11px] sm:leading-[11px]"></span>
+              <span class="h-2.5 leading-none sm:h-3 sm:leading-none"></span>
+              <span class="h-2.5 leading-none sm:h-3 sm:leading-none">Mon</span>
+              <span class="h-2.5 leading-none sm:h-3 sm:leading-none"></span>
+              <span class="h-2.5 leading-none sm:h-3 sm:leading-none">Wed</span>
+              <span class="h-2.5 leading-none sm:h-3 sm:leading-none"></span>
+              <span class="h-2.5 leading-none sm:h-3 sm:leading-none">Fri</span>
+              <span class="h-2.5 leading-none sm:h-3 sm:leading-none"></span>
             </div>
 
             <!-- Contribution Grid Columns -->
-            <div class="flex gap-[3px]">
+            <div class="flex gap-0.5">
               {
                 contributionWeeks.map((week) => (
-                  <div class="flex flex-col gap-[3px]">
+                  <div class="flex flex-col gap-0.5">
                     {week.map((day) => {
                       const countText =
                         day.count === 0
@@ -158,7 +166,7 @@ contributionWeeks.forEach((week, index) => {
 
                       return (
                         <div
-                          class={`gh-cell-${day.level} h-[10px] w-[10px] rounded-[2px] transition-transform duration-100 hover:scale-125 sm:h-[11px] sm:w-[11px]`}
+                          class={`gh-cell-${day.level} h-2.5 w-2.5 rounded-xs transition-transform duration-100 hover:scale-125 sm:h-3 sm:w-3`}
                           title={countText}
                         />
                       );
@@ -173,7 +181,7 @@ contributionWeeks.forEach((week, index) => {
 
       <!-- Graph Footer & Color Scale Legend -->
       <div
-        class="border-base-300/60 text-base-content/50 mt-3 flex flex-col justify-between gap-2 border-t pt-3 font-mono text-[11px] sm:flex-row sm:items-center"
+        class="border-base-300/60 text-base-content/60 mt-3 flex flex-col justify-between gap-2 border-t pt-3 font-mono text-xs sm:flex-row sm:items-center"
       >
         <a
           href="https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/managing-contribution-settings-on-your-profile/why-are-my-contributions-not-showing-up-on-my-profile"
@@ -185,14 +193,16 @@ contributionWeeks.forEach((week, index) => {
           <Icon name="ph:arrow-up-right-bold" class="h-2.5 w-2.5 opacity-60" />
         </a>
 
-        <div class="flex items-center gap-1.5 self-end sm:self-auto">
-          <span class="text-[10px]">Less</span>
-          <div class="gh-cell-0 h-[10px] w-[10px] rounded-[2px]" title="0 contributions"></div>
-          <div class="gh-cell-1 h-[10px] w-[10px] rounded-[2px]" title="1-3 contributions"></div>
-          <div class="gh-cell-2 h-[10px] w-[10px] rounded-[2px]" title="4-8 contributions"></div>
-          <div class="gh-cell-3 h-[10px] w-[10px] rounded-[2px]" title="9-15 contributions"></div>
-          <div class="gh-cell-4 h-[10px] w-[10px] rounded-[2px]" title="16+ contributions"></div>
-          <span class="text-[10px]">More</span>
+        <div
+          class="text-base-content/60 flex items-center gap-1.5 self-end font-mono text-xs sm:self-auto"
+        >
+          <span>Less</span>
+          <div class="gh-cell-0 h-2.5 w-2.5 rounded-xs" title="0 contributions"></div>
+          <div class="gh-cell-1 h-2.5 w-2.5 rounded-xs" title="1-3 contributions"></div>
+          <div class="gh-cell-2 h-2.5 w-2.5 rounded-xs" title="4-8 contributions"></div>
+          <div class="gh-cell-3 h-2.5 w-2.5 rounded-xs" title="9-15 contributions"></div>
+          <div class="gh-cell-4 h-2.5 w-2.5 rounded-xs" title="16+ contributions"></div>
+          <span>More</span>
         </div>
       </div>
     </div>
@@ -206,7 +216,7 @@ contributionWeeks.forEach((week, index) => {
       >
         Recent Verified Commits & Pull Requests
       </span>
-      <span class="text-base-content/40 font-mono text-[11px]">Latest verified commits</span>
+      <span class="text-base-content/50 font-mono text-xs">Latest verified commits</span>
     </div>
 
     <div class="space-y-2">
@@ -215,9 +225,9 @@ contributionWeeks.forEach((week, index) => {
           <div class="group border-base-300/80 bg-base-100/60 hover:border-base-content/20 flex flex-col justify-between gap-2.5 rounded-lg border p-3.5 transition-all sm:flex-row sm:items-center">
             <div class="flex min-w-0 items-start gap-3">
               <span
-                class={`mt-0.5 shrink-0 rounded px-1.5 py-0.5 font-mono text-[10px] font-semibold ${
+                class={`mt-0.5 shrink-0 rounded px-1.5 py-0.5 font-mono text-xs font-semibold ${
                   commit.type === 'feat'
-                    ? 'border border-[#39d353]/30 bg-[#39d353]/10 text-[#39d353]'
+                    ? 'border-github-active/30 bg-github-active/10 text-github-active border'
                     : commit.type === 'fix'
                       ? 'border border-amber-500/30 bg-amber-500/10 text-amber-400'
                       : 'border border-zinc-500/30 bg-zinc-500/10 text-zinc-400'
@@ -229,7 +239,7 @@ contributionWeeks.forEach((week, index) => {
                 <p class="text-base-content group-hover:text-accent line-clamp-1 text-xs leading-snug font-medium transition-colors">
                   {commit.message}
                 </p>
-                <div class="text-base-content/50 mt-1 flex flex-wrap items-center gap-2 font-mono text-[11px]">
+                <div class="text-base-content/60 mt-1 flex flex-wrap items-center gap-2 font-mono text-xs">
                   <span class="text-accent/90 font-medium">{commit.repo}</span>
                   <span class="opacity-40">•</span>
                   <span>{commit.date}</span>
@@ -241,7 +251,7 @@ contributionWeeks.forEach((week, index) => {
               href={commit.url}
               target="_blank"
               rel="noopener noreferrer"
-              class="border-base-300/80 bg-base-200/40 text-base-content/60 shrink-0 self-end rounded px-2 py-0.5 font-mono text-[11px] transition-colors hover:border-[#39d353]/40 hover:text-[#39d353] sm:self-center"
+              class="border-base-300/80 bg-base-200/40 text-base-content/60 hover:border-github-active/40 hover:text-github-active shrink-0 self-end rounded px-2.5 py-0.5 font-mono text-xs transition-colors sm:self-center"
             >
               #{commit.sha}
             </a>

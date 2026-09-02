@@ -1,6 +1,6 @@
 ---
 title: 'CSS Subgrid Mental Model'
-description: 'Aligning card headers and footers across independent grid tracks seamlessly.'
+description: 'Align card headers and footers across independent grid tracks without layout hacks.'
 publishDate: '2024-09-14'
 topic: 'CSS'
 tags: ['CSS', 'Subgrid', 'Layout']

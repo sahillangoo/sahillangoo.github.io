@@ -2,18 +2,19 @@
   "id": "frontend",
   "roleTitle": "Frontend Systems Engineer & UI Architect",
   "filename": "Resume-Sahil-Langoo-Frontend.pdf",
-  "summary": "Frontend Systems Engineer with 3+ years experience building zero-JS baseline architectures, high-performance web applications, and accessible design systems. Proven track record achieving sub-50ms TTFB, 0.00 CLS, and 100/100 Lighthouse performance metrics across production platforms.",
+  "summary": "Frontend Systems Engineer with 3+ years experience building high-performance web applications, accessible design systems, and responsive user interfaces. Proven track record achieving sub-50ms TTFB, 0.00 CLS, and 100/100 Lighthouse performance metrics across production platforms.",
   "skills": {
-    "languages": ["TypeScript", "JavaScript (ES2024+)", "HTML5", "CSS3 / OKLCH", "SQL", "Go"],
+    "languages": ["TypeScript", "JavaScript", "HTML5", "CSS3 / OKLCH", "SQL", "Go"],
     "frameworks": [
-      "React 19",
+      "React",
       "Next.js",
-      "Astro 7",
-      "Tailwind CSS v4",
-      "daisyUI 5",
-      "Vite",
+      "Astro",
+      "Tailwind CSS",
+      "daisyUI",
+      "Redux Toolkit",
       "TanStack Query",
-      "TanStack Router"
+      "TanStack Router",
+      "Vite"
     ],
     "cloud": [
       "Cloudflare Pages & Workers",
@@ -27,7 +28,7 @@
       "Figma",
       "Playwright",
       "Sentry Telemetry",
-      "ESLint 10",
+      "ESLint",
       "Prettier",
       "Postman",
       "Responsive Design"
@@ -35,76 +36,88 @@
   },
   "experience": [
     {
-      "role": "Lead Frontend Engineer & Co-Founder",
-      "company": "SquadCoders",
-      "location": "Kashmir, India",
-      "dates": "2023 — Present",
-      "highlights": [
-        "Architected static-first web platforms for 6+ client systems using Astro 7, TypeScript, and Tailwind CSS v4, delivering sub-50ms global TTFB and strict 0.00 Cumulative Layout Shift (CLS).",
-        "Engineered component design systems with daisyUI 5 and OKLCH color palettes, cutting client bundle payloads by 65% and attaining 100/100 Lighthouse benchmarks across mobile viewports.",
-        "Constructed automated pre-flight quality enforcement hooks in Node.js to validate link integrity, metadata parity, and image layout bounds prior to static artifact generation."
-      ]
-    },
-    {
-      "role": "Frontend Developer",
-      "company": "Taffin.Tech",
-      "location": "Remote, Srinagar",
-      "dates": "Apr 2024 — Present",
-      "highlights": [
-        "Engineered responsive UI architectures using Tailwind CSS, React, and Twig templating for an AI-integrated recruitment platform, cutting initial render times by 40%.",
-        "Delivered pixel-perfect mobile-first components with WCAG 2.1 AA accessibility compliance and micro-interaction states."
-      ]
-    },
-    {
       "role": "Frontend Integration Engineer",
-      "company": "Enterprise Web Systems (@ecspl)",
+      "company": "Eresolution Consultancy Services",
       "location": "Remote",
-      "dates": "2021 — 2024",
+      "dates": "Apr 2025 - Present",
       "highlights": [
-        "Developed high-concurrency client interfaces and checkout flows integrated with Hono proxy gateways, handling 15K daily transactions with sub-800ms Largest Contentful Paint (LCP).",
+        "Architected high-concurrency client interfaces and checkout flows integrated with Hono proxy gateways, processing 15K daily transactions with sub-800ms Largest Contentful Paint (LCP).",
         "Instrumented real-time Sentry frontend telemetry and exception monitoring, triaging UI race conditions and reducing customer-facing checkout errors by 14%.",
         "Authored comprehensive Playwright end-to-end regression suites integrated into CI pipelines, eliminating cross-browser layout discrepancies across Chromium, Firefox, and WebKit."
+      ]
+    },
+    {
+      "role": "Frontend Architect & Developer",
+      "company": "Taffin.Tech",
+      "location": "Remote, Srinagar",
+      "dates": "Apr 2024 - Aug 2025",
+      "highlights": [
+        "Architected responsive hybrid React SPA integrated with Symfony Webpack Encore, implementing bilingual internationalization (EN/FR) via Lingui and sub-100ms routing with TanStack Router.",
+        "Constructed stateful recruiter workspaces with Redux Toolkit, candidate bookmarking, and multi-filter talent pools with zero client-side hydration mismatch.",
+        "Engineered accessible design components with daisyUI and Tailwind CSS, achieving 100% WCAG AA compliance and keyboard navigation across core application flows."
+      ]
+    },
+    {
+      "role": "Freelance Frontend Engineer",
+      "company": "SquadCoders",
+      "location": "Kashmir, India",
+      "dates": "Dec 2023 - Mar 2024",
+      "highlights": [
+        "Engineered static-first client platforms using Astro, TypeScript, and Tailwind CSS, delivering sub-50ms global TTFB and strict 0.00 Cumulative Layout Shift (CLS).",
+        "Designed modular component design systems with daisyUI and OKLCH color palettes, cutting client CSS payloads by 65% and attaining 100/100 mobile Lighthouse benchmarks.",
+        "Shipped 10+ high-performance commercial websites, accelerating mobile page load velocity by 30% and lifting customer checkout conversion by 15%.",
+        "Automated pre-flight build-time quality hooks in Node.js, validating link integrity, semantic metadata, and image aspect ratios prior to production publishing."
       ]
     },
     {
       "role": "Web Development Trainee",
       "company": "Elance Technologies",
       "location": "Srinagar, Kashmir",
-      "dates": "Jan 2023 — Jun 2023",
+      "dates": "Jan 2023 - Jun 2023",
       "highlights": [
-        "Implemented WCAG 2.1 AA accessibility standards and responsive grid refactors across legacy web portals, increasing mobile user engagement by 40%."
+        "Refactored responsive CSS grid systems and accessible form controls across legacy web portals, increasing mobile user engagement by 40%."
       ]
     }
   ],
   "projects": [
     {
-      "name": "Listify",
-      "tech": "JavaScript, CSS3, HTML5, MariaDB, Leaflet.js",
-      "dates": "2023",
+      "name": "TAFFin.Tech Marketplace",
+      "tech": "React, Redux Toolkit, TanStack Router & Query, Lingui i18n, daisyUI",
+      "dates": "2024",
       "highlights": [
-        "Built interactive geospatial discovery UI using Leaflet.js, vanilla JavaScript, and modern CSS, rendering 500+ localized map pins with zero main-thread jank.",
-        "Engineered client-side search indexing and asynchronous filtering, achieving instant query latency under 15ms."
+        "Architected bilingual European recruitment marketplace featuring Redux recruiter workspaces, instant talent filtering, and drag-and-drop resume parsing.",
+        "Integrated compile-time Lingui i18n catalogs and custom daisyUI themes delivering sub-800ms LCP on mobile networks."
       ],
-      "link": "https://listify.sahillangoo.com"
+      "link": "https://taffin.tech"
     },
     {
-      "name": "BreedersHub",
+      "name": "EduCore Portal UI",
+      "tech": "Next.js, React, Tailwind CSS, TanStack Query, visx, Nuqs",
+      "dates": "2024",
+      "highlights": [
+        "Engineered accessible dashboard and public guardian payment portals with React, TanStack Query, and URL-driven data table state via Nuqs.",
+        "Integrated visx charting libraries for real-time exam distribution analytics and client-side printable PDF receipt generation with pdfmake."
+      ],
+      "link": "https://github.com/SquadCoders/school_management"
+    },
+    {
+      "name": "HackerForce Storefront",
+      "tech": "Astro, TypeScript, Tailwind CSS, Pagefind WASM, MDX",
+      "dates": "2024",
+      "highlights": [
+        "Architected zero-server cybersecurity storefront with Astro and Tailwind CSS, achieving sub-300ms LCP and zero client JavaScript overhead.",
+        "Engineered in-browser full-text search via WebAssembly with Pagefind, indexing hundreds of MDX curricula files with sub-15ms client query execution."
+      ],
+      "link": "https://github.com/HackerForceDev/hackforce-storefront"
+    },
+    {
+      "name": "BreedersHub Storefront",
       "tech": "React, Tailwind CSS, PWA, TWA, Webpack",
       "dates": "2023",
       "highlights": [
-        "Designed mobile-first e-commerce frontend supporting 1,000+ SKU catalog with sub-3s 3G network loads using asset compression and lazy hydration.",
-        "Packaged and deployed application as a Progressive Web App (PWA) and Trusted Web Activity (TWA) across Android Play Store."
+        "Architected mobile-first e-commerce frontend supporting 1,000+ SKU catalog with sub-3s 3G network loads, packaged as a PWA and Trusted Web Activity (TWA) on Play Store."
       ],
       "link": "https://breedershub.in"
-    },
-    {
-      "name": "Portfolio & Minimalist UI System",
-      "tech": "Astro 7, TypeScript, Tailwind CSS v4, daisyUI 5",
-      "dates": "2024",
-      "highlights": [
-        "Architected editorial portfolio featuring dark/light OKLCH themes, view transitions, zero layout shifts (CLS = 0.00), and sub-800ms LCP."
-      ],
-      "link": "https://sahillangoo.in"
     }
   ]
 }

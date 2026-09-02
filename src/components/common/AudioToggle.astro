@@ -18,7 +18,25 @@ import { Icon } from 'astro-icon/components';
 </button>
 
 <script>
-  import { audioEngine } from '../../utils/audioEngine';
+  let audioEngineInstance: typeof import('@utils/audioEngine.ts').audioEngine | null = null;
+
+  async function getAudioEngine() {
+    if (!audioEngineInstance) {
+      const module = await import('@utils/audioEngine.ts');
+      audioEngineInstance = module.audioEngine;
+    }
+    return audioEngineInstance;
+  }
+
+  function isAudioMuted(): boolean {
+    if (audioEngineInstance) {
+      return audioEngineInstance.isMutedState();
+    }
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('sl_sound_effects') !== 'enabled';
+    }
+    return true;
+  }
 
   function updateAudioToggleUI() {
     const unmutedIcon = document.getElementById('audio-icon-unmuted');
@@ -26,7 +44,7 @@ import { Icon } from 'astro-icon/components';
     const btn = document.getElementById('audio-toggle-btn');
     if (!unmutedIcon || !mutedIcon || !btn) return;
 
-    const isMuted = audioEngine.isMutedState();
+    const isMuted = isAudioMuted();
     if (isMuted) {
       unmutedIcon.classList.add('hidden');
       mutedIcon.classList.remove('hidden');
@@ -38,29 +56,31 @@ import { Icon } from 'astro-icon/components';
     }
   }
 
-  function setupAudioToggle() {
-    const btn = document.getElementById('audio-toggle-btn');
-    if (!btn) return;
+  const win = window as unknown as Record<string, unknown>;
+  if (!win.__AUDIO_TOGGLE_INIT__) {
+    win.__AUDIO_TOGGLE_INIT__ = true;
 
-    updateAudioToggleUI();
+    document.addEventListener('click', async (e) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
 
-    btn.onclick = () => {
-      audioEngine.toggleMute();
-      updateAudioToggleUI();
-    };
+      const toggleBtn = target.closest('#audio-toggle-btn');
+      if (toggleBtn) {
+        const engine = await getAudioEngine();
+        engine.toggleMute();
+        updateAudioToggleUI();
+        return;
+      }
 
-    // Attach global subtle audio click to interactive elements when unmuted
-    document.querySelectorAll('a, button, input[type="checkbox"]').forEach((el) => {
-      if ((el as HTMLElement).dataset.audioBound) return;
-      (el as HTMLElement).dataset.audioBound = 'true';
-      el.addEventListener('click', () => {
-        if (!audioEngine.isMutedState()) {
-          audioEngine.playClick('soft');
+      if (!isAudioMuted()) {
+        const interactiveEl = target.closest('a, button, input[type="checkbox"]');
+        if (interactiveEl) {
+          const engine = await getAudioEngine();
+          engine.playClick('soft');
         }
-      });
+      }
     });
   }
 
-  setupAudioToggle();
-  document.addEventListener('astro:page-load', setupAudioToggle);
+  document.addEventListener('astro:page-load', updateAudioToggleUI);
 </script>

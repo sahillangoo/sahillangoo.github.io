@@ -1,8 +1,8 @@
 {
   "name": "Sahil Langoo",
   "title": "Full Stack Systems Engineer & Systems Architect",
-  "bio": "Full Stack Systems Engineer and Co-Founder at @SquadCoders. Architecting ultra-fast static web architectures, distributed edge proxies, and local AI pipelines.",
-  "about": "Innovative Full Stack Systems Engineer with a B.Tech in Computer Science Engineering (CGPA: 7.07) from the University of Kashmir and co-founder at SquadCoders. Proven expertise in crafting high-performance, responsive web architectures, distributed edge computing proxies, and AI integrations. Demonstrated ability to boost website performance by 30-40% (sub-50ms TTFB, 0.00 CLS) and increase organic reach and user engagement by 20-30%. Dedicated to building software that is fast by default, zero-waste, and engineered with strict type safety.",
+  "bio": "Full Stack Systems Engineer at Eresolution Consultancy Services. Architecting ultra-fast static web architectures, distributed edge proxies, and local AI pipelines.",
+  "about": "Innovative Full Stack Systems Engineer with a B.Tech in Computer Science Engineering (CGPA: 7.07) from the University of Kashmir, currently engineering systems at Eresolution Consultancy Services. Proven expertise in crafting high-performance, responsive web architectures, distributed edge computing proxies, and AI integrations. Demonstrated ability to boost website performance by 30-40% (sub-50ms TTFB, 0.00 CLS) and increase organic reach and user engagement by 20-30%. Dedicated to building software that is fast by default, zero-waste, and engineered with strict type safety.",
   "skills": {
     "languages": [
       "TypeScript",

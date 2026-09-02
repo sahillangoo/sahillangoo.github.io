@@ -1,13 +1,15 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { Icon } from 'astro-icon/components';
+import { cn } from '@utils/cn.ts';
 
 export interface Props {
   note: CollectionEntry<'notes'>;
   headingLevel?: 'h2' | 'h3';
+  class?: string;
 }
 
-const { note, headingLevel = 'h2' } = Astro.props;
+const { note, headingLevel = 'h2', class: className = '' } = Astro.props;
 const { data, id } = note;
 
 const HeadingTag = headingLevel;
@@ -19,20 +21,25 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
 });
 ---
 
-<article class="editorial-card group relative flex flex-col justify-between p-5 sm:p-6">
+<article
+  class={cn(
+    'group relative flex flex-col justify-between rounded-xl border border-base-300 bg-base-200 p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/40 active:scale-99 sm:p-6',
+    className
+  )}
+>
   <div>
     <div class="text-base-content/60 mb-2 flex items-center justify-between text-xs">
       <span
-        class="bg-accent/10 text-accent rounded px-2 py-0.5 font-mono text-[10px] font-semibold tracking-wider uppercase"
+        class="bg-accent/10 text-accent rounded px-2.5 py-0.5 font-mono text-xs font-semibold tracking-wider uppercase"
       >
         {data.topic}
       </span>
-      <time datetime={data.publishDate} class="font-mono text-[11px]">{formattedDate}</time>
+      <time datetime={data.publishDate} class="font-mono text-xs">{formattedDate}</time>
     </div>
 
     <HeadingTag
       transition:name={`note-title-${id}`}
-      class="text-base-content group-hover:text-accent text-base font-bold tracking-tight transition-colors"
+      class="text-base-content group-hover:text-accent text-base font-bold tracking-tight transition-colors sm:text-lg"
     >
       <a href={`/notes/${id}/`} class="after:absolute after:inset-0 focus:outline-none">
         {data.title}
@@ -41,7 +48,7 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
 
     {
       data.description && (
-        <p class="text-base-content/70 mt-2 line-clamp-2 text-xs leading-relaxed">
+        <p class="text-base-content/75 mt-2 line-clamp-2 text-xs leading-relaxed">
           {data.description}
         </p>
       )
@@ -50,11 +57,7 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
 
   <div class="border-base-300/40 mt-4 flex items-center justify-between border-t pt-3">
     <div class="flex flex-wrap gap-1">
-      {
-        data.tags.map((tag) => (
-          <span class="text-base-content/50 font-mono text-[10px]">#{tag}</span>
-        ))
-      }
+      {data.tags.map((tag) => <span class="text-base-content/60 font-mono text-xs">#{tag}</span>)}
     </div>
     <Icon
       name="ph:arrow-up-right-bold"

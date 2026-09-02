@@ -11,7 +11,7 @@
       pre.style.position = 'relative';
       const btn = document.createElement('button');
       btn.className =
-        'code-copy-btn absolute top-2 right-2 rounded border border-base-300 bg-base-200/90 px-2 py-1 font-mono text-[10px] text-base-content/70 hover:text-accent hover:border-accent transition-colors';
+        'code-copy-btn absolute top-2 right-2 rounded-md border border-base-300 bg-base-200/90 px-2.5 py-1 font-mono text-xs text-base-content/75 hover:text-accent hover:border-accent transition-all duration-150 active:scale-95';
       btn.textContent = 'Copy';
       btn.type = 'button';
       btn.setAttribute('aria-label', 'Copy code to clipboard');
@@ -35,6 +35,5 @@
     });
   }
 
-  setupCodeCopyButtons();
   document.addEventListener('astro:page-load', setupCodeCopyButtons);
 </script>

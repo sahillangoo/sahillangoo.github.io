@@ -1,11 +1,11 @@
 export const SITE = {
   name: 'Sahil Langoo',
-  title: 'Sahil Langoo — Full Stack Systems Engineer & Systems Architect',
+  title: 'Sahil Langoo | Full Stack Systems Engineer & Systems Architect',
   tagline:
     'Engineering resilient edge systems, high-throughput web architectures & minimalist interfaces.',
-  bio: 'Full Stack Systems Engineer and Co-Founder at @SquadCoders. Specializing in TypeScript, Astro static architectures, distributed edge proxies, and minimalist UI craft.',
+  bio: 'Full Stack Systems Engineer at Eresolution Consultancy Services. Specializing in TypeScript, Astro static architectures, distributed edge proxies, and minimalist UI craft.',
   description:
-    'Personal portfolio, engineering journal, and systems catalog of Sahil Langoo. Specializing in TypeScript, Astro 7, modern web architecture, edge proxies, and minimalist UI craft.',
+    'Personal portfolio, engineering journal, and systems catalog of Sahil Langoo. Specializing in TypeScript, Astro, modern web architecture, edge proxies, and minimalist UI craft.',
   url: 'https://sahillangoo.in',
   author: 'Sahil Langoo',
   legalName: 'Sahil Ahmad Langoo',
@@ -14,7 +14,8 @@ export const SITE = {
   email: 'hello@sahillangoo.in',
   personalEmail: 'sahilahmed3066@gmail.com',
   phone: '+91 7006 588 022',
-  status: 'Open to high-impact engineering opportunities & select consulting',
+  status:
+    'Systems Engineer at Eresolution Consultancy Services | Open to high-impact engineering opportunities',
   summary:
     'Innovative web developer with a B.Tech in Computer Science Engineering and proven full-stack expertise. Skilled in crafting high-performance, responsive web solutions using modern frameworks and AI integration. Demonstrated ability to boost website performance by 30% and increase user engagement by 20%. Passionate about creating impactful digital experiences that drive business growth.',
   education: [
@@ -22,7 +23,7 @@ export const SITE = {
       institution: 'University of Kashmir (North Campus)',
       location: 'Baramulla, Kashmir, India',
       degree: 'Bachelor of Technology in Computer Science Engineering (B.Tech CSE)',
-      period: '2021 — 2023',
+      period: '2021 - 2023',
       graduationDate: 'December 2023',
       cgpa: '7.07 / 10.0',
       coursework: [
@@ -37,7 +38,7 @@ export const SITE = {
       institution: 'Kashmir Govt Polytechnic',
       location: 'Srinagar, Kashmir, India',
       degree: '3-Year Diploma in Computer Science Engineering',
-      period: '2016 — 2019',
+      period: '2016 - 2019',
       graduationDate: 'July 2019',
       cgpa: '6.22 / 10.0',
       coursework: ['Computer Programming', 'Database Management', 'Computer Networks'],

@@ -1,10 +1,10 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import ReadingProgressBar from '@/components/common/ReadingProgressBar.astro';
-import ArticleAudioReader from '@/components/blog/ArticleAudioReader.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ReadingProgressBar from '@components/common/ReadingProgressBar.astro';
+import ArticleAudioReader from '@components/blog/ArticleAudioReader.astro';
 import { getCollection, render } from 'astro:content';
-import { SITE } from '@/const/site.ts';
-import { slugify } from '@/utils/slugify';
+import { SITE } from '@const/site.ts';
+import { slugify } from '@utils/slugify.ts';
 import { Icon } from 'astro-icon/components';
 
 export async function getStaticPaths() {
@@ -177,11 +177,11 @@ const breadcrumbs = [
           {prevPost ? (
             <a
               href={`/blog/${prevPost.id}/`}
-              class="editorial-card group flex flex-col justify-between p-5 text-left transition-all"
+              class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-left transition-all duration-200 hover:-translate-y-0.5 active:scale-99"
               rel="prev"
             >
-              <span class="text-base-content/60 flex items-center gap-1 font-mono text-[11px] tracking-wider uppercase">
-                <Icon name="ph:arrow-left-bold" class="h-3 w-3" /> Previous Article
+              <span class="text-base-content/60 flex items-center gap-1 font-mono text-xs font-medium tracking-wider uppercase">
+                <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Previous Article
               </span>
               <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
                 {prevPost.data.title}
@@ -194,11 +194,11 @@ const breadcrumbs = [
           {nextPost && (
             <a
               href={`/blog/${nextPost.id}/`}
-              class="editorial-card group flex flex-col justify-between p-5 text-right transition-all sm:col-start-2"
+              class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-right transition-all duration-200 hover:-translate-y-0.5 active:scale-99 sm:col-start-2"
               rel="next"
             >
-              <span class="text-base-content/60 flex items-center justify-end gap-1 font-mono text-[11px] tracking-wider uppercase">
-                Next Article <Icon name="ph:arrow-right-bold" class="h-3 w-3" />
+              <span class="text-base-content/60 flex items-center justify-end gap-1 font-mono text-xs font-medium tracking-wider uppercase">
+                Next Article <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
               </span>
               <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
                 {nextPost.data.title}
@@ -212,7 +212,7 @@ const breadcrumbs = [
     <!-- Article Footer / Author Box -->
     <footer class="border-base-300 mt-12 border-t pt-8">
       <div
-        class="editorial-card flex flex-col justify-between gap-6 p-6 sm:flex-row sm:items-center"
+        class="border-base-300 bg-base-200 flex flex-col justify-between gap-6 rounded-xl border p-6 sm:flex-row sm:items-center sm:p-7"
       >
         <div class="flex items-start gap-4">
           <!-- Author Avatar / Badge -->
@@ -228,7 +228,9 @@ const breadcrumbs = [
                   {SITE.name}
                 </a>
               </span>
-              <span class="bg-accent/15 text-accent py-0.2 rounded px-1.5 font-mono text-[10px]">
+              <span
+                class="bg-accent/15 text-accent rounded-md px-2 py-0.5 font-mono text-xs font-semibold"
+              >
                 Author
               </span>
             </div>

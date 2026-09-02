@@ -17,7 +17,7 @@ const {
 <!-- In-Article Audio Player Card -->
 <div
   id="article-audio-player"
-  class="editorial-card border-base-300/80 bg-base-200/50 my-6 flex flex-col gap-3.5 p-4 transition-all duration-200 sm:p-5"
+  class="border-base-300/80 bg-base-200/50 my-6 flex flex-col gap-3.5 rounded-xl border p-4 transition-all duration-200 sm:p-5"
   data-target={articleSelector}
   data-title={articleTitle}
   data-reading-time={readingTime}
@@ -42,7 +42,7 @@ const {
           <span class="text-base-content text-xs font-bold tracking-tight">Audio Narration</span>
           <span
             id="audio-voice-badge"
-            class="bg-accent/10 text-accent rounded px-1.5 py-0.5 font-mono text-[10px] font-medium"
+            class="bg-accent/10 text-accent rounded px-2 py-0.5 font-mono text-xs font-medium"
           >
             Neural AI Voice
           </span>
@@ -66,7 +66,7 @@ const {
             </span>
           </div>
         </div>
-        <span id="audio-status-text" class="text-base-content/65 font-mono text-[11px]">
+        <span id="audio-status-text" class="text-base-content/65 font-mono text-xs">
           Listen to this article ({readingTime})
         </span>
       </div>
@@ -78,21 +78,21 @@ const {
       <div class="join border-base-300 bg-base-100/70 rounded-lg border shadow-xs">
         <button
           type="button"
-          class="audio-rate-btn join-item btn btn-xs btn-ghost active-rate bg-base-content text-base-100 font-mono text-[10px] font-bold"
+          class="audio-rate-btn join-item btn btn-xs btn-ghost active-rate bg-base-content text-base-100 font-mono text-xs font-bold"
           data-rate="1"
         >
           1x
         </button>
         <button
           type="button"
-          class="audio-rate-btn join-item btn btn-xs btn-ghost font-mono text-[10px]"
+          class="audio-rate-btn join-item btn btn-xs btn-ghost font-mono text-xs"
           data-rate="1.25"
         >
           1.25x
         </button>
         <button
           type="button"
-          class="audio-rate-btn join-item btn btn-xs btn-ghost font-mono text-[10px]"
+          class="audio-rate-btn join-item btn btn-xs btn-ghost font-mono text-xs"
           data-rate="1.5"
         >
           1.5x
@@ -124,7 +124,7 @@ const {
       <!-- Voice Selector Dropdown -->
       <select
         id="audio-voice-select"
-        class="select select-xs border-base-300 bg-base-100/80 text-base-content font-mono text-[11px] focus:outline-hidden"
+        class="select select-xs border-base-300 bg-base-100/80 text-base-content font-mono text-xs focus:outline-hidden"
         aria-label="Select Narration Voice"
       >
         <option value="auto">Auto (Best Natural)</option>
@@ -155,7 +155,7 @@ const {
     </div>
     <span
       id="audio-progress-text"
-      class="text-base-content/60 shrink-0 font-mono text-[10px] tabular-nums"
+      class="text-base-content/60 shrink-0 font-mono text-xs tabular-nums"
     >
       0%
     </span>
@@ -181,7 +181,7 @@ const {
     </button>
 
     <div class="flex min-w-0 flex-1 flex-col">
-      <span class="text-base-content truncate text-[11px] font-semibold" id="pip-title">
+      <span class="text-base-content truncate text-xs font-semibold" id="pip-title">
         {articleTitle}
       </span>
       <div class="flex items-center gap-2">
@@ -193,7 +193,7 @@ const {
           >
           </div>
         </div>
-        <span id="pip-percent" class="text-base-content/60 shrink-0 font-mono text-[9px]">0%</span>
+        <span id="pip-percent" class="text-base-content/60 shrink-0 font-mono text-xs">0%</span>
       </div>
     </div>
 
@@ -726,6 +726,5 @@ const {
     window.addEventListener('popstate', handlePageTeardown, { once: true });
   }
 
-  setupArticleAudio();
   document.addEventListener('astro:page-load', setupArticleAudio);
 </script>

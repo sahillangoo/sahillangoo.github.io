@@ -2,7 +2,7 @@ import type { NotFoundPageCopy } from './types';
 
 export const notFoundCopy: NotFoundPageCopy = {
   seo: {
-    title: '404 — Page Not Found — Sahil Langoo',
+    title: '404 | Page Not Found | Sahil Langoo',
     description: 'The requested document or resource could not be located in this namespace.',
     noindex: true,
   },

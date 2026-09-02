@@ -2,10 +2,19 @@
   "id": "forward-deployed",
   "roleTitle": "Forward Deployed Engineer & Solutions Architect",
   "filename": "Resume-Sahil-Langoo-Forward-Deployed.pdf",
-  "summary": "Forward Deployed Engineer and Technical Co-Founder with deep expertise bridging customer requirements, production API integrations, and edge cloud architectures. Proven record shipping 6+ bespoke enterprise solutions with 100% on-time delivery, sub-100ms p99 execution SLAs, and measurable business growth (+20% client revenue).",
+  "summary": "Forward Deployed Engineer with deep expertise bridging customer requirements, production API integrations, and edge cloud architectures. Proven record shipping bespoke enterprise solutions with 100% on-time delivery, sub-100ms p99 execution SLAs, and measurable business growth (+20% client revenue).",
   "skills": {
     "languages": ["TypeScript", "JavaScript", "Python", "Go", "SQL", "PHP", "Bash"],
-    "frameworks": ["Hono", "Astro 7", "React 19", "Next.js", "Node.js", "Express", "Tailwind CSS"],
+    "frameworks": [
+      "Next.js",
+      "React",
+      "Hono",
+      "Astro",
+      "Node.js",
+      "Symfony",
+      "Tailwind CSS",
+      "Drizzle ORM"
+    ],
     "cloud": [
       "Cloudflare Workers & Pages",
       "Cloudflare Turnstile",
@@ -15,6 +24,7 @@
       "REST / GraphQL APIs"
     ],
     "databasesAndTools": [
+      "MySQL",
       "PostgreSQL",
       "SQLite / D1",
       "Redis",
@@ -27,57 +37,79 @@
   },
   "experience": [
     {
-      "role": "Forward Deployed Lead & Co-Founder",
-      "company": "SquadCoders",
-      "location": "Kashmir, India",
-      "dates": "2023 — Present",
+      "role": "Solutions & Integration Engineer",
+      "company": "Eresolution Consultancy Services",
+      "location": "Remote",
+      "dates": "Apr 2025 - Present",
       "highlights": [
-        "Directed end-to-end technical delivery for 6+ enterprise client platforms (SoulMedia, Hotel Akbar, TravelKit), engineering custom CMS workflows, edge routing, and automated asset optimization.",
-        "Transformed client sales funnels by developing high-speed, SEO-optimized static interfaces, generating an average 20% increase in online sales and 15% conversion lift.",
-        "Spearheaded technical discovery, architecture design, and client deployment cycles, establishing sub-50ms global TTFB baselines with zero post-launch regressions."
+        "Architected and deployed high-throughput Hono proxy microservices on Cloudflare Workers for Experian OTP authentication and Meta CAPI server-side event streaming.",
+        "Resolved mission-critical checkout failures and client-side race conditions by analyzing production Sentry telemetry, elevating payment success rates by 14%.",
+        "Authored automated Playwright regression suites across production environments, accelerating client release velocity by 35%."
       ]
     },
     {
       "role": "Solutions Developer",
       "company": "Taffin.Tech",
       "location": "Remote, Srinagar",
-      "dates": "Apr 2024 — Present",
+      "dates": "Apr 2024 - Aug 2025",
       "highlights": [
         "Engineered AI-integrated candidate matching workflows for a French startup job board, boosting user engagement by 25% and implementing EU GDPR privacy compliance.",
-        "Delivered dynamic search filtering and SEO optimization pipelines, driving a 30% increase in organic candidate conversions."
+        "Delivered dynamic search filtering and SEO optimization pipelines, driving a 30% increase in organic candidate conversions.",
+        "Integrated secure candidate resume ingestion dropzones with automated parsing pipelines."
       ]
     },
     {
-      "role": "Solutions & Integration Engineer",
-      "company": "Enterprise Web Systems (@ecspl)",
-      "location": "Remote",
-      "dates": "2021 — 2024",
+      "role": "Freelance Forward Deployed Engineer",
+      "company": "SquadCoders",
+      "location": "Kashmir, India",
+      "dates": "Dec 2023 - Mar 2024",
       "highlights": [
-        "Built and deployed high-throughput Hono proxy microservices on Cloudflare Workers for Experian OTP authentication and Meta CAPI server-side event streaming.",
-        "Resolved mission-critical checkout failures and client-side race conditions by analyzing production Sentry telemetry, elevating payment success rates by 14%.",
-        "Authored automated Playwright regression suites across production environments, accelerating client release velocity by 35%."
+        "Directed technical delivery for client platforms (SoulMedia, Hotel Akbar, TravelKit), engineering custom CMS workflows, edge routing, and automated asset optimization.",
+        "Transformed client sales funnels by developing high-speed, SEO-optimized static interfaces, generating an average 20% increase in online sales and 15% conversion lift.",
+        "Led technical discovery, architecture design, and client deployment cycles, establishing sub-50ms global TTFB baselines with zero post-launch regressions.",
+        "Delivered 10+ high-performance client websites with rigorous build-time verification and zero-downtime rollouts."
       ]
     },
     {
       "role": "Industrial Trainee",
       "company": "Elance Technologies",
       "location": "Srinagar, Kashmir",
-      "dates": "Jan 2023 — Jun 2023",
+      "dates": "Jan 2023 - Jun 2023",
       "highlights": [
-        "Collaborated on client integration prototypes and accessible UI modules, expanding mobile user reach by 40%."
+        "Engineered client integration prototypes and accessible UI modules, expanding mobile user reach by 40%."
       ]
     }
   ],
   "projects": [
     {
-      "name": "BreedersHub",
-      "tech": "React, Tailwind CSS, PWA, TWA, Webpack",
-      "dates": "2023",
+      "name": "EduCore Enterprise ERP",
+      "tech": "Next.js, Razorpay, Better Auth, Drizzle ORM, MySQL",
+      "dates": "2024",
       "highlights": [
-        "Engineered multi-channel e-commerce platform for retail client, implementing mobile-first catalog browsing for 1,000+ items and sub-3s page loads.",
-        "Shipped PWA and Trusted Web App (TWA) packages to Google Play, reducing client customer drop-off by 25%."
+        "Architected end-to-end multi-tenant ERP for educational institution, delivering automated student fee collections, guardian self-service pay portals, and real-time ledger reconciliation.",
+        "Mitigated payment drop-offs and administrative overhead by 60% through automated Razorpay webhook processing and instant fee receipt generation."
       ],
-      "link": "https://breedershub.in"
+      "link": "https://github.com/SquadCoders/school_management"
+    },
+    {
+      "name": "TAFFin.Tech Marketplace",
+      "tech": "Symfony, React, AI Matching, GDPR, Redux",
+      "dates": "2024",
+      "highlights": [
+        "Engineered client-facing recruitment marketplace connecting European tech talent with hiring partners, achieving 25% user engagement boost and 100% GDPR regulatory compliance.",
+        "Deployed dynamic resume ingestion dropzones and automated bilingual candidate notification pipelines."
+      ],
+      "link": "https://taffin.tech"
+    },
+    {
+      "name": "HackerForce Storefront",
+      "tech": "Astro, TypeScript, Tailwind CSS, Pagefind WASM",
+      "dates": "2024",
+      "highlights": [
+        "Delivered high-performance static cybersecurity platform with Astro, achieving sub-300ms LCP across edge networks.",
+        "Implemented zero-backend static search indexing via Pagefind WebAssembly, enabling offline technical courseware search with sub-15ms latency."
+      ],
+      "link": "https://github.com/HackerForceDev/hackforce-storefront"
     },
     {
       "name": "XpressSys Logistics",
@@ -88,15 +120,6 @@
         "Implemented automated pin-code verification and driver routing dashboards to accelerate package fulfillment."
       ],
       "link": "https://xpresssys.com"
-    },
-    {
-      "name": "Listify Business Discovery",
-      "tech": "PHP, MariaDB, JavaScript, Leaflet.js",
-      "dates": "2023",
-      "highlights": [
-        "Built business directory platform enabling localized merchant discovery with sub-15ms search response times."
-      ],
-      "link": "https://listify.sahillangoo.com"
     }
   ]
 }

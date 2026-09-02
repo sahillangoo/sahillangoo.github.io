@@ -2,7 +2,7 @@ import type { ProjectsPageCopy } from './types';
 
 export const projectsCopy: ProjectsPageCopy = {
   seo: {
-    title: 'Projects & Production Systems — Sahil Langoo',
+    title: 'Projects & Production Systems | Sahil Langoo',
     description:
       'Catalog of production web applications, open source developer tools, CLI utilities, and distributed systems engineered by Sahil Langoo.',
     image: '/og/projects.png',

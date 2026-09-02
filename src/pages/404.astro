@@ -1,6 +1,6 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import { notFoundCopy } from '@/data/copy/not-found.ts';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { notFoundCopy } from '@copy/not-found.ts';
 import { Icon } from 'astro-icon/components';
 ---
 
@@ -10,7 +10,7 @@ import { Icon } from 'astro-icon/components';
   noindex={notFoundCopy.seo.noindex}
 >
   <div class="mx-auto max-w-md space-y-6 px-4 py-24 text-center">
-    <div class="text-accent font-mono text-5xl font-black">{notFoundCopy.code}</div>
+    <div class="text-accent font-mono text-5xl font-bold">{notFoundCopy.code}</div>
     <h1 class="text-base-content text-2xl font-bold tracking-tight">{notFoundCopy.title}</h1>
     <p class="text-base-content/70 text-sm">
       {notFoundCopy.description}

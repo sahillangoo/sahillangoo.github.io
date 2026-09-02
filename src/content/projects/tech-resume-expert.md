@@ -1,5 +1,5 @@
 ---
-title: 'Tech Resume Expert — Career Intelligence & Resume Engineering Platform'
+title: 'Tech Resume Expert | Career Intelligence & Resume Engineering Platform'
 description: 'Premier open-source career intelligence platform encoding Harvard MCS & FAANG screening heuristics, 75+ rule linter, and Typst/LaTeX compilers.'
 summary: 'Open-source career intelligence engine with 75+ rule linter, Typst compilation, and FAANG screening simulators.'
 category: 'open-source'

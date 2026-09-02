@@ -1,8 +1,8 @@
 ---
-import { SITE } from '@/const/site.ts';
-import { navigationCopy } from '@/data/copy/navigation.ts';
-import TimeAvailabilityWidget from '@/components/common/TimeAvailabilityWidget.astro';
-import SpotifyWidget from '@/components/common/SpotifyWidget.astro';
+import { SITE } from '@const/site.ts';
+import { navigationCopy } from '@copy/navigation.ts';
+import TimeAvailabilityWidget from '@components/common/TimeAvailabilityWidget.astro';
+import SpotifyWidget from '@components/common/SpotifyWidget.astro';
 import { Icon } from 'astro-icon/components';
 
 const currentYear = new Date().getFullYear();
@@ -106,10 +106,12 @@ const currentYear = new Date().getFullYear();
     </div>
 
     <div
-      class="border-base-300/60 text-base-content/50 flex flex-col items-center justify-between gap-2 border-t pt-6 text-[11px] sm:flex-row"
+      class="border-base-300/60 text-base-content/60 flex flex-col items-center justify-between gap-2 border-t pt-6 text-xs sm:flex-row"
     >
       <span>{navigationCopy.footerTelemetry.copyright(currentYear)}</span>
-      <span class="font-mono text-[10px]">{navigationCopy.footerTelemetry.metrics}</span>
+      <span class="text-base-content/50 font-mono text-xs">
+        {navigationCopy.footerTelemetry.metrics}
+      </span>
     </div>
   </div>
 </footer>

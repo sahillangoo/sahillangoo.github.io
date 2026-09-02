@@ -1,10 +1,10 @@
 ---
-import { SITE } from '@/const/site.ts';
-import { contactCopy } from '@/data/copy/contact.ts';
+import { SITE } from '@const/site.ts';
+import { contactCopy } from '@copy/contact.ts';
 import { Icon } from 'astro-icon/components';
 ---
 
-<div class="editorial-card p-6 sm:p-8">
+<div class="border-base-300 bg-base-200 rounded-xl border p-6 sm:p-8">
   <div class="mb-6">
     <h2 class="text-base-content text-xl font-bold">{contactCopy.form.title}</h2>
     <p class="text-base-content/70 mt-1 text-sm">
@@ -108,6 +108,8 @@ import { Icon } from 'astro-icon/components';
     const statusMsg = document.getElementById('contact-status-msg');
 
     if (!form || !submitBtn || !btnText || !statusMsg) return;
+    if (form.dataset.bound === 'true') return;
+    form.dataset.bound = 'true';
 
     const authorEmail = form.getAttribute('data-author-email') || 'hello@sahillangoo.in';
 
@@ -145,6 +147,5 @@ import { Icon } from 'astro-icon/components';
     });
   }
 
-  setupContactForm();
   document.addEventListener('astro:page-load', setupContactForm);
 </script>

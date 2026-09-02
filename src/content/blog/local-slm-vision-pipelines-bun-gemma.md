@@ -21,7 +21,7 @@ Cloud AI APIs (OpenAI GPT-4o, Anthropic Claude 3.5) are exceptional for complex 
 2. **Data Privacy**: Client imagery and internal marketing assets must not leave the local filesystem or travel across third-party cloud infrastructure.
 3. **Network Latency & Rate Limits**: Relying on external network roundtrips severely bottlenecks batch build-time pipelines.
 
-To eliminate these constraints, I engineered [`smart-img-cli`](https://github.com/sahillangoo/smart-img-cli)—an ultra-fast CLI tool built with the **Bun** JavaScript runtime that connects to **local Small Language Models (SLMs)** like Google's **Gemma 2B Vision** running offline via **LM Studio**.
+To eliminate these constraints, I engineered [`smart-img-cli`](https://github.com/sahillangoo/smart-img-cli) - an ultra-fast CLI tool built with the **Bun** JavaScript runtime that connects to **local Small Language Models (SLMs)** like Google's **Gemma 2B Vision** running offline via **LM Studio**.
 
 ---
 

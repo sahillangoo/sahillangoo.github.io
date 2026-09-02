@@ -1,6 +1,7 @@
 ---
-import { SITE } from '@/const/site.ts';
+import { SITE } from '@const/site.ts';
 import { ClientRouter } from 'astro:transitions';
+import { Font } from 'astro:assets';
 
 export interface BreadcrumbItem {
   name: string;
@@ -46,7 +47,7 @@ const formattedCanonical =
   canonicalUrl.endsWith('/') || canonicalUrl.includes('.') ? canonicalUrl : `${canonicalUrl}/`;
 
 const formattedTitle =
-  title === SITE.title || title.endsWith(SITE.name) ? title : `${title} — ${SITE.name}`;
+  title === SITE.title || title.endsWith(SITE.name) ? title : `${title} | ${SITE.name}`;
 const siteUrl = SITE.url;
 const ogImage = image.startsWith('http')
   ? image
@@ -156,6 +157,9 @@ const schemaGraph = {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="canonical" href={formattedCanonical} />
+  <!-- Self-hosted optimized fonts via Astro Font Provider API with font-display: swap -->
+  <Font cssVariable="--ff-sans" preload={[{ weight: 400, style: 'normal' }]} />
+  <Font cssVariable="--ff-mono" />
   <!-- RSS Feed Autodiscovery -->
   <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
   <!-- AI LLM Discovery -->
@@ -249,6 +253,9 @@ const schemaGraph = {
     };
 
     applyTheme();
-    document.addEventListener('astro:after-swap', applyTheme);
+    if (!window.__theme_after_swap_bound__) {
+      window.__theme_after_swap_bound__ = true;
+      document.addEventListener('astro:after-swap', applyTheme);
+    }
   </script>
 </head>

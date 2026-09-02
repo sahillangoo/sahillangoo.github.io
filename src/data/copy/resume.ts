@@ -2,17 +2,17 @@ import type { ResumePageCopy } from './types';
 
 export const resumeCopy: ResumePageCopy = {
   seo: {
-    title: 'Resume & Curriculum Vitae — Sahil Langoo',
+    title: 'Resume & Curriculum Vitae | Sahil Langoo',
     description:
-      'Professional engineering resume, verified career experience at SquadCoders and ECSPL, core technical competencies, and architectural timeline of Sahil Langoo.',
+      'Professional engineering resume, verified career experience at Eresolution Consultancy Services, core technical competencies, and architectural timeline of Sahil Langoo.',
     image: '/og/resume.png',
   },
   header: {
     eyebrow: 'Curriculum Vitae',
-    roleSubtitle: 'Full Stack Systems Engineer & Co-Founder • Kashmir, India',
+    roleSubtitle: 'Full Stack Systems Engineer • Kashmir, India',
     downloadCta: {
       label: 'Download PDF',
-      href: '/resumes/Resume-Sahil-2025.pdf',
+      href: '/resumes/Resume-Sahil-Langoo.pdf',
       icon: 'ph:file-pdf-bold',
       external: true,
     },

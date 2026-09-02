@@ -5,7 +5,7 @@
   "summary": "Cloud & DevOps Systems Engineer with deep expertise in edge serverless infrastructure, automated CI/CD pipelines, containerization, and production reliability. Specializing in Cloudflare (Workers, Pages, R2), GitHub Actions automation, Docker multi-stage workflows, and supply-chain lockfile security.",
   "skills": {
     "languages": ["Bash / Shell Scripting", "TypeScript", "Python", "Go", "YAML", "SQL"],
-    "frameworks": ["Node.js", "Docker", "Hono", "Playwright", "Vitest", "Astro SSG"],
+    "frameworks": ["Node.js", "Docker", "Hono", "Playwright", "Vitest", "Astro"],
     "cloud": [
       "Cloudflare (Workers, Pages, R2, KV, Turnstile, WAF)",
       "Vercel",
@@ -18,6 +18,7 @@
       "Sentry Telemetry",
       "Wrangler",
       "Linux / POSIX",
+      "MySQL",
       "PostgreSQL",
       "SQLite / D1",
       "ESLint / Prettier"
@@ -25,48 +26,70 @@
   },
   "experience": [
     {
-      "role": "Lead DevOps & Systems Engineer",
-      "company": "SquadCoders",
-      "location": "Kashmir, India",
-      "dates": "2023 — Present",
+      "role": "DevOps & Edge Infrastructure Engineer",
+      "company": "Eresolution Consultancy Services",
+      "location": "Remote",
+      "dates": "Apr 2025 - Present",
       "highlights": [
-        "Architected multi-stage Docker deployment pipelines and automated GitHub Actions workflows, deploying static web platforms to Cloudflare Pages with zero-downtime rollouts.",
-        "Engineered custom pre-flight build-time quality hooks in Node.js (astroSiteQualityEnforcer), eliminating broken links, missing assets, and unoptimized payloads before artifact publishing.",
-        "Configured Cloudflare edge rules, SSL/TLS strict policies, and Turnstile bot protection, achieving 99.99% availability and sub-50ms global TTFB."
+        "Architected and maintained serverless Hono API gateways on Cloudflare Workers, processing 15K+ daily requests with sub-100ms execution latency.",
+        "Automated Playwright end-to-end regression suites integrated with GitHub Actions CI, reducing release cycle duration by 35% while enforcing pnpm lockfile supply-chain verification.",
+        "Centralized Sentry exception telemetry across microservices, establishing automated alerting thresholds and reducing Mean Time to Resolution (MTTR) by 40%."
       ]
     },
     {
       "role": "DevOps & Infrastructure Developer",
       "company": "Taffin.Tech",
       "location": "Remote, Srinagar",
-      "dates": "Apr 2024 — Present",
+      "dates": "Apr 2024 - Aug 2025",
       "highlights": [
-        "Configured continuous integration pipelines and automated quality lint gates for recruitment platform microservices.",
-        "Implemented GDPR compliance security measures and automated error alerting thresholds with Sentry."
+        "Engineered continuous integration pipelines and automated quality lint gates for recruitment platform microservices with GitHub Actions.",
+        "Hardened GDPR data retention policies and instrumented real-time error telemetry thresholds with Sentry.",
+        "Optimized Docker asset staging pipelines with Webpack Encore to reduce container build footprints by 30%."
       ]
     },
     {
-      "role": "DevOps & Edge Infrastructure Engineer",
-      "company": "Enterprise Web Systems (@ecspl)",
-      "location": "Remote",
-      "dates": "2021 — 2024",
+      "role": "Freelance DevOps Engineer",
+      "company": "SquadCoders",
+      "location": "Kashmir, India",
+      "dates": "Dec 2023 - Mar 2024",
       "highlights": [
-        "Deployed and maintained serverless Hono API gateways on Cloudflare Workers, handling 15K+ daily requests with sub-100ms execution latency.",
-        "Automated Playwright end-to-end regression suites integrated with GitHub Actions CI, reducing release cycle duration by 35% while enforcing pnpm lockfile supply-chain verification.",
-        "Managed centralized Sentry error tracking pipelines across microservices, establishing automated alerting thresholds and reducing Mean Time to Resolution (MTTR) by 40%."
+        "Architected multi-stage Docker deployment pipelines and automated GitHub Actions workflows, deploying static web platforms to Cloudflare Pages with zero-downtime rollouts.",
+        "Engineered custom pre-flight build-time quality hooks in Node.js (astroSiteQualityEnforcer), eliminating broken links, missing assets, and unoptimized payloads before artifact publishing.",
+        "Configured Cloudflare edge rules, SSL/TLS strict policies, and Turnstile bot protection, achieving 99.99% availability and sub-50ms global TTFB.",
+        "Automated deployment workflows across 10+ production web platforms with continuous telemetry integration."
       ]
     },
     {
       "role": "Infrastructure & Web Trainee",
       "company": "Elance Technologies",
       "location": "Srinagar, Kashmir",
-      "dates": "Jan 2023 — Jun 2023",
+      "dates": "Jan 2023 - Jun 2023",
       "highlights": [
-        "Managed Linux server environments, Apache/Nginx web server configurations, and database backup routines with automated shell scripts."
+        "Maintained Linux server environments, Nginx reverse proxy configurations, and automated cron backup routines with POSIX shell scripts."
       ]
     }
   ],
   "projects": [
+    {
+      "name": "Smart Image CLI",
+      "tech": "Bun, TypeScript, Sharp, Local SLMs / LM Studio",
+      "dates": "2024",
+      "highlights": [
+        "Built high-throughput image optimization CLI in Bun, automating WebP/AVIF compression pipelines with multi-threaded batch workers.",
+        "Integrated local offline vision SLMs via LM Studio for automated semantic image classification, eliminating cloud API costs and data privacy exposure."
+      ],
+      "link": "https://github.com/sahillangoo/smart-img-cli"
+    },
+    {
+      "name": "EduCore Infrastructure",
+      "tech": "Docker, MySQL, Drizzle Kit, Next.js, Sentry",
+      "dates": "2024",
+      "highlights": [
+        "Architected containerized multi-stage Docker deployment for school ERP, provisioning MySQL database instances, automated database migrations via Drizzle Kit, and Sentry error monitoring.",
+        "Configured automated database backup routines and SSL edge reverse proxies."
+      ],
+      "link": "https://github.com/SquadCoders/school_management"
+    },
     {
       "name": "XpressSys Cloud Security",
       "tech": "Cloudflare Pages, Cloudflare WAF, DNS, Node.js",
@@ -79,22 +102,13 @@
     },
     {
       "name": "Portfolio Automated CI/CD Engine",
-      "tech": "Astro 7, TypeScript, GitHub Actions, Wrangler, Cloudflare",
+      "tech": "Astro, TypeScript, GitHub Actions, Wrangler, Cloudflare",
       "dates": "2024",
       "highlights": [
-        "Constructed automated static site generation pipeline with Astro 7, TypeScript, and Wrangler, publishing immutable edge builds via Cloudflare Pages in under 60 seconds.",
+        "Constructed automated static site generation pipeline with Astro, TypeScript, and Wrangler, publishing immutable edge builds via Cloudflare Pages in under 60 seconds.",
         "Enforced zero-warning linting, formatting, and strict type-checking gates in GitHub Actions."
       ],
       "link": "https://sahillangoo.in"
-    },
-    {
-      "name": "Smart IMG CLI",
-      "tech": "Node.js, Sharp, TypeScript, CLI Tooling",
-      "dates": "2024",
-      "highlights": [
-        "Built high-speed CLI utility for batch image optimization and WebP/AVIF conversions, reducing media asset weights by 70% in build pipelines."
-      ],
-      "link": "https://github.com/sahillangoo"
     }
   ]
 }

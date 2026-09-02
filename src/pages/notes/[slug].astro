@@ -1,7 +1,7 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
-import { SITE } from '@/const/site.ts';
+import { SITE } from '@const/site.ts';
 import { Icon } from 'astro-icon/components';
 
 export async function getStaticPaths() {
@@ -68,7 +68,7 @@ const breadcrumbs = [
   breadcrumbs={breadcrumbs}
   structuredData={noteSchema}
 >
-  <article class="mx-auto max-w-2xl space-y-8 px-4 py-8 sm:px-6 sm:py-12">
+  <article class="mx-auto max-w-3xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">
     <!-- Back Link -->
     <a
       href="/notes/"
@@ -78,10 +78,10 @@ const breadcrumbs = [
     </a>
 
     <!-- Note Header -->
-    <header class="border-base-300 space-y-3 border-b pb-6">
+    <header class="border-base-300 space-y-4 border-b pb-8">
       <div class="text-base-content/60 flex items-center gap-2 font-mono text-xs">
         <span
-          class="bg-accent/10 text-accent rounded px-2 py-0.5 font-semibold tracking-wider uppercase"
+          class="bg-accent/10 text-accent rounded px-2.5 py-0.5 font-semibold tracking-wider uppercase"
         >
           {data.topic}
         </span>
@@ -91,22 +91,22 @@ const breadcrumbs = [
 
       <h1
         transition:name={`note-title-${id}`}
-        class="text-base-content text-2xl font-extrabold tracking-tight sm:text-3xl"
+        class="text-base-content text-2xl leading-tight font-bold tracking-tight sm:text-3xl"
       >
         {data.title}
       </h1>
 
       {
         data.description && (
-          <p class="text-base-content/80 text-sm leading-relaxed">{data.description}</p>
+          <p class="text-base-content/80 text-base leading-relaxed sm:text-lg">
+            {data.description}
+          </p>
         )
       }
     </header>
 
     <!-- Note Content -->
-    <div
-      class="prose prose-invert prose-headings:font-bold prose-headings:text-base-content prose-p:text-base-content/80 prose-code:font-mono prose-code:text-accent prose-pre:border prose-pre:border-base-300 prose-pre:bg-base-200 max-w-none"
-    >
+    <div class="prose max-w-none">
       <Content />
     </div>
 
@@ -120,13 +120,13 @@ const breadcrumbs = [
           {prevNote ? (
             <a
               href={`/notes/${prevNote.id}/`}
-              class="editorial-card group flex flex-col justify-between p-4 text-left transition-all"
+              class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-left transition-all duration-200 hover:-translate-y-0.5 active:scale-99"
               rel="prev"
             >
-              <span class="text-base-content/60 flex items-center gap-1 font-mono text-[11px] tracking-wider uppercase">
-                <Icon name="ph:arrow-left-bold" class="h-3 w-3" /> Previous Note
+              <span class="text-base-content/60 flex items-center gap-1 font-mono text-xs font-medium tracking-wider uppercase">
+                <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Previous Note
               </span>
-              <span class="text-base-content group-hover:text-accent mt-1.5 text-xs font-bold transition-colors">
+              <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
                 {prevNote.data.title}
               </span>
             </a>
@@ -137,13 +137,13 @@ const breadcrumbs = [
           {nextNote && (
             <a
               href={`/notes/${nextNote.id}/`}
-              class="editorial-card group flex flex-col justify-between p-4 text-right transition-all sm:col-start-2"
+              class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-right transition-all duration-200 hover:-translate-y-0.5 active:scale-99 sm:col-start-2"
               rel="next"
             >
-              <span class="text-base-content/60 flex items-center justify-end gap-1 font-mono text-[11px] tracking-wider uppercase">
-                Next Note <Icon name="ph:arrow-right-bold" class="h-3 w-3" />
+              <span class="text-base-content/60 flex items-center justify-end gap-1 font-mono text-xs font-medium tracking-wider uppercase">
+                Next Note <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
               </span>
-              <span class="text-base-content group-hover:text-accent mt-1.5 text-xs font-bold transition-colors">
+              <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
                 {nextNote.data.title}
               </span>
             </a>

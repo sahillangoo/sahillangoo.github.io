@@ -1,5 +1,5 @@
 ---
-title: 'HackerForce — Red Team Operations & Tactical Intelligence Platform'
+title: 'HackerForce | Red Team Operations & Tactical Intelligence Platform'
 description: 'High-performance static cybersecurity storefront, MDX intelligence publications, and SMTP exploitation course platform built with Astro 7 and Tailwind CSS v4.'
 summary: 'Tactical cybersecurity storefront, red team courseware engine, and zero-server Pagefind search architecture.'
 category: 'web-app'
@@ -26,7 +26,7 @@ githubUrl: 'https://github.com/HackerForceDev/hackforce-storefront'
 Key engineering challenges included:
 
 1. **Zero-Server Attack Surface**: Given the adversarial target audience (penetration testers and security researchers), hosting a traditional backend CMS (e.g. WordPress, Drupal) introduced high vulnerability risks and maintenance overhead.
-2. **Heavy Curricula & Content Scale**: In-depth courseware—such as _SMTP Protocol Exploitation_, _Subdomain Hijacking_, and _Active Directory Kerberoasting_—required rich code snippets, interactive terminals, and searchability across hundreds of technical markdown files.
+2. **Heavy Curricula & Content Scale**: In-depth courseware - such as _SMTP Protocol Exploitation_, _Subdomain Hijacking_, and _Active Directory Kerberoasting_ - required rich code snippets, interactive terminals, and searchability across hundreds of technical markdown files.
 3. **Strict Design & Accessibility Integrity**: The interface demanded a tailored _"tactical obsidian"_ aesthetic with high typographic hierarchy, zero neon glows, and strict WCAG AA contrast compliance for prolonged low-light operating environments.
 
 ---

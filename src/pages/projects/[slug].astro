@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import ReadingProgressBar from '@/components/common/ReadingProgressBar.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ReadingProgressBar from '@components/common/ReadingProgressBar.astro';
 import { getCollection, render } from 'astro:content';
-import { SITE } from '@/const/site.ts';
+import { SITE } from '@const/site.ts';
 import { Icon } from 'astro-icon/components';
 
 export async function getStaticPaths() {
@@ -145,7 +145,7 @@ const breadcrumbs = [
     </header>
 
     <!-- Technologies Grid -->
-    <div class="editorial-card p-5 sm:p-6">
+    <div class="border-base-300 bg-base-200 rounded-xl border p-5 sm:p-6">
       <h2 class="text-accent mb-3 font-mono text-xs font-semibold tracking-widest uppercase">
         Technologies & Tools
       </h2>
@@ -177,11 +177,11 @@ const breadcrumbs = [
           {prevProject ? (
             <a
               href={`/projects/${prevProject.id}/`}
-              class="editorial-card group flex flex-col justify-between p-5 text-left transition-all"
+              class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-left transition-all duration-200 hover:-translate-y-0.5 active:scale-99"
               rel="prev"
             >
-              <span class="text-base-content/60 flex items-center gap-1 font-mono text-[11px] tracking-wider uppercase">
-                <Icon name="ph:arrow-left-bold" class="h-3 w-3" /> Previous Project
+              <span class="text-base-content/60 flex items-center gap-1 font-mono text-xs font-medium tracking-wider uppercase">
+                <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Previous Project
               </span>
               <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
                 {prevProject.data.title}
@@ -194,11 +194,11 @@ const breadcrumbs = [
           {nextProject && (
             <a
               href={`/projects/${nextProject.id}/`}
-              class="editorial-card group flex flex-col justify-between p-5 text-right transition-all sm:col-start-2"
+              class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-right transition-all duration-200 hover:-translate-y-0.5 active:scale-99 sm:col-start-2"
               rel="next"
             >
-              <span class="text-base-content/60 flex items-center justify-end gap-1 font-mono text-[11px] tracking-wider uppercase">
-                Next Project <Icon name="ph:arrow-right-bold" class="h-3 w-3" />
+              <span class="text-base-content/60 flex items-center justify-end gap-1 font-mono text-xs font-medium tracking-wider uppercase">
+                Next Project <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
               </span>
               <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
                 {nextProject.data.title}

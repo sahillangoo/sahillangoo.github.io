@@ -1,5 +1,5 @@
 ---
-title: 'EduCore — Enterprise School Management & Fee Billing SaaS Platform'
+title: 'EduCore | Enterprise School Management & Fee Billing SaaS Platform'
 description: 'A comprehensive Next.js 16 App Router school ERP and automated fee billing platform featuring Drizzle ORM, Better Auth, Razorpay reconciliation, pdfmake generation, and public guardian portals.'
 summary: 'Enterprise school management SaaS with automated fee calculation, Razorpay webhook reconciliation, exam rankings, printable ID cards, and guardian portals.'
 category: 'web-app'
@@ -100,4 +100,4 @@ Implemented a dedicated client-side print engine under `src/app/(print)`:
 ### 6. Production Observability & Standalone Containerization
 
 - Integrated **Sentry (`@sentry/nextjs`)** capturing server action exceptions and database query latency.
-- Authored multi-stage standalone Docker builds deploying seamlessly on **Coolify** and Cloudflare R2 object storage.
+- Authored multi-stage standalone Docker builds deploying reliably to **Coolify** and Cloudflare R2 object storage.

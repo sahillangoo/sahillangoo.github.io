@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import ContactForm from '@/components/portfolio/ContactForm.astro';
-import { SITE } from '@/const/site.ts';
-import { contactCopy } from '@/data/copy/contact.ts';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ContactForm from '@components/portfolio/ContactForm.astro';
+import { SITE } from '@const/site.ts';
+import { contactCopy } from '@copy/contact.ts';
 import { Icon } from 'astro-icon/components';
 
 const contactKeywords = [
@@ -17,7 +17,7 @@ const contactSchema = [
   {
     '@type': 'ContactPage',
     '@id': `${SITE.url}/contact/#contactpage`,
-    name: `${contactCopy.header.title} — ${SITE.name}`,
+    name: `${contactCopy.header.title} | ${SITE.name}`,
     url: `${SITE.url}/contact/`,
     description: contactCopy.header.description,
     mainEntity: {
@@ -65,7 +65,7 @@ const breadcrumbs = [
     <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
       <!-- Left sidebar with quick details -->
       <div class="space-y-6">
-        <div class="editorial-card space-y-4 p-5">
+        <div class="border-base-300 bg-base-200 space-y-4 rounded-xl border p-5">
           <div>
             <span class="text-base-content/60 font-mono text-xs tracking-wider uppercase">
               {contactCopy.sidebar.emailLabel}
@@ -99,7 +99,7 @@ const breadcrumbs = [
           </div>
         </div>
 
-        <div class="editorial-card space-y-3 p-5">
+        <div class="border-base-300 bg-base-200 space-y-3 rounded-xl border p-5">
           <span class="text-base-content/60 font-mono text-xs tracking-wider uppercase">
             {contactCopy.sidebar.verifiedProfilesLabel}
           </span>

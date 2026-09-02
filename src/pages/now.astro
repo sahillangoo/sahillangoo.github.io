@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import TimeAvailabilityWidget from '@/components/common/TimeAvailabilityWidget.astro';
-import SpotifyWidget from '@/components/common/SpotifyWidget.astro';
-import { SITE } from '@/const/site.ts';
-import { nowCopy } from '@/data/copy/now.ts';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import TimeAvailabilityWidget from '@components/common/TimeAvailabilityWidget.astro';
+import SpotifyWidget from '@components/common/SpotifyWidget.astro';
+import { SITE } from '@const/site.ts';
+import { nowCopy } from '@copy/now.ts';
 import { Icon } from 'astro-icon/components';
 
 const breadcrumbs = [
@@ -22,7 +22,7 @@ const nowKeywords = [
 const nowSchema = {
   '@type': 'WebPage',
   '@id': `${SITE.url}/now/#webpage`,
-  name: `${nowCopy.header.title} — ${SITE.name}`,
+  name: `${nowCopy.header.title} | ${SITE.name}`,
   url: `${SITE.url}/now/`,
   description: nowCopy.seo.description,
   mainEntity: {
@@ -64,7 +64,7 @@ const nowSchema = {
     <div class="space-y-10">
       {
         nowCopy.sections.map((section) => (
-          <div class="editorial-card space-y-4 p-6 sm:p-8">
+          <div class="border-base-300 bg-base-200 space-y-4 rounded-xl border p-6 sm:p-8">
             <h2 class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase">
               <Icon name={section.icon} class="h-4 w-4" />
               {section.category}

@@ -2,18 +2,18 @@ import type { HomePageCopy } from './types';
 
 export const homeCopy: HomePageCopy = {
   seo: {
-    title: 'Sahil Langoo — Full Stack Systems Engineer & Systems Architect',
+    title: 'Sahil Langoo | Full Stack Systems Engineer & Systems Architect',
     description:
       'Personal portfolio, engineering journal, and systems catalog of Sahil Langoo. Specializing in Astro 7 static architectures, TypeScript, distributed edge proxies, and minimalist UI craft.',
     image: '/og/home.png',
   },
   hero: {
-    badge: 'Full Stack Systems Engineer & Co-Founder',
+    badge: 'Full Stack Systems Engineer',
     headline:
       'Engineering resilient edge systems, high-throughput web architectures & crafted interfaces.',
     subheadline:
-      'I am Sahil Langoo, based in Kashmir, India. I specialize in architecting ultra-fast static web platforms, distributed API proxies, and local AI pipelines at @SquadCoders and in open source.',
-    imageAlt: 'Sahil Langoo — Full Stack Systems Engineer & Systems Architect',
+      'I am Sahil Langoo, based in Kashmir, India. I specialize in architecting ultra-fast static web platforms, distributed API proxies, and type-safe systems at Eresolution Consultancy Services and in open source.',
+    imageAlt: 'Sahil Langoo - Full Stack Systems Engineer & Systems Architect',
     statusText: 'Available for work',
     locationText: 'Kashmir, India',
     ctas: [

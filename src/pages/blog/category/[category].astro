@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import ArticleCard from '@/components/portfolio/ArticleCard.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ArticleCard from '@components/portfolio/ArticleCard.astro';
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { slugify } from '@/utils/slugify';
-import { SITE } from '@/const/site.ts';
+import { slugify } from '@utils/slugify.ts';
+import { SITE } from '@const/site.ts';
 import { Icon } from 'astro-icon/components';
 
 export async function getStaticPaths() {
@@ -45,7 +45,7 @@ const pageUrl = `${SITE.url}/blog/category/${categorySlug}/`;
 const categorySchema = {
   '@type': 'CollectionPage',
   '@id': `${pageUrl}#collectionpage`,
-  name: `${categoryName} Articles — ${SITE.name}`,
+  name: `${categoryName} Articles | ${SITE.name}`,
   url: pageUrl,
   description: `Technical essays and architecture deep-dives by Sahil Langoo in the ${categoryName} category.`,
   mainEntity: {

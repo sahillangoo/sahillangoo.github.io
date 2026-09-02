@@ -12,23 +12,18 @@
     "target": "ESNext",
     "paths": {
       "@/*": ["*"],
-      "@assets/*": ["assets/*"],
-      "@images/*": ["assets/images/*"],
       "@components/*": ["components/*"],
       "@layouts/*": ["layouts/*"],
-      "@styles/*": ["styles/*"],
-      "@services/*": ["services/*"],
       "@utils/*": ["utils/*"],
-      "@data/*": ["data/*"],
-      "@data-types/*": ["data/types/*"],
       "@const/*": ["const/*"],
-      "@copy/*": ["const/copy/*"],
-      "@scripts/*": ["scripts/*"],
+      "@copy/*": ["data/copy/*"],
+      "@copy": ["data/copy/index.ts"],
+      "@data/*": ["data/*"],
       "@content/*": ["content/*"],
+      "@assets/*": ["assets/*"],
+      "@styles/*": ["styles/*"],
       "@plugins/*": ["plugins/*"],
-      "@types/*": ["types/*"],
-      "@lib/*": ["lib/*"],
-      "@pages/*": ["pages/*"]
+      "@scripts/*": ["../scripts/*"]
     },
     "plugins": [
       {

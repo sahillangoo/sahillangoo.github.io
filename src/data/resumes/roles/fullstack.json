@@ -2,26 +2,19 @@
   "id": "fullstack",
   "roleTitle": "Full Stack Systems Engineer & Architect",
   "filename": "Resume-Sahil-Langoo-FullStack.pdf",
-  "summary": "Full Stack Systems Engineer and Co-Founder specializing in high-throughput web systems, distributed edge proxies, and end-to-end type safety. Proven track record architecting zero-JS Astro static platforms, Cloudflare Worker proxies (Hono, Meta CAPI, Turnstile), and automated build-time verification pipelines.",
+  "summary": "Full Stack Systems Engineer specializing in high-throughput web systems, distributed edge proxies, and end-to-end type safety. Proven track record architecting resilient Cloudflare Worker proxies (Hono, Meta CAPI, Turnstile), Next.js applications, and automated build-time verification pipelines.",
   "skills": {
-    "languages": [
-      "TypeScript",
-      "JavaScript (ES2024+)",
-      "Go",
-      "Python",
-      "SQL",
-      "PHP",
-      "HTML5 / CSS3"
-    ],
+    "languages": ["TypeScript", "JavaScript", "Go", "Python", "SQL", "PHP", "HTML5 / CSS3"],
     "frameworks": [
-      "Astro 7",
-      "React 19",
       "Next.js",
+      "React",
+      "Astro",
       "Hono",
       "Node.js",
-      "Tailwind CSS v4",
-      "daisyUI 5",
-      "Express"
+      "Symfony",
+      "Tailwind CSS",
+      "daisyUI",
+      "Drizzle ORM"
     ],
     "cloud": [
       "Cloudflare Pages & Workers",
@@ -32,6 +25,7 @@
       "REST / GraphQL"
     ],
     "databasesAndTools": [
+      "MySQL",
       "PostgreSQL",
       "SQLite / D1",
       "Redis",
@@ -44,77 +38,88 @@
   },
   "experience": [
     {
-      "role": "Lead Software Engineer & Co-Founder",
-      "company": "SquadCoders",
-      "location": "Kashmir, India",
-      "dates": "2023 — Present",
+      "role": "Systems & Backend Integration Engineer",
+      "company": "Eresolution Consultancy Services",
+      "location": "Remote",
+      "dates": "Apr 2025 - Present",
       "highlights": [
-        "Co-founded and architected core web platform at SquadCoders, delivering sub-50ms global TTFB and 0.00 CLS across 6 production client platforms by leveraging Astro 7 SSG, TypeScript, and Cloudflare Pages.",
-        "Engineered bespoke web systems including SoulMedia, Hotel Akbar, and TravelKit, reducing bundle payloads by 65% and achieving 100/100 Lighthouse performance benchmarks through zero-JS baselines.",
-        "Developed custom zero-dependency build-time quality hooks in Node.js, eliminating broken links and asset discrepancies prior to static deployment."
+        "Architected distributed Hono API gateways on Cloudflare Workers for Experian credit OTP proxies and Meta CAPI server-side dispatching, maintaining 99.99% uptime and sub-100ms p99 execution latency.",
+        "Remediated production exception bottlenecks across 90-day intervals via Sentry telemetry, eliminating client-side race conditions and increasing checkout transaction success rate by 14%.",
+        "Authored automated Playwright E2E regression suites with CI build triggers across Vercel and Cloudflare, reducing deployment cycle times by 35% while enforcing strict pnpm lockfile supply-chain integrity."
       ]
     },
     {
       "role": "Full Stack Developer",
       "company": "Taffin.Tech",
       "location": "Remote, Srinagar",
-      "dates": "Apr 2024 — Present",
+      "dates": "Apr 2024 - Aug 2025",
       "highlights": [
-        "Spearheaded development of an AI-integrated job board platform for a French startup, increasing user engagement by 25% and implementing EU GDPR-compliant privacy standards.",
-        "Engineered responsive user interfaces with Tailwind CSS, React, and Twig templating integrated with Symfony backend, slashing initial page load times by 40%.",
-        "Configured dynamic SEO indexing strategies and structured schema pipelines, boosting organic search traffic by 30%."
+        "Architected full-stack AI candidate-matching pipelines and job board platform for a French recruitment startup, driving a 25% lift in user engagement while enforcing EU GDPR privacy compliance.",
+        "Engineered responsive client interfaces with Tailwind CSS, React, and Twig integrated into a Symfony backend, slashing initial page load times by 40% across mobile devices.",
+        "Automated dynamic SEO indexing pipelines and structured JSON-LD schema generation in Symfony, lifting organic search discovery by 30%."
       ]
     },
     {
-      "role": "Systems & Backend Integration Engineer",
-      "company": "Enterprise Web Systems (@ecspl)",
-      "location": "Remote",
-      "dates": "2021 — 2024",
+      "role": "Freelance Software Engineer",
+      "company": "SquadCoders",
+      "location": "Kashmir, India",
+      "dates": "Dec 2023 - Mar 2024",
       "highlights": [
-        "Engineered distributed Hono API gateways on Cloudflare Workers for Experian credit OTP proxies and Meta CAPI server-side dispatching, maintaining 99.99% uptime and sub-100ms p99 execution latency.",
-        "Triaged production Sentry exception telemetry across 90-day intervals, resolving client-side race conditions and payment transport failures to elevate checkout transaction success rate by 14%.",
-        "Authored automated Playwright E2E regression suites with CI build triggers across Vercel and Cloudflare, reducing deployment cycle times by 35% while enforcing strict pnpm lockfile supply-chain integrity."
+        "Engineered static-first web architectures with Astro, TypeScript, and Cloudflare Pages, establishing sub-50ms global TTFB and zero Cumulative Layout Shift (0.00 CLS) across client systems.",
+        "Refactored production platforms including SoulMedia, Hotel Akbar, and TravelKit, reducing bundle payloads by 65% and attaining 100/100 Lighthouse performance benchmarks through zero-JS baselines.",
+        "Delivered 10+ high-performance commercial websites with localized edge caching, achieving an average page-load improvement of 30% and a 15% conversion lift.",
+        "Automated custom build-time verification hooks in Node.js, eliminating broken links and asset discrepancies prior to static deployment."
       ]
     },
     {
       "role": "Full Stack Industrial Trainee",
       "company": "Elance Technologies",
       "location": "Srinagar, Kashmir",
-      "dates": "Jan 2023 — Jun 2023",
+      "dates": "Jan 2023 - Jun 2023",
       "highlights": [
-        "Completed 6-month intensive full-stack development curriculum, building secure RESTful APIs and dynamic interfaces with PHP, JavaScript, and MariaDB.",
-        "Collaborated on accessibility and responsive grid refactoring across client platforms, increasing mobile user traffic by 40%."
+        "Mastered full-stack web engineering fundamentals across a 6-month intensive curriculum in PHP, JavaScript, MySQL/MariaDB, and responsive HTML5/CSS3.",
+        "Re-engineered accessible grid layouts and touch-first interactions across client platforms, driving a 40% increase in mobile user engagement."
       ]
     }
   ],
   "projects": [
     {
-      "name": "Listify",
-      "tech": "PHP, MariaDB, JavaScript, Leaflet.js, HTML5/CSS3",
-      "dates": "2023",
+      "name": "EduCore SaaS",
+      "tech": "Next.js, React, Drizzle ORM, MySQL, Better Auth, Razorpay",
+      "dates": "2024",
       "highlights": [
-        "Architected full-stack business directory with PHP, MariaDB, and Leaflet.js, incorporating secure session authentication and spatial indexing.",
-        "Delivered sub-15ms search and filter response times across 500+ localized verified business listings."
+        "Architected Next.js App Router multi-tenant SaaS with Drizzle ORM and MySQL, modeling student lifecycles, automated fee ledgers, and role-based access controls (RBAC).",
+        "Engineered webhook-verified Razorpay payment pipeline with automated PDF invoice dispatching via pdfmake, eliminating billing discrepancies across 500+ active students."
       ],
-      "link": "https://listify.sahillangoo.com"
+      "link": "https://github.com/SquadCoders/school_management"
     },
     {
-      "name": "BreedersHub",
-      "tech": "React, Tailwind CSS, PWA, TWA, Webpack",
-      "dates": "2023",
+      "name": "HackerForce Storefront",
+      "tech": "Astro, TypeScript, Tailwind CSS, Pagefind WASM",
+      "dates": "2024",
       "highlights": [
-        "Designed mobile-first e-commerce frontend supporting 1,000+ SKU catalog with sub-3s 3G network loads using asset compression and lazy hydration.",
-        "Packaged and deployed application as a Progressive Web App (PWA) and Trusted Web Activity (TWA) across Android Play Store."
+        "Architected zero-server static cybersecurity platform with Astro and Tailwind CSS, achieving sub-300ms LCP and zero client-side JavaScript overhead.",
+        "Engineered in-browser full-text search via WebAssembly with Pagefind, indexing hundreds of MDX curricula files with sub-15ms client query execution."
       ],
-      "link": "https://breedershub.in"
+      "link": "https://github.com/HackerForceDev/hackforce-storefront"
+    },
+    {
+      "name": "TAFFin.Tech Marketplace",
+      "tech": "React, Symfony, Redux Toolkit, TanStack Query, Tailwind CSS",
+      "dates": "2024",
+      "highlights": [
+        "Constructed hybrid React SPA and Symfony recruitment marketplace featuring Redux state management, bilingual Lingui i18n (EN/FR), and GDPR-compliant candidate ingestion.",
+        "Optimized high-density candidate search filters and application funnels with TanStack Query, achieving sub-100ms client-side state transitions."
+      ],
+      "link": "https://taffin.tech"
     },
     {
       "name": "XpressSys Logistics",
       "tech": "Cloudflare Pages, Node.js, JavaScript, Cloudflare WAF",
       "dates": "2023",
       "highlights": [
-        "Developed logistics dispatch platform enabling automated parcel tracking, delivery pin-code routing, and Cloudflare WAF anti-bot mitigation.",
-        "Reduced malicious spam requests by 99% via edge security rules and Cloudflare DNS proxies."
+        "Engineered logistics dispatch platform with automated consignment tracking, delivery pin-code routing, and Cloudflare edge proxying.",
+        "Hardened edge security perimeter via Cloudflare WAF and custom IP rate-limiting rules, eliminating 99% of automated bot and spam requests."
       ],
       "link": "https://xpresssys.com"
     }

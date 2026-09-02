@@ -1,13 +1,15 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import { Icon } from 'astro-icon/components';
+import { cn } from '@utils/cn.ts';
 
 export interface Props {
   post: CollectionEntry<'blog'>;
   headingLevel?: 'h2' | 'h3';
+  class?: string;
 }
 
-const { post, headingLevel = 'h2' } = Astro.props;
+const { post, headingLevel = 'h2', class: className = '' } = Astro.props;
 const { data, id } = post;
 
 const HeadingTag = headingLevel;
@@ -19,7 +21,12 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
 });
 ---
 
-<article class="editorial-card group relative flex flex-col justify-between p-6 sm:p-7">
+<article
+  class={cn(
+    'group relative flex flex-col justify-between rounded-xl border border-base-300 bg-base-200 p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/40 active:scale-99 sm:p-7',
+    className
+  )}
+>
   <div>
     <!-- Metadata -->
     <div class="text-base-content/60 mb-3 flex items-center justify-between text-xs">
@@ -53,14 +60,14 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
         data.tags
           .slice(0, 3)
           .map((tag) => (
-            <span class="bg-base-300/40 text-base-content/70 rounded px-2 py-0.5 font-mono text-[11px]">
+            <span class="bg-base-300/40 text-base-content/70 rounded-md px-2 py-0.5 font-mono text-xs">
               #{tag}
             </span>
           ))
       }
     </div>
     <span
-      class="text-accent flex items-center gap-1 font-mono text-[11px] font-medium transition-transform group-hover:translate-x-0.5"
+      class="text-accent flex items-center gap-1 font-mono text-xs font-medium transition-transform group-hover:translate-x-0.5"
     >
       Read <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
     </span>

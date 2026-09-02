@@ -1,5 +1,5 @@
 ---
-import { SITE } from '@/const/site.ts';
+import { SITE } from '@const/site.ts';
 import { Icon } from 'astro-icon/components';
 import { getCollection } from 'astro:content';
 
@@ -135,7 +135,7 @@ const searchIndex = [
   <!-- Palette Container -->
   <div class="fixed inset-0 z-10 flex items-start justify-center p-4 pt-16 sm:pt-24">
     <div
-      class="border-base-300 bg-base-100/95 flex max-h-[80vh] w-full max-w-xl flex-col overflow-hidden rounded-xl border shadow-2xl backdrop-blur-md"
+      class="border-base-300 bg-base-100/95 max-h-modal flex w-full max-w-xl flex-col overflow-hidden rounded-xl border shadow-2xl backdrop-blur-md"
     >
       <!-- Search Input Header -->
       <div class="border-base-300 flex items-center gap-3 border-b px-4 py-3.5">
@@ -144,33 +144,33 @@ const searchIndex = [
           id="command-palette-input"
           type="text"
           placeholder="Search pages, projects, articles, notes, or actions..."
-          class="text-base-content placeholder:text-base-content/40 w-full bg-transparent text-sm focus:outline-none"
+          class="text-base-content placeholder:text-base-content/40 w-full bg-transparent text-sm focus:outline-none sm:text-base"
           autocomplete="off"
           spellcheck="false"
         />
         <kbd
-          class="border-base-300 bg-base-200 text-base-content/60 hidden items-center gap-0.5 rounded border px-1.5 py-0.5 font-mono text-[10px] sm:inline-flex"
+          class="border-base-300 bg-base-200 text-base-content/60 hidden items-center gap-0.5 rounded border px-1.5 py-0.5 font-mono text-xs sm:inline-flex"
         >
           ESC
         </kbd>
       </div>
 
       <!-- Results Container -->
-      <div id="command-palette-results" class="flex-grow space-y-1 overflow-y-auto p-2">
+      <div id="command-palette-results" class="grow space-y-1 overflow-y-auto p-2">
         <!-- Results will be dynamically filtered and rendered via client script -->
       </div>
 
       <!-- Palette Footer -->
       <div
-        class="border-base-300/80 bg-base-200/50 text-base-content/50 flex items-center justify-between border-t px-4 py-2 font-mono text-[11px]"
+        class="border-base-300/80 bg-base-200/50 text-base-content/60 flex items-center justify-between border-t px-4 py-2.5 font-mono text-xs"
       >
         <div class="flex items-center gap-3">
           <span class="flex items-center gap-1">
-            <kbd class="border-base-300 bg-base-100 rounded border px-1">↑</kbd>
-            <kbd class="border-base-300 bg-base-100 rounded border px-1">↓</kbd> Navigate
+            <kbd class="border-base-300 bg-base-100 rounded border px-1.5 py-0.5">↑</kbd>
+            <kbd class="border-base-300 bg-base-100 rounded border px-1.5 py-0.5">↓</kbd> Navigate
           </span>
           <span class="flex items-center gap-1">
-            <kbd class="border-base-300 bg-base-100 rounded border px-1">↵</kbd> Select
+            <kbd class="border-base-300 bg-base-100 rounded border px-1.5 py-0.5">↵</kbd> Select
           </span>
         </div>
         <span>{SITE.name}</span>
@@ -195,118 +195,152 @@ const searchIndex = [
   declare global {
     interface Window {
       __SEARCH_INDEX__?: SearchItem[];
+      __PALETTE_INIT__?: boolean;
     }
   }
 
-  function setupCommandPalette() {
-    const modal = document.getElementById('command-palette-modal');
-    const backdrop = document.getElementById('command-palette-backdrop');
-    const input = document.getElementById('command-palette-input') as HTMLInputElement | null;
-    const resultsContainer = document.getElementById('command-palette-results');
-    const openBtns = document.querySelectorAll('[data-open-palette]');
+  let selectedIndex = 0;
+  let filteredItems: SearchItem[] = [];
 
-    if (!modal || !input || !resultsContainer) return;
+  function getModal() {
+    return document.getElementById('command-palette-modal');
+  }
 
-    const items: SearchItem[] = window.__SEARCH_INDEX__ || [];
-    let selectedIndex = 0;
-    let filteredItems: SearchItem[] = [...items];
+  function getInput() {
+    return document.getElementById('command-palette-input') as HTMLInputElement | null;
+  }
 
-    const close = () => {
+  function getResultsContainer() {
+    return document.getElementById('command-palette-results');
+  }
+
+  function closePalette() {
+    const modal = getModal();
+    if (modal) {
       modal.classList.add('hidden');
-      document.body.style.overflow = '';
-    };
+    }
+    document.body.style.overflow = '';
+  }
 
-    const open = () => {
-      modal.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-      input.value = '';
-      filter('');
-      setTimeout(() => input.focus(), 50);
-    };
+  function renderResults() {
+    const resultsContainer = getResultsContainer();
+    if (!resultsContainer) return;
 
-    const renderResults = () => {
-      if (filteredItems.length === 0) {
-        resultsContainer.innerHTML = `
-          <div class="py-8 text-center text-xs text-base-content/50 font-mono">
-            No matching documents or actions found.
-          </div>
+    if (filteredItems.length === 0) {
+      resultsContainer.innerHTML = `
+        <div class="py-8 text-center text-xs text-base-content/50 font-mono">
+          No matching documents or actions found.
+        </div>
+      `;
+      return;
+    }
+
+    let html = '';
+    let currentIndex = 0;
+
+    const categories = Array.from(new Set(filteredItems.map((i) => i.category)));
+
+    categories.forEach((cat) => {
+      html += `<div class="px-3 pt-3 pb-1 text-xs font-mono uppercase tracking-wider text-accent font-semibold">${cat}</div>`;
+      const catItems = filteredItems.filter((i) => i.category === cat);
+      catItems.forEach((item) => {
+        const isSelected = currentIndex === selectedIndex;
+        html += `
+          <a
+            href="${item.url}"
+            data-index="${currentIndex}"
+            class="palette-result-item flex items-center justify-between rounded-lg px-3 py-2.5 text-sm transition-colors ${
+              isSelected
+                ? 'bg-base-300 text-base-content font-medium'
+                : 'text-base-content/75 hover:bg-base-200 hover:text-base-content'
+            }"
+          >
+            <div class="min-w-0 pr-2">
+              <div class="font-medium text-base-content truncate text-sm">${item.title}</div>
+              <div class="text-xs text-base-content/65 truncate mt-0.5">${item.subtitle}</div>
+            </div>
+            <span class="font-mono text-xs text-base-content/50 shrink-0">Jump ↵</span>
+          </a>
         `;
-        return;
-      }
-
-      let html = '';
-      let currentIndex = 0;
-
-      const categories = Array.from(new Set(filteredItems.map((i) => i.category)));
-
-      categories.forEach((cat) => {
-        html += `<div class="px-2 pt-2 pb-1 text-[10px] font-mono uppercase tracking-widest text-accent font-semibold">${cat}</div>`;
-        const catItems = filteredItems.filter((i) => i.category === cat);
-        catItems.forEach((item) => {
-          const isSelected = currentIndex === selectedIndex;
-          html += `
-            <a
-              href="${item.url}"
-              data-index="${currentIndex}"
-              class="palette-result-item flex items-center justify-between rounded-lg px-3 py-2 text-xs transition-colors ${
-                isSelected
-                  ? 'bg-base-300 text-base-content font-medium'
-                  : 'text-base-content/75 hover:bg-base-200 hover:text-base-content'
-              }"
-            >
-              <div class="min-w-0 pr-2">
-                <div class="font-medium text-base-content truncate">${item.title}</div>
-                <div class="text-[11px] text-base-content/50 truncate">${item.subtitle}</div>
-              </div>
-              <span class="font-mono text-[10px] text-base-content/40 shrink-0">Jump ↵</span>
-            </a>
-          `;
-          currentIndex++;
-        });
+        currentIndex++;
       });
-
-      resultsContainer.innerHTML = html;
-
-      // Close palette on click
-      resultsContainer.querySelectorAll('a').forEach((a) => {
-        a.addEventListener('click', close);
-      });
-    };
-
-    const filter = (query: string) => {
-      const q = query.toLowerCase().trim();
-      if (!q) {
-        filteredItems = [...items];
-      } else {
-        filteredItems = items.filter(
-          (i) =>
-            i.title.toLowerCase().includes(q) ||
-            i.subtitle.toLowerCase().includes(q) ||
-            i.category.toLowerCase().includes(q)
-        );
-      }
-      selectedIndex = 0;
-      renderResults();
-    };
-
-    openBtns.forEach((btn) => btn.addEventListener('click', open));
-    backdrop?.addEventListener('click', close);
-
-    input.addEventListener('input', (e) => {
-      filter((e.target as HTMLInputElement).value);
     });
 
+    resultsContainer.innerHTML = html;
+  }
+
+  function filterItems(query: string) {
+    const items: SearchItem[] = window.__SEARCH_INDEX__ || [];
+    const q = query.toLowerCase().trim();
+    if (!q) {
+      filteredItems = [...items];
+    } else {
+      filteredItems = items.filter(
+        (i) =>
+          i.title.toLowerCase().includes(q) ||
+          i.subtitle.toLowerCase().includes(q) ||
+          i.category.toLowerCase().includes(q)
+      );
+    }
+    selectedIndex = 0;
+    renderResults();
+  }
+
+  function openPalette() {
+    const modal = getModal();
+    const input = getInput();
+    if (!modal || !input) return;
+
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    input.value = '';
+    filterItems('');
+    setTimeout(() => input.focus(), 50);
+  }
+
+  // Register persistent listeners exactly once
+  if (!window.__PALETTE_INIT__) {
+    window.__PALETTE_INIT__ = true;
+
+    // Delegated click handler for open triggers, backdrop, and result links
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+
+      if (target.closest('[data-open-palette]')) {
+        e.preventDefault();
+        openPalette();
+      } else if (
+        target.id === 'command-palette-backdrop' ||
+        target.closest('.palette-result-item')
+      ) {
+        closePalette();
+      }
+    });
+
+    // Delegated input handler
+    document.addEventListener('input', (e) => {
+      const target = e.target as HTMLElement | null;
+      if (target && target.id === 'command-palette-input') {
+        filterItems((target as HTMLInputElement).value);
+      }
+    });
+
+    // Global keyboard shortcuts
     window.addEventListener('keydown', (e) => {
+      const modal = getModal();
+      const isHidden = !modal || modal.classList.contains('hidden');
+
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
-        if (modal.classList.contains('hidden')) {
-          open();
+        if (isHidden) {
+          openPalette();
         } else {
-          close();
+          closePalette();
         }
-      } else if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-        close();
-      } else if (!modal.classList.contains('hidden')) {
+      } else if (e.key === 'Escape' && !isHidden) {
+        closePalette();
+      } else if (!isHidden) {
         if (e.key === 'ArrowDown') {
           e.preventDefault();
           selectedIndex = (selectedIndex + 1) % Math.max(1, filteredItems.length);
@@ -320,19 +354,17 @@ const searchIndex = [
           e.preventDefault();
           const target = filteredItems[selectedIndex];
           if (target) {
-            close();
-            window.location.href = target.url;
+            closePalette();
+            const link = document.createElement('a');
+            link.href = target.url;
+            link.click();
           }
         }
       }
     });
-  }
 
-  setupCommandPalette();
-  document.addEventListener('astro:page-load', setupCommandPalette);
-  document.addEventListener('astro:before-swap', () => {
-    const modal = document.getElementById('command-palette-modal');
-    if (modal) modal.classList.add('hidden');
-    document.body.style.overflow = '';
-  });
+    document.addEventListener('astro:before-swap', () => {
+      closePalette();
+    });
+  }
 </script>

@@ -1,5 +1,5 @@
 ---
-title: 'Template Astro Daisy — Production Starter Boilerplate'
+title: 'Template Astro Daisy | Production Starter Boilerplate'
 description: 'A production-ready starter template pairing Astro 7, daisyUI 5, Tailwind CSS v4, and OKLCH theming with strict ESLint 10 standards.'
 summary: 'Developer boilerplate combining Astro 7, Tailwind CSS v4, daisyUI 5, and automated linting pipelines.'
 category: 'open-source'

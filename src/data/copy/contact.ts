@@ -2,7 +2,7 @@ import type { ContactPageCopy } from './types';
 
 export const contactCopy: ContactPageCopy = {
   seo: {
-    title: 'Contact & Engineering Inquiries — Sahil Langoo',
+    title: 'Contact & Engineering Inquiries | Sahil Langoo',
     description:
       'Get in touch with Sahil Langoo for software engineering, system architecture consulting, open-source collaboration, or project inquiries.',
     image: '/og/contact.png',

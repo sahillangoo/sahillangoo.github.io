@@ -64,7 +64,7 @@ Built an environment-aware CAPI routing module that executes parallel server-sid
 
 - **Web Crypto SHA-256 Normalization**: Hashes and canonicalizes user phone numbers, emails, and client IP addresses prior to transmission.
 - **Deterministic Deduplication**: Generates synchronized `event_id` keys matching browser-side pixels to eliminate double counting.
-- **Measurable Impact**: Elevated Meta Event Match Quality (EMQ) from **4.8/10** to **8.9/10**, reducing blended Customer Acquisition Cost (CAC) by 22%.
+- **Measurable Impact**: Increased Meta Event Match Quality (EMQ) from **4.8/10** to **8.9/10**, reducing blended Customer Acquisition Cost (CAC) by 22%.
 
 ### 3. Multi-Tenant Hono JSX + Juice Email Templating Engine
 

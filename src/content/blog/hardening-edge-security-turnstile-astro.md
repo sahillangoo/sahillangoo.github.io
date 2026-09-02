@@ -18,7 +18,7 @@ Traditional CAPTCHAs (distorted text, clicking fire hydrants and traffic lights)
 
 When deploying static websites and lead inquiry forms on **Cloudflare Pages**, we needed a zero-friction, privacy-preserving solution to protect our API endpoints from automated spam bots and credential stuffing.
 
-**Cloudflare Turnstile** provides a seamless alternative that verifies human interaction without user puzzle prompts. Here is how to integrate Turnstile with static Astro components and verify tokens at the edge.
+**Cloudflare Turnstile** provides a drop-in, non-interactive alternative that verifies human interaction without user puzzle prompts. Here is how to integrate Turnstile with static Astro components and verify tokens at the edge.
 
 ---
 

@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
-import ProjectCard from '@/components/portfolio/ProjectCard.astro';
+import ProjectCard from '@components/portfolio/ProjectCard.astro';
 import { Icon } from 'astro-icon/components';
+import { cn } from '@utils/cn.ts';
 
 const projects = await getCollection('projects');
 const sortedProjects = projects.sort((a, b) => a.data.order - b.data.order);
@@ -26,11 +27,12 @@ const categories = [
         <button
           type="button"
           data-filter={cat.id}
-          class={`filter-btn rounded-md px-3 py-1 font-mono text-xs transition-colors ${
+          class={cn(
+            'filter-btn rounded-md px-3 py-1 font-mono text-xs transition-colors',
             idx === 0
               ? 'bg-base-content text-base-100 active-filter hover:text-base-100 hover:bg-base-content/90 font-semibold'
               : 'bg-base-200 text-base-content/75 hover:bg-base-300 hover:text-base-content'
-          }`}
+          )}
         >
           {cat.label}
         </button>
@@ -58,6 +60,8 @@ const categories = [
   function setupProjectFilter() {
     const root = document.getElementById('project-filter-root');
     if (!root) return;
+    if (root.dataset.bound === 'true') return;
+    root.dataset.bound = 'true';
 
     const filterBtns = root.querySelectorAll<HTMLButtonElement>('.filter-btn');
     const items = root.querySelectorAll<HTMLElement>('.project-item');
@@ -119,6 +123,5 @@ const categories = [
     });
   }
 
-  setupProjectFilter();
   document.addEventListener('astro:page-load', setupProjectFilter);
 </script>

@@ -1,14 +1,15 @@
 ---
-import SeoHead, { type BreadcrumbItem } from '@/components/common/SeoHead.astro';
-import NavigationBar from '@/components/common/NavigationBar.astro';
-import MobileNavigation from '@/components/common/MobileNavigation.astro';
-import SiteFooter from '@/components/common/SiteFooter.astro';
-import CommandPalette from '@/components/common/CommandPalette.astro';
-import BackToTop from '@/components/common/BackToTop.astro';
-import CodeCopyScript from '@/components/common/CodeCopyScript.astro';
-import TextQuoteTooltip from '@/components/blog/TextQuoteTooltip.astro';
-import CloudflareEmailDecoder from '@/components/common/CloudflareEmailDecoder.astro';
-import '@/styles/global.css';
+import SeoHead, { type BreadcrumbItem } from '@components/common/SeoHead.astro';
+import NavigationBar from '@components/common/NavigationBar.astro';
+import MobileNavigation from '@components/common/MobileNavigation.astro';
+import SiteFooter from '@components/common/SiteFooter.astro';
+import CommandPalette from '@components/common/CommandPalette.astro';
+import BackToTop from '@components/common/BackToTop.astro';
+import CodeCopyScript from '@components/common/CodeCopyScript.astro';
+import TextQuoteTooltip from '@components/blog/TextQuoteTooltip.astro';
+import CloudflareEmailDecoder from '@components/common/CloudflareEmailDecoder.astro';
+import { cn } from '@utils/cn.ts';
+import '@styles/global.css';
 import 'lenis/dist/lenis.css';
 
 export interface Props {
@@ -71,43 +72,61 @@ const {
     <TextQuoteTooltip />
     <CloudflareEmailDecoder />
 
-    <main class={`w-full flex-grow ${hideNav ? 'pt-0' : 'pt-20 md:pt-24'}`}>
+    <main id="main-content" class={cn('w-full grow', hideNav ? 'pt-0' : 'pt-20 md:pt-24')}>
       <slot />
     </main>
 
     {!hideFooter && <SiteFooter />}
 
     <script>
-      import Lenis from 'lenis';
+      type LenisType = import('lenis').default;
+      let lenisInstance: LenisType | null = null;
+      let lenisPromise: Promise<LenisType | null> | null = null;
 
-      function initLenis(): Lenis {
-        const win = window as unknown as Record<string, unknown>;
-        if (!win.__lenis__) {
-          win.__lenis__ = new Lenis({
-            autoRaf: true,
-            duration: 1.0,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-          });
+      async function getLenis(): Promise<LenisType | null> {
+        if (typeof window === 'undefined') return null;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          return null;
         }
-        return win.__lenis__ as Lenis;
+        if (lenisInstance) return lenisInstance;
+        if (lenisPromise) return lenisPromise;
+
+        lenisPromise = import('lenis')
+          .then(({ default: Lenis }) => {
+            lenisInstance = new Lenis({
+              autoRaf: true,
+              duration: 0.9,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            });
+            return lenisInstance;
+          })
+          .catch(() => null);
+
+        return lenisPromise;
       }
 
-      initLenis();
+      getLenis();
 
-      document.addEventListener('astro:after-swap', () => {
-        document.body.style.overflow = '';
-        const win = window as unknown as Record<string, unknown>;
-        if (win.__lenis__) {
-          (win.__lenis__ as Lenis).scrollTo(0, { immediate: true });
+      document.addEventListener('astro:before-swap', () => {
+        if (lenisInstance) {
+          lenisInstance.stop();
         }
       });
 
-      document.addEventListener('astro:page-load', () => {
-        const lenis = initLenis();
-        if (window.location.hash) {
-          const target = document.querySelector(window.location.hash);
-          if (target) {
-            lenis.scrollTo(target as HTMLElement, { immediate: true });
+      document.addEventListener('astro:after-swap', () => {
+        document.body.style.overflow = '';
+      });
+
+      document.addEventListener('astro:page-load', async () => {
+        const lenis = await getLenis();
+        if (lenis) {
+          lenis.resize();
+          lenis.start();
+          if (window.location.hash) {
+            const target = document.querySelector(window.location.hash);
+            if (target) {
+              lenis.scrollTo(target as HTMLElement, { immediate: true });
+            }
           }
         }
       });

@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import ExperienceTimeline from '@/components/portfolio/ExperienceTimeline.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ExperienceTimeline from '@components/portfolio/ExperienceTimeline.astro';
 import { getCollection, getEntry } from 'astro:content';
-import { SITE } from '@/const/site.ts';
-import { resumeCopy } from '@/data/copy/resume.ts';
+import { SITE } from '@const/site.ts';
+import { resumeCopy } from '@copy/resume.ts';
 import { Icon } from 'astro-icon/components';
 
 const experiences = await getCollection('experience');
@@ -14,7 +14,7 @@ const resumeSchema = [
   {
     '@type': 'ProfilePage',
     '@id': `${SITE.url}/resume/#profilepage`,
-    name: `${resumeCopy.header.eyebrow} — ${SITE.name}`,
+    name: `${resumeCopy.header.eyebrow} | ${SITE.name}`,
     url: `${SITE.url}/resume/`,
     mainEntity: {
       '@id': `${SITE.url}/#person`,
@@ -137,7 +137,7 @@ const breadcrumbs = [
       <h2 class="text-accent font-mono text-xs font-bold tracking-widest uppercase">
         {resumeCopy.sections.professionalExperience}
       </h2>
-      <div class="editorial-card p-6 sm:p-8">
+      <div class="border-base-300 bg-base-200 rounded-xl border p-6 sm:p-8">
         <ExperienceTimeline experiences={experiences} />
       </div>
     </section>
@@ -151,7 +151,7 @@ const breadcrumbs = [
           </h2>
 
           <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div class="editorial-card space-y-2 p-5">
+            <div class="border-base-300 bg-base-200 space-y-2 rounded-xl border p-5">
               <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
                 {resumeCopy.sections.languagesTitle}
               </h3>
@@ -164,7 +164,7 @@ const breadcrumbs = [
               </div>
             </div>
 
-            <div class="editorial-card space-y-2 p-5">
+            <div class="border-base-300 bg-base-200 space-y-2 rounded-xl border p-5">
               <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
                 {resumeCopy.sections.frameworksTitle}
               </h3>
@@ -177,7 +177,7 @@ const breadcrumbs = [
               </div>
             </div>
 
-            <div class="editorial-card space-y-2 p-5">
+            <div class="border-base-300 bg-base-200 space-y-2 rounded-xl border p-5">
               <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
                 {resumeCopy.sections.cloudTitle}
               </h3>
@@ -190,7 +190,7 @@ const breadcrumbs = [
               </div>
             </div>
 
-            <div class="editorial-card space-y-2 p-5">
+            <div class="border-base-300 bg-base-200 space-y-2 rounded-xl border p-5">
               <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
                 {resumeCopy.sections.databasesToolsTitle}
               </h3>
@@ -215,7 +215,7 @@ const breadcrumbs = [
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
         {
           SITE.education.map((edu) => (
-            <div class="editorial-card flex flex-col justify-between space-y-4 p-6">
+            <div class="border-base-300 bg-base-200 flex flex-col justify-between space-y-4 rounded-xl border p-6">
               <div class="space-y-2">
                 <div class="flex items-start justify-between gap-2">
                   <span class="bg-base-300/40 text-accent rounded px-2 py-0.5 font-mono text-xs font-bold">
@@ -235,7 +235,7 @@ const breadcrumbs = [
                   <span class="text-base-content/60 block font-mono text-xs">Key Coursework:</span>
                   <div class="mt-1.5 flex flex-wrap gap-1">
                     {edu.coursework.map((c) => (
-                      <span class="bg-base-200 text-base-content/70 rounded px-1.5 py-0.5 font-mono text-[11px]">
+                      <span class="bg-base-200 text-base-content/70 rounded-md px-2 py-0.5 font-mono text-xs">
                         {c}
                       </span>
                     ))}
@@ -256,7 +256,7 @@ const breadcrumbs = [
       <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {
           SITE.certifications.map((cert) => (
-            <div class="editorial-card flex flex-col justify-between space-y-3 p-5">
+            <div class="border-base-300 bg-base-200 flex flex-col justify-between space-y-3 rounded-xl border p-5">
               <div class="space-y-1">
                 <div class="flex items-center justify-between">
                   <span class="text-accent font-mono text-xs font-medium">{cert.issuer}</span>
@@ -264,7 +264,7 @@ const breadcrumbs = [
                 </div>
                 <h3 class="text-base-content text-xs leading-snug font-bold">{cert.name}</h3>
               </div>
-              <div class="text-base-content/60 flex items-center gap-1 font-mono text-[11px]">
+              <div class="text-base-content/60 flex items-center gap-1 font-mono text-xs">
                 <Icon name="ph:seal-check-bold" class="text-accent h-3.5 w-3.5" />
                 <span>Verified Credential</span>
               </div>

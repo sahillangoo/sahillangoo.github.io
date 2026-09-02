@@ -1,9 +1,10 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { SITE } from '@/const/site.ts';
-import { linksCopy } from '@/data/copy/links.ts';
+import { SITE } from '@const/site.ts';
+import { linksCopy } from '@copy/links.ts';
 import { Icon } from 'astro-icon/components';
+import { cn } from '@utils/cn.ts';
 
 const links = await getCollection('links');
 const sortedLinks = [...links].sort((a, b) => a.data.order - b.data.order);
@@ -78,15 +79,16 @@ const breadcrumbs = [
             href={item.data.url}
             target={item.data.url.startsWith('http') ? '_blank' : '_self'}
             rel={item.data.url.startsWith('http') ? 'noopener noreferrer' : ''}
-            class={`editorial-card group flex items-center justify-between p-4 transition-all ${
-              item.data.highlight ? 'border-accent/40 bg-base-200/80 shadow-xs' : ''
-            }`}
+            class={cn(
+              'group border-base-300 bg-base-200 hover:border-accent/40 flex items-center justify-between rounded-xl border p-4 transition-all duration-200 hover:-translate-y-0.5 active:scale-99',
+              item.data.highlight && 'border-accent/40 bg-base-200/80 shadow-xs'
+            )}
           >
             <div>
               <div class="text-base-content group-hover:text-accent flex items-center gap-2 text-sm font-bold transition-colors">
                 {item.data.title}
                 {item.data.highlight && (
-                  <span class="bg-accent/15 text-accent py-0.2 rounded px-1.5 font-mono text-[10px]">
+                  <span class="bg-accent/15 text-accent rounded-md px-2 py-0.5 font-mono text-xs font-semibold">
                     Featured
                   </span>
                 )}
@@ -105,7 +107,7 @@ const breadcrumbs = [
 
       <a
         href={linksCopy.mainSiteCard.href}
-        class="editorial-card group border-base-300/80 hover:border-base-300 flex items-center justify-between border-dashed p-4"
+        class="group border-base-300/80 bg-base-200 hover:border-base-300 flex items-center justify-between rounded-xl border border-dashed p-4 transition-all duration-200 hover:-translate-y-0.5 active:scale-99"
       >
         <div>
           <div

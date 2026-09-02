@@ -70,7 +70,6 @@ import { Icon } from 'astro-icon/components';
     });
   }
 
-  setupThemeToggle();
   document.addEventListener('astro:page-load', setupThemeToggle);
   document.addEventListener('astro:after-swap', syncCheckboxState);
 </script>

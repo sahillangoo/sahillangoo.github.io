@@ -1,16 +1,16 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import ProjectCard from '@/components/portfolio/ProjectCard.astro';
-import ArticleCard from '@/components/portfolio/ArticleCard.astro';
-import NoteCard from '@/components/portfolio/NoteCard.astro';
-import ExperienceTimeline from '@/components/portfolio/ExperienceTimeline.astro';
-import GitHubActivityWidget from '@/components/portfolio/GitHubActivityWidget.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ProjectCard from '@components/portfolio/ProjectCard.astro';
+import ArticleCard from '@components/portfolio/ArticleCard.astro';
+import NoteCard from '@components/portfolio/NoteCard.astro';
+import ExperienceTimeline from '@components/portfolio/ExperienceTimeline.astro';
+import GitHubActivityWidget from '@components/portfolio/GitHubActivityWidget.astro';
 import { getCollection, getEntry } from 'astro:content';
-import { SITE } from '@/const/site.ts';
-import { homeCopy } from '@/data/copy/home.ts';
+import { SITE } from '@const/site.ts';
+import { homeCopy } from '@copy/home.ts';
 import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
-import sahilHeroImage from '@/assets/images/IMG_20260510_183207.jpg';
+import sahilHeroImage from '@assets/images/IMG_20260510_183207.jpg';
 
 const projects = await getCollection('projects');
 const featuredProjects = projects
@@ -143,7 +143,9 @@ const homeSchema = [
 
         <!-- Hero Portrait Image Presentation -->
         <div class="relative shrink-0 self-center lg:self-start">
-          <div class="editorial-card group relative overflow-hidden rounded-2xl p-2 sm:p-2.5">
+          <div
+            class="group border-base-300 bg-base-200 relative overflow-hidden rounded-2xl border p-2 transition-all duration-200 hover:-translate-y-0.5 sm:p-2.5"
+          >
             <div
               class="bg-base-300 relative aspect-4/5 w-60 overflow-hidden rounded-xl sm:w-64 md:w-72 lg:w-80"
             >
@@ -158,13 +160,13 @@ const homeSchema = [
                 class="h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
               />
               <div
-                class="from-base-100/40 pointer-events-none absolute inset-0 bg-gradient-to-t via-transparent to-transparent opacity-60"
+                class="from-base-100/40 pointer-events-none absolute inset-0 bg-linear-to-t via-transparent to-transparent opacity-60"
               >
               </div>
             </div>
 
             <div
-              class="text-base-content/70 mt-2 flex items-center justify-between px-1 font-mono text-[11px]"
+              class="text-base-content/70 mt-2.5 flex flex-wrap items-center justify-between gap-2 px-1 font-mono text-xs"
             >
               <span class="inline-flex items-center gap-1.5">
                 <span class="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500">
@@ -182,7 +184,7 @@ const homeSchema = [
     <section class="space-y-8">
       <div class="border-base-300 flex items-end justify-between border-b pb-4">
         <div>
-          <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
+          <span class="text-accent font-mono text-xs font-semibold tracking-widest uppercase">
             {homeCopy.sections.selectedWork.eyebrow}
           </span>
           <h2 class="text-base-content mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
@@ -209,7 +211,7 @@ const homeSchema = [
       <div class="pt-2 text-center sm:hidden">
         <a
           href="/projects/"
-          class="btn btn-sm btn-outline border-base-300 flex w-full items-center justify-center gap-2 font-mono text-xs"
+          class="btn btn-sm btn-outline border-base-300 flex w-full items-center justify-center gap-2 font-mono text-xs font-medium tracking-wider uppercase"
         >
           <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
           {homeCopy.sections.selectedWork.viewAllText}
@@ -226,7 +228,7 @@ const homeSchema = [
     <section class="space-y-8">
       <div class="border-base-300 flex items-end justify-between border-b pb-4">
         <div>
-          <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
+          <span class="text-accent font-mono text-xs font-semibold tracking-widest uppercase">
             {homeCopy.sections.careerHistory.eyebrow}
           </span>
           <h2 class="text-base-content mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
@@ -242,7 +244,7 @@ const homeSchema = [
         </a>
       </div>
 
-      <div class="editorial-card p-6 sm:p-8">
+      <div class="border-base-300 bg-base-200 rounded-xl border p-6 sm:p-8">
         <ExperienceTimeline experiences={experiences} />
       </div>
     </section>
@@ -285,7 +287,7 @@ const homeSchema = [
       principles.length > 0 && (
         <section class="space-y-8">
           <div class="border-base-300 border-b pb-4">
-            <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
+            <span class="text-accent font-mono text-xs font-semibold tracking-widest uppercase">
               {homeCopy.sections.philosophy.eyebrow}
             </span>
             <h2 class="text-base-content mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
@@ -295,10 +297,10 @@ const homeSchema = [
 
           <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {principles.map((p) => (
-              <div class="editorial-card flex flex-col justify-between p-5">
+              <div class="border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 transition-all duration-200 hover:-translate-y-0.5 active:scale-99">
                 <div>
                   <h3 class="text-base-content font-mono text-sm font-bold">{p.title}</h3>
-                  <p class="text-base-content/70 mt-2 text-xs leading-relaxed">{p.description}</p>
+                  <p class="text-base-content/75 mt-2 text-xs leading-relaxed">{p.description}</p>
                 </div>
               </div>
             ))}
@@ -308,7 +310,9 @@ const homeSchema = [
     }
 
     <!-- Presence & CTA Banner -->
-    <section class="editorial-card space-y-4 p-8 text-center sm:p-10">
+    <section
+      class="border-base-300 bg-base-200 space-y-4 rounded-xl border p-8 text-center sm:p-10"
+    >
       <h2 class="text-base-content text-2xl font-bold tracking-tight sm:text-3xl">
         {homeCopy.sections.ctaBanner.title}
       </h2>

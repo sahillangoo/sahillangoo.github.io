@@ -1,0 +1,31 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript"],
+  "categories": {
+    "correctness": "error",
+    "perf": "warn",
+    "suspicious": "warn"
+  },
+  "rules": {
+    "typescript/triple-slash-reference": "off",
+    "no-underscore-dangle": "off",
+    "no-await-in-loop": "off",
+    "no-empty": "error",
+    "no-unused-vars": "warn",
+    "no-useless-catch": "error",
+    "no-debugger": "error"
+  },
+  "ignorePatterns": [
+    "dist/**",
+    ".astro/**",
+    "node_modules/**",
+    "public/pagefind/**",
+    ".agents/**",
+    ".codex/**",
+    ".cursor/**",
+    ".wrangler/**",
+    "**/*.d.ts",
+    "playwright-report/**",
+    "test-results/**"
+  ]
+}

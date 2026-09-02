@@ -12,7 +12,7 @@ export async function getStaticPaths() {
     {
       params: { slug: 'default' },
       props: {
-        title: 'Sahil Langoo — Full Stack Systems Engineer',
+        title: 'Sahil Langoo | Full Stack Systems Engineer',
         category: 'PORTFOLIO & JOURNAL',
         description:
           'Engineering high-performance web systems, creative interfaces, and robust software.',
@@ -52,7 +52,7 @@ export async function getStaticPaths() {
     {
       params: { slug: 'resume' },
       props: {
-        title: 'Sahil Langoo — Resume & Curriculum Vitae',
+        title: 'Sahil Langoo | Resume & Curriculum Vitae',
         category: 'CAREER & EXPERIENCE',
         description:
           'Co-Founder & Lead Engineer at SquadCoders. Full stack systems, TypeScript, and edge architectures.',
@@ -62,7 +62,7 @@ export async function getStaticPaths() {
     {
       params: { slug: 'about' },
       props: {
-        title: 'About Sahil Langoo — Engineering Philosophy & Craft',
+        title: 'About Sahil Langoo | Engineering Philosophy & Craft',
         category: 'ENGINEERING & PHILOSOPHY',
         description:
           'Full Stack Systems Engineer and Co-Founder at SquadCoders. Minimalist UI craft & edge systems.',
@@ -82,7 +82,7 @@ export async function getStaticPaths() {
     {
       params: { slug: 'now' },
       props: {
-        title: 'Now — Current Priorities & Active Projects',
+        title: 'Now | Current Priorities & Active Projects',
         category: 'NOW FOCUS',
         description:
           'Public declaration of current priorities, active projects, learning quests, and focus areas.',
@@ -92,7 +92,7 @@ export async function getStaticPaths() {
     {
       params: { slug: 'uses' },
       props: {
-        title: 'Uses & Developer Setup — Tools & Hardware',
+        title: 'Uses & Developer Setup | Tools & Hardware',
         category: 'GEAR & ENVIRONMENT',
         description:
           'Living inventory of hardware, software, editors, terminal tools, and cloud services.',
@@ -112,7 +112,7 @@ export async function getStaticPaths() {
     {
       params: { slug: 'links' },
       props: {
-        title: 'Sahil Langoo — Verified Links & Profiles',
+        title: 'Sahil Langoo | Verified Links & Profiles',
         category: 'VERIFIED PROFILES',
         description:
           'Quick access links to official profiles, repositories, technical essays, and portfolio.',

@@ -1,8 +1,9 @@
 ---
-import { SITE } from '@/const/site.ts';
-import ThemeToggle from '@/components/common/ThemeToggle.astro';
-import AudioToggle from '@/components/common/AudioToggle.astro';
+import { SITE } from '@const/site.ts';
+import ThemeToggle from '@components/common/ThemeToggle.astro';
+import AudioToggle from '@components/common/AudioToggle.astro';
 import { Icon } from 'astro-icon/components';
+import { cn } from '@utils/cn.ts';
 
 const currentPath = Astro.url.pathname;
 
@@ -12,7 +13,11 @@ function isActive(href: string): boolean {
 }
 ---
 
-<header id="site-header" class="w-full" transition:persist="main-header">
+<header
+  id="site-header"
+  class="fixed top-0 right-0 left-0 z-50 w-full border-b border-transparent transition-all duration-200"
+  transition:persist="main-header"
+>
   <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 md:py-5">
     <!-- Brand / Name with Status -->
     <a
@@ -26,7 +31,7 @@ function isActive(href: string): boolean {
       </span>
       <div class="flex flex-col">
         <span class="text-sm leading-tight font-semibold tracking-tight">{SITE.name}</span>
-        <span class="text-base-content/60 flex items-center gap-1.5 text-[11px]">
+        <span class="text-base-content/60 flex items-center gap-1.5 text-xs">
           <span class="relative flex h-1.5 w-1.5">
             <span
               class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
@@ -51,11 +56,12 @@ function isActive(href: string): boolean {
             <a
               href={item.href}
               data-nav-link={item.href}
-              class={`nav-item rounded-full px-3.5 py-1 text-xs font-medium transition-all ${
+              class={cn(
+                'nav-item rounded-full px-3.5 py-1 text-xs font-medium transition-all duration-150 active:scale-95',
                 active
                   ? 'bg-base-content text-base-100 hover:text-base-100 hover:bg-base-content/90 font-semibold shadow-xs'
                   : 'text-base-content/70 hover:text-base-content hover:bg-base-300/50'
-              }`}
+              )}
             >
               {item.label}
             </a>
@@ -65,11 +71,12 @@ function isActive(href: string): boolean {
       <a
         href="/now/"
         data-nav-link="/now/"
-        class={`nav-item rounded-full px-3.5 py-1 text-xs font-medium transition-all flex items-center gap-1.5 ${
+        class={cn(
+          'nav-item rounded-full px-3.5 py-1 text-xs font-medium transition-all duration-150 active:scale-95 flex items-center gap-1.5',
           isActive('/now/')
             ? 'bg-base-content text-base-100 font-semibold shadow-xs hover:text-base-100 hover:bg-base-content/90'
             : 'text-base-content/70 hover:text-base-content hover:bg-base-300/50'
-        }`}
+        )}
       >
         <span class="bg-accent h-1.5 w-1.5 animate-pulse rounded-full"></span>
         Now
@@ -83,12 +90,12 @@ function isActive(href: string): boolean {
         type="button"
         data-open-palette
         aria-label="Open command palette"
-        class="border-base-300 bg-base-200/80 text-base-content/60 hover:text-base-content hover:border-base-content/30 hidden items-center gap-2 rounded-lg border px-2.5 py-1.5 font-mono text-xs transition-all sm:inline-flex"
+        class="border-base-300 bg-base-200/80 text-base-content/60 hover:text-base-content hover:border-base-content/30 hidden items-center gap-2 rounded-lg border px-2.5 py-1.5 font-mono text-xs transition-all active:scale-95 sm:inline-flex"
       >
         <Icon name="ph:magnifying-glass-bold" class="h-3.5 w-3.5" />
-        <span class="text-[11px]">Search</span>
+        <span class="text-xs">Search</span>
         <kbd
-          class="border-base-300 bg-base-100 py-0.2 text-base-content/50 rounded border px-1 text-[10px]"
+          class="border-base-300 bg-base-100 text-base-content/50 rounded border px-1.5 py-0.5 font-mono text-xs"
         >
           ⌘K
         </kbd>
@@ -121,22 +128,23 @@ function isActive(href: string): boolean {
 </header>
 
 <script>
-  function setupHeader() {
+  const handleScroll = () => {
     const header = document.getElementById('site-header');
     if (!header) return;
+    if (window.scrollY > 20) {
+      header.classList.add('backdrop-blur-md', 'border-base-300', 'bg-base-100/85');
+      header.classList.remove('border-transparent');
+    } else {
+      header.classList.remove('backdrop-blur-md', 'border-base-300', 'bg-base-100/85');
+      header.classList.add('border-transparent');
+    }
+  };
 
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        header.classList.add('is-scrolled');
-      } else {
-        header.classList.remove('is-scrolled');
-      }
-    };
+  window.addEventListener('scroll', handleScroll, { passive: true });
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+  function syncNavLinks() {
     handleScroll();
 
-    // Update active nav link styling on client navigation
     const current = window.location.pathname;
     const navLinks = document.querySelectorAll<HTMLAnchorElement>('#desktop-nav [data-nav-link]');
     navLinks.forEach((link) => {
@@ -174,6 +182,7 @@ function isActive(href: string): boolean {
     });
   }
 
-  setupHeader();
-  document.addEventListener('astro:page-load', setupHeader);
+  window.addEventListener('popstate', () => setTimeout(syncNavLinks, 0));
+  document.addEventListener('astro:after-swap', syncNavLinks);
+  document.addEventListener('astro:page-load', syncNavLinks);
 </script>

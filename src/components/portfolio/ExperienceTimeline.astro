@@ -17,7 +17,7 @@ const sorted = [...experiences].sort((a, b) => a.data.order - b.data.order);
       return (
         <div class="group relative">
           {/* Timeline Node dot */}
-          <div class="border-base-100 bg-base-300 group-hover:bg-accent absolute top-1.5 -left-[31px] flex h-4 w-4 items-center justify-center rounded-full border-2 transition-all group-hover:scale-125 md:-left-[39px]">
+          <div class="border-base-100 bg-base-300 group-hover:bg-accent absolute top-1.5 -left-8 flex h-4 w-4 items-center justify-center rounded-full border-2 transition-all group-hover:scale-125 md:-left-10">
             {data.current && <div class="bg-accent h-1.5 w-1.5 animate-pulse rounded-full" />}
           </div>
 
@@ -27,7 +27,7 @@ const sorted = [...experiences].sort((a, b) => a.data.order - b.data.order);
               <h3 class="text-base-content flex items-center gap-2 text-lg font-bold">
                 {data.role}
                 {data.current && (
-                  <span class="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-medium text-emerald-400">
+                  <span class="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 font-mono text-xs font-medium text-emerald-400">
                     Current
                   </span>
                 )}
@@ -65,7 +65,7 @@ const sorted = [...experiences].sort((a, b) => a.data.order - b.data.order);
           {data.skills.length > 0 && (
             <div class="mt-4 flex flex-wrap gap-1.5">
               {data.skills.map((skill) => (
-                <span class="bg-base-200 border-base-300 text-base-content/70 rounded border px-2 py-0.5 font-mono text-[11px]">
+                <span class="bg-base-200 border-base-300 text-base-content/70 rounded-md border px-2.5 py-0.5 font-mono text-xs">
                   {skill}
                 </span>
               ))}

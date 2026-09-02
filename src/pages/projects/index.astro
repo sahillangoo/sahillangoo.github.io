@@ -1,9 +1,9 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import ProjectFilter from '@/components/portfolio/ProjectFilter.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ProjectFilter from '@components/portfolio/ProjectFilter.astro';
 import { getCollection } from 'astro:content';
-import { SITE } from '@/const/site.ts';
-import { projectsCopy } from '@/data/copy/projects.ts';
+import { SITE } from '@const/site.ts';
+import { projectsCopy } from '@copy/projects.ts';
 
 const projects = await getCollection('projects');
 const sortedProjects = [...projects].sort((a, b) => a.data.order - b.data.order);
@@ -24,7 +24,7 @@ const collectionSchema = [
   {
     '@type': 'CollectionPage',
     '@id': `${SITE.url}/projects/#collectionpage`,
-    name: `${projectsCopy.header.title} — ${SITE.name}`,
+    name: `${projectsCopy.header.title} | ${SITE.name}`,
     url: `${SITE.url}/projects/`,
     description: projectsCopy.header.description,
     mainEntity: {

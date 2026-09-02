@@ -1,6 +1,7 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { getFeaturedTrack } from '@/utils/spotify.ts';
+import { getFeaturedTrack } from '@utils/spotify.ts';
+import { cn } from '@utils/cn.ts';
 
 export interface Props {
   variant?: 'card' | 'compact' | 'footer';
@@ -13,9 +14,11 @@ const defaultTrack = getFeaturedTrack(0);
 
 <div
   id="spotify-widget-container"
-  class={`group inline-flex items-center justify-between gap-3 rounded-lg border border-base-300 bg-base-200/50 px-3.5 py-2 text-xs transition-all duration-200 hover:border-emerald-500/40 hover:bg-base-200/80 shadow-xs ${
-    variant === 'footer' ? 'w-full sm:w-auto' : ''
-  } ${className}`}
+  class={cn(
+    'group inline-flex items-center justify-between gap-3 rounded-lg border border-base-300 bg-base-200/50 px-3.5 py-2 text-xs transition-all duration-200 hover:border-emerald-500/40 hover:bg-base-200/80 shadow-xs',
+    variant === 'footer' && 'w-full sm:w-auto',
+    className
+  )}
 >
   <a
     id="spotify-widget-link"
@@ -27,19 +30,19 @@ const defaultTrack = getFeaturedTrack(0);
     aria-label="Spotify listening status"
   >
     <!-- Animated 3-Bar Equalizer -->
-    <div class="relative flex h-3.5 w-3.5 shrink-0 items-end justify-center gap-[2px]">
+    <div class="relative flex h-3.5 w-3.5 shrink-0 items-end justify-center gap-0.5">
       <span
-        class="w-[2.5px] animate-[equalizer_1.2s_ease-in-out_infinite] rounded-full bg-emerald-500"
+        class="animate-equalizer w-0.5 rounded-full bg-emerald-500"
         style="height: 12px; animation-delay: 0.1s;"
       >
       </span>
       <span
-        class="w-[2.5px] animate-[equalizer_1.2s_ease-in-out_infinite] rounded-full bg-emerald-500"
+        class="animate-equalizer w-0.5 rounded-full bg-emerald-500"
         style="height: 16px; animation-delay: 0.3s;"
       >
       </span>
       <span
-        class="w-[2.5px] animate-[equalizer_1.2s_ease-in-out_infinite] rounded-full bg-emerald-500"
+        class="animate-equalizer w-0.5 rounded-full bg-emerald-500"
         style="height: 8px; animation-delay: 0.2s;"
       >
       </span>
@@ -48,7 +51,7 @@ const defaultTrack = getFeaturedTrack(0);
     <!-- Track Metadata Column -->
     <div class="flex min-w-0 flex-col">
       <div class="flex items-center gap-1.5">
-        <span class="font-mono text-[10px] font-semibold tracking-wider text-emerald-500 uppercase">
+        <span class="font-mono text-xs font-semibold tracking-wider text-emerald-500 uppercase">
           Listening
         </span>
         <span class="relative flex h-1.5 w-1.5">
@@ -60,7 +63,7 @@ const defaultTrack = getFeaturedTrack(0);
         </span>
         <span
           id="spotify-track-tag"
-          class="py-0.2 hidden rounded bg-emerald-500/10 px-1 font-mono text-[9px] font-medium text-emerald-400 sm:inline"
+          class="hidden rounded bg-emerald-500/10 px-1.5 py-0.5 font-mono text-xs font-medium text-emerald-400 sm:inline"
         >
           {defaultTrack.albumTag || 'Coke Studio'}
         </span>
@@ -74,7 +77,7 @@ const defaultTrack = getFeaturedTrack(0);
           {defaultTrack.title}
         </span>
         <span class="text-base-content/30">•</span>
-        <span id="spotify-track-artist" class="text-base-content/60 truncate font-mono text-[11px]">
+        <span id="spotify-track-artist" class="text-base-content/60 truncate font-mono text-xs">
           {defaultTrack.artist}
         </span>
       </div>
@@ -123,8 +126,8 @@ const defaultTrack = getFeaturedTrack(0);
 </style>
 
 <script>
-  import { SPOTIFY_TRACKS, type SpotifyTrack } from '../../utils/spotify';
-
+  type SpotifyTrack = import('@utils/spotify.ts').SpotifyTrack;
+  let tracksCache: readonly SpotifyTrack[] | null = null;
   let currentTrackIdx = 0;
 
   function updateSpotifyDisplay(track: SpotifyTrack) {
@@ -148,17 +151,20 @@ const defaultTrack = getFeaturedTrack(0);
     const skipBtn = document.getElementById('spotify-skip-btn');
     if (!skipBtn) return;
 
-    skipBtn.onclick = (e) => {
+    skipBtn.onclick = async (e) => {
       e.preventDefault();
       e.stopPropagation();
-      currentTrackIdx = (currentTrackIdx + 1) % SPOTIFY_TRACKS.length;
-      const nextTrack = SPOTIFY_TRACKS[currentTrackIdx];
+      if (!tracksCache) {
+        const { SPOTIFY_TRACKS } = await import('@utils/spotify.ts');
+        tracksCache = SPOTIFY_TRACKS;
+      }
+      currentTrackIdx = (currentTrackIdx + 1) % tracksCache.length;
+      const nextTrack = tracksCache[currentTrackIdx];
       if (nextTrack) {
         updateSpotifyDisplay(nextTrack);
       }
     };
   }
 
-  setupSpotifyWidget();
   document.addEventListener('astro:page-load', setupSpotifyWidget);
 </script>

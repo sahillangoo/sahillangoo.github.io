@@ -2,6 +2,7 @@ import js from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import lockfile from 'eslint-plugin-lockfile';
 import astro from 'eslint-plugin-astro';
+import oxlint from 'eslint-plugin-oxlint';
 import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 import path from 'node:path';
@@ -68,12 +69,12 @@ export default defineConfig([
     },
     rules: {
       'no-undef': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-explicit-any': 'error',
     },
   },
   {
     plugins: {
-      lockfile: lockfile,
+      lockfile,
     },
   },
   ...lockfileConfigs,
@@ -83,5 +84,21 @@ export default defineConfig([
       'lockfile/flavor': ['error', 'pnpm'],
     },
   },
+  {
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'error',
+      'no-empty': ['error', { allowEmptyCatch: false }],
+      'no-unused-expressions': 'error',
+      'no-useless-catch': 'error',
+      'no-useless-return': 'error',
+      'prefer-const': 'error',
+      'no-var': 'error',
+      'object-shorthand': 'error',
+      'astro/no-set-html-directive': 'off',
+      'astro/no-unused-define-vars-in-style': 'error',
+      'astro/valid-compile': 'error',
+    },
+  },
+  oxlint.configs['flat/recommended'],
   eslintConfigPrettier,
 ]);
