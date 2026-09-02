@@ -54,9 +54,9 @@ jobs:
       - name: Run Astro TypeScript diagnostics
         run: pnpm check
 
-      - name: Run test suite
-        run: pnpm test
-
       - name: Build static production assets
         run: pnpm build
+
+      - name: Run test suite
+        run: pnpm test
 
