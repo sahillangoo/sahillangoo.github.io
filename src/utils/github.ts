@@ -50,12 +50,14 @@ function loadCachedActivity(): GitHubActivityData {
 }
 
 function saveCachedActivity(data: GitHubActivityData): void {
+  // Never dirty the working tree during CI
+  if (process.env.CI) return;
   try {
     const dataDir = path.dirname(CACHE_FILE_PATH);
     if (!fs.existsSync(dataDir)) {
       fs.mkdirSync(dataDir, { recursive: true });
     }
-    fs.writeFileSync(CACHE_FILE_PATH, JSON.stringify(data, null, 2), 'utf-8');
+    fs.writeFileSync(CACHE_FILE_PATH, `${JSON.stringify(data, null, 2)}\n`, 'utf-8');
   } catch (err) {
     console.warn('⚠️ Could not save GitHub activity cache:', err);
   }
