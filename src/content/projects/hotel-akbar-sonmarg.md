@@ -12,7 +12,7 @@ tags:
 featured: false
 year: 2024
 role: 'Lead Frontend Architect'
-order: 6
+order: 7
 publishDate: '2024-08-15'
 liveUrl: 'https://akbarsonamarg.com'
 githubUrl: 'https://github.com/SquadCoders/hotel-akbar-sonmarg'

@@ -15,7 +15,7 @@ tags:
 featured: true
 year: 2024
 role: 'Frontend Architect & Full Stack Engineer'
-order: 4
+order: 5
 publishDate: '2024-06-28'
 liveUrl: 'https://taffin.tech'
 githubUrl: 'https://github.com/sahillangoo/taffin-react'

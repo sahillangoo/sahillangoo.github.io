@@ -20,22 +20,26 @@
       "Bash"
     ],
     "frameworks": [
-      "Astro 7",
+      "Next.js 16",
       "React 19",
-      "Next.js",
+      "Astro 7",
       "Hono",
       "Node.js",
       "Express",
       "Tailwind CSS v4",
       "daisyUI 5",
+      "Drizzle ORM",
+      "Better Auth",
       "Twig",
       "Symfony",
       "TanStack Router",
       "TanStack Query",
+      "TanStack Table",
       "Partytown",
       "WordPress"
     ],
     "databases": [
+      "MySQL",
       "PostgreSQL",
       "SQLite / Cloudflare D1",
       "MariaDB",
