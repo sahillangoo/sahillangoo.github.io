@@ -1,16 +1,19 @@
 ---
-title: 'TAFFin.Tech — AI-Powered Job Board & Recruiter Platform'
-description: 'An AI-powered European recruitment portal and recruiter analytics dashboard built with React 19, TanStack Router & Table, daisyUI, and Tailwind CSS.'
-summary: 'AI-driven tech recruitment portal with automated candidate scoring, Recruiter dashboard, and GDPR-compliant candidate pipelines.'
+title: 'TAFFin.Tech — AI-Driven European Tech Recruitment Marketplace'
+description: 'A full-stack bilingual European recruitment marketplace engineered with Symfony, React, Redux Toolkit, TanStack Router, Lingui i18n, daisyUI, and Tailwind CSS.'
+summary: 'Bilingual AI-powered job board and recruiter marketplace pairing Symfony PHP with React 18, Redux Toolkit, Lingui i18n, and dynamic email pipelines.'
 category: 'web-app'
 tags:
   - react
+  - symfony
+  - redux
+  - tanstack-query
+  - tanstack-router
+  - lingui-i18n
   - tailwindcss
   - daisyui
-  - tanstack-query
-  - tanstack-table
   - typescript
-  - symfony
+  - php
   - gdpr
 featured: true
 year: 2024
@@ -18,63 +21,77 @@ role: 'Frontend Architect & Full Stack Engineer'
 order: 5
 publishDate: '2024-06-28'
 liveUrl: 'https://taffin.tech'
-githubUrl: 'https://github.com/sahillangoo/taffin-react'
+githubUrl: 'https://github.com/Cloud-Innovation-Partners/CIP_Marketplace'
 ---
 
 ## The Challenge
 
-**TAFFin.Tech** is a European AI-powered recruitment platform designed to bridge the gap between technical recruiters and emerging tech talent (graduates, junior freelancers, career switchers, and senior experts) across Cybersecurity, Cloud/SaaS, Data/AI, and DevOps.
+**TAFFin.Tech** (developed for **Cloud Innovation Partners**) is an AI-driven European recruitment marketplace connecting tech talent (graduates, junior freelancers, career switchers, and senior engineers) across Cybersecurity, Cloud/SaaS, Data/AI, and DevOps with hiring companies across France and Europe.
 
-Key engineering challenges included:
+Key architectural hurdles included:
 
-1. **High-Density Recruiter Workspaces**: Recruiters required complex data grids for filtering hundreds of applicant CVs, viewing AI compatibility scores, and managing hiring stages without page reloads.
-2. **Multi-Step Candidate Onboarding & Resume Dropzone**: Seamless drag-and-drop CV uploading with instant file validation, client-side preview, and error recovery over unstable network connections.
-3. **Strict European GDPR Compliance & Performance**: Full compliance with EU data protection regulations, cookie consent architectures, dynamic multilingual SEO, and sub-second page loads.
+1. **Full-Stack Hybrid Monolith & SPA Integration**: Merging a robust **Symfony PHP** backend with interactive **React** single-page interfaces (`@symfony/ux-react`, `@hotwired/stimulus`, Webpack Encore) without duplicating routing logic or causing client hydration mismatches.
+2. **Bilingual Localization (EN / FR)**: Delivering seamless, compile-time internationalization across all user profiles, recruiter dashboards, job listings, and automated email notifications.
+3. **Complex Recruiter Workspaces & Redux State**: Providing recruiters with high-density candidate workspaces, filterable talent pools, candidate bookmarking, and application status funnels with zero latency.
+4. **European GDPR Compliance & Deliverability**: Complying with strict EU privacy regulations (candidate data anonymization, consent management) and optimizing transactional email templates for mobile mail clients.
 
 ---
 
-## Architectural Solutions & System Design
+## Architectural Solutions & System Pipeline
 
 ```
-[Candidate / Recruiter UI]
-           │
-           ▼
+[Candidate / Recruiter Web Client]
+                 │
+                 ▼
 ┌─────────────────────────────────────────────────────────────┐
-│              React 19 + TanStack Single Page App            │
+│    Hybrid React SPA + Symfony Webpack Encore Integration    │
 ├──────────────────────────────┬──────────────────────────────┤
-│  TanStack Router & Query     │  TanStack Table & DaisyUI    │
-│  (Type-safe Client Routing)  │  (Virtual Data Grids & Stats)│
+│  TanStack Router & Query v5  │  Redux Toolkit Global Store  │
+│  (Type-safe Route Generation)│  (Recruiter Workspaces)      │
+├──────────────────────────────┼──────────────────────────────┤
+│  Lingui i18n (EN / FR)       │  DaisyUI & Tailwind CSS      │
+│  (Compile-time Catalogs)     │  (Accessible UI System)      │
 └──────────────┬───────────────┴──────────────┬───────────────┘
                │                              │
                ▼                              ▼
-    [React Dropzone & Hook Form]    [Symfony PHP REST Backend]
-    (Client Resume Parsing)         (AI Matching & Scoring Engine)
+    [React Hook Form & Dropzone]    [Symfony PHP 8 Backend Engine]
+    (Resume Ingestion & Parsing)    (Doctrine ORM, Auth & Matcher)
+                                              │
+               ┌──────────────────────────────┴──────────────────────────────┐
+               ▼                                                             ▼
+    [Bilingual Email Pipeline]                                    [Dynamic XML Sitemap]
+    (Personalized EN/FR Match Alerts)                             (Automated lastmod & SEO)
 ```
 
-### 1. High-Performance Recruiter Dashboard & Data Grids
+### 1. Hybrid React & Symfony Architecture (`@symfony/ux-react`)
 
-Architected the `RecruiterDashboard` and `StatsRecruiter` workspace using **React 19**, **TanStack Table v8**, and **daisyUI**:
+Constructed a high-performance hybrid architecture connecting **Symfony** with **React 18** and Webpack Encore:
 
-- **Virtual Candidate Grids**: Implemented virtualized data tables rendering hundreds of candidate profiles, salary expectations, and AI matching scorecards with 60fps scrolling performance.
-- **Real-Time Funnel Analytics**: Dynamic KPI widgets displaying active listings, application throughput, interview conversion rates, and time-to-hire metrics.
+- Integrated **TanStack Router** (`@tanstack/router-cli`) with automatic file-based route generation (`tsr generate`), enabling type-safe client navigation inside Symfony Twig layouts.
+- Managed complex candidate state, application filters, and recruiter actions with **Redux Toolkit** (`@reduxjs/toolkit`) and **TanStack Query v5** for optimistic UI updates.
 
-### 2. Type-Safe Client State & Data Fetching
+### 2. Full-Scale Bilingual Localization with Lingui i18n
 
-Leveraged **TanStack Router** and **TanStack Query v5** for optimistic updates and caching:
+Engineered a compile-time internationalization system using **Lingui i18n** (`@lingui/react`, `@lingui/cli`):
 
-- Pre-fetches candidate profiles and company settings in the background, eliminating loading spinners across sub-navigation transitions.
-- Automatic cache invalidation on job posting updates, candidate stage movements, and bookmark actions.
+- Extracted and compiled message catalogs for English and French, delivering instantaneous language switching with zero runtime bundle overhead.
+- Ensured seamless date/time and currency formatting across both locales via `dayjs` and `Intl` APIs.
 
-### 3. Drag-and-Drop Resume Ingestion Pipeline
+### 3. Automated Bilingual Email Dispatch Engine
 
-Engineered an interactive resume dropzone using `react-dropzone` and `react-hook-form`:
+Designed personalized transactional email templates in English and French for:
 
-- Validates file MIME types (PDF, DOCX) and enforces strict file size budgets prior to network upload.
-- Dispatches asynchronous upload jobs to the Symfony AI scoring backend, returning parsing feedback and compatibility summaries within seconds.
+- **Job Match Alerts**: Automatically dispatches tailored job notifications with candidate-skill compatibility scores directly to applicant inboxes.
+- **Mobile Client Optimization**: Formatted email HTML to eliminate target-blank security vulnerabilities and ensure fluid rendering across Apple Mail, Gmail, and Outlook.
 
-### 4. GDPR-Compliant Privacy & Design System
+### 4. Recruiter Workspaces & Candidate Portfolios
 
-Developed a clean, modern interface using **Tailwind CSS** and **daisyUI** semantic themes:
+Authored modular frontend components for:
 
-- Implemented explicit GDPR data controls, allowing candidates to anonymize profiles, manage data retention preferences, and revoke consent with one click.
-- Boosted organic search visibility by 30% through dynamic OpenGraph meta tag injection and structured Schema.org `JobPosting` JSON-LD schemas.
+- `UserProfileProjects`: Interactive portfolio showcase displaying developer repositories, live demos, and verified technical experiences.
+- `RecruiterDashboard` & `StatsRecruiter`: High-density candidate data grids, company profile management, and application funnel telemetry.
+
+### 5. European GDPR Compliance & Search Equity
+
+- Implemented explicit GDPR candidate privacy controls, enabling talent to manage data retention, anonymize CV details, and revoke recruiter visibility on demand.
+- Engineered automated XML sitemap generators (`sitemap.xml`, `sitemap-base.xml`) with dynamic `lastmod` timestamps, boosting organic search indexation by 30%.

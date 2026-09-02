@@ -32,9 +32,11 @@
       "Better Auth",
       "Twig",
       "Symfony",
+      "Redux Toolkit",
       "TanStack Router",
       "TanStack Query",
       "TanStack Table",
+      "Lingui i18n",
       "Partytown",
       "WordPress"
     ],
