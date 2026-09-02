@@ -1,0 +1,111 @@
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  description: 'Enterprise supply-chain secured Renovate configuration for sahillangoo-portfolio',
+  extends: [
+    'config:recommended',
+    ':dependencyDashboard',
+    ':semanticCommits',
+    ':enablePreCommit',
+    'security:openssf-scorecard',
+    'helpers:pinGitHubActionDigests',
+  ],
+  timezone: 'Asia/Kolkata',
+  minimumReleaseAge: '3 days',
+  internalChecksFilter: 'strict',
+  ignoreUnstable: true,
+  dependencyDashboardTitle: 'Renovate Dependency Dashboard',
+  prHourlyLimit: 5,
+  prConcurrentLimit: 10,
+  rebaseWhen: 'auto',
+  labels: ['dependencies', 'renovate'],
+
+  // Enable lockfile maintenance to refresh deduplicated dependency trees weekly
+  lockFileMaintenance: {
+    enabled: true,
+    schedule: ['before 9am on monday'],
+    commitMessageAction: 'Refresh lockfile maintenance',
+  },
+
+  // Immediate handling of security vulnerability alerts bypassing schedule & quarantine
+  vulnerabilityAlerts: {
+    enabled: true,
+    labels: ['security', 'dependencies'],
+    schedule: ['at any time'],
+    minimumReleaseAge: null,
+    commitMessagePrefix: 'fix(security):',
+  },
+
+  packageRules: [
+    // 1. Astro Ecosystem
+    {
+      description: 'Group all Astro framework and official integrations together',
+      matchPackageNames: ['/^astro/', '/^@astrojs//'],
+      groupName: 'astro ecosystem',
+    },
+
+    // 2. Tailwind CSS & UI Components
+    {
+      description: 'Group Tailwind CSS, Vite plugins, typography, and DaisyUI',
+      matchPackageNames: ['/^tailwindcss/', '/^@tailwindcss//', '/^daisyui/', '/^cnfast/'],
+      groupName: 'tailwind and ui ecosystem',
+    },
+
+    // 3. Linting, Formatting & Code Quality
+    {
+      description: 'Group ESLint, Prettier, TypeScript-ESLint, and formatting plugins',
+      matchPackageNames: [
+        '/^eslint/',
+        '/^@eslint//',
+        '/^eslint-plugin-/',
+        '/^eslint-config-/',
+        '/^typescript-eslint/',
+        '/^prettier/',
+        '/^prettier-plugin-/',
+        '/^globals/',
+        '/^astro-eslint-parser/',
+      ],
+      groupName: 'linting and formatting tooling',
+    },
+
+    // 4. Icons & Asset Processing
+    {
+      description: 'Group Iconify collections, Typst compilers, and Sharp image processors',
+      matchPackageNames: ['/^@iconify-json//', '/^@myriaddreamin//', '/^sharp/', '/^astro-icon/'],
+      groupName: 'icons and media assets',
+    },
+
+    // 5. Animation & Runtime Utilities
+    {
+      description: 'Group Motion and Lenis smooth scrolling libraries',
+      matchPackageNames: ['/^motion/', '/^lenis/'],
+      groupName: 'animation and runtime utilities',
+    },
+
+    // 6. GitHub Actions Workflows
+    {
+      description: 'Group GitHub Actions and pin to immutable commit digests',
+      matchManagers: ['github-actions'],
+      groupName: 'github actions',
+      pinDigests: true,
+    },
+
+    // 7. Minor & Patch updates policy: Twice a week (Tue/Fri) + Platform Automerge
+    {
+      description: 'Automatically merge non-breaking minor and patch updates when CI passes',
+      matchUpdateTypes: ['minor', 'patch', 'pin', 'digest', 'lockFileMaintenance'],
+      automerge: true,
+      platformAutomerge: true,
+      automergeType: 'pr',
+      schedule: ['before 9am on tuesday', 'before 9am on friday'],
+    },
+
+    // 8. Major updates policy: Weekly (Sun) + Manual user review gated
+    {
+      description: 'Gated weekly schedule for major breaking updates requiring user approval',
+      matchUpdateTypes: ['major'],
+      automerge: false,
+      schedule: ['before 9am on sunday'],
+      labels: ['dependencies', 'major-update', 'needs-review'],
+    },
+  ],
+}
