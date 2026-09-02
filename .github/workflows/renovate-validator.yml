@@ -14,6 +14,8 @@ on:
       - '.github/renovate.json'
       - 'renovate.json'
       - 'renovate.json5'
+  workflow_dispatch:
+
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
