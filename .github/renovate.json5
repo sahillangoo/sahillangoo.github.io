@@ -10,6 +10,7 @@
     'helpers:pinGitHubActionDigests',
   ],
   timezone: 'Asia/Kolkata',
+  onboarding: false,
   minimumReleaseAge: '3 days',
   internalChecksFilter: 'strict',
   ignoreUnstable: true,
