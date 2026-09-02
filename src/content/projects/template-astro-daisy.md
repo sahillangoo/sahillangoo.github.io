@@ -13,7 +13,7 @@ tags:
 featured: false
 year: 2024
 role: 'Creator & Maintainer'
-order: 7
+order: 8
 publishDate: '2024-01-14'
 liveUrl: 'https://github.com/sahillangoo/template-astro-daisy'
 githubUrl: 'https://github.com/sahillangoo/template-astro-daisy'

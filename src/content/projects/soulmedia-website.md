@@ -13,7 +13,7 @@ tags:
 featured: false
 year: 2024
 role: 'Lead Systems Architect'
-order: 6
+order: 7
 publishDate: '2024-08-17'
 liveUrl: 'https://github.com/SquadCoders/soulmedia-website'
 githubUrl: 'https://github.com/SquadCoders/soulmedia-website'
