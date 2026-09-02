@@ -9,10 +9,10 @@ tags:
   - daisyui
   - typescript
   - cloudflare-pages
-featured: true
+featured: false
 year: 2024
 role: 'Lead Frontend Architect'
-order: 3
+order: 5
 publishDate: '2024-08-15'
 liveUrl: 'https://akbarsonamarg.com'
 githubUrl: 'https://github.com/SquadCoders/hotel-akbar-sonmarg'

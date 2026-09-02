@@ -10,10 +10,10 @@ tags:
   - sentry
   - docker
   - tailwindcss
-featured: true
+featured: false
 year: 2024
 role: 'Lead Systems Architect'
-order: 2
+order: 6
 publishDate: '2024-08-17'
 liveUrl: 'https://github.com/SquadCoders/soulmedia-website'
 githubUrl: 'https://github.com/SquadCoders/soulmedia-website'
