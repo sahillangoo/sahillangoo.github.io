@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "astro": "astro",
+    "prebuild": "pnpm lint:ai",
     "build": "astro build",
     "check": "astro check",
     "deploy": "wrangler pages deploy ./dist --project-name sahillangoo-portfolio",
@@ -21,7 +22,6 @@
     "lint:fix": "eslint --cache --fix .",
     "lint:ox": "oxlint --deny-warnings",
     "pages:deploy": "wrangler pages deploy ./dist --project-name sahillangoo-portfolio",
-    "prebuild": "pnpm lint:ai",
     "preview": "astro preview",
     "sync": "astro sync",
     "test": "node scripts/test-console-and-views.mjs",

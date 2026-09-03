@@ -313,9 +313,7 @@ function getAllFiles(dir, files = []) {
     const full = path.join(dir, item);
     const rel = path.relative(rootDir, full).replace(/\\/g, '/');
     if (
-      EXCLUDE_PATHS.some(
-        (ex) => rel === ex || rel.startsWith(`${ex}/`) || rel.includes(`/${ex}/`)
-      )
+      EXCLUDE_PATHS.some((ex) => rel === ex || rel.startsWith(`${ex}/`) || rel.includes(`/${ex}/`))
     )
       continue;
     if (fs.statSync(full).isDirectory()) getAllFiles(full, files);
@@ -537,9 +535,7 @@ for (const filePath of allFiles) {
         !BUILTIN_MODULES.has(basePkg)
       ) {
         hallucinatedImports++;
-        console.error(
-          `❌ [TIER-1-IMPORT] ${relPath} imports uninstalled package "${pkgName}"`
-        );
+        console.error(`❌ [TIER-1-IMPORT] ${relPath} imports uninstalled package "${pkgName}"`);
       }
     }
   }
@@ -646,22 +642,30 @@ for (const filePath of allFiles) {
         const postFixedMasked = isMarkdown ? maskMarkdownInlineCode(line, inlineCodeState) : line;
         if (EM_DASH_REGEX.test(postFixedMasked)) {
           emDashViolations++;
-          console.error(`❌ [TIER-1-EM-DASH] ${relPath}:${idx + 1} contains unfixable em-dash ('—')`);
+          console.error(
+            `❌ [TIER-1-EM-DASH] ${relPath}:${idx + 1} contains unfixable em-dash ('—')`
+          );
         }
         if (EMOJI_REGEX.test(postFixedMasked)) {
           emojiViolations++;
-          console.error(`❌ [TIER-1-EMOJI] ${relPath}:${idx + 1} contains unfixable user-facing emoji`);
+          console.error(
+            `❌ [TIER-1-EMOJI] ${relPath}:${idx + 1} contains unfixable user-facing emoji`
+          );
         }
         for (const { pattern, name } of TIER_1_TEXT_PATTERNS) {
           if (pattern.test(postFixedMasked)) {
             tier1TextViolations++;
-            console.error(`❌ [TIER-1-AI-TEXT] ${relPath}:${idx + 1} contains unfixable AI filler "${name}"`);
+            console.error(
+              `❌ [TIER-1-AI-TEXT] ${relPath}:${idx + 1} contains unfixable AI filler "${name}"`
+            );
           }
         }
         for (const { pattern, name } of TIER_2_TEXT_PATTERNS) {
           if (pattern.test(postFixedMasked)) {
             tier2TextViolations++;
-            console.warn(`⚠️  [TIER-2-BUZZWORD] ${relPath}:${idx + 1} contains unfixable buzzword "${name}"`);
+            console.warn(
+              `⚠️  [TIER-2-BUZZWORD] ${relPath}:${idx + 1} contains unfixable buzzword "${name}"`
+            );
           }
         }
       } else {
@@ -686,9 +690,7 @@ for (const filePath of allFiles) {
         for (const { pattern, name, suggestion } of TIER_1_TEXT_PATTERNS) {
           if (pattern.test(maskedLine)) {
             tier1TextViolations++;
-            console.error(
-              `❌ [TIER-1-AI-TEXT] ${relPath}:${idx + 1} contains AI filler "${name}"`
-            );
+            console.error(`❌ [TIER-1-AI-TEXT] ${relPath}:${idx + 1} contains AI filler "${name}"`);
             console.error(`   "${line.trim()}"`);
             console.error(`   💡 Recommendation: ${suggestion}`);
           }
@@ -698,9 +700,7 @@ for (const filePath of allFiles) {
         for (const { pattern, name, suggestion } of TIER_2_TEXT_PATTERNS) {
           if (pattern.test(maskedLine)) {
             tier2TextViolations++;
-            console.warn(
-              `⚠️  [TIER-2-BUZZWORD] ${relPath}:${idx + 1} contains buzzword "${name}"`
-            );
+            console.warn(`⚠️  [TIER-2-BUZZWORD] ${relPath}:${idx + 1} contains buzzword "${name}"`);
             console.warn(`   "${line.trim()}"`);
             console.warn(`   💡 Recommendation: ${suggestion}`);
           }
