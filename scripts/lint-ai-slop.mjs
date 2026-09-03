@@ -281,8 +281,12 @@ const AI_CODE_PATTERNS = [
   },
 ];
 
-// Emoji Detection (Extended Pictographic, without 'g' flag for testing)
-const EMOJI_REGEX = /\p{Extended_Pictographic}/u;
+// Emoji Detection: Extended Pictographic, excluding legal typographic symbols (©, ®, ™)
+const EMOJI_REGEX = /(?![©®™])\p{Extended_Pictographic}/u;
+const EMOJI_GLOBAL_REGEX = /(?![©®™])\p{Extended_Pictographic}/gu;
+
+// Em-Dash Detection: literal '—' or HTML entities
+const EM_DASH_REGEX = /(?:—|&mdash;|&#8212;|&#x2014;)/;
 
 const TARGET_DIRECTORIES = [
   path.join(rootDir, 'src'),
@@ -320,6 +324,15 @@ function getAllFiles(dir, files = []) {
   return files;
 }
 
+function getAuditFiles() {
+  const files = TARGET_DIRECTORIES.flatMap((d) => getAllFiles(d));
+  const rootReadme = path.join(rootDir, 'README.md');
+  if (fs.existsSync(rootReadme) && !files.includes(rootReadme)) {
+    files.push(rootReadme);
+  }
+  return files;
+}
+
 function isUserContentFile(relPath) {
   // Strictly scope user-facing content/prose/emoji checks: exclude infrastructure and internal utilities
   if (
@@ -327,7 +340,8 @@ function isUserContentFile(relPath) {
     relPath.startsWith('src/plugins/') ||
     relPath.startsWith('src/utils/') ||
     relPath.startsWith('src/styles/') ||
-    relPath.endsWith('.d.ts')
+    relPath.endsWith('.d.ts') ||
+    relPath === 'src/data/copy/types.ts'
   ) {
     return false;
   }
@@ -335,7 +349,14 @@ function isUserContentFile(relPath) {
     if (relPath.includes('package.json') || relPath.includes('tsconfig')) return false;
     return true;
   }
+  if (relPath === 'README.md') return true;
   if (relPath.endsWith('.md') || relPath.endsWith('.mdx')) return true;
+  if (
+    relPath.startsWith('public/') &&
+    (relPath.endsWith('.txt') || relPath.endsWith('.md') || relPath.endsWith('.json'))
+  ) {
+    return true;
+  }
   if (relPath.startsWith('src/data/copy/')) return true;
   if (relPath.startsWith('src/data/resumes/')) return true;
   if (relPath.startsWith('src/content/')) return true;
@@ -364,6 +385,92 @@ function isImportScanFile(relPath) {
   );
 }
 
+function maskMarkdownInlineCode(line, state) {
+  let result = '';
+  let i = 0;
+  while (i < line.length) {
+    if (state.inInlineCode) {
+      const delim = '`'.repeat(state.inlineDelimLen);
+      const closeIdx = line.indexOf(delim, i);
+      if (closeIdx === -1) {
+        result += ' '.repeat(line.length - i);
+        i = line.length;
+      } else {
+        result += ' '.repeat(closeIdx + delim.length - i);
+        i = closeIdx + delim.length;
+        state.inInlineCode = false;
+        state.inlineDelimLen = 0;
+      }
+    } else {
+      if (line[i] === '`') {
+        let count = 1;
+        while (i + count < line.length && line[i + count] === '`') {
+          count++;
+        }
+        const delim = '`'.repeat(count);
+        const closeIdx = line.indexOf(delim, i + count);
+        if (closeIdx === -1) {
+          state.inInlineCode = true;
+          state.inlineDelimLen = count;
+          result += ' '.repeat(line.length - i);
+          i = line.length;
+        } else {
+          result += ' '.repeat(closeIdx + count - i);
+          i = closeIdx + count;
+        }
+      } else {
+        result += line[i];
+        i++;
+      }
+    }
+  }
+  return result;
+}
+
+function replaceEmDashes(text, isTitleLine) {
+  if (!EM_DASH_REGEX.test(text)) return text;
+  if (isTitleLine) {
+    return text.replace(/(?:\s*(?:—|&mdash;|&#8212;|&#x2014;)\s*)/g, ' | ');
+  } else {
+    return text
+      .replace(
+        /(\d{4}|\w{3}\s+\d{4})\s*(?:—|&mdash;|&#8212;|&#x2014;)\s*(\d{4}|Present|\w{3}\s+\d{4})/g,
+        '$1 - $2'
+      )
+      .replace(/(\w)(?:—|&mdash;|&#8212;|&#x2014;)(\w)/g, '$1 - $2')
+      .replace(/(?:\s*(?:—|&mdash;|&#8212;|&#x2014;)\s*)/g, ' - ');
+  }
+}
+
+function applyFixesToProse(text, fullLine) {
+  let fixed = text;
+  const isTitleLine = /title|name:|pageTitleSuffix/i.test(fullLine);
+
+  if (EM_DASH_REGEX.test(fixed)) {
+    fixed = replaceEmDashes(fixed, isTitleLine);
+  }
+
+  if (EMOJI_REGEX.test(fixed)) {
+    fixed = fixed.replace(EMOJI_GLOBAL_REGEX, '').replace(/\s{2,}/g, ' ');
+  }
+
+  for (const { pattern, replacement } of TIER_1_TEXT_PATTERNS) {
+    if (replacement && pattern.test(fixed)) {
+      const globalRegex = new RegExp(pattern.source, 'gi');
+      fixed = fixed.replace(globalRegex, replacement);
+    }
+  }
+
+  for (const { pattern, replacement } of TIER_2_TEXT_PATTERNS) {
+    if (replacement && pattern.test(fixed)) {
+      const globalRegex = new RegExp(pattern.source, 'gi');
+      fixed = fixed.replace(globalRegex, replacement);
+    }
+  }
+
+  return fixed;
+}
+
 let emDashViolations = 0;
 let emojiViolations = 0;
 let tier1TextViolations = 0;
@@ -380,8 +487,8 @@ if (isFixMode)
 if (isStrictMode)
   console.log('🛡️  Running with --strict: Tier 2 warnings will trigger process exit 1.');
 
-const allFiles = TARGET_DIRECTORIES.flatMap((d) => getAllFiles(d));
-console.log(`📂 Scanning ${allFiles.length} files across src/, public/, scripts/...`);
+const allFiles = getAuditFiles();
+console.log(`📂 Scanning ${allFiles.length} files across src/, public/, scripts/, root...`);
 
 for (const filePath of allFiles) {
   let content = fs.readFileSync(filePath, 'utf8');
@@ -439,58 +546,146 @@ for (const filePath of allFiles) {
 
   // 2. User Content Scanner (Tier 1 & Tier 2 Text, Em-Dashes, Emojis)
   if (isUserContentFile(relPath)) {
+    const isMarkdown =
+      relPath.endsWith('.md') || relPath.endsWith('.mdx') || relPath === 'README.md';
+    const isAstro = relPath.endsWith('.astro');
+
     const lines = content.split('\n');
     let inCodeBlock = false;
-    let codeBlockDelim = '';
+    let codeBlockChar = '';
+    let codeBlockLength = 0;
+    const inlineCodeState = { inInlineCode: false, inlineDelimLen: 0 };
+
+    let inAstroFrontmatter = false;
+    let astroFrontmatterCount = 0;
+    let inScriptTag = false;
+    let inStyleTag = false;
+
     const updatedLines = [];
 
     for (let idx = 0; idx < lines.length; idx++) {
       let line = lines[idx];
       const trimmed = line.trim();
 
-      // Code-fence state machine: skip code blocks (``` or ~~~)
-      if (!inCodeBlock) {
-        if (trimmed.startsWith('```') || trimmed.startsWith('~~~')) {
-          inCodeBlock = true;
-          codeBlockDelim = trimmed.slice(0, 3);
+      // In Astro files: track frontmatter, script, and style blocks (treat them as code, not prose)
+      if (isAstro) {
+        if (trimmed === '---') {
+          astroFrontmatterCount++;
+          inAstroFrontmatter = astroFrontmatterCount === 1;
           updatedLines.push(line);
           continue;
         }
-      } else {
-        if (trimmed.startsWith(codeBlockDelim)) {
-          inCodeBlock = false;
-          codeBlockDelim = '';
+        if (inAstroFrontmatter) {
+          updatedLines.push(line);
+          continue;
         }
-        updatedLines.push(line);
-        continue;
+        if (/<script\b/i.test(trimmed)) {
+          inScriptTag = true;
+        }
+        if (inScriptTag) {
+          if (/<\/script>/i.test(trimmed)) inScriptTag = false;
+          updatedLines.push(line);
+          continue;
+        }
+        if (/<style\b/i.test(trimmed)) {
+          inStyleTag = true;
+        }
+        if (inStyleTag) {
+          if (/<\/style>/i.test(trimmed)) inStyleTag = false;
+          updatedLines.push(line);
+          continue;
+        }
       }
 
-      // Outside code blocks: mask inline code spans before auditing
-      const maskedLine = line.replace(/`+[^`\n]+`+/g, (m) => ' '.repeat(m.length));
+      // In Markdown files: Code-fence state machine supporting arbitrary length delimiters
+      if (isMarkdown) {
+        const fenceMatch = trimmed.match(/^(`{3,}|~{3,})/);
+        if (!inCodeBlock && fenceMatch) {
+          inCodeBlock = true;
+          codeBlockChar = fenceMatch[1][0];
+          codeBlockLength = fenceMatch[1].length;
+          updatedLines.push(line);
+          continue;
+        } else if (inCodeBlock) {
+          const closeMatch = trimmed.match(/^(`{3,}|~{3,})/);
+          if (
+            closeMatch &&
+            closeMatch[1][0] === codeBlockChar &&
+            closeMatch[1].length >= codeBlockLength &&
+            trimmed.slice(closeMatch[1].length).trim() === ''
+          ) {
+            inCodeBlock = false;
+            codeBlockChar = '';
+            codeBlockLength = 0;
+          }
+          updatedLines.push(line);
+          continue;
+        }
+      }
 
-      // 2a. Em-Dash Check (Tier 1 Error)
-      if (maskedLine.includes('—')) {
-        emDashViolations++;
-        if (!isFixMode) {
-          console.error(`❌ [TIER-1-EM-DASH] ${relPath}:${idx + 1} contains '—'`);
+      // 2e. Auto-Remediation (--fix)
+      if (isFixMode) {
+        let newLine;
+        if (isMarkdown) {
+          const segments = line.split(/(`+[^`\n]+`+)/g);
+          const fixedSegments = segments.map((seg, segIdx) => {
+            if (segIdx % 2 === 1) return seg; // Inside inline code: preserve untouched
+            return applyFixesToProse(seg, line);
+          });
+          newLine = fixedSegments.join('');
+        } else {
+          newLine = applyFixesToProse(line, line);
+        }
+
+        if (newLine !== line) {
+          line = newLine;
+          fileModified = true;
+        }
+
+        // Audit the line after fixing for any remaining unfixable errors
+        const postFixedMasked = isMarkdown ? maskMarkdownInlineCode(line, inlineCodeState) : line;
+        if (EM_DASH_REGEX.test(postFixedMasked)) {
+          emDashViolations++;
+          console.error(`❌ [TIER-1-EM-DASH] ${relPath}:${idx + 1} contains unfixable em-dash ('—')`);
+        }
+        if (EMOJI_REGEX.test(postFixedMasked)) {
+          emojiViolations++;
+          console.error(`❌ [TIER-1-EMOJI] ${relPath}:${idx + 1} contains unfixable user-facing emoji`);
+        }
+        for (const { pattern, name } of TIER_1_TEXT_PATTERNS) {
+          if (pattern.test(postFixedMasked)) {
+            tier1TextViolations++;
+            console.error(`❌ [TIER-1-AI-TEXT] ${relPath}:${idx + 1} contains unfixable AI filler "${name}"`);
+          }
+        }
+        for (const { pattern, name } of TIER_2_TEXT_PATTERNS) {
+          if (pattern.test(postFixedMasked)) {
+            tier2TextViolations++;
+            console.warn(`⚠️  [TIER-2-BUZZWORD] ${relPath}:${idx + 1} contains unfixable buzzword "${name}"`);
+          }
+        }
+      } else {
+        // Prepare audited line: for Markdown mask inline code spans; for TS/JS template literals preserve as copy
+        const maskedLine = isMarkdown ? maskMarkdownInlineCode(line, inlineCodeState) : line;
+
+        // 2a. Em-Dash Check (Tier 1 Error)
+        if (EM_DASH_REGEX.test(maskedLine)) {
+          emDashViolations++;
+          console.error(`❌ [TIER-1-EM-DASH] ${relPath}:${idx + 1} contains em-dash ('—')`);
           console.error(`   "${line.trim()}"`);
         }
-      }
 
-      // 2b. User-Facing Emoji Check (Tier 1 Error)
-      if (EMOJI_REGEX.test(maskedLine)) {
-        emojiViolations++;
-        if (!isFixMode) {
+        // 2b. User-Facing Emoji Check (Tier 1 Error, excluding legal typography ©, ®, ™)
+        if (EMOJI_REGEX.test(maskedLine)) {
+          emojiViolations++;
           console.error(`❌ [TIER-1-EMOJI] ${relPath}:${idx + 1} contains user-facing emoji`);
           console.error(`   "${line.trim()}"`);
         }
-      }
 
-      // 2c. Tier 1 High-Confidence AI Filler Tropes (Tier 1 Error)
-      for (const { pattern, name, suggestion } of TIER_1_TEXT_PATTERNS) {
-        if (pattern.test(maskedLine)) {
-          tier1TextViolations++;
-          if (!isFixMode) {
+        // 2c. Tier 1 High-Confidence AI Filler Tropes (Tier 1 Error)
+        for (const { pattern, name, suggestion } of TIER_1_TEXT_PATTERNS) {
+          if (pattern.test(maskedLine)) {
+            tier1TextViolations++;
             console.error(
               `❌ [TIER-1-AI-TEXT] ${relPath}:${idx + 1} contains AI filler "${name}"`
             );
@@ -498,76 +693,17 @@ for (const filePath of allFiles) {
             console.error(`   💡 Recommendation: ${suggestion}`);
           }
         }
-      }
 
-      // 2d. Tier 2 Resume & Tech Buzzwords (Tier 2 Warning)
-      for (const { pattern, name, suggestion } of TIER_2_TEXT_PATTERNS) {
-        if (pattern.test(maskedLine)) {
-          tier2TextViolations++;
-          if (!isFixMode) {
+        // 2d. Tier 2 Resume & Tech Buzzwords (Tier 2 Warning)
+        for (const { pattern, name, suggestion } of TIER_2_TEXT_PATTERNS) {
+          if (pattern.test(maskedLine)) {
+            tier2TextViolations++;
             console.warn(
               `⚠️  [TIER-2-BUZZWORD] ${relPath}:${idx + 1} contains buzzword "${name}"`
             );
             console.warn(`   "${line.trim()}"`);
             console.warn(`   💡 Recommendation: ${suggestion}`);
           }
-        }
-      }
-
-      // 2e. Auto-Remediation (--fix) applied outside inline code tokens
-      if (isFixMode) {
-        const segments = line.split(/(`+[^`\n]+`+)/g);
-        let lineChanged = false;
-
-        const fixedSegments = segments.map((seg, segIdx) => {
-          // Odd segments are inside inline code: preserve untouched
-          if (segIdx % 2 === 1) return seg;
-
-          let fixedSeg = seg;
-
-          // Em-dash replacement
-          if (fixedSeg.includes('—')) {
-            if (/title|name:|pageTitleSuffix/i.test(line)) {
-              fixedSeg = fixedSeg.replace(/\s*—\s*/g, ' | ');
-            } else {
-              fixedSeg = fixedSeg
-                .replace(/(\d{4}|\w{3}\s+\d{4})\s*—\s*(\d{4}|Present|\w{3}\s+\d{4})/g, '$1 - $2')
-                .replace(/(\w)—(\w)/g, '$1 - $2')
-                .replace(/\s*—\s*/g, ' - ');
-            }
-            lineChanged = true;
-          }
-
-          // User-facing emoji removal
-          if (EMOJI_REGEX.test(fixedSeg)) {
-            fixedSeg = fixedSeg.replace(/\p{Extended_Pictographic}/gu, '').replace(/\s{2,}/g, ' ');
-            lineChanged = true;
-          }
-
-          // Tier 1 AI text replacements
-          for (const { pattern, replacement } of TIER_1_TEXT_PATTERNS) {
-            if (replacement && pattern.test(fixedSeg)) {
-              const globalRegex = new RegExp(pattern.source, 'gi');
-              fixedSeg = fixedSeg.replace(globalRegex, replacement);
-              lineChanged = true;
-            }
-          }
-
-          // Tier 2 buzzword replacements
-          for (const { pattern, replacement } of TIER_2_TEXT_PATTERNS) {
-            if (replacement && pattern.test(fixedSeg)) {
-              const globalRegex = new RegExp(pattern.source, 'gi');
-              fixedSeg = fixedSeg.replace(globalRegex, replacement);
-              lineChanged = true;
-            }
-          }
-
-          return fixedSeg;
-        });
-
-        if (lineChanged) {
-          line = fixedSegments.join('');
-          fileModified = true;
         }
       }
 
@@ -607,23 +743,34 @@ const totalTier2Warnings = tier2TextViolations + aiCodeViolations;
 console.log('\n==================================================');
 console.log('📊 AI Slop, Copywriting & SEO Audit Results:');
 console.log(`- Files Audited: ${allFiles.length}`);
-console.log(`- Tier 1 Errors (Exit 1):`);
-console.log(`    * Em-Dash Violations: ${emDashViolations}`);
-console.log(`    * User-Facing Emojis: ${emojiViolations}`);
-console.log(`    * AI Filler Clichés: ${tier1TextViolations}`);
-console.log(`    * Hallucinated Imports: ${hallucinatedImports}`);
-console.log(`- Tier 2 Warnings (${isStrictMode ? 'Strict Mode: Exit 1' : 'Exit 0'}):`);
-console.log(`    * Tech/Resume Buzzwords: ${tier2TextViolations}`);
-console.log(`    * AI Code Smells: ${aiCodeViolations}`);
-if (isFixMode) console.log(`- Files Auto-Remediated: ${fixedFiles}`);
+if (isFixMode) {
+  console.log(`- Files Auto-Remediated: ${fixedFiles}`);
+  console.log(`- Remaining Tier 1 Errors: ${totalTier1Errors}`);
+  console.log(`- Remaining Tier 2 Warnings: ${totalTier2Warnings}`);
+} else {
+  console.log(`- Tier 1 Errors (Exit 1):`);
+  console.log(`    * Em-Dash Violations: ${emDashViolations}`);
+  console.log(`    * User-Facing Emojis: ${emojiViolations}`);
+  console.log(`    * AI Filler Clichés: ${tier1TextViolations}`);
+  console.log(`    * Hallucinated Imports: ${hallucinatedImports}`);
+  console.log(`- Tier 2 Warnings (${isStrictMode ? 'Strict Mode: Exit 1' : 'Exit 0'}):`);
+  console.log(`    * Tech/Resume Buzzwords: ${tier2TextViolations}`);
+  console.log(`    * AI Code Smells: ${aiCodeViolations}`);
+}
 console.log('==================================================\n');
 
 let hasFailed = false;
 
 if (totalTier1Errors > 0) {
-  console.error(
-    `❌ Build Gate Failed: Found ${totalTier1Errors} Tier 1 error(s). Run \`pnpm fix:ai\` to auto-fix where possible.`
-  );
+  if (isFixMode) {
+    console.error(
+      `❌ Build Gate Failed: Found ${totalTier1Errors} unfixable Tier 1 error(s). Review logs above.`
+    );
+  } else {
+    console.error(
+      `❌ Build Gate Failed: Found ${totalTier1Errors} Tier 1 error(s). Run \`pnpm fix:ai\` to auto-fix where possible.`
+    );
+  }
   hasFailed = true;
 }
 
@@ -644,4 +791,8 @@ if (!isFixMode && totalTier2Warnings > 0) {
   );
 }
 
-console.log('✨ AI Slop, Copywriting & SEO Audit Passed!');
+if (isFixMode && fixedFiles > 0) {
+  console.log(`✨ Auto-remediation complete: ${fixedFiles} file(s) updated. All issues resolved!`);
+} else {
+  console.log('✨ AI Slop, Copywriting & SEO Audit Passed!');
+}
