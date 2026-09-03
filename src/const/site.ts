@@ -17,7 +17,7 @@ export const SITE = {
   status:
     'Systems Engineer at Eresolution Consultancy Services | Open to high-impact engineering opportunities',
   summary:
-    'Innovative web developer with a B.Tech in Computer Science Engineering and proven full-stack expertise. Skilled in crafting high-performance, responsive web solutions using modern frameworks and AI integration. Demonstrated ability to boost website performance by 30% and increase user engagement by 20%. Passionate about creating impactful digital experiences that drive business growth.',
+    'Full-stack systems engineer with a B.Tech in Computer Science Engineering. Architect of high-throughput web architectures, distributed edge proxies, and resilient applications using TypeScript, Astro, and Cloudflare. Experienced in optimizing Core Web Vitals and reducing server latency across production systems.',
   education: [
     {
       institution: 'University of Kashmir (North Campus)',

@@ -2,7 +2,7 @@
   "id": "fullstack",
   "roleTitle": "Full Stack Systems Engineer & Architect",
   "filename": "Resume-Sahil-Langoo-FullStack.pdf",
-  "summary": "Full Stack Systems Engineer specializing in high-throughput web systems, distributed edge proxies, and end-to-end type safety. Proven track record architecting resilient Cloudflare Worker proxies (Hono, Meta CAPI, Turnstile), Next.js applications, and automated build-time verification pipelines.",
+  "summary": "Full Stack Systems Engineer specializing in high-throughput web systems, distributed edge proxies, and end-to-end type safety. Experienced in architecting resilient Cloudflare Worker proxies (Hono, Meta CAPI, Turnstile), Next.js applications, and automated build-time verification pipelines.",
   "skills": {
     "languages": ["TypeScript", "JavaScript", "Go", "Python", "SQL", "PHP", "HTML5 / CSS3"],
     "frameworks": [

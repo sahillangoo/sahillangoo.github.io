@@ -50,6 +50,9 @@ jobs:
       - name: Verify Prettier formatting
         run: pnpm format:check
 
+      - name: Verify AI Slop & Copywriting Quality Gate (Strict)
+        run: pnpm lint:ai:strict
+
       - name: Run ESLint
         run: pnpm lint
 

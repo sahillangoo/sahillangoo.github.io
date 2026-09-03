@@ -2,7 +2,7 @@
   "id": "frontend",
   "roleTitle": "Frontend Systems Engineer & UI Architect",
   "filename": "Resume-Sahil-Langoo-Frontend.pdf",
-  "summary": "Frontend Systems Engineer with 3+ years experience building high-performance web applications, accessible design systems, and responsive user interfaces. Proven track record achieving sub-50ms TTFB, 0.00 CLS, and 100/100 Lighthouse performance metrics across production platforms.",
+  "summary": "Frontend Systems Engineer with 3+ years experience building high-performance web applications, accessible design systems, and responsive user interfaces. Consistently achieves sub-50ms TTFB, 0.00 CLS, and 100/100 Lighthouse performance metrics across production platforms.",
   "skills": {
     "languages": ["TypeScript", "JavaScript", "HTML5", "CSS3 / OKLCH", "SQL", "Go"],
     "frameworks": [

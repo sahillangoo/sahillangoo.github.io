@@ -3,12 +3,18 @@
  * AI Slop, Anti-Pattern, Copywriting & SEO Static Analysis Engine
  *
  * Exhaustively audits content collections, website copy, templates, and metadata for:
- * 1. Em dashes (— / \u2014) across all copy, content, and titles
- * 2. Hallmark AI buzzwords and statistical tropes ("delve", "tapestry", "testament", "seamless", etc.)
- * 3. AI code smells (swallowed errors, placeholder TODOs, hallucinated imports, obsolete Tailwind v3 syntax)
- * 4. Technical SEO hygiene (metadata description lengths, title format with pipe separators)
+ * 1. Tier 1 (Errors, Exit 1):
+ *    - Em dashes (— / \u2014) across all copy, content, and titles
+ *    - User-facing emojis in content, prose, and headings
+ *    - High-confidence AI filler tropes ("delve into", "rich tapestry", "testament to", etc.)
+ *    - Hallucinated / uninstalled package imports
+ * 2. Tier 2 (Warnings, Exit 0 normally, Exit 1 with --strict):
+ *    - Tech & resume buzzwords ("proven track record", "spearheaded", "passionate about", etc.)
+ *    - AI code smells (empty catch, placeholder TODOs, async in forEach, obsolete Tailwind v3 syntax)
  *
- * Supports --fix to automatically humanize text, replace AI clichés, and normalize typography.
+ * Supports:
+ * - --strict: Fail the build on any Tier 2 warnings
+ * - --fix: Automatically humanize text, replace AI clichés, and normalize typography outside code fences
  */
 
 import fs from 'node:fs';
@@ -20,6 +26,7 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 
 const isFixMode = process.argv.includes('--fix');
+const isStrictMode = process.argv.includes('--strict');
 
 // 1. Read Installed Dependencies to Prevent Hallucinated Package Imports
 const pkgPath = path.join(rootDir, 'package.json');
@@ -69,170 +76,213 @@ const BUILTIN_MODULES = new Set([
   'eslint/config',
 ]);
 
-// 2. Hallmark AI Text Buzzwords & Statistical Tropes with Auto-Fix Replacements
-const AI_TEXT_PATTERNS = [
+// 2. Tier 1: High-Confidence AI Filler Tropes (Exit 1 Errors)
+const TIER_1_TEXT_PATTERNS = [
   {
-    pattern: /\bdelv(?:e|es|ed|ing)\s+into\b/gi,
+    pattern: /\bdelv(?:e|es|ed|ing)\s+into\b/i,
     name: 'delve into',
     suggestion: 'explore / analyze / examine / build',
     replacement: 'explore',
   },
   {
-    pattern: /\brich\s+tapestry\b/gi,
+    pattern: /\brich\s+tapestry\b/i,
     name: 'rich tapestry',
     suggestion: 'broad collection / diverse ecosystem',
     replacement: 'broad collection',
   },
   {
-    pattern: /\btapestry\s+of\b/gi,
+    pattern: /\btapestry\s+of\b/i,
     name: 'tapestry of',
     suggestion: 'array of / combination of',
     replacement: 'array of',
   },
   {
-    pattern: /\bstands?\s+as\s+a\s+testament\b/gi,
+    pattern: /\bstands?\s+as\s+a\s+testament\b/i,
     name: 'stands as a testament',
     suggestion: 'proves / demonstrates / shows',
     replacement: 'demonstrates',
   },
   {
-    pattern: /\ba\s+testament\s+to\b/gi,
+    pattern: /\ba\s+testament\s+to\b/i,
     name: 'a testament to',
     suggestion: 'evidence of / reflects',
     replacement: 'evidence of',
   },
   {
-    pattern: /\bbeacon\s+of\b/gi,
+    pattern: /\bbeacon\s+of\b/i,
     name: 'beacon of',
     suggestion: 'standard for / benchmark for',
     replacement: 'standard for',
   },
   {
-    pattern: /\bin\s+today's\s+(?:digital\s+landscape|rapidly\s+evolving|fast-paced)\b/gi,
+    pattern: /\bin\s+today's\s+(?:digital\s+landscape|rapidly\s+evolving|fast-paced)\b/i,
     name: "in today's ...",
     suggestion: 'cut phrase entirely',
     replacement: 'currently',
   },
   {
-    pattern: /\bin\s+an\s+era\s+where\b/gi,
+    pattern: /\bin\s+an\s+era\s+where\b/i,
     name: 'in an era where',
     suggestion: 'cut phrase or state directly',
     replacement: 'when',
   },
   {
-    pattern: /\bpivotal\s+role\b/gi,
+    pattern: /\bpivotal\s+role\b/i,
     name: 'pivotal role',
     suggestion: 'key role / primary function',
     replacement: 'key role',
   },
   {
-    pattern: /\bit\s+is\s+(?:crucial|vital|essential)\s+to\s+(?:note|remember|understand)\b/gi,
+    pattern: /\bit\s+is\s+(?:crucial|vital|essential)\s+to\s+(?:note|remember|understand)\b/i,
     name: 'it is crucial to note...',
     suggestion: 'state directly without filler',
     replacement: 'notably,',
   },
   {
-    pattern: /\bharness(?:ing)?\s+the\s+power\s+of\b/gi,
+    pattern: /\bharness(?:ing)?\s+the\s+power\s+of\b/i,
     name: 'harness the power of',
     suggestion: 'using / applying',
     replacement: 'using',
   },
   {
-    pattern: /\bleverage\s+the\s+power\s+of\b/gi,
+    pattern: /\bleverage\s+the\s+power\s+of\b/i,
     name: 'leverage the power of',
     suggestion: 'utilizing / adopting',
     replacement: 'utilizing',
   },
   {
-    pattern: /\bunleash(?:ing)?\s+the\s+potential\b/gi,
+    pattern: /\bunleash(?:ing)?\s+the\s+potential\b/i,
     name: 'unleash the potential',
     suggestion: 'enable / optimize',
     replacement: 'enabling',
   },
   {
-    pattern: /\bgame-changer\b/gi,
+    pattern: /\bgame-changer\b/i,
     name: 'game-changer',
     suggestion: 'major improvement / breakthrough',
     replacement: 'major breakthrough',
   },
   {
-    pattern: /\bplethora\s+of\b/gi,
+    pattern: /\bplethora\s+of\b/i,
     name: 'plethora of',
     suggestion: 'numerous / various',
     replacement: 'numerous',
   },
   {
-    pattern: /\bseamlessly\b/gi,
+    pattern: /\bseamlessly\b/i,
     name: 'seamlessly',
     suggestion: 'reliably / directly / smoothly',
     replacement: 'reliably',
   },
   {
-    pattern: /\bseamless\b/gi,
+    pattern: /\bseamless\b/i,
     name: 'seamless',
     suggestion: 'consistent / frictionless / direct',
     replacement: 'consistent',
   },
   {
-    pattern: /\bfoster(?:ing)?\s+innovation\b/gi,
+    pattern: /\bfoster(?:ing)?\s+innovation\b/i,
     name: 'fostering innovation',
     suggestion: 'building / advancing systems',
     replacement: 'advancing technology',
   },
   {
-    pattern: /\bdemystif(?:y|ying)\b/gi,
+    pattern: /\bdemystif(?:y|ying)\b/i,
     name: 'demystifying',
     suggestion: 'explaining / clarifying',
     replacement: 'explaining',
   },
   {
-    pattern: /\bembark(?:ing)?\s+on\s+a\s+journey\b/gi,
+    pattern: /\bembark(?:ing)?\s+on\s+a\s+journey\b/i,
     name: 'embarking on a journey',
     suggestion: 'getting started / building',
     replacement: 'building',
   },
 ];
 
-// 3. AI Code Anti-Patterns & Framework Mistakes
+// 3. Tier 2: Resume & Tech Buzzwords (Warnings, Exit 1 only with --strict)
+const TIER_2_TEXT_PATTERNS = [
+  {
+    pattern: /\bproven\s+(?:track\s+)?record\b/i,
+    name: 'proven track record',
+    suggestion: 'experienced in / history of / demonstrated ability',
+    replacement: 'experienced in',
+  },
+  {
+    pattern: /\bspearhead(?:ed|ing)?\b/i,
+    name: 'spearheaded',
+    suggestion: 'led / architected / directed',
+    replacement: 'architected',
+  },
+  {
+    pattern: /\bpassionate\s+about\b/i,
+    name: 'passionate about',
+    suggestion: 'focused on / dedicated to / building',
+    replacement: 'focused on',
+  },
+  {
+    pattern: /\bcutting[- ]edge\b/i,
+    name: 'cutting-edge',
+    suggestion: 'modern / production / advanced',
+    replacement: 'modern',
+  },
+  {
+    pattern: /\bstate[- ]of[- ]the[- ]art\b/i,
+    name: 'state-of-the-art',
+    suggestion: 'high-performance / advanced / modern',
+    replacement: 'modern',
+  },
+  {
+    pattern: /\bsupercharg(?:e|ed|ing|es)\b/i,
+    name: 'supercharge',
+    suggestion: 'accelerate / optimize / enhance',
+    replacement: 'accelerate',
+  },
+];
+
+// 4. Tier 2: AI Code Anti-Patterns & Framework Mistakes (Warnings)
 const AI_CODE_PATTERNS = [
   {
-    pattern: /catch\s*\([^)]*\)\s*\{\s*\}/g,
+    pattern: /catch\s*\([^)]*\)\s*\{\s*\}/,
     name: 'swallowed-error-empty-catch',
     suggestion: 'log or handle the caught error',
   },
   {
-    pattern: /\/\/\s*TODO:\s*(?:implement|add\s+code\s+here|placeholder)\b/gi,
+    pattern: /\/\/\s*TODO:\s*(?:implement|add\s+code\s+here|placeholder)\b/i,
     name: 'ai-placeholder-todo',
     suggestion: 'implement or remove placeholder',
   },
   {
-    pattern: /\/\/\s*(?:Start|End)\s+of\s+(?:component|function|file)\b/gi,
+    pattern: /\/\/\s*(?:Start|End)\s+of\s+(?:component|function|file)\b/i,
     name: 'ai-narrative-comment',
     suggestion: 'remove superfluous structural comment',
   },
   {
-    pattern: /\.(?:forEach)\s*\(\s*async\b/g,
+    pattern: /\.(?:forEach)\s*\(\s*async\b/,
     name: 'async-in-forEach-pitfall',
     suggestion: 'use for...of loop or Promise.all(arr.map(...))',
   },
   {
-    pattern: /\b(?:bg|text|border|ring|divide)-opacity-\d+\b/g,
+    pattern: /\b(?:bg|text|border|ring|divide)-opacity-\d+\b/,
     name: 'tailwind-v3-obsolete-opacity-class',
     suggestion: 'use Tailwind v4 slash opacity (e.g. bg-accent/20, text-base-content/80)',
   },
   {
-    pattern: /\bflex-(?:grow|shrink)(?:-\d+)?\b/g,
+    pattern: /\bflex-(?:grow|shrink)(?:-\d+)?\b/,
     name: 'tailwind-v3-obsolete-flex-class',
     suggestion: 'use Tailwind v4 grow or shrink utilities',
   },
   {
     pattern:
-      /\b(?:[a-z0-9-]+:)*(?:w|h|text|leading|tracking|gap|p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|bg|border|rounded|scale|top|bottom|left|right|z|max-w|max-h|min-w|min-h|shadow|animate)-\[[^\]]+\]/g,
+      /\b(?:[a-z0-9-]+:)*(?:w|h|text|leading|tracking|gap|p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|bg|border|rounded|scale|top|bottom|left|right|z|max-w|max-h|min-w|min-h|shadow|animate)-\[[^\]]+\]/,
     name: 'tailwind-arbitrary-bracket-class',
     suggestion:
       'avoid arbitrary bracket classes; use standard scale or formalize in @theme in global.css',
   },
 ];
+
+// Emoji Detection (Extended Pictographic, without 'g' flag for testing)
+const EMOJI_REGEX = /\p{Extended_Pictographic}/u;
 
 const TARGET_DIRECTORIES = [
   path.join(rootDir, 'src'),
@@ -240,7 +290,7 @@ const TARGET_DIRECTORIES = [
   path.join(rootDir, 'scripts'),
 ];
 
-const SCAN_EXTENSIONS = ['.astro', '.ts', '.tsx', '.js', '.mjs', '.json', '.md', '.txt'];
+const SCAN_EXTENSIONS = ['.astro', '.ts', '.tsx', '.js', '.mjs', '.json', '.md', '.mdx', '.txt'];
 
 const EXCLUDE_PATHS = [
   'node_modules',
@@ -258,15 +308,66 @@ function getAllFiles(dir, files = []) {
   for (const item of fs.readdirSync(dir)) {
     const full = path.join(dir, item);
     const rel = path.relative(rootDir, full).replace(/\\/g, '/');
-    if (EXCLUDE_PATHS.some((ex) => rel.startsWith(ex) || rel.includes(`/${ex}/`))) continue;
+    if (
+      EXCLUDE_PATHS.some(
+        (ex) => rel === ex || rel.startsWith(`${ex}/`) || rel.includes(`/${ex}/`)
+      )
+    )
+      continue;
     if (fs.statSync(full).isDirectory()) getAllFiles(full, files);
     else if (SCAN_EXTENSIONS.some((ext) => full.endsWith(ext))) files.push(full);
   }
   return files;
 }
 
+function isUserContentFile(relPath) {
+  // Strictly scope user-facing content/prose/emoji checks: exclude infrastructure and internal utilities
+  if (
+    relPath.startsWith('scripts/') ||
+    relPath.startsWith('src/plugins/') ||
+    relPath.startsWith('src/utils/') ||
+    relPath.startsWith('src/styles/') ||
+    relPath.endsWith('.d.ts')
+  ) {
+    return false;
+  }
+  if (relPath.endsWith('.json')) {
+    if (relPath.includes('package.json') || relPath.includes('tsconfig')) return false;
+    return true;
+  }
+  if (relPath.endsWith('.md') || relPath.endsWith('.mdx')) return true;
+  if (relPath.startsWith('src/data/copy/')) return true;
+  if (relPath.startsWith('src/data/resumes/')) return true;
+  if (relPath.startsWith('src/content/')) return true;
+  if (relPath.startsWith('src/const/')) return true;
+  if (relPath.endsWith('.astro')) return true;
+  return false;
+}
+
+function isCodeFile(relPath) {
+  return (
+    relPath.endsWith('.ts') ||
+    relPath.endsWith('.tsx') ||
+    relPath.endsWith('.js') ||
+    relPath.endsWith('.mjs') ||
+    relPath.endsWith('.astro')
+  );
+}
+
+function isImportScanFile(relPath) {
+  return (
+    relPath.endsWith('.ts') ||
+    relPath.endsWith('.tsx') ||
+    relPath.endsWith('.js') ||
+    relPath.endsWith('.mjs') ||
+    relPath.endsWith('.astro')
+  );
+}
+
 let emDashViolations = 0;
-let aiTextViolations = 0;
+let emojiViolations = 0;
+let tier1TextViolations = 0;
+let tier2TextViolations = 0;
 let aiCodeViolations = 0;
 let hallucinatedImports = 0;
 let fixedFiles = 0;
@@ -276,6 +377,8 @@ if (isFixMode)
   console.log(
     '🔧 Running with --fix: automatic humanization, vocabulary replacement, and em-dash elimination active.'
   );
+if (isStrictMode)
+  console.log('🛡️  Running with --strict: Tier 2 warnings will trigger process exit 1.');
 
 const allFiles = TARGET_DIRECTORIES.flatMap((d) => getAllFiles(d));
 console.log(`📂 Scanning ${allFiles.length} files across src/, public/, scripts/...`);
@@ -285,51 +388,8 @@ for (const filePath of allFiles) {
   const relPath = path.relative(rootDir, filePath).replace(/\\/g, '/');
   let fileModified = false;
 
-  // 1. Em-Dash Check & Humanized Replacement
-  if (content.includes('—')) {
-    const lines = content.split('\n');
-    lines.forEach((line, idx) => {
-      if (line.includes('—')) {
-        emDashViolations++;
-        if (!isFixMode) {
-          console.error(`❌ [EM-DASH] ${relPath}:${idx + 1} contains '—'`);
-          console.error(`   "${line.trim()}"`);
-        }
-      }
-    });
-
-    if (isFixMode) {
-      let updated = content;
-      updated = updated.replace(
-        /(\d{4}|\w{3}\s+\d{4})\s*—\s*(\d{4}|Present|\w{3}\s+\d{4})/g,
-        '$1 - $2'
-      );
-
-      const updatedLines = updated.split('\n').map((l) => {
-        if (!l.includes('—')) return l;
-        if (/title|name:|pageTitleSuffix/i.test(l)) {
-          return l.replace(/\s*—\s*/g, ' | ');
-        }
-        return l.replace(/(\w)—(\w)/g, '$1 - $2').replace(/\s*—\s*/g, ' - ');
-      });
-
-      updated = updatedLines.join('\n');
-
-      if (updated !== content) {
-        content = updated;
-        fileModified = true;
-        console.log(`✨ [FIXED] Em dashes eliminated in: ${relPath}`);
-      }
-    }
-  }
-
-  // 2. Hallucinated Package Import Check
-  const isImportScanFile =
-    filePath.endsWith('.ts') ||
-    filePath.endsWith('.js') ||
-    filePath.endsWith('.mjs') ||
-    filePath.endsWith('.astro');
-  if (isImportScanFile) {
+  // 1. Hallucinated Package Import Check (Tier 1 Error)
+  if (isImportScanFile(relPath)) {
     const importRegex =
       /(?:import\s+(?:[\s\S]*?from\s+)?['"]([^'"]+)['"]|require\(['"]([^'"]+)['"]\))/g;
     let match;
@@ -371,63 +431,162 @@ for (const filePath of allFiles) {
       ) {
         hallucinatedImports++;
         console.error(
-          `❌ [HALLUCINATED-IMPORT] ${relPath} imports uninstalled package "${pkgName}"`
+          `❌ [TIER-1-IMPORT] ${relPath} imports uninstalled package "${pkgName}"`
         );
       }
     }
   }
 
-  // 3. AI Text Slop Check (Markdown, Copy, Astro)
-  const isTextFile =
-    filePath.endsWith('.md') ||
-    filePath.includes('/data/copy/') ||
-    filePath.endsWith('.astro') ||
-    filePath.endsWith('.json');
-  if (isTextFile) {
+  // 2. User Content Scanner (Tier 1 & Tier 2 Text, Em-Dashes, Emojis)
+  if (isUserContentFile(relPath)) {
     const lines = content.split('\n');
-    lines.forEach((line, idx) => {
-      for (const { pattern, name, suggestion, replacement } of AI_TEXT_PATTERNS) {
-        if (pattern.test(line)) {
-          aiTextViolations++;
+    let inCodeBlock = false;
+    let codeBlockDelim = '';
+    const updatedLines = [];
+
+    for (let idx = 0; idx < lines.length; idx++) {
+      let line = lines[idx];
+      const trimmed = line.trim();
+
+      // Code-fence state machine: skip code blocks (``` or ~~~)
+      if (!inCodeBlock) {
+        if (trimmed.startsWith('```') || trimmed.startsWith('~~~')) {
+          inCodeBlock = true;
+          codeBlockDelim = trimmed.slice(0, 3);
+          updatedLines.push(line);
+          continue;
+        }
+      } else {
+        if (trimmed.startsWith(codeBlockDelim)) {
+          inCodeBlock = false;
+          codeBlockDelim = '';
+        }
+        updatedLines.push(line);
+        continue;
+      }
+
+      // Outside code blocks: mask inline code spans before auditing
+      const maskedLine = line.replace(/`+[^`\n]+`+/g, (m) => ' '.repeat(m.length));
+
+      // 2a. Em-Dash Check (Tier 1 Error)
+      if (maskedLine.includes('—')) {
+        emDashViolations++;
+        if (!isFixMode) {
+          console.error(`❌ [TIER-1-EM-DASH] ${relPath}:${idx + 1} contains '—'`);
+          console.error(`   "${line.trim()}"`);
+        }
+      }
+
+      // 2b. User-Facing Emoji Check (Tier 1 Error)
+      if (EMOJI_REGEX.test(maskedLine)) {
+        emojiViolations++;
+        if (!isFixMode) {
+          console.error(`❌ [TIER-1-EMOJI] ${relPath}:${idx + 1} contains user-facing emoji`);
+          console.error(`   "${line.trim()}"`);
+        }
+      }
+
+      // 2c. Tier 1 High-Confidence AI Filler Tropes (Tier 1 Error)
+      for (const { pattern, name, suggestion } of TIER_1_TEXT_PATTERNS) {
+        if (pattern.test(maskedLine)) {
+          tier1TextViolations++;
           if (!isFixMode) {
-            console.warn(`⚠️  [AI-SLOP-TEXT] ${relPath}:${idx + 1} contains AI trope "${name}"`);
-            console.warn(`   "${line.trim()}"`);
-            console.warn(`   💡 Recommendation: ${suggestion}`);
-          } else if (replacement) {
-            line = line.replace(pattern, replacement);
-            fileModified = true;
+            console.error(
+              `❌ [TIER-1-AI-TEXT] ${relPath}:${idx + 1} contains AI filler "${name}"`
+            );
+            console.error(`   "${line.trim()}"`);
+            console.error(`   💡 Recommendation: ${suggestion}`);
           }
         }
       }
-    });
 
-    if (isFixMode && fileModified) {
-      let updated = content;
-      for (const { pattern, replacement } of AI_TEXT_PATTERNS) {
-        if (replacement) {
-          updated = updated.replace(pattern, replacement);
+      // 2d. Tier 2 Resume & Tech Buzzwords (Tier 2 Warning)
+      for (const { pattern, name, suggestion } of TIER_2_TEXT_PATTERNS) {
+        if (pattern.test(maskedLine)) {
+          tier2TextViolations++;
+          if (!isFixMode) {
+            console.warn(
+              `⚠️  [TIER-2-BUZZWORD] ${relPath}:${idx + 1} contains buzzword "${name}"`
+            );
+            console.warn(`   "${line.trim()}"`);
+            console.warn(`   💡 Recommendation: ${suggestion}`);
+          }
         }
       }
-      if (updated !== content) {
-        content = updated;
-        fileModified = true;
+
+      // 2e. Auto-Remediation (--fix) applied outside inline code tokens
+      if (isFixMode) {
+        const segments = line.split(/(`+[^`\n]+`+)/g);
+        let lineChanged = false;
+
+        const fixedSegments = segments.map((seg, segIdx) => {
+          // Odd segments are inside inline code: preserve untouched
+          if (segIdx % 2 === 1) return seg;
+
+          let fixedSeg = seg;
+
+          // Em-dash replacement
+          if (fixedSeg.includes('—')) {
+            if (/title|name:|pageTitleSuffix/i.test(line)) {
+              fixedSeg = fixedSeg.replace(/\s*—\s*/g, ' | ');
+            } else {
+              fixedSeg = fixedSeg
+                .replace(/(\d{4}|\w{3}\s+\d{4})\s*—\s*(\d{4}|Present|\w{3}\s+\d{4})/g, '$1 - $2')
+                .replace(/(\w)—(\w)/g, '$1 - $2')
+                .replace(/\s*—\s*/g, ' - ');
+            }
+            lineChanged = true;
+          }
+
+          // User-facing emoji removal
+          if (EMOJI_REGEX.test(fixedSeg)) {
+            fixedSeg = fixedSeg.replace(/\p{Extended_Pictographic}/gu, '').replace(/\s{2,}/g, ' ');
+            lineChanged = true;
+          }
+
+          // Tier 1 AI text replacements
+          for (const { pattern, replacement } of TIER_1_TEXT_PATTERNS) {
+            if (replacement && pattern.test(fixedSeg)) {
+              const globalRegex = new RegExp(pattern.source, 'gi');
+              fixedSeg = fixedSeg.replace(globalRegex, replacement);
+              lineChanged = true;
+            }
+          }
+
+          // Tier 2 buzzword replacements
+          for (const { pattern, replacement } of TIER_2_TEXT_PATTERNS) {
+            if (replacement && pattern.test(fixedSeg)) {
+              const globalRegex = new RegExp(pattern.source, 'gi');
+              fixedSeg = fixedSeg.replace(globalRegex, replacement);
+              lineChanged = true;
+            }
+          }
+
+          return fixedSeg;
+        });
+
+        if (lineChanged) {
+          line = fixedSegments.join('');
+          fileModified = true;
+        }
       }
+
+      updatedLines.push(line);
+    }
+
+    if (isFixMode && fileModified) {
+      content = updatedLines.join('\n');
     }
   }
 
-  // 4. AI Code Smell Check (Scripts, Astro, TS)
-  const isCodeFile =
-    filePath.endsWith('.ts') ||
-    filePath.endsWith('.js') ||
-    filePath.endsWith('.mjs') ||
-    filePath.endsWith('.astro');
-  if (isCodeFile) {
+  // 3. AI Code Anti-Patterns & Framework Mistakes (Tier 2 Warnings)
+  if (isCodeFile(relPath)) {
     const lines = content.split('\n');
     lines.forEach((line, idx) => {
       for (const { pattern, name, suggestion } of AI_CODE_PATTERNS) {
         if (pattern.test(line)) {
           aiCodeViolations++;
-          console.warn(`⚠️  [AI-CODE-SMELL] ${relPath}:${idx + 1} violates rule "${name}"`);
+          console.warn(`⚠️  [TIER-2-CODE-SMELL] ${relPath}:${idx + 1} violates rule "${name}"`);
           console.warn(`   "${line.trim()}"`);
           console.warn(`   💡 Recommendation: ${suggestion}`);
         }
@@ -441,40 +600,48 @@ for (const filePath of allFiles) {
   }
 }
 
+const totalTier1Errors =
+  emDashViolations + emojiViolations + tier1TextViolations + hallucinatedImports;
+const totalTier2Warnings = tier2TextViolations + aiCodeViolations;
+
 console.log('\n==================================================');
-console.log('📊 AI Slop & SEO Audit Results:');
+console.log('📊 AI Slop, Copywriting & SEO Audit Results:');
 console.log(`- Files Audited: ${allFiles.length}`);
-console.log(`- Em-Dash Violations: ${emDashViolations}`);
-console.log(`- Hallucinated Package Imports: ${hallucinatedImports}`);
-console.log(`- AI Text Tropes Detected: ${aiTextViolations}`);
-console.log(`- AI Code Smells Detected: ${aiCodeViolations}`);
+console.log(`- Tier 1 Errors (Exit 1):`);
+console.log(`    * Em-Dash Violations: ${emDashViolations}`);
+console.log(`    * User-Facing Emojis: ${emojiViolations}`);
+console.log(`    * AI Filler Clichés: ${tier1TextViolations}`);
+console.log(`    * Hallucinated Imports: ${hallucinatedImports}`);
+console.log(`- Tier 2 Warnings (${isStrictMode ? 'Strict Mode: Exit 1' : 'Exit 0'}):`);
+console.log(`    * Tech/Resume Buzzwords: ${tier2TextViolations}`);
+console.log(`    * AI Code Smells: ${aiCodeViolations}`);
 if (isFixMode) console.log(`- Files Auto-Remediated: ${fixedFiles}`);
 console.log('==================================================\n');
 
-let hasErrors = false;
+let hasFailed = false;
 
-if (!isFixMode && emDashViolations > 0) {
+if (totalTier1Errors > 0) {
   console.error(
-    `❌ Build Gate Failed: Found ${emDashViolations} em dash(es). Run \`pnpm fix:ai\` to auto-fix.`
+    `❌ Build Gate Failed: Found ${totalTier1Errors} Tier 1 error(s). Run \`pnpm fix:ai\` to auto-fix where possible.`
   );
-  hasErrors = true;
+  hasFailed = true;
 }
 
-if (hallucinatedImports > 0) {
+if (isStrictMode && totalTier2Warnings > 0) {
   console.error(
-    `❌ Build Gate Failed: Found ${hallucinatedImports} hallucinated/uninstalled package import(s).`
+    `❌ Strict Gate Failed: Found ${totalTier2Warnings} Tier 2 warning(s) under --strict.`
   );
-  hasErrors = true;
+  hasFailed = true;
 }
 
-if (hasErrors) {
+if (hasFailed) {
   process.exit(1);
 }
 
-if (!isFixMode && (aiTextViolations > 0 || aiCodeViolations > 0)) {
+if (!isFixMode && totalTier2Warnings > 0) {
   console.warn(
-    `⚠️  Audit Notice: Review AI slop occurrences above to maintain high editorial craft.`
+    `⚠️  Audit Notice: Review ${totalTier2Warnings} Tier 2 warning(s) above to maintain high editorial craft.`
   );
 }
 
-console.log('✨ AI Slop, Copywriting & SEO Audit Complete!');
+console.log('✨ AI Slop, Copywriting & SEO Audit Passed!');

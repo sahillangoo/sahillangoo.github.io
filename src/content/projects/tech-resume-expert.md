@@ -24,7 +24,7 @@ githubUrl: 'https://github.com/sahillangoo/tech-resume-expert'
 In modern technical hiring, software engineers face two critical barriers:
 
 1. **The ATS & Semantic Skills Graph Filter (Gate 1)**: Automated parser algorithms (Ashby, Greenhouse, Eightfold.ai) ingest resumes into vector co-occurrence graphs. Unstructured formats, multi-column tables, and missing technical primitives result in silent auto-rejection before human review.
-2. **The 6-Second Recruiter & Engineering Manager Scan (Gates 2 & 3)**: Human reviewers scan resumes in an F-pattern within 6 to 10 seconds. Generic bullet points (_"responsible for backend services"_), missing baseline metrics, and overused AI filler words (_"spearheaded"_, _"orchestrated"_) trigger immediate dismissal.
+2. **The 6-Second Recruiter & Engineering Manager Scan (Gates 2 & 3)**: Human reviewers scan resumes in an F-pattern within 6 to 10 seconds. Generic bullet points (_"responsible for backend services"_), missing baseline metrics, and overused AI filler words (`"spearheaded"`, `"orchestrated"`) trigger immediate dismissal.
 3. **Typography & PDF Ligature Corruption**: Traditional Word-exported PDFs and misconfigured LaTeX templates often corrupt Unicode ligatures (`fi`, `fl`, `ff`), causing ATS parsers to read words like `efficiency` as `e   ciency`.
 
 ---
