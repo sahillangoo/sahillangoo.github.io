@@ -47,9 +47,9 @@ export const nowCopy: NowPageCopy = {
     description:
       'Operating globally across UTC+5:30 (IST), UTC, and EST time zones with asynchronous discipline.',
     cta: {
-      label: 'Inquire Availability',
-      href: '/contact/',
-      icon: 'ph:paper-plane-tilt-bold',
+      label: 'Connect & Links',
+      href: '/links/',
+      icon: 'ph:link-bold',
     },
   },
 };

@@ -22,25 +22,46 @@ const lockfileConfigs = lockfile.configs.recommended.filter(
 export default defineConfig([
   {
     ignores: [
+      // Build & Distribution outputs
       'dist/**',
-      '**/*.d.ts',
-      '.github/**',
-      'public/pagefind/**',
-      '.playwright-browsers/**',
-      'playwright-report/**',
-      'test-results/**',
-      'blob-report/**',
-      'playwright/.auth/**',
-      'playwright/.cache/**',
+      '.output/**',
       '.astro/**',
+      '.mf/**',
+      '.unlighthouse/**',
+      'public/pagefind/**',
+
+      // Cloudflare & Deployment Artifacts
+      '.wrangler/**',
+      '.vercel/**',
+      '.netlify/**',
+
+      // Dependencies & Package Manager
+      'node_modules/**',
+
+      // Caches, Logs & Reports
+      '**/*.log',
+      '.eslintcache',
+      '.prettiercache',
+      '.oxlintcache',
+      '.parcel-cache/**',
+      '.turbo/**',
+
+      // Test Reports, E2E & Browser Artifacts
+      'test-results/**',
+      'playwright-report/**',
+      'blob-report/**',
+      'playwright/.cache/**',
+      'playwright/.auth/**',
+      '.playwright-browsers/**',
+
+      // Tooling, CI & AI Agent Directories
+      '.github/**',
       '.agents/**',
       '.codex/**',
       '.cursor/**',
-      '.netlify/**',
-      '.vercel/**',
-      '.wrangler/**',
-      'node_modules/**',
-      '**/*.log',
+
+      // TypeScript Ambient Declarations
+      '**/*.d.ts',
     ],
   },
   {

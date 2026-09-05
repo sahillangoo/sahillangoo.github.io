@@ -1,0 +1,61 @@
+---
+/**
+ * Cloudflare Web Analytics Component for Astro
+ *
+ * Implements Cloudflare Web Analytics with SPA (Single Page Application)
+ * support for Astro View Transitions without blocking the main rendering
+ * thread or degrading Lighthouse Performance & Core Web Vitals scores.
+ *
+ * Runs exclusively in production on sahillangoo.in.
+ */
+import { SITE } from '@const/site.ts';
+
+const token = SITE.analytics.cloudflareToken;
+---
+
+<script is:inline define:vars={{ token }}>
+  function loadCfBeacon(siteToken) {
+    if (document.getElementById('cf-web-analytics-script')) return;
+
+    const script = document.createElement('script');
+    script.id = 'cf-web-analytics-script';
+    script.type = 'module';
+    script.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+    script.setAttribute('data-cf-beacon', JSON.stringify({ token: siteToken, spa: true }));
+    document.head.appendChild(script);
+  }
+
+  if (token && window.location.hostname === 'sahillangoo.in' && !window.__cf_beacon_injected) {
+    window.__cf_beacon_injected = true;
+
+    const interactionEvents = ['pointerdown', 'scroll', 'keydown', 'touchstart'];
+    const onInteract = () => {
+      interactionEvents.forEach((event) =>
+        window.removeEventListener(event, onInteract, { passive: true })
+      );
+      loadCfBeacon(token);
+    };
+
+    interactionEvents.forEach((event) =>
+      window.addEventListener(event, onInteract, { passive: true, once: true })
+    );
+
+    const onIdle = () => loadCfBeacon(token);
+
+    if (document.readyState === 'complete') {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(onIdle, { timeout: 3500 });
+      } else {
+        setTimeout(onIdle, 3000);
+      }
+    } else {
+      window.addEventListener('load', () => {
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(onIdle, { timeout: 3500 });
+        } else {
+          setTimeout(onIdle, 3000);
+        }
+      });
+    }
+  }
+</script>

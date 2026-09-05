@@ -49,20 +49,15 @@ const defaultTrack = getFeaturedTrack(0);
 
     <!-- Track Metadata Column -->
     <div class="flex min-w-0 flex-col">
-      <div class="flex items-center gap-1.5">
-        <span class="font-mono text-xs font-semibold tracking-wider text-emerald-500 uppercase">
+      <div class="flex min-w-0 items-center gap-1.5">
+        <span
+          class="shrink-0 font-mono text-xs font-semibold tracking-wider text-emerald-500 uppercase"
+        >
           Listening
-        </span>
-        <span class="relative flex h-1.5 w-1.5">
-          <span
-            class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
-          >
-          </span>
-          <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
         </span>
         <span
           id="spotify-track-tag"
-          class="badge badge-sm hidden border-0 bg-emerald-500/10 font-mono text-xs font-medium text-emerald-400 sm:inline-flex"
+          class="badge badge-sm hidden shrink-0 border-0 bg-emerald-500/10 font-mono text-xs font-medium whitespace-nowrap text-emerald-400 sm:inline-flex"
         >
           {defaultTrack.albumTag || 'Coke Studio'}
         </span>

@@ -270,6 +270,19 @@ export interface NavigationCopy {
     label: string;
     href: string;
   }[];
+  footerSections: {
+    navigation: {
+      title: string;
+      links: { label: string; href: string }[];
+    };
+    system: {
+      title: string;
+      links: { label: string; href: string }[];
+    };
+    connect: {
+      title: string;
+    };
+  };
   footerTelemetry: {
     copyright: (year: number) => string;
     metrics: string;

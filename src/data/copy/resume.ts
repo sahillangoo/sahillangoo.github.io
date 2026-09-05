@@ -17,9 +17,10 @@ export const resumeCopy: ResumePageCopy = {
       external: true,
     },
     contactCta: {
-      label: 'Contact Me',
-      href: '/contact/',
-      icon: 'ph:paper-plane-tilt-bold',
+      label: 'Email Me',
+      href: 'mailto:hello@sahillangoo.in',
+      icon: 'ph:envelope-simple-bold',
+      external: true,
     },
     githubCta: {
       label: 'GitHub',

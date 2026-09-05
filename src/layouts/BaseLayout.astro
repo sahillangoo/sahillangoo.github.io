@@ -8,6 +8,7 @@ import BackToTop from '@components/common/BackToTop.astro';
 import CodeCopyScript from '@components/common/CodeCopyScript.astro';
 import TextQuoteTooltip from '@components/blog/TextQuoteTooltip.astro';
 import CloudflareEmailDecoder from '@components/common/CloudflareEmailDecoder.astro';
+import CloudflareAnalytics from '@components/common/CloudflareAnalytics.astro';
 import { cn } from '@utils/cn.ts';
 import '@styles/global.css';
 import 'lenis/dist/lenis.css';
@@ -71,6 +72,7 @@ const {
     <CodeCopyScript />
     <TextQuoteTooltip />
     <CloudflareEmailDecoder />
+    <CloudflareAnalytics />
 
     <main id="main-content" class:list={cn('w-full grow', hideNav ? 'pt-0' : 'pt-20 md:pt-24')}>
       <slot />

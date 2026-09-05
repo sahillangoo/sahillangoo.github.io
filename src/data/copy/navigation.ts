@@ -12,7 +12,7 @@ export const navigationCopy: NavigationCopy = {
     { label: 'Notes', href: '/notes/' },
     { label: 'Resume', href: '/resume/' },
     { label: 'About', href: '/about/' },
-    { label: 'Contact', href: '/contact/' },
+    { label: 'Links', href: '/links/' },
   ],
   footerNav: [
     { label: 'Work', href: '/projects/' },
@@ -23,11 +23,32 @@ export const navigationCopy: NavigationCopy = {
     { label: 'Uses', href: '/uses/' },
     { label: 'Colophon', href: '/colophon/' },
     { label: 'Links', href: '/links/' },
-    { label: 'Contact', href: '/contact/' },
   ],
+  footerSections: {
+    navigation: {
+      title: 'Navigation',
+      links: [
+        { label: 'Work', href: '/projects/' },
+        { label: 'Writing', href: '/blog/' },
+        { label: 'Garden', href: '/notes/' },
+        { label: 'Resume', href: '/resume/' },
+      ],
+    },
+    system: {
+      title: 'System',
+      links: [
+        { label: 'Now', href: '/now/' },
+        { label: 'Uses', href: '/uses/' },
+        { label: 'Colophon', href: '/colophon/' },
+        { label: 'Links', href: '/links/' },
+      ],
+    },
+    connect: {
+      title: 'Activity & Connect',
+    },
+  },
   footerTelemetry: {
-    copyright: (year: number) =>
-      `© ${year} Sahil Langoo. Built statically with Astro 7.2 & Tailwind CSS v4.`,
+    copyright: (year: number) => `© ${year} Sahil Langoo. All rights reserved.`,
     metrics: '0.00 CLS • Sub-50ms Global TTFB • Cloudflare Edge',
   },
 };

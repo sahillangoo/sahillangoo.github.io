@@ -50,9 +50,9 @@ export const aboutCopy: AboutPageCopy = {
     description:
       "Whether exploring edge architectures, open source systems, or high-impact engineering roles - let's connect.",
     cta: {
-      label: 'Get in Touch',
-      href: '/contact/',
-      icon: 'ph:paper-plane-tilt-bold',
+      label: 'Connect & Links',
+      href: '/links/',
+      icon: 'ph:link-bold',
     },
   },
 };

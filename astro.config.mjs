@@ -15,6 +15,9 @@ export default defineConfig({
   site: 'https://sahillangoo.in',
   trailingSlash: 'always',
   output: 'static',
+  redirects: {
+    '/contact/': '/links/',
+  },
   prefetch: {
     prefetchAll: true,
     defaultStrategy: 'hover',
@@ -66,7 +69,6 @@ export default defineConfig({
   integrations: [
     icon({
       include: {
-        lucide: ['*'],
         ph: ['*'],
         'line-md': ['*'],
       },

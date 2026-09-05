@@ -7,7 +7,6 @@ export * from './notes';
 export * from './now';
 export * from './uses';
 export * from './colophon';
-export * from './contact';
 export * from './resume';
 export * from './links';
 export * from './not-found';

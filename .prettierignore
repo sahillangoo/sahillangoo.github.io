@@ -1,22 +1,40 @@
-# Build & Static Output
+# Build & Distribution outputs
 dist/
+.output/
 .astro/
-.wrangler/
 .mf/
-.agents/
+.unlighthouse/
+public/pagefind/
+
+# Cloudflare & Deployment Artifacts
+.wrangler/
+.vercel/
+.netlify/
 
 # Dependencies & Lockfiles
 node_modules/
 pnpm-lock.yaml
 
-# IDE & Tooling
-.vscode/
-.github/
-
 # Caches & Reports
 .eslintcache
 .prettiercache
+.oxlintcache
+.parcel-cache/
+.turbo/
 test-results/
 playwright-report/
 blob-report/
+playwright/.cache/
+playwright/.auth/
+.playwright-browsers/
 *.log
+
+# IDE, CI & AI Agent Tooling
+.vscode/
+.github/
+.agents/
+.codex/
+.cursor/
+
+# TypeScript Ambient Declarations
+**/*.d.ts

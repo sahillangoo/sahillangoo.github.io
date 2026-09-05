@@ -79,8 +79,10 @@ for (const htmlFile of htmlFiles) {
 
   totalPagesChecked++;
 
-  // 404 page does not require rich results schemas
-  if (is404) continue;
+  // 404 page and redirect stub pages do not require rich results schemas
+  const isRedirect =
+    content.includes('http-equiv="refresh"') || content.includes('Redirecting to:');
+  if (is404 || isRedirect) continue;
 
   const scriptMatches = [
     ...content.matchAll(

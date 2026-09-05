@@ -47,5 +47,25 @@
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist"
   },
-  "exclude": ["node_modules", "dist", ".astro", ".output", ".agents", ".codex", ".cursor"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".output",
+    ".astro",
+    ".mf",
+    ".unlighthouse",
+    "public/pagefind",
+    ".wrangler",
+    ".vercel",
+    ".netlify",
+    "playwright-report",
+    "test-results",
+    "blob-report",
+    ".playwright-browsers",
+    "playwright/.cache",
+    "playwright/.auth",
+    ".agents",
+    ".codex",
+    ".cursor"
+  ]
 }

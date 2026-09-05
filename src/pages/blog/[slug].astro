@@ -266,13 +266,15 @@ const breadcrumbs = [
           </div>
         </div>
 
+        <Fragment set:html="<!--email_off-->" />
         <a
-          href="/contact/"
+          href={SITE.social.email}
           class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 flex shrink-0 items-center gap-1.5 self-start rounded-md font-mono text-xs sm:self-auto"
         >
           <Icon name="ph:paper-plane-tilt-bold" class="h-3.5 w-3.5" />
           Say Hello
         </a>
+        <Fragment set:html="<!--/email_off-->" />
       </div>
     </footer>
   </article>

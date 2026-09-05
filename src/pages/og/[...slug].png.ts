@@ -70,16 +70,6 @@ export async function getStaticPaths() {
       },
     },
     {
-      params: { slug: 'contact' },
-      props: {
-        title: 'Start a Conversation & Technical Consulting',
-        category: 'CONTACT & COLLABORATION',
-        description:
-          'Get in touch for software engineering, system architecture consulting, and open-source collaboration.',
-        readingTime: 'Get in Touch',
-      },
-    },
-    {
       params: { slug: 'now' },
       props: {
         title: 'Now | Current Priorities & Active Projects',

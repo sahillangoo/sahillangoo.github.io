@@ -16,7 +16,7 @@
   Styling: Tailwind CSS v4 & daisyUI 5 (OKLCH Color Spaces)
   Hosting: Cloudflare Pages & Cloudflare Edge Network
   Typography: Plus Jakarta Sans (Google Fonts) & JetBrains Mono
-  Icons: Iconify (Lucide, Phosphor Icons, Line-MD)
+  Icons: Iconify (Phosphor Icons, Line-MD)
   Quality Gates: ESLint 10 Flat Config, Prettier, Custom Astro Site Quality Enforcer
   Performance: 100/100 Lighthouse Performance, 0.00 CLS, 0ms TBT
 

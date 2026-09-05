@@ -18,14 +18,8 @@ const { variant = 'compact', showWeather = true, class: className = '' } = Astro
     className
   )}
 >
-  <div class="flex items-center gap-2">
-    <span class="relative flex h-2 w-2">
-      <span
-        class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"
-      >
-      </span>
-      <span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
-    </span>
+  <div class="flex items-center gap-1.5">
+    <Icon name="ph:map-pin-bold" class="h-3.5 w-3.5 shrink-0 text-emerald-500" />
     <span class="text-base-content/80 font-medium">Kashmir, India</span>
   </div>
 

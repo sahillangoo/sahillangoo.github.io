@@ -158,7 +158,6 @@ export function createSitemapSerializer(buildDate: string = DEFAULT_BUILD_DATE) 
     // 7. Categories & Secondary Pages (Priority 0.60)
     if (
       pathname.startsWith('/blog/category/') ||
-      pathname === '/contact/' ||
       pathname === '/now/' ||
       pathname === '/uses/' ||
       pathname === '/colophon/' ||

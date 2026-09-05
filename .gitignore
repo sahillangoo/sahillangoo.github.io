@@ -1,18 +1,24 @@
 # Build & Distribution outputs
 dist/
+.output/
 .astro/
 .mf/
+.unlighthouse/
+public/pagefind/
+
+# Cloudflare & Deployment Artifacts
+.wrangler/
+.vercel/
+.netlify/
 
 # Package Manager & Dependencies
 node_modules/
 .pnpm-store/
 
-# Cloudflare & Wrangler artifacts
-.wrangler/
-
-# Caches & Linters
+# Caches & Linter Artifacts
 .eslintcache
 .prettiercache
+.oxlintcache
 .parcel-cache/
 .turbo/
 
@@ -28,12 +34,13 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Test Reports & E2E Artifacts
+# Test Reports, E2E & Browser Artifacts
 test-results/
 playwright-report/
 blob-report/
 playwright/.cache/
 playwright/.auth/
+.playwright-browsers/
 
 # Operating System & Editor Artifacts
 .DS_Store
@@ -43,9 +50,13 @@ Thumbs.db
 !.vscode/extensions.json
 !.vscode/settings.json
 
+# AI Agent & Workspace Directories
+.agents/**
+!.agents/skills/
+.codex/
+.cursor/
+
 # Temporary & Swap Files
 *.tmp
 *.bak
 *.swp
-.agents/**
-.unlighthouse/

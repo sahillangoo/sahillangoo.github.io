@@ -30,9 +30,9 @@ export const homeCopy: HomePageCopy = {
         variant: 'outline',
       },
       {
-        label: 'Get in Touch',
-        href: '/contact/',
-        icon: 'ph:paper-plane-tilt-bold',
+        label: 'Connect & Links',
+        href: '/links/',
+        icon: 'ph:link-bold',
         variant: 'ghost',
       },
     ],
@@ -66,10 +66,17 @@ export const homeCopy: HomePageCopy = {
         'Open to high-impact software engineering roles, distributed edge systems design, and select technical consulting engagements.',
       ctas: [
         {
-          label: 'Start a Conversation',
-          href: '/contact/',
-          icon: 'ph:paper-plane-tilt-bold',
+          label: 'Explore Links & Socials',
+          href: '/links/',
+          icon: 'ph:link-bold',
           variant: 'primary',
+        },
+        {
+          label: 'Direct Email',
+          href: 'mailto:hello@sahillangoo.in',
+          icon: 'ph:envelope-simple-bold',
+          external: true,
+          variant: 'outline',
         },
         {
           label: 'Explore GitHub',

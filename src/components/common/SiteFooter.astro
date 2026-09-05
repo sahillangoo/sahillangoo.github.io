@@ -13,102 +13,152 @@ const currentYear = new Date().getFullYear();
   class="border-base-300 bg-base-100/50 text-base-content/70 w-full border-t py-12"
   transition:persist="site-footer"
 >
-  <div class="mx-auto max-w-6xl space-y-8 px-4 sm:px-6">
-    <div class="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-      <!-- Brand & Tagline -->
-      <div class="flex max-w-sm flex-col gap-2">
-        <span class="text-base-content font-mono text-sm font-bold tracking-tight">
+  <div class="mx-auto max-w-6xl space-y-10 px-4 sm:px-6">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+      <!-- Col 1: Identity & Presence (lg:col-span-4) -->
+      <div class="flex flex-col gap-3 md:col-span-1 lg:col-span-4">
+        <a
+          href="/"
+          class="text-base-content hover:text-accent font-mono text-sm font-bold tracking-tight transition-colors"
+        >
           {navigationCopy.brand.name}
-        </span>
-        <p class="text-base-content/60 text-xs leading-relaxed">
+        </a>
+        <p class="text-base-content/60 max-w-sm text-xs leading-relaxed">
           {navigationCopy.brand.tagline}
         </p>
-        <div class="flex flex-col gap-2 pt-2">
+        <div class="pt-1">
           <TimeAvailabilityWidget variant="compact" />
-          <SpotifyWidget variant="compact" />
         </div>
       </div>
 
-      <!-- Footer Quick Links Grid -->
-      <div class="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-xs">
-        {
-          navigationCopy.footerNav.map((item) => (
-            <a href={item.href} class="hover:text-accent transition-colors">
-              {item.label}
-            </a>
-          ))
-        }
-        <a
-          href="/rss.xml"
-          target="_blank"
-          class="hover:text-accent flex items-center gap-1 transition-colors"
-        >
-          <Icon name="ph:rss-bold" class="h-3.5 w-3.5" />
-          RSS
-        </a>
+      <!-- Cols 2 & 3: Navigation & System Links (lg:col-span-4) -->
+      <div class="grid grid-cols-2 gap-6 sm:gap-8 md:col-span-1 lg:col-span-4">
+        <!-- Col 2: Navigation Links -->
+        <div class="flex flex-col gap-3">
+          <span
+            class="text-base-content/50 font-mono text-xs font-semibold tracking-wider uppercase"
+          >
+            {navigationCopy.footerSections.navigation.title}
+          </span>
+          <ul class="flex flex-col gap-2 font-mono text-xs">
+            {
+              navigationCopy.footerSections.navigation.links.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    class="text-base-content/70 hover:text-accent transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <!-- Col 3: System & Resources -->
+        <div class="flex flex-col gap-3">
+          <span
+            class="text-base-content/50 font-mono text-xs font-semibold tracking-wider uppercase"
+          >
+            {navigationCopy.footerSections.system.title}
+          </span>
+          <ul class="flex flex-col gap-2 font-mono text-xs">
+            {
+              navigationCopy.footerSections.system.links.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    class="text-base-content/70 hover:text-accent transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+            <li>
+              <a
+                href="/rss.xml"
+                target="_blank"
+                class="text-base-content/70 hover:text-accent inline-flex items-center gap-1.5 transition-colors"
+              >
+                <Icon name="ph:rss-bold" class="h-3.5 w-3.5 text-amber-500/80" />
+                RSS
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
 
-      <!-- Social Links -->
-      <div class="flex items-center gap-2 self-start md:self-auto">
-        <a
-          href={SITE.social.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub"
-          class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
-        >
-          <Icon name="ph:github-logo-bold" class="h-4 w-4" />
-        </a>
-        <a
-          href={SITE.social.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LinkedIn"
-          class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
-        >
-          <Icon name="ph:linkedin-logo-bold" class="h-4 w-4" />
-        </a>
-        <a
-          href={SITE.social.twitter}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="X (Twitter)"
-          class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
-        >
-          <Icon name="ph:x-logo-bold" class="h-4 w-4" />
-        </a>
-        <a
-          href={SITE.social.facebook}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Facebook"
-          class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
-        >
-          <Icon name="ph:facebook-logo-bold" class="h-4 w-4" />
-        </a>
-        <a
-          href={SITE.social.instagram}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Instagram"
-          class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
-        >
-          <Icon name="ph:instagram-logo-bold" class="h-4 w-4" />
-        </a>
-        <Fragment set:html="<!--email_off-->" />
-        <a
-          href={SITE.social.email}
-          aria-label="Email"
-          class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
-        >
-          <Icon name="ph:envelope-simple-bold" class="h-4 w-4" />
-        </a>
-        <Fragment set:html="<!--/email_off-->" />
+      <!-- Col 4: Activity & Connect (lg:col-span-4) -->
+      <div class="flex flex-col gap-3 md:col-span-2 lg:col-span-4">
+        <span class="text-base-content/50 font-mono text-xs font-semibold tracking-wider uppercase">
+          {navigationCopy.footerSections.connect.title}
+        </span>
+        <div class="flex flex-col gap-3">
+          <SpotifyWidget variant="compact" class="w-full" />
+          <div class="flex flex-wrap items-center gap-1 pt-0.5">
+            <a
+              href={SITE.social.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
+            >
+              <Icon name="ph:github-logo-bold" class="h-4 w-4" />
+            </a>
+            <a
+              href={SITE.social.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
+            >
+              <Icon name="ph:linkedin-logo-bold" class="h-4 w-4" />
+            </a>
+            <a
+              href={SITE.social.twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="X (Twitter)"
+              class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
+            >
+              <Icon name="ph:x-logo-bold" class="h-4 w-4" />
+            </a>
+            <a
+              href={SITE.social.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
+            >
+              <Icon name="ph:facebook-logo-bold" class="h-4 w-4" />
+            </a>
+            <a
+              href={SITE.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
+            >
+              <Icon name="ph:instagram-logo-bold" class="h-4 w-4" />
+            </a>
+            <Fragment set:html="<!--email_off-->" />
+            <a
+              href={SITE.social.email}
+              aria-label="Email"
+              class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
+            >
+              <Icon name="ph:envelope-simple-bold" class="h-4 w-4" />
+            </a>
+            <Fragment set:html="<!--/email_off-->" />
+          </div>
+        </div>
       </div>
     </div>
 
     <div
-      class="border-base-300/60 text-base-content/60 flex flex-col items-center justify-between gap-2 border-t pt-6 text-xs sm:flex-row"
+      class="border-base-300/60 text-base-content/60 flex flex-col items-center justify-between gap-3 border-t pt-6 text-xs sm:flex-row"
     >
       <span>{navigationCopy.footerTelemetry.copyright(currentYear)}</span>
       <span class="text-base-content/50 font-mono text-xs">

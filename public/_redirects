@@ -26,6 +26,8 @@ http://sahillangoo.in/*       https://sahillangoo.in/:splat  301
 /articles   /blog/      301
 /cv         /resume/    301
 /notes/all  /notes/     301
+/contact    /links/     301
+/contact/*  /links/     301
 
 # External Verified Social Redirects
 /github     https://github.com/sahillangoo        302

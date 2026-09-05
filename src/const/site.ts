@@ -139,13 +139,16 @@ export const SITE = {
     email: 'mailto:hello@sahillangoo.in',
     rss: '/rss.xml',
   },
+  analytics: {
+    cloudflareToken: '0898a42bd33b4506bc0c0912a143f843',
+  },
   nav: [
     { label: 'Work', href: '/projects/' },
     { label: 'Writing', href: '/blog/' },
     { label: 'Notes', href: '/notes/' },
     { label: 'Resume', href: '/resume/' },
     { label: 'About', href: '/about/' },
-    { label: 'Contact', href: '/contact/' },
+    { label: 'Links', href: '/links/' },
   ],
 } as const;
 
