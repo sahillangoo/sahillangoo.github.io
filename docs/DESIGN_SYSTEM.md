@@ -198,8 +198,8 @@ All arbitrary values must use either Tailwind standard scales or our formalized 
 | `w-[2.5px]`                       | `w-0.5`                                  | Standard Tailwind scale (2px bar width).                                   |
 | `gap-[2px]`, `gap-[3px]`          | `gap-0.5`                                | Standard Tailwind scale (2px grid gap).                                    |
 | `rounded-[2px]`                   | `rounded-xs`                             | Tailwind v4 standard micro-radius (2px).                                   |
-| `max-h-[80vh]`                    | `max-h-modal`                            | Formalized `@theme` modal viewport height constraint (80vh).               |
+| `max-h-modal`                    | `max-h-modal`                            | Formalized `@theme` modal viewport height constraint (80vh).               |
 | `min-w-[700px]`                   | `min-w-max`                              | Semantic intrinsic sizing for wide content tables/heatmaps.                |
 | `left-[-31px]`, `md:left-[-39px]` | `-left-8`, `md:-left-10`                 | Exact mathematical centering of 16px dot on `pl-6` (24px) / `pl-8` (32px). |
-| `text-[#39d353]`, `bg-[#39d353]`  | `text-github-active`, `bg-github-active` | Formalized `@theme` semantic contribution matrix green.                    |
+| `text-github-active`, `bg-github-active`  | `text-github-active`, `bg-github-active` | Formalized `@theme` semantic contribution matrix green.                    |
 | `animate-[equalizer_...]`         | `animate-equalizer`                      | Formalized `@theme` keyframe animation token.                              |

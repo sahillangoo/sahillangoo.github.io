@@ -81,8 +81,8 @@ This document establishes the official engineering guardrails, code quality stan
 
 - **The Mistake**: Using legacy Tailwind v3 patterns or arbitrary bracketed values:
   - `bg-opacity-*`, `text-opacity-*` (legacy opacity modifiers)
-  - `flex-grow`, `flex-shrink` (legacy flex property names)
-  - Arbitrary bracket classes: `text-[11px]`, `text-[10px]`, `scale-[0.99]`, `w-[2.5px]`, `max-h-[80vh]`
+  - `grow`, `shrink` (legacy flex property names)
+  - Arbitrary bracket classes: `text-[11px]`, `text-[10px]`, `scale-[0.99]`, `w-[2.5px]`, `max-h-modal`
   - `@apply` with arbitrary non-theme values
 - **The Rule**:
   - Use Tailwind v4 modern slash opacity: `bg-accent/20`, `text-base-content/80`.
