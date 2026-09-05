@@ -18,28 +18,15 @@ const linksKeywords = [
   'SquadCoders Link',
 ];
 
-const linksSchema = [
-  {
-    '@type': 'ProfilePage',
-    '@id': `${SITE.url}/links/#profilepage`,
-    name: `${linksCopy.seo.title}`,
-    url: `${SITE.url}/links/`,
-    mainEntity: {
-      '@id': `${SITE.url}/#person`,
-    },
+const linksSchema = {
+  '@type': 'ProfilePage',
+  '@id': `${SITE.url}/links/#profilepage`,
+  name: `${linksCopy.seo.title}`,
+  url: `${SITE.url}/links/`,
+  mainEntity: {
+    '@id': `${SITE.url}/#person`,
   },
-  {
-    '@type': 'ItemList',
-    '@id': `${SITE.url}/links/#itemlist`,
-    name: 'Verified Social & Career Profiles',
-    itemListElement: sortedLinks.map((link, idx) => ({
-      '@type': 'ListItem',
-      position: idx + 1,
-      name: link.data.title,
-      url: link.data.url,
-    })),
-  },
-];
+};
 
 const breadcrumbs = [
   { name: 'Home', item: '/' },

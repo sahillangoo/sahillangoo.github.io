@@ -13,31 +13,16 @@ const usesKeywords = [
   'Engineering Productivity',
 ];
 
-const allGear = usesCopy.sections.flatMap((s) => s.items);
-
-const usesSchema = [
-  {
-    '@type': 'ItemPage',
-    '@id': `${SITE.url}/uses/#itempage`,
-    name: `${usesCopy.header.title} | ${SITE.name}`,
-    url: `${SITE.url}/uses/`,
-    description: usesCopy.seo.description,
-    mainEntity: {
-      '@id': `${SITE.url}/#person`,
-    },
+const usesSchema = {
+  '@type': 'ItemPage',
+  '@id': `${SITE.url}/uses/#itempage`,
+  name: `${usesCopy.header.title} | ${SITE.name}`,
+  url: `${SITE.url}/uses/`,
+  description: usesCopy.seo.description,
+  mainEntity: {
+    '@id': `${SITE.url}/#person`,
   },
-  {
-    '@type': 'ItemList',
-    '@id': `${SITE.url}/uses/#itemlist`,
-    name: 'Developer Gear, Hardware & Software Suite',
-    itemListElement: allGear.map((item, idx) => ({
-      '@type': 'ListItem',
-      position: idx + 1,
-      name: item.name,
-      description: item.description,
-    })),
-  },
-];
+};
 
 const breadcrumbs = [
   { name: 'Home', item: '/' },

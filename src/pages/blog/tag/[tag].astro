@@ -53,14 +53,12 @@ const tagSchema = {
   name: `#${tagName} Articles | ${SITE.name}`,
   url: pageUrl,
   description: `Technical articles and notes tagged #${tagName} by Sahil Langoo.`,
+  about: {
+    '@type': 'Thing',
+    name: tagName,
+  },
   mainEntity: {
-    '@type': 'ItemList',
-    itemListElement: posts.map((post, idx) => ({
-      '@type': 'ListItem',
-      position: idx + 1,
-      name: post.data.title,
-      url: `${SITE.url}/blog/${post.id}/`,
-    })),
+    '@id': `${SITE.url}/#person`,
   },
 };
 

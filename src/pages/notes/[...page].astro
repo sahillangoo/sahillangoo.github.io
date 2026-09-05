@@ -43,30 +43,16 @@ const notesKeywords = [
   'JSON-LD Structured Data',
 ];
 
-const notesSchema = [
-  {
-    '@type': 'CollectionPage',
-    '@id': `${canonicalUrl}#collectionpage`,
-    name: pageTitle,
-    url: canonicalUrl,
-    description: pageDescription,
-    mainEntity: {
-      '@id': `${SITE.url}/#person`,
-    },
+const notesSchema = {
+  '@type': 'CollectionPage',
+  '@id': `${canonicalUrl}#collectionpage`,
+  name: pageTitle,
+  url: canonicalUrl,
+  description: pageDescription,
+  mainEntity: {
+    '@id': `${SITE.url}/#person`,
   },
-  {
-    '@type': 'ItemList',
-    '@id': `${canonicalUrl}#itemlist`,
-    name: 'Digital Garden Technical Notes',
-    itemListElement: notes.map((note, idx) => ({
-      '@type': 'ListItem',
-      position: idx + 1,
-      name: note.data.title,
-      description: note.data.description,
-      url: `${SITE.url}/notes/${note.id}/`,
-    })),
-  },
-];
+};
 
 const breadcrumbs = [
   { name: 'Home', item: '/' },

@@ -48,14 +48,12 @@ const categorySchema = {
   name: `${categoryName} Articles | ${SITE.name}`,
   url: pageUrl,
   description: `Technical essays and architecture deep-dives by Sahil Langoo in the ${categoryName} category.`,
+  about: {
+    '@type': 'Thing',
+    name: categoryName,
+  },
   mainEntity: {
-    '@type': 'ItemList',
-    itemListElement: posts.map((post, idx) => ({
-      '@type': 'ListItem',
-      position: idx + 1,
-      name: post.data.title,
-      url: `${SITE.url}/blog/${post.id}/`,
-    })),
+    '@id': `${SITE.url}/#person`,
   },
 };
 

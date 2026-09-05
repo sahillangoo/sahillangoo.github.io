@@ -1,12 +1,8 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import ProjectFilter from '@components/portfolio/ProjectFilter.astro';
-import { getCollection } from 'astro:content';
 import { SITE } from '@const/site.ts';
 import { projectsCopy } from '@copy/projects.ts';
-
-const projects = await getCollection('projects');
-const sortedProjects = [...projects].sort((a, b) => a.data.order - b.data.order);
 
 const projectKeywords = [
   'Full Stack Projects',
@@ -20,30 +16,16 @@ const projectKeywords = [
   'TypeScript Web Apps',
 ];
 
-const collectionSchema = [
-  {
-    '@type': 'CollectionPage',
-    '@id': `${SITE.url}/projects/#collectionpage`,
-    name: `${projectsCopy.header.title} | ${SITE.name}`,
-    url: `${SITE.url}/projects/`,
-    description: projectsCopy.header.description,
-    mainEntity: {
-      '@id': `${SITE.url}/#person`,
-    },
+const collectionSchema = {
+  '@type': 'CollectionPage',
+  '@id': `${SITE.url}/projects/#collectionpage`,
+  name: `${projectsCopy.header.title} | ${SITE.name}`,
+  url: `${SITE.url}/projects/`,
+  description: projectsCopy.header.description,
+  mainEntity: {
+    '@id': `${SITE.url}/#person`,
   },
-  {
-    '@type': 'ItemList',
-    '@id': `${SITE.url}/projects/#itemlist`,
-    name: 'Engineered Systems & Open Source Projects',
-    itemListElement: sortedProjects.map((p, idx) => ({
-      '@type': 'ListItem',
-      position: idx + 1,
-      name: p.data.title,
-      description: p.data.description,
-      url: `${SITE.url}/projects/${p.id}/`,
-    })),
-  },
-];
+};
 
 const breadcrumbs = [
   { name: 'Home', item: '/' },

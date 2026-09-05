@@ -48,35 +48,6 @@ const homeKeywords = [
   'Web Performance Optimization',
   'Minimalist Software Engineering',
 ];
-
-const homeSchema = [
-  {
-    '@type': 'ItemList',
-    '@id': `${SITE.url}/#featured-projects`,
-    name: 'Featured Production Systems & Open-Source Engineering',
-    description:
-      'High-throughput architectures, distributed edge proxies, and systems engineered by Sahil Langoo.',
-    itemListElement: featuredProjects.map((p, idx) => ({
-      '@type': 'ListItem',
-      position: idx + 1,
-      name: p.data.title,
-      description: p.data.description,
-      url: `${SITE.url}/projects/${p.id}/`,
-    })),
-  },
-  {
-    '@type': 'ItemList',
-    '@id': `${SITE.url}/#recent-writing`,
-    name: 'Recent Engineering Essays & Architecture Deconstructions',
-    itemListElement: recentArticles.map((a, idx) => ({
-      '@type': 'ListItem',
-      position: idx + 1,
-      name: a.data.title,
-      description: a.data.description,
-      url: `${SITE.url}/blog/${a.id}/`,
-    })),
-  },
-];
 ---
 
 <BaseLayout
@@ -84,7 +55,6 @@ const homeSchema = [
   description={homeCopy.seo.description}
   keywords={homeKeywords}
   image={homeCopy.seo.image}
-  structuredData={homeSchema}
 >
   <div class="mx-auto max-w-6xl space-y-20 px-4 py-8 sm:space-y-28 sm:px-6 sm:py-12">
     <!-- Hero Section -->
