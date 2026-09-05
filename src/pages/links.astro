@@ -59,6 +59,7 @@ const breadcrumbs = [
     </div>
 
     <!-- Link List -->
+    <Fragment set:html="<!--email_off-->" />
     <div class="space-y-3 text-left">
       {
         sortedLinks.map((item) => (
@@ -86,7 +87,7 @@ const breadcrumbs = [
             </div>
             <Icon
               name="ph:arrow-up-right-bold"
-              class="text-base-content/40 group-hover:text-accent ml-2 h-4 w-4 shrink-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              class="text-base-content/60 group-hover:text-accent ml-2 h-4 w-4 shrink-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
             />
           </a>
         ))
@@ -108,9 +109,10 @@ const breadcrumbs = [
         </div>
         <Icon
           name="ph:arrow-right-bold"
-          class="text-base-content/40 group-hover:text-accent ml-2 h-4 w-4 shrink-0"
+          class="text-base-content/60 group-hover:text-accent ml-2 h-4 w-4 shrink-0"
         />
       </a>
     </div>
+    <Fragment set:html="<!--/email_off-->" />
   </div>
 </BaseLayout>

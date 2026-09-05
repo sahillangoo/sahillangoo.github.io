@@ -125,7 +125,7 @@ contributionWeeks.forEach((week, index) => {
       <div class="scrollbar-none overflow-x-auto pb-1">
         <div class="inline-block min-w-max">
           <!-- Month Labels Row -->
-          <div class="text-base-content/50 mb-1.5 flex pl-8 font-mono text-xs">
+          <div class="text-base-content/65 mb-1.5 flex pl-8 font-mono text-xs">
             {
               contributionWeeks.map((_, i) => {
                 const match = monthLabels.find((m) => m.index === i);
@@ -142,7 +142,7 @@ contributionWeeks.forEach((week, index) => {
           <div class="flex items-start gap-2">
             <!-- Weekday Labels (Mon, Wed, Fri) -->
             <div
-              class="text-base-content/40 flex flex-col justify-between font-mono text-xs select-none"
+              class="text-base-content/65 flex flex-col justify-between font-mono text-xs select-none"
             >
               <span class="h-2.5 leading-none sm:h-3 sm:leading-none"></span>
               <span class="h-2.5 leading-none sm:h-3 sm:leading-none">Mon</span>
@@ -240,9 +240,9 @@ contributionWeeks.forEach((week, index) => {
                 <p class="text-base-content group-hover:text-accent line-clamp-1 text-xs leading-snug font-medium transition-colors">
                   {commit.message}
                 </p>
-                <div class="text-base-content/60 mt-1 flex flex-wrap items-center gap-2 font-mono text-xs">
+                <div class="text-base-content/65 mt-1 flex flex-wrap items-center gap-2 font-mono text-xs">
                   <span class="text-accent/90 font-medium">{commit.repo}</span>
-                  <span class="opacity-40">•</span>
+                  <span class="opacity-60">•</span>
                   <span>{commit.date}</span>
                 </div>
               </div>

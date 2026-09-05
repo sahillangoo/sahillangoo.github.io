@@ -95,6 +95,7 @@ const currentYear = new Date().getFullYear();
         >
           <Icon name="ph:instagram-logo-bold" class="h-4 w-4" />
         </a>
+        <Fragment set:html="<!--email_off-->" />
         <a
           href={SITE.social.email}
           aria-label="Email"
@@ -102,6 +103,7 @@ const currentYear = new Date().getFullYear();
         >
           <Icon name="ph:envelope-simple-bold" class="h-4 w-4" />
         </a>
+        <Fragment set:html="<!--/email_off-->" />
       </div>
     </div>
 

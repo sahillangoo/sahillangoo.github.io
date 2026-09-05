@@ -7,9 +7,11 @@ import { Icon } from 'astro-icon/components';
 <div class="border-base-300 bg-base-200 rounded-xl border p-6 sm:p-8">
   <div class="mb-6">
     <h2 class="text-base-content text-xl font-bold">{contactCopy.form.title}</h2>
+    <Fragment set:html="<!--email_off-->" />
     <p class="text-base-content/70 mt-1 text-sm">
       {contactCopy.form.description}
     </p>
+    <Fragment set:html="<!--/email_off-->" />
   </div>
 
   <form id="contact-form" data-author-email={SITE.email} class="space-y-4">

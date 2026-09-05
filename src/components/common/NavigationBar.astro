@@ -89,12 +89,14 @@ function isActive(href: string): boolean {
       <button
         type="button"
         data-open-palette
-        aria-label="Open command palette"
         class="btn btn-sm btn-outline border-base-300 bg-base-200/80 text-base-content/60 hover:text-base-content hover:border-base-content/30 hidden items-center gap-2 font-mono text-xs font-normal normal-case transition-all active:scale-95 sm:inline-flex"
       >
         <Icon name="ph:magnifying-glass-bold" class="h-3.5 w-3.5" />
         <span class="text-xs">Search</span>
-        <kbd class="kbd kbd-sm border-base-300 bg-base-100 text-base-content/50 font-mono text-xs">
+        <kbd
+          aria-hidden="true"
+          class="kbd kbd-sm border-base-300 bg-base-100 text-base-content/50 font-mono text-xs"
+        >
           ⌘K
         </kbd>
       </button>
