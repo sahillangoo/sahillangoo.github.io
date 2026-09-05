@@ -42,7 +42,7 @@ const {
           <span class="text-base-content text-xs font-bold tracking-tight">Audio Narration</span>
           <span
             id="audio-voice-badge"
-            class="bg-accent/10 text-accent rounded px-2 py-0.5 font-mono text-xs font-medium"
+            class="badge badge-sm bg-accent/10 text-accent border-0 font-mono text-xs font-medium"
           >
             Neural AI Voice
           </span>
@@ -296,6 +296,34 @@ const {
     return clean.trim();
   }
 
+  function getVoiceScore(v: SpeechSynthesisVoice): number {
+    const name = v.name.toLowerCase();
+    // Priority 1: Natural Microsoft Online voices (Windows / Edge)
+    if (name.includes('natural') || name.includes('online (natural)')) return 100;
+    // Priority 2: Apple Enhanced / Premium voices (macOS / iOS)
+    if (name.includes('premium') || name.includes('enhanced')) return 90;
+    // Priority 3: Google Chrome high-quality neural voices
+    if (name.includes('google us english') || name.includes('google uk english')) return 80;
+    if (name.includes('google')) return 70;
+    // Priority 4: Apple Siri & standard natural voices
+    if (
+      ['samantha', 'serena', 'ava', 'zoe', 'alex', 'daniel', 'guy', 'jenny', 'aria'].some((n) =>
+        name.includes(n)
+      )
+    )
+      return 60;
+    // Priority 5: Standard local voices
+    if (v.localService) return 40;
+    return 10;
+  }
+
+  function rankVoices(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice[] {
+    const englishVoices = voices.filter((v) => v.lang.startsWith('en'));
+    if (englishVoices.length === 0) return voices;
+
+    return englishVoices.toSorted((a, b) => getVoiceScore(b) - getVoiceScore(a));
+  }
+
   function setupArticleAudio() {
     const player = document.getElementById('article-audio-player');
     const pipDock = document.getElementById('audio-pip-dock');
@@ -339,36 +367,6 @@ const {
     let availableVoices: SpeechSynthesisVoice[] = [];
     let selectedVoice: SpeechSynthesisVoice | null = null;
     let highlightedElement: HTMLElement | null = null;
-
-    // 1. Rank and Select Natural Human Voices
-    function rankVoices(voices: SpeechSynthesisVoice[]): SpeechSynthesisVoice[] {
-      const englishVoices = voices.filter((v) => v.lang.startsWith('en'));
-      if (englishVoices.length === 0) return voices;
-
-      return englishVoices.sort((a, b) => {
-        const score = (v: SpeechSynthesisVoice) => {
-          const name = v.name.toLowerCase();
-          // Priority 1: Natural Microsoft Online voices (Windows / Edge)
-          if (name.includes('natural') || name.includes('online (natural)')) return 100;
-          // Priority 2: Apple Enhanced / Premium voices (macOS / iOS)
-          if (name.includes('premium') || name.includes('enhanced')) return 90;
-          // Priority 3: Google Chrome high-quality neural voices
-          if (name.includes('google us english') || name.includes('google uk english')) return 80;
-          if (name.includes('google')) return 70;
-          // Priority 4: Apple Siri & standard natural voices
-          if (
-            ['samantha', 'serena', 'ava', 'zoe', 'alex', 'daniel', 'guy', 'jenny', 'aria'].some(
-              (n) => name.includes(n)
-            )
-          )
-            return 60;
-          // Priority 5: Standard local voices
-          if (v.localService) return 40;
-          return 10;
-        };
-        return score(b) - score(a);
-      });
-    }
 
     function populateVoices() {
       const rawVoices = synth.getVoices();
@@ -418,11 +416,11 @@ const {
 
     populateVoices();
     if (synth.onvoiceschanged !== undefined) {
-      synth.onvoiceschanged = populateVoices;
+      synth.addEventListener('voiceschanged', populateVoices);
     }
 
     if (voiceSelect) {
-      voiceSelect.onchange = () => {
+      voiceSelect.addEventListener('change', () => {
         const val = voiceSelect.value;
         if (val === 'auto') {
           selectedVoice = availableVoices[0] || null;
@@ -436,7 +434,7 @@ const {
           synth.cancel();
           speakCurrentChunk();
         }
-      };
+      });
     }
 
     // 2. Pre-parse readable text immediately on idle
@@ -578,25 +576,25 @@ const {
         utterance.voice = selectedVoice;
       }
 
-      utterance.onstart = () => {
+      utterance.addEventListener('start', () => {
         setHighlight(current.element);
-      };
+      });
 
-      utterance.onend = () => {
+      utterance.addEventListener('end', () => {
         if (!isPlaying || isPaused) return;
         currentChunkIndex++;
         updateUIState();
         speakCurrentChunk();
-      };
+      });
 
-      utterance.onerror = (event) => {
+      utterance.addEventListener('error', (event) => {
         if (!isPlaying || isPaused || event.error === 'canceled' || event.error === 'interrupted') {
           return;
         }
         currentChunkIndex++;
         updateUIState();
         speakCurrentChunk();
-      };
+      });
 
       if (statusText) {
         const progress = Math.round((currentChunkIndex / Math.max(1, chunks.length)) * 100);
@@ -676,32 +674,32 @@ const {
         { passive: true }
       );
 
-      playBtn.onclick = () => {
+      playBtn.addEventListener('click', () => {
         if (isPlaying) {
           pausePlayback();
         } else {
           startPlayback();
         }
-      };
+      });
     }
 
     if (pipPlayBtn) {
-      pipPlayBtn.onclick = () => {
+      pipPlayBtn.addEventListener('click', () => {
         if (isPlaying) {
           pausePlayback();
         } else {
           startPlayback();
         }
-      };
+      });
     }
 
-    if (stopBtn) stopBtn.onclick = stopPlayback;
-    if (pipCloseBtn) pipCloseBtn.onclick = stopPlayback;
-    if (skipBackBtn) skipBackBtn.onclick = () => skipChunk(-1);
-    if (skipFwdBtn) skipFwdBtn.onclick = () => skipChunk(1);
+    if (stopBtn) stopBtn.addEventListener('click', stopPlayback);
+    if (pipCloseBtn) pipCloseBtn.addEventListener('click', stopPlayback);
+    if (skipBackBtn) skipBackBtn.addEventListener('click', () => skipChunk(-1));
+    if (skipFwdBtn) skipFwdBtn.addEventListener('click', () => skipChunk(1));
 
     rateBtns.forEach((btn) => {
-      btn.onclick = () => {
+      btn.addEventListener('click', () => {
         const rate = parseFloat(btn.dataset.rate || '1');
         playbackRate = rate;
         rateBtns.forEach((b) =>
@@ -713,7 +711,7 @@ const {
           synth.cancel();
           speakCurrentChunk();
         }
-      };
+      });
     });
 
     // Cleanup on View Transitions & Page Unload

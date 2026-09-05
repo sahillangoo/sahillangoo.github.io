@@ -27,7 +27,7 @@ const sorted = [...experiences].sort((a, b) => a.data.order - b.data.order);
               <h3 class="text-base-content flex items-center gap-2 text-lg font-bold">
                 {data.role}
                 {data.current && (
-                  <span class="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 font-mono text-xs font-medium text-emerald-400">
+                  <span class="badge badge-sm border-emerald-500/20 bg-emerald-500/10 font-mono text-xs font-medium text-emerald-400">
                     Current
                   </span>
                 )}
@@ -65,7 +65,7 @@ const sorted = [...experiences].sort((a, b) => a.data.order - b.data.order);
           {data.skills.length > 0 && (
             <div class="mt-4 flex flex-wrap gap-1.5">
               {data.skills.map((skill) => (
-                <span class="bg-base-200 border-base-300 text-base-content/70 rounded-md border px-2.5 py-0.5 font-mono text-xs">
+                <span class="badge badge-sm border-base-300 bg-base-200 text-base-content/70 font-mono text-xs">
                   {skill}
                 </span>
               ))}

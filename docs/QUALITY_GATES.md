@@ -1,4 +1,4 @@
-# QUALITY_GATES.md — Verification Scripts & Quality Gates
+# QUALITY_GATES.md: Verification Scripts & Quality Gates
 
 This document outlines the strict quality verification gates required before shipping changes to the **Sahil Langoo Portfolio**.
 
@@ -12,32 +12,64 @@ Run all checks sequentially from Windows PowerShell (`pwsh`):
 # 1. Format Compliance Check (Prettier)
 pnpm format:check
 
-# 2. ESLint 10 AST-aware Linting
-pnpm lint
+# 2. Ultra-Fast Static Analysis (Oxlint)
+pnpm lint:ox
 
-# 3. Astro TypeScript Diagnostics & Component Checks
+# 3. AI Slop, Anti-Pattern & Em-Dash Analyzer
+pnpm lint:ai
+
+# 4. ESLint AST-Aware Linting
+pnpm lint:eslint
+
+# 5. Dead Code & Supply Chain Verification
+pnpm lint:deps
+
+# 6. Astro TypeScript Diagnostics & Component Checks
 pnpm check
 
-# 4. Production Static Build & Link Audit
+# 7. Production Static Build & Link Audit
 pnpm build
+
+# 8. Schema.org JSON-LD & Google Rich Results Static Validation
+pnpm audit:schema
+
+# 9. Linkinator Internal Link & Fragment Anchor Crawler
+pnpm audit:links
+
+# 10. Production Readiness & Domain Verification
+pnpm verify:prod
 ```
 
 ---
 
 ## 2. Gate Criteria & Enforcement
 
-| Quality Gate        | Command             | Passing Threshold                                                                                |
-| :------------------ | :------------------ | :----------------------------------------------------------------------------------------------- |
-| **Formatting**      | `pnpm format:check` | 100% Prettier rule compliance on all `.astro`, `.ts`, `.md`, `.json`, `.css`.                    |
-| **Linting**         | `pnpm lint`         | 0 errors, 0 warnings across JS/TS/Astro and lockfile integrity.                                  |
-| **Typecheck**       | `pnpm check`        | 0 TypeScript errors, 0 Astro diagnostics, 0 hints across all 40 files.                           |
-| **Link Integrity**  | `pnpm build`        | `astroSiteQualityEnforcer` passes with 0 broken links, 0 missing assets, valid trailing slashes. |
-| **Build Artifacts** | `pnpm build`        | Compiles 35 static routes and outputs `sitemap-index.xml` in `dist/`.                            |
+| Quality Gate          | Command             | Passing Threshold                                                                    |
+| :-------------------- | :------------------ | :----------------------------------------------------------------------------------- |
+| **Formatting**        | `pnpm format:check` | 100% Prettier rule compliance on all `.astro`, `.ts`, `.md`, `.json`, `.css`.        |
+| **Static Linting**    | `pnpm lint:ox`      | 0 errors, 0 warnings (<50ms execution).                                              |
+| **AI Slop / Copy**    | `pnpm lint:ai`      | 0 em dashes, 0 hallucinated patterns, 0 forbidden buzzwords.                         |
+| **Typecheck**         | `pnpm check`        | 0 TypeScript errors, 0 Astro diagnostics, 0 hints.                                   |
+| **Schema Validation** | `pnpm audit:schema` | 100% valid Schema.org graphs and Google Rich Results compliance across all 73 pages. |
+| **Link Crawler**      | `pnpm audit:links`  | 0 dead links (404), 0 broken fragment anchors (#...) across all HTML pages.          |
+| **Build Artifacts**   | `pnpm build`        | Compiles 73 static routes and outputs `sitemap-index.xml` in `dist/`.                |
+| **Production Ready**  | `pnpm verify:prod`  | All 2,400+ domain, canonical, and security header checks passed.                     |
 
 ---
 
-## 3. Deployment Command
+## 3. On-Demand Audit Commands
+
+| Audit Target               | Command                    | Purpose                                                                       |
+| :------------------------- | :------------------------- | :---------------------------------------------------------------------------- |
+| **Multi-Page Lighthouse**  | `pnpm audit:lighthouse`    | Spawns local preview server and audits all pages with Unlighthouse visual UI. |
+| **Headless Lighthouse CI** | `pnpm audit:lighthouse:ci` | Runs headless Lighthouse CI and asserts budget thresholds (90+).              |
+| **Full External Links**    | `pnpm audit:links:all`     | Crawls all internal links and external third-party URLs.                      |
+| **Unified SEO Audit**      | `pnpm audit:seo`           | Runs Schema validator, Linkinator crawler, and production verification.       |
+
+---
+
+## 4. Deployment Command
 
 ```powershell
-pnpm exec wrangler pages deploy ./dist --project-name sahillangoo-portfolio --branch main
+pnpm run deploy
 ```

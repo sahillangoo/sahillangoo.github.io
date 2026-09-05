@@ -14,8 +14,8 @@ const defaultTrack = getFeaturedTrack(0);
 
 <div
   id="spotify-widget-container"
-  class={cn(
-    'group inline-flex items-center justify-between gap-3 rounded-lg border border-base-300 bg-base-200/50 px-3.5 py-2 text-xs transition-all duration-200 hover:border-emerald-500/40 hover:bg-base-200/80 shadow-xs',
+  class:list={cn(
+    'group border-base-300 bg-base-200/50 hover:bg-base-200/80 inline-flex items-center justify-between gap-3 rounded-lg border px-3.5 py-2 text-xs shadow-xs transition-all duration-200 hover:border-emerald-500/40',
     variant === 'footer' && 'w-full sm:w-auto',
     className
   )}
@@ -63,7 +63,7 @@ const defaultTrack = getFeaturedTrack(0);
         </span>
         <span
           id="spotify-track-tag"
-          class="hidden rounded bg-emerald-500/10 px-1.5 py-0.5 font-mono text-xs font-medium text-emerald-400 sm:inline"
+          class="badge badge-sm hidden border-0 bg-emerald-500/10 font-mono text-xs font-medium text-emerald-400 sm:inline-flex"
         >
           {defaultTrack.albumTag || 'Coke Studio'}
         </span>
@@ -151,7 +151,7 @@ const defaultTrack = getFeaturedTrack(0);
     const skipBtn = document.getElementById('spotify-skip-btn');
     if (!skipBtn) return;
 
-    skipBtn.onclick = async (e) => {
+    skipBtn.addEventListener('click', async (e) => {
       e.preventDefault();
       e.stopPropagation();
       if (!tracksCache) {
@@ -163,7 +163,7 @@ const defaultTrack = getFeaturedTrack(0);
       if (nextTrack) {
         updateSpotifyDisplay(nextTrack);
       }
-    };
+    });
   }
 
   document.addEventListener('astro:page-load', setupSpotifyWidget);

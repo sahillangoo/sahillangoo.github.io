@@ -50,6 +50,10 @@ const noteSchema = {
   keywords: data.tags.join(', '),
   inLanguage: 'en-US',
   articleSection: data.topic,
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': pageUrl,
+  },
 };
 
 const breadcrumbs = [
@@ -81,7 +85,7 @@ const breadcrumbs = [
     <header class="border-base-300 space-y-4 border-b pb-8">
       <div class="text-base-content/60 flex items-center gap-2 font-mono text-xs">
         <span
-          class="bg-accent/10 text-accent rounded px-2.5 py-0.5 font-semibold tracking-wider uppercase"
+          class="badge badge-sm bg-accent/10 text-accent border-0 font-mono text-xs font-semibold tracking-wider uppercase"
         >
           {data.topic}
         </span>

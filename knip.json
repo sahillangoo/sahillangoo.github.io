@@ -5,10 +5,7 @@
     "astro-eslint-parser",
     "@astrojs/ts-plugin",
     "motion",
-    "daisyui",
-    "tailwindcss",
-    "@tailwindcss/typography",
-    "@tailwindcss/vite"
+    "unlighthouse"
   ],
-  "ignore": ["src/data/copy/index.ts", "dist/**", ".astro/**"]
+  "ignore": ["src/data/copy/index.ts"]
 }

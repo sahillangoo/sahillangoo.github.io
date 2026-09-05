@@ -22,15 +22,15 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
 ---
 
 <article
-  class={cn(
-    'group relative flex flex-col justify-between rounded-xl border border-base-300 bg-base-200 p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-accent/40 active:scale-99 sm:p-6',
+  class:list={cn(
+    'group border-base-300 bg-base-200 hover:border-accent/40 relative flex flex-col justify-between rounded-xl border p-5 transition-all duration-200 hover:-translate-y-0.5 active:scale-99 sm:p-6',
     className
   )}
 >
   <div>
     <div class="text-base-content/60 mb-2 flex items-center justify-between text-xs">
       <span
-        class="bg-accent/10 text-accent rounded px-2.5 py-0.5 font-mono text-xs font-semibold tracking-wider uppercase"
+        class="badge badge-sm bg-accent/10 text-accent border-0 font-mono text-xs font-semibold tracking-wider uppercase"
       >
         {data.topic}
       </span>

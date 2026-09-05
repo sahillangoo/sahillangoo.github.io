@@ -5,6 +5,12 @@
   "type": "module",
   "scripts": {
     "astro": "astro",
+    "audit:lighthouse": "node scripts/audit-lighthouse.mjs",
+    "audit:lighthouse:ci": "node scripts/audit-lighthouse.mjs --ci",
+    "audit:links": "node scripts/audit-links.mjs",
+    "audit:links:all": "node scripts/audit-links.mjs --all",
+    "audit:schema": "node scripts/audit-rich-results.mjs",
+    "audit:seo": "node scripts/audit-rich-results.mjs && node scripts/audit-links.mjs && node scripts/verify-production.mjs",
     "prebuild": "pnpm lint:ai",
     "build": "astro build",
     "check": "astro check",
@@ -58,6 +64,7 @@
     "eslint-plugin-oxlint": "^1.81.0",
     "globals": "^17.11.0",
     "knip": "^6.34.0",
+    "linkinator": "^8.1.0",
     "oxlint": "^1.81.0",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
@@ -67,6 +74,7 @@
     "puppeteer-core": "^25.9.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.69.0",
+    "unlighthouse": "^0.18.0",
     "wrangler": "^4.127.1"
   },
   "packageManager": "pnpm@12.3.4+sha512.961aa41fb077da3a04a441d9f8e15ebc0c96da8ef710b2eb67bf9ee7cb0610eabd48f1fd85f51cffe73846785fa0f87c56a3a872a1d893f8446741b5cce45457",

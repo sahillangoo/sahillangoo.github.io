@@ -125,7 +125,7 @@ const homeSchema = [
               homeCopy.hero.ctas.map((cta) => (
                 <a
                   href={cta.href}
-                  class={
+                  class:list={
                     cta.variant === 'primary'
                       ? 'btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-5 font-mono text-xs tracking-wider uppercase'
                       : cta.variant === 'outline'
@@ -326,7 +326,7 @@ const homeSchema = [
               href={cta.href}
               target={cta.external ? '_blank' : undefined}
               rel={cta.external ? 'noopener noreferrer' : undefined}
-              class={
+              class:list={
                 cta.variant === 'primary'
                   ? 'btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-6 font-mono text-xs tracking-wider uppercase'
                   : 'btn btn-outline border-base-300 hover:bg-base-200 hover:text-base-content flex items-center gap-2 rounded-md px-6 font-mono text-xs tracking-wider uppercase'

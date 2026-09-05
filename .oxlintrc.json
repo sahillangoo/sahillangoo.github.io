@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["typescript"],
+  "plugins": ["typescript", "unicorn", "oxc", "jsx-a11y", "promise", "node", "import"],
   "categories": {
     "correctness": "error",
     "perf": "warn",
@@ -13,7 +13,11 @@
     "no-empty": "error",
     "no-unused-vars": "warn",
     "no-useless-catch": "error",
-    "no-debugger": "error"
+    "no-debugger": "error",
+    "import/no-unassigned-import": "off",
+    "import/no-named-as-default-member": "off",
+    "unicorn/no-array-sort": "off",
+    "unicorn/no-array-reverse": "off"
   },
   "ignorePatterns": [
     "dist/**",

@@ -263,6 +263,19 @@ if (errors > 0) {
   console.error(`🚨 Verification failed with ${errors} error(s). Please resolve before deploying.`);
   process.exit(1);
 } else {
+  console.log(
+    `✨ Baseline production readiness checks passed! Validating Schema.org & Google Rich Results...`
+  );
+  try {
+    const { execFileSync } = await import('node:child_process');
+    execFileSync(process.execPath, [path.join(__dirname, 'audit-rich-results.mjs')], {
+      stdio: 'inherit',
+    });
+  } catch {
+    console.error('🚨 Schema.org & Rich Results verification failed.');
+    process.exit(1);
+  }
+
   console.log(`✨ All production readiness checks passed! Safe to deploy to ${TARGET_DOMAIN}.`);
   process.exit(0);
 }

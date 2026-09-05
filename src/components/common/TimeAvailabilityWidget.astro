@@ -12,9 +12,9 @@ const { variant = 'compact', showWeather = true, class: className = '' } = Astro
 ---
 
 <div
-  class={cn(
+  class:list={cn(
     'inline-flex flex-wrap items-center gap-2.5 font-mono text-xs',
-    variant === 'full' && 'rounded-xl border border-base-300 bg-base-200 p-4 sm:p-5',
+    variant === 'full' && 'border-base-300 bg-base-200 rounded-xl border p-4 sm:p-5',
     className
   )}
 >
@@ -58,7 +58,7 @@ const { variant = 'compact', showWeather = true, class: className = '' } = Astro
 
   {
     variant === 'full' && (
-      <div class="ml-auto hidden rounded-full border border-emerald-800/40 bg-emerald-950/40 px-2.5 py-0.5 font-mono text-xs font-medium text-emerald-400 sm:block">
+      <div class="badge badge-sm ml-auto hidden border-emerald-800/40 bg-emerald-950/40 font-mono text-xs font-medium text-emerald-400 sm:inline-flex">
         Open to Select Projects
       </div>
     )

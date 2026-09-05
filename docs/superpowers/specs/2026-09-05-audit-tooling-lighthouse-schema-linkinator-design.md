@@ -3,13 +3,14 @@
 **Date**: 2026-09-05  
 **Topic**: Lighthouse Multi-Page Auditing, Google Rich Results / JSON-LD Validation & Linkinator Link Crawler  
 **Author**: Sahil Langoo & Antigravity  
-**Status**: Draft for User Review  
+**Status**: Draft for User Review
 
 ---
 
 ## 1. Executive Summary
 
 This specification outlines the architecture and integration of three specialized verification tools for the Sahil Langoo portfolio (`sahillangoo.in`):
+
 1. **Lighthouse Multi-Page Audit (`unlighthouse`)**: On-demand parallel auditing across all 73 static pages with a visual dashboard report in `.unlighthouse/`.
 2. **Google Rich Results & JSON-LD Validator (`scripts/audit-rich-results.mjs`)**: High-speed, zero-network, static analysis of Schema.org graph structures across every HTML file in `dist/`.
 3. **Link & Anchor SEO Crawler (`linkinator`)**: Automated detection of broken internal URLs, redirects, and missing fragment/hash targets (`#...`).
@@ -20,12 +21,12 @@ This specification outlines the architecture and integration of three specialize
 
 ### 2.1 Tool Matrix
 
-| Capability | Selected Tool | Execution Frequency | Integration Point | Output / Report |
-| :--- | :--- | :--- | :--- | :--- |
-| **Multi-Page Lighthouse** | `unlighthouse` | On-demand | `pnpm audit:lighthouse` | HTML/Bento Dashboard in `.unlighthouse/` |
-| **Rich Results / JSON-LD** | In-repo `scripts/audit-rich-results.mjs` | Automated & On-demand | `pnpm audit:schema`, `pnpm verify:prod` | Terminal summary with schema graph counts |
-| **Link & Anchor Crawler** | `linkinator` | Automated & On-demand | `pnpm audit:links`, `pnpm audit:links:all` | Terminal list of checked links, status codes |
-| **Unified SEO Quality Gate** | In-repo unified pipeline | On-demand / Pre-release | `pnpm audit:seo` | Runs schema validation, Linkinator, and production verification |
+| Capability                   | Selected Tool                            | Execution Frequency     | Integration Point                          | Output / Report                                                 |
+| :--------------------------- | :--------------------------------------- | :---------------------- | :----------------------------------------- | :-------------------------------------------------------------- |
+| **Multi-Page Lighthouse**    | `unlighthouse`                           | On-demand               | `pnpm audit:lighthouse`                    | HTML/Bento Dashboard in `.unlighthouse/`                        |
+| **Rich Results / JSON-LD**   | In-repo `scripts/audit-rich-results.mjs` | Automated & On-demand   | `pnpm audit:schema`, `pnpm verify:prod`    | Terminal summary with schema graph counts                       |
+| **Link & Anchor Crawler**    | `linkinator`                             | Automated & On-demand   | `pnpm audit:links`, `pnpm audit:links:all` | Terminal list of checked links, status codes                    |
+| **Unified SEO Quality Gate** | In-repo unified pipeline                 | On-demand / Pre-release | `pnpm audit:seo`                           | Runs schema validation, Linkinator, and production verification |
 
 ---
 
@@ -34,9 +35,11 @@ This specification outlines the architecture and integration of three specialize
 ### 3.1 Multi-Page Lighthouse Audit (`unlighthouse`)
 
 #### Purpose
+
 Scan all 73 static pages generated in `dist/` without slowing down the primary static build or CI cycle.
 
 #### Configuration & Execution
+
 - Dependency: `unlighthouse` installed as a devDependency.
 - Targeted directory: Local static build directory `./dist` or preview server `http://127.0.0.1:4321`.
 - Router discovery: Automatically parses `dist/sitemap-index.xml` and `dist/sitemap-0.xml` to discover all static routes.
@@ -50,9 +53,11 @@ Scan all 73 static pages generated in `dist/` without slowing down the primary s
 ### 3.2 Google Rich Results & JSON-LD Validator (`scripts/audit-rich-results.mjs`)
 
 #### Purpose
+
 Validate every `<script type="application/ld+json">` block across all 73 HTML files in `dist/` against Google Rich Snippet and Schema.org standards in <100ms.
 
 #### Validation Rules
+
 1. **Root Graph Structure**:
    - Must contain `@context: "https://schema.org"`.
    - Must contain `@graph` array.
@@ -81,9 +86,11 @@ Validate every `<script type="application/ld+json">` block across all 73 HTML fi
 ### 3.3 Link & Anchor SEO Crawler (`linkinator`)
 
 #### Purpose
+
 Verify that all internal URLs and fragment hash identifiers (`href="#section-id"`) resolve with HTTP 200 and valid DOM target IDs.
 
 #### Configuration & Execution
+
 - Dependency: `linkinator` installed as devDependency.
 - Commands:
   - `pnpm audit:links`:

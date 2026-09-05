@@ -14,9 +14,9 @@ export default {
   endOfLine: 'lf',
   plugins: [
     'prettier-plugin-astro',
-    'prettier-plugin-tailwindcss',
     'prettier-plugin-css-order',
     'prettier-plugin-packagejson',
+    'prettier-plugin-tailwindcss',
   ],
   overrides: [
     {

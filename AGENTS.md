@@ -51,7 +51,10 @@ pnpm lint:eslint   # ESLint 9+ flat config with Astro & TypeScript rules
 pnpm lint          # Run unified quality linter pipeline
 pnpm check         # Run Astro TypeScript diagnostics
 pnpm build         # Run production static build & link verification
+pnpm audit:schema  # Schema.org JSON-LD & Google Rich Results audit
+pnpm audit:links   # Linkinator link & fragment anchor crawler
 pnpm verify:prod   # Production readiness & domain verification
+pnpm audit:seo     # Unified SEO quality gate (schema + links + prod)
 ```
 
 ---

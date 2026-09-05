@@ -2,6 +2,7 @@ import js from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import lockfile from 'eslint-plugin-lockfile';
 import astro from 'eslint-plugin-astro';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
 import oxlint from 'eslint-plugin-oxlint';
 import { defineConfig } from 'eslint/config';
 import globals from 'globals';
@@ -51,9 +52,10 @@ export default defineConfig([
     },
   },
   js.configs.recommended,
-  tseslint.configs.recommended,
-  ...astro.configs.recommended,
-  ...astro.configs['jsx-a11y-recommended'],
+  ...tseslint.configs.recommended,
+  jsxA11y.flatConfigs.strict,
+  ...astro.configs['flat/recommended'],
+  ...astro.configs['flat/jsx-a11y-strict'],
   {
     files: ['**/*.astro'],
     languageOptions: {
@@ -70,6 +72,32 @@ export default defineConfig([
     rules: {
       'no-undef': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
+      'astro/no-set-html-directive': 'off',
+      'astro/no-set-text-directive': 'error',
+      'astro/valid-compile': 'error',
+      'astro/no-unused-css-selector': 'error',
+      'astro/prefer-class-list-directive': 'warn',
+    },
+  },
+  {
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        sourceType: 'module',
+        ecmaVersion: 'latest',
+        project: './tsconfig.json',
+        tsconfigRootDir,
+      },
+    },
+    rules: {
+      '@typescript-eslint/consistent-type-imports': [
+        'error',
+        { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
+      ],
+      '@typescript-eslint/no-import-type-side-effects': 'error',
+      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/prefer-as-const': 'error',
     },
   },
   {
@@ -86,19 +114,17 @@ export default defineConfig([
   },
   {
     rules: {
-      '@typescript-eslint/no-explicit-any': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
       'no-empty': ['error', { allowEmptyCatch: false }],
-      'no-unused-expressions': 'error',
-      'no-useless-catch': 'error',
       'no-useless-return': 'error',
       'prefer-const': 'error',
       'no-var': 'error',
       'object-shorthand': 'error',
-      'astro/no-set-html-directive': 'off',
-      'astro/no-unused-define-vars-in-style': 'error',
-      'astro/valid-compile': 'error',
     },
   },
-  oxlint.configs['flat/recommended'],
+  ...oxlint.configs['flat/recommended'],
   eslintConfigPrettier,
 ]);

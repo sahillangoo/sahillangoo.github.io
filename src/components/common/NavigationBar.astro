@@ -56,7 +56,7 @@ function isActive(href: string): boolean {
             <a
               href={item.href}
               data-nav-link={item.href}
-              class={cn(
+              class:list={cn(
                 'nav-item rounded-full px-3.5 py-1 text-xs font-medium transition-all duration-150 active:scale-95',
                 active
                   ? 'bg-base-content text-base-100 hover:text-base-100 hover:bg-base-content/90 font-semibold shadow-xs'
@@ -71,10 +71,10 @@ function isActive(href: string): boolean {
       <a
         href="/now/"
         data-nav-link="/now/"
-        class={cn(
-          'nav-item rounded-full px-3.5 py-1 text-xs font-medium transition-all duration-150 active:scale-95 flex items-center gap-1.5',
+        class:list={cn(
+          'nav-item flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-medium transition-all duration-150 active:scale-95',
           isActive('/now/')
-            ? 'bg-base-content text-base-100 font-semibold shadow-xs hover:text-base-100 hover:bg-base-content/90'
+            ? 'bg-base-content text-base-100 hover:text-base-100 hover:bg-base-content/90 font-semibold shadow-xs'
             : 'text-base-content/70 hover:text-base-content hover:bg-base-300/50'
         )}
       >
@@ -90,13 +90,11 @@ function isActive(href: string): boolean {
         type="button"
         data-open-palette
         aria-label="Open command palette"
-        class="border-base-300 bg-base-200/80 text-base-content/60 hover:text-base-content hover:border-base-content/30 hidden items-center gap-2 rounded-lg border px-2.5 py-1.5 font-mono text-xs transition-all active:scale-95 sm:inline-flex"
+        class="btn btn-sm btn-outline border-base-300 bg-base-200/80 text-base-content/60 hover:text-base-content hover:border-base-content/30 hidden items-center gap-2 font-mono text-xs font-normal normal-case transition-all active:scale-95 sm:inline-flex"
       >
         <Icon name="ph:magnifying-glass-bold" class="h-3.5 w-3.5" />
         <span class="text-xs">Search</span>
-        <kbd
-          class="border-base-300 bg-base-100 text-base-content/50 rounded border px-1.5 py-0.5 font-mono text-xs"
-        >
+        <kbd class="kbd kbd-sm border-base-300 bg-base-100 text-base-content/50 font-mono text-xs">
           ⌘K
         </kbd>
       </button>

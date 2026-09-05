@@ -17,13 +17,13 @@ Tailwind CSS v4 introduces CSS-first configuration via `@import "tailwindcss";` 
 
 ```css
 @import 'tailwindcss';
-@plugin "daisyui" {
+@plugin 'daisyui' {
   themes:
     editorialDark --default,
     editorialLight;
 }
 
-@plugin "daisyui/theme" {
+@plugin 'daisyui/theme' {
   name: 'editorialDark';
   default: true;
   prefersdark: true;

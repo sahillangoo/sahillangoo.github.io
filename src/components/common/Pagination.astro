@@ -73,11 +73,11 @@ function getPageUrl(pageNum: number): string {
         return (
           <a
             href={url}
-            class={cn(
-              'flex h-8 w-8 items-center justify-center rounded-md text-xs font-semibold transition-colors',
+            class:list={cn(
+              'btn btn-sm btn-square text-xs font-semibold transition-colors',
               isCurrent
-                ? 'bg-base-content text-base-100 hover:text-base-100 hover:bg-base-content/90 font-bold'
-                : 'text-base-content/70 hover:bg-base-200 hover:text-base-content'
+                ? 'btn-active bg-base-content text-base-100 hover:text-base-100 hover:bg-base-content/90 border-0 font-bold'
+                : 'btn-ghost text-base-content/70 hover:bg-base-200 hover:text-base-content'
             )}
             aria-current={isCurrent ? 'page' : undefined}
             aria-label={`Go to page ${num}`}

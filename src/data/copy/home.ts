@@ -5,7 +5,7 @@ export const homeCopy: HomePageCopy = {
     title: 'Sahil Langoo | Full Stack Systems Engineer & Systems Architect',
     description:
       'Personal portfolio, engineering journal, and systems catalog of Sahil Langoo. Specializing in Astro 7 static architectures, TypeScript, distributed edge proxies, and minimalist UI craft.',
-    image: '/og/home.png',
+    image: '/og/default.png',
   },
   hero: {
     badge: 'Full Stack Systems Engineer',

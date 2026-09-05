@@ -187,19 +187,19 @@ Arbitrary Tailwind classes (e.g. `text-[11px]`, `w-[320px]`, `scale-[0.99]`, `le
 
 All arbitrary values must use either Tailwind standard scales or our formalized `@theme` tokens in `src/styles/global.css`:
 
-| Deprecated Arbitrary Class        | Semantic Utility                         | Origin / Rationale                                                         |
-| :-------------------------------- | :--------------------------------------- | :------------------------------------------------------------------------- |
-| `text-[11px]`                     | `text-2xs`                               | Formalized `@theme` micro-typography token (11px / 14px line-height).      |
-| `text-[10px]`, `text-[9px]`       | `text-3xs`                               | Formalized `@theme` badge/telemetry token (10px / 12px line-height).       |
-| `scale-[0.99]`                    | `scale-99`                               | Formalized `@theme` tactile press state (`active:scale-99`).               |
-| `h-[10px]`, `w-[10px]`            | `h-2.5`, `w-2.5`                         | Standard Tailwind scale (2.5 * 4px = 10px).                                |
-| `h-[11px]`, `w-[11px]`            | `h-3`, `w-3`                             | Standard Tailwind scale (3 * 4px = 12px).                                  |
-| `h-[2px]`                         | `h-0.5`                                  | Standard Tailwind scale (0.5 * 4px = 2px).                                 |
-| `w-[2.5px]`                       | `w-0.5`                                  | Standard Tailwind scale (2px bar width).                                   |
-| `gap-[2px]`, `gap-[3px]`          | `gap-0.5`                                | Standard Tailwind scale (2px grid gap).                                    |
-| `rounded-[2px]`                   | `rounded-xs`                             | Tailwind v4 standard micro-radius (2px).                                   |
-| `max-h-modal`                    | `max-h-modal`                            | Formalized `@theme` modal viewport height constraint (80vh).               |
-| `min-w-[700px]`                   | `min-w-max`                              | Semantic intrinsic sizing for wide content tables/heatmaps.                |
-| `left-[-31px]`, `md:left-[-39px]` | `-left-8`, `md:-left-10`                 | Exact mathematical centering of 16px dot on `pl-6` (24px) / `pl-8` (32px). |
-| `text-github-active`, `bg-github-active`  | `text-github-active`, `bg-github-active` | Formalized `@theme` semantic contribution matrix green.                    |
-| `animate-[equalizer_...]`         | `animate-equalizer`                      | Formalized `@theme` keyframe animation token.                              |
+| Deprecated Arbitrary Class               | Semantic Utility                         | Origin / Rationale                                                         |
+| :--------------------------------------- | :--------------------------------------- | :------------------------------------------------------------------------- |
+| `text-[11px]`                            | `text-2xs`                               | Formalized `@theme` micro-typography token (11px / 14px line-height).      |
+| `text-[10px]`, `text-[9px]`              | `text-3xs`                               | Formalized `@theme` badge/telemetry token (10px / 12px line-height).       |
+| `scale-[0.99]`                           | `scale-99`                               | Formalized `@theme` tactile press state (`active:scale-99`).               |
+| `h-[10px]`, `w-[10px]`                   | `h-2.5`, `w-2.5`                         | Standard Tailwind scale (2.5 * 4px = 10px).                                |
+| `h-[11px]`, `w-[11px]`                   | `h-3`, `w-3`                             | Standard Tailwind scale (3 * 4px = 12px).                                  |
+| `h-[2px]`                                | `h-0.5`                                  | Standard Tailwind scale (0.5 * 4px = 2px).                                 |
+| `w-[2.5px]`                              | `w-0.5`                                  | Standard Tailwind scale (2px bar width).                                   |
+| `gap-[2px]`, `gap-[3px]`                 | `gap-0.5`                                | Standard Tailwind scale (2px grid gap).                                    |
+| `rounded-[2px]`                          | `rounded-xs`                             | Tailwind v4 standard micro-radius (2px).                                   |
+| `max-h-modal`                            | `max-h-modal`                            | Formalized `@theme` modal viewport height constraint (80vh).               |
+| `min-w-[700px]`                          | `min-w-max`                              | Semantic intrinsic sizing for wide content tables/heatmaps.                |
+| `left-[-31px]`, `md:left-[-39px]`        | `-left-8`, `md:-left-10`                 | Exact mathematical centering of 16px dot on `pl-6` (24px) / `pl-8` (32px). |
+| `text-github-active`, `bg-github-active` | `text-github-active`, `bg-github-active` | Formalized `@theme` semantic contribution matrix green.                    |
+| `animate-[equalizer_...]`                | `animate-equalizer`                      | Formalized `@theme` keyframe animation token.                              |

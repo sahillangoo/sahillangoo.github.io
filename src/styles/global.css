@@ -1,12 +1,12 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
-@plugin "daisyui" {
+@plugin 'daisyui' {
   themes:
     editorialDark --default,
     editorialLight;
 }
 
-@plugin "daisyui/theme" {
+@plugin 'daisyui/theme' {
   name: 'editorialDark';
   default: true;
   prefersdark: true;
@@ -56,7 +56,7 @@
   --noise: 0;
 }
 
-@plugin "daisyui/theme" {
+@plugin 'daisyui/theme' {
   name: 'editorialLight';
   default: false;
   prefersdark: false;

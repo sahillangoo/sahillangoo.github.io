@@ -43,15 +43,13 @@ const extraLinks = navigationCopy.footerNav.filter((item) => !primaryNavHrefs.ha
       <button
         type="button"
         data-open-palette
-        class="border-base-300 bg-base-200/80 text-base-content/70 flex w-full items-center justify-between rounded-lg border px-3.5 py-2.5 font-mono text-xs"
+        class="btn btn-sm btn-outline border-base-300 bg-base-200/80 text-base-content/70 flex w-full items-center justify-between font-mono text-xs font-normal normal-case"
       >
         <span class="flex items-center gap-2">
           <Icon name="ph:magnifying-glass-bold" class="text-accent h-4 w-4" />
           Search everything...
         </span>
-        <kbd class="border-base-300 bg-base-100 rounded border px-1.5 py-0.5 font-mono text-xs">
-          ⌘K
-        </kbd>
+        <kbd class="kbd kbd-sm border-base-300 bg-base-100 font-mono text-xs">⌘K</kbd>
       </button>
 
       <!-- Primary Nav -->
@@ -62,7 +60,7 @@ const extraLinks = navigationCopy.footerNav.filter((item) => !primaryNavHrefs.ha
             return (
               <a
                 href={item.href}
-                class={cn(
+                class:list={cn(
                   'flex items-center justify-between rounded-lg px-4 py-2.5 text-sm font-medium transition-colors',
                   active
                     ? 'bg-base-200 text-base-content border-accent border-l-2 font-semibold'
@@ -90,7 +88,7 @@ const extraLinks = navigationCopy.footerNav.filter((item) => !primaryNavHrefs.ha
             return (
               <a
                 href={item.href}
-                class={cn(
+                class:list={cn(
                   'flex items-center justify-between rounded-lg px-4 py-2 font-mono text-xs transition-colors',
                   active
                     ? 'text-accent font-semibold'

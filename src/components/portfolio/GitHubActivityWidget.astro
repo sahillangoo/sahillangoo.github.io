@@ -67,7 +67,7 @@ contributionWeeks.forEach((week, index) => {
             {totalContributions.toLocaleString()} contributions in the last year
           </h2>
           <span
-            class="border-github-active/30 bg-github-active/10 text-github-active rounded-full border px-2.5 py-0.5 font-mono text-xs font-medium"
+            class="badge badge-sm border-github-active/30 bg-github-active/10 text-github-active font-mono text-xs font-medium"
           >
             Verified Stream
           </span>
@@ -101,7 +101,7 @@ contributionWeeks.forEach((week, index) => {
       </a>
       <div class="flex items-center gap-2">
         <span
-          class="border-base-300 bg-base-100 text-base-content/70 hidden items-center gap-1.5 rounded-md border px-2.5 py-1 font-mono text-xs sm:inline-flex"
+          class="badge badge-sm border-base-300 bg-base-100 text-base-content/70 hidden items-center gap-1.5 font-mono text-xs sm:inline-flex"
         >
           <span class="bg-github-active h-2 w-2 animate-pulse rounded-full"></span>
           Active Profile
@@ -166,7 +166,7 @@ contributionWeeks.forEach((week, index) => {
 
                       return (
                         <div
-                          class={`gh-cell-${day.level} h-2.5 w-2.5 rounded-xs transition-transform duration-100 hover:scale-125 sm:h-3 sm:w-3`}
+                          class:list={`gh-cell-${day.level} h-2.5 w-2.5 rounded-xs transition-transform duration-100 hover:scale-125 sm:h-3 sm:w-3`}
                           title={countText}
                         />
                       );
@@ -225,13 +225,14 @@ contributionWeeks.forEach((week, index) => {
           <div class="group border-base-300/80 bg-base-100/60 hover:border-base-content/20 flex flex-col justify-between gap-2.5 rounded-lg border p-3.5 transition-all sm:flex-row sm:items-center">
             <div class="flex min-w-0 items-start gap-3">
               <span
-                class={`mt-0.5 shrink-0 rounded px-1.5 py-0.5 font-mono text-xs font-semibold ${
+                class:list={[
+                  'badge badge-sm mt-0.5 shrink-0 font-mono text-xs font-semibold',
                   commit.type === 'feat'
-                    ? 'border-github-active/30 bg-github-active/10 text-github-active border'
+                    ? 'border-github-active/30 bg-github-active/10 text-github-active'
                     : commit.type === 'fix'
                       ? 'border border-amber-500/30 bg-amber-500/10 text-amber-400'
-                      : 'border border-zinc-500/30 bg-zinc-500/10 text-zinc-400'
-                }`}
+                      : 'border border-zinc-500/30 bg-zinc-500/10 text-zinc-400',
+                ]}
               >
                 {commit.type}
               </span>
@@ -251,7 +252,7 @@ contributionWeeks.forEach((week, index) => {
               href={commit.url}
               target="_blank"
               rel="noopener noreferrer"
-              class="border-base-300/80 bg-base-200/40 text-base-content/60 hover:border-github-active/40 hover:text-github-active shrink-0 self-end rounded px-2.5 py-0.5 font-mono text-xs transition-colors sm:self-center"
+              class="badge badge-sm border-base-300/80 bg-base-200/40 text-base-content/60 hover:border-github-active/40 hover:text-github-active shrink-0 self-end font-mono text-xs transition-colors sm:self-center"
             >
               #{commit.sha}
             </a>
