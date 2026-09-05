@@ -15,8 +15,7 @@ year: 2024
 role: 'Lead Frontend & Systems Architect'
 order: 4
 publishDate: '2024-08-29'
-liveUrl: 'https://github.com/HackerForceDev/hackforce-storefront'
-githubUrl: 'https://github.com/HackerForceDev/hackforce-storefront'
+liveUrl: 'https://hackerforce.dev/'
 ---
 
 ## The Challenge

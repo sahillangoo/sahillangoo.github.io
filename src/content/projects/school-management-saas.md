@@ -20,8 +20,7 @@ year: 2024
 role: 'Lead Full Stack & Systems Architect'
 order: 2
 publishDate: '2024-08-18'
-liveUrl: 'https://github.com/SquadCoders/school_management'
-githubUrl: 'https://github.com/SquadCoders/school_management'
+liveUrl: 'http://kwschool.in/'
 ---
 
 ## The Challenge

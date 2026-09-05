@@ -44,6 +44,7 @@ try {
     directoryListing: true,
     recurse: false,
     checkFragments: true,
+    allowInsecureCerts: true,
     linksToSkip: checkAll ? [] : ['^(https?:\\/\\/(?!localhost|127\\.0\\.0\\.1|sahillangoo\\.in))'],
   });
 

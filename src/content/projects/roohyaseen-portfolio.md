@@ -15,8 +15,7 @@ year: 2024
 role: 'Creative Technologist & Lead Engineer'
 order: 11
 publishDate: '2024-08-15'
-liveUrl: 'https://roohyaseen.com'
-githubUrl: 'https://github.com/SquadCoders/roohyaseen-portfolio'
+liveUrl: 'https://roohyaseen.com/'
 ---
 
 ## The Challenge

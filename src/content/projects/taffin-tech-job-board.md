@@ -20,8 +20,7 @@ year: 2024
 role: 'Frontend Architect & Full Stack Engineer'
 order: 5
 publishDate: '2024-06-28'
-liveUrl: 'https://taffin.tech'
-githubUrl: 'https://github.com/Cloud-Innovation-Partners/CIP_Marketplace'
+liveUrl: 'https://www.taffin.tech/'
 ---
 
 ## The Challenge

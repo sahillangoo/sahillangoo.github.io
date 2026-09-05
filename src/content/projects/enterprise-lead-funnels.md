@@ -17,8 +17,7 @@ year: 2024
 role: 'Backend & Systems Architect'
 order: 3
 publishDate: '2024-09-02'
-liveUrl: 'https://github.com/ecspl/websites'
-githubUrl: 'https://github.com/ecspl/websites'
+liveUrl: 'https://www.expertsupport.org/'
 ---
 
 ## The Challenge

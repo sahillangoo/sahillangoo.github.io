@@ -15,8 +15,7 @@ year: 2024
 role: 'Lead Full Stack Architect'
 order: 10
 publishDate: '2024-08-18'
-liveUrl: 'https://github.com/SquadCoders/travel_kit_websites'
-githubUrl: 'https://github.com/SquadCoders/travel_kit_websites'
+liveUrl: 'https://travelarc.in/'
 ---
 
 ## The Challenge
