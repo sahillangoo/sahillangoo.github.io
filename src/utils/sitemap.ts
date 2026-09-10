@@ -129,7 +129,7 @@ export function createSitemapSerializer(buildDate: string = DEFAULT_BUILD_DATE) 
       };
     }
 
-    // 5. Engineering Deep Dives / Blog (Priority 0.85) - Specific updated/published date
+    // 5. Engineering Essays / Blog (Priority 0.85) - Specific updated/published date
     if (pathname.startsWith('/blog/') && !pathname.startsWith('/blog/category/')) {
       const slug = pathname.replace(/^\/blog\//, '').replace(/\/$/, '');
       const date = blogDates.get(slug) ?? latestBlogDate;

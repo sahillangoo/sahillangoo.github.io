@@ -115,7 +115,7 @@ sahillangoo-portfolio/
 - **Target Roles:** Forward Deployed Engineer, Solutions Architect, Technical Integration Lead.
 - **Top Competencies:** Full-Stack Architecture, Rapid Prototyping, API Gateways (Meta CAPI, Payment Gateways, Turnstile), Client Integration, Systems Debugging, Sentry Telemetry, Python, Go, TypeScript, Cloudflare.
 - **Experience Highlights:**
-  - Delivered 6+ bespoke client platforms (SoulMedia, Hotel Akbar, TravelKit) with 100% on-time deployment and quantified client conversion gains (+15% to +20%).
+  - Delivered 6+ custom client platforms (SoulMedia, Hotel Akbar, TravelKit) with 100% on-time deployment and quantified client conversion gains (+15% to +20%).
   - Architected and debugged mission-critical third-party integrations (Experian OTP proxy, Meta CAPI, Razorpay), reducing transaction failure rates by 14%.
   - Rapid root-cause analysis across Sentry error telemetry, resolving production bottlenecks.
 

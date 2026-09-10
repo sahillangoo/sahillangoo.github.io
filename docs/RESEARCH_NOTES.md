@@ -53,7 +53,7 @@ This document captures the synthesized intelligence gathered from GitHub (`@sahi
 ### C. Personal Tooling (`@sahillangoo`)
 
 1. **`smart-img-cli`** (Bun, LM Studio, JavaScript):
-   - Lightning-fast image compression and local AI-powered SEO image renaming CLI using offline Small Language Models (Google Gemma 2B Vision).
+   - High-speed image compression and local AI-powered SEO image renaming CLI using offline Small Language Models (Google Gemma 2B Vision).
 2. **`hackforce-storefront`** (Astro, Pagefind, Tailwind CSS):
    - Tactical cybersecurity storefront with static search indexing.
 3. **`template-astro-daisy`** (Astro, DaisyUI 5, Tailwind CSS):

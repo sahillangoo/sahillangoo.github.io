@@ -11,7 +11,7 @@ export const blogCopy: BlogPageCopy = {
     badgePrefix: 'Articles',
     title: 'Systems Engineering & Architecture Journal',
     description:
-      'Deep dives into Astro static architecture, server-side Meta CAPI, edge proxies, type-safe content pipelines, and zero-JS performance engineering.',
+      'Technical essays on Astro static architecture, server-side Meta CAPI, edge proxies, type-safe content pipelines, and zero-JS performance engineering.',
     topicsLabel: 'Topics:',
   },
 };

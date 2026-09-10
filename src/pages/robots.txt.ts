@@ -1,14 +1,24 @@
-# ==============================================================================
+import type { APIRoute } from 'astro';
+import { SITE, NON_INDEXABLE_PATHS } from '@const/site.ts';
+
+export const GET: APIRoute = () => {
+  const disallowPaths = Array.from(
+    new Set([...NON_INDEXABLE_PATHS.filter((path) => !path.endsWith('.xml')), '/api/', '/private/'])
+  );
+
+  const disallowDirectives = disallowPaths.map((path) => `Disallow: ${path}`).join('\n');
+
+  const content = `# ==============================================================================
 # Robots.txt for sahillangoo.in
 # Production SEO, AI LLM Citations & Social Preview Policy
+# LLM Knowledge Base & Extended Context (llmstxt.org v2):
+# ${SITE.url}/llms.txt
+# ${SITE.url}/llms-full.txt
 # ==============================================================================
 
 User-agent: *
 Allow: /
-Disallow: /404/
-Disallow: /api/
-Disallow: /private/
-Disallow: /blog/tag/
+${disallowDirectives}
 
 # ------------------------------------------------------------------------------
 # 1. Traditional Search Engines
@@ -94,5 +104,13 @@ Allow: /
 # ------------------------------------------------------------------------------
 # 4. Sitemaps
 # ------------------------------------------------------------------------------
-Sitemap: https://sahillangoo.in/sitemap-index.xml
-Sitemap: https://sahillangoo.in/sitemap.xml
+Sitemap: ${SITE.url}/sitemap-index.xml
+Sitemap: ${SITE.url}/sitemap.xml
+`;
+
+  return new Response(content.trim() + '\n', {
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+    },
+  });
+};

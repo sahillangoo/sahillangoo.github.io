@@ -1,6 +1,6 @@
 ---
 title: 'Engineering Local AI Workflows: Running Gemma Vision Pipelines with Bun and LM Studio'
-description: 'How to build high-throughput, private CLI tools that leverage local Small Language Models (SLMs) and vision architectures for automated SEO image optimization and metadata extraction.'
+description: 'How to build high-throughput, private CLI tools that use local Small Language Models (SLMs) and vision architectures for automated SEO image optimization and metadata extraction.'
 publishDate: '2026-08-10'
 category: 'AI & Tooling'
 tags:
@@ -41,7 +41,7 @@ On a local AMD Ryzen + RTX setup or M-series Mac:
 
 LM Studio exposes a local OpenAI-compatible HTTP endpoint at `http://127.0.0.1:1234/v1`.
 
-By pairing **Bun's** lightning-fast native file I/O and process spawns with TypeScript, we construct an image inspection daemon:
+By pairing **Bun's** high-speed native file I/O and process spawns with TypeScript, we construct an image inspection daemon:
 
 ```typescript
 // src/services/vision.ts

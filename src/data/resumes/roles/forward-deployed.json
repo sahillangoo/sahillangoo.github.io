@@ -2,7 +2,7 @@
   "id": "forward-deployed",
   "roleTitle": "Forward Deployed Engineer & Solutions Architect",
   "filename": "Resume-Sahil-Langoo-Forward-Deployed.pdf",
-  "summary": "Forward Deployed Engineer with deep expertise bridging customer requirements, production API integrations, and edge cloud architectures. Demonstrated history of shipping bespoke enterprise solutions with 100% on-time delivery, sub-100ms p99 execution SLAs, and measurable business growth (+20% client revenue).",
+  "summary": "Forward Deployed Engineer with deep expertise bridging customer requirements, production API integrations, and edge cloud architectures. Demonstrated history of shipping custom enterprise solutions with 100% on-time delivery, sub-100ms p99 execution SLAs, and measurable business growth (+20% client revenue).",
   "skills": {
     "languages": ["TypeScript", "JavaScript", "Python", "Go", "SQL", "PHP", "Bash"],
     "frameworks": [
@@ -43,7 +43,7 @@
       "dates": "Apr 2025 - Present",
       "highlights": [
         "Architected and deployed high-throughput Hono proxy microservices on Cloudflare Workers for Experian OTP authentication and Meta CAPI server-side event streaming.",
-        "Resolved mission-critical checkout failures and client-side race conditions by analyzing production Sentry telemetry, elevating payment success rates by 14%.",
+        "Resolved mission-critical checkout failures and client-side race conditions by analyzing production Sentry telemetry, increasing payment success rates by 14%.",
         "Authored automated Playwright regression suites across production environments, accelerating client release velocity by 35%."
       ]
     },

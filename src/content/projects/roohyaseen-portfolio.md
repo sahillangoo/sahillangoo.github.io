@@ -1,7 +1,7 @@
 ---
 title: 'Rooh Yaseen Editorial Cinematography Showcase'
 description: 'An ultra-minimalist, high-contrast cinematography & photography portfolio built for UK Director of Photography Rooh Yaseen.'
-summary: 'Editorial luxury portfolio website with Facade video embedding, zero CLS, and bespoke OKLCH dark theme.'
+summary: 'Editorial luxury portfolio website with Facade video embedding, zero CLS, and custom OKLCH dark theme.'
 category: 'web-app'
 tags:
   - astro

@@ -58,7 +58,7 @@ Implemented zero-server search using **Pagefind**. During build time, Pagefind i
 
 ### 3. Tailwind CSS v4 Responsive Design System & Typography Hierarchy
 
-Developed a bespoke design system built on **Tailwind CSS v4** with mathematical typography tokens:
+Developed a custom design system built on **Tailwind CSS v4** with mathematical typography tokens:
 
 - **60:30:10 Tactical Palette**: Muted obsidian base (`#0c0c0e`), titanium structural borders (`#27272a`), and high-contrast chalk typography (`#fafafa`).
 - **Responsive Tracking & Spacing**: Enforced standardized fluid typography scale (`text-xs` to `text-4xl`) and tracking rules (`tracking-tight` for titles, `tracking-wider` for monospace headers) across all breakpoints.

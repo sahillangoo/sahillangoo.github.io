@@ -95,7 +95,7 @@
       "tech": "Cloudflare Pages, Cloudflare WAF, DNS, Node.js",
       "dates": "2023",
       "highlights": [
-        "Architected edge security architecture leveraging Cloudflare WAF and custom rate-limiting rules, mitigating 100% of brute-force spam traffic.",
+        "Architected edge security architecture using Cloudflare WAF and custom rate-limiting rules, mitigating 100% of brute-force spam traffic.",
         "Configured automated DNS routing and SSL certificate provisioning across staging and production environments."
       ],
       "link": "https://xpresssys.com"

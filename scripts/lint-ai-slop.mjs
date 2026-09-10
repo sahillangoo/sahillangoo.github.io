@@ -18,6 +18,7 @@
  */
 
 import fs from 'node:fs';
+import { isBuiltin } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -35,6 +36,49 @@ const installedDeps = new Set([
   ...Object.keys(pkgJson.dependencies || {}),
   ...Object.keys(pkgJson.devDependencies || {}),
 ]);
+
+// Dynamic Alias Resolution from tsconfig.json
+let tsconfigAliases = [];
+try {
+  const tsconfigPath = path.join(rootDir, 'tsconfig.json');
+  if (fs.existsSync(tsconfigPath)) {
+    const rawTsConfig = fs.readFileSync(tsconfigPath, 'utf8');
+    const cleanTsConfig = rawTsConfig.replace(/\/\*[\s\S]*?\*\/|\/\/.*/g, '');
+    const tsconfig = JSON.parse(cleanTsConfig);
+    const paths = tsconfig.compilerOptions?.paths || {};
+    tsconfigAliases = Object.keys(paths).map((aliasKey) => {
+      if (aliasKey.endsWith('/*')) {
+        return aliasKey.slice(0, -1);
+      }
+      return aliasKey;
+    });
+  }
+} catch {
+  tsconfigAliases = [
+    '@/',
+    '@components/',
+    '@layouts/',
+    '@utils/',
+    '@const/',
+    '@copy/',
+    '@copy',
+    '@data/',
+    '@content/',
+    '@assets/',
+    '@styles/',
+    '@plugins/',
+    '@scripts/',
+  ];
+}
+
+function isPathAlias(pkgName) {
+  return tsconfigAliases.some((alias) => {
+    if (alias.endsWith('/')) {
+      return pkgName.startsWith(alias);
+    }
+    return pkgName === alias || pkgName.startsWith(`${alias}/`);
+  });
+}
 
 // Standard Node.js & Astro Virtual Built-ins
 const BUILTIN_MODULES = new Set([
@@ -79,10 +123,46 @@ const BUILTIN_MODULES = new Set([
 // 2. Tier 1: High-Confidence AI Filler Tropes (Exit 1 Errors)
 const TIER_1_TEXT_PATTERNS = [
   {
-    pattern: /\bdelv(?:e|es|ed|ing)\s+into\b/i,
+    pattern: /\bdelv(?:e|es|ed|ing)(?:\s+deep)?\s+into\b/i,
     name: 'delve into',
     suggestion: 'explore / analyze / examine / build',
     replacement: 'explore',
+  },
+  {
+    pattern: /\btransform(?:ing)?\s+ideas\s+into\s+(?:[\w-]+\s+)?realities\b/i,
+    name: 'transforming ideas into realities',
+    suggestion: 'engineering high-performance web platforms / direct proposition',
+    replacement: 'engineering high-performance web platforms',
+  },
+  {
+    pattern: /\bdigital\s+realities\b/i,
+    name: 'digital realities',
+    suggestion: 'web platforms / production software',
+    replacement: 'web platforms',
+  },
+  {
+    pattern: /\bdigital\s+experiences?\b/i,
+    name: 'digital experiences',
+    suggestion: 'web platforms / web applications',
+    replacement: 'web platforms',
+  },
+  {
+    pattern: /\blook\s+no\s+further\b/i,
+    name: 'look no further',
+    suggestion: 'state value proposition directly',
+    replacement: '',
+  },
+  {
+    pattern: /\bparadigm\s+shifts?\b/i,
+    name: 'paradigm shift',
+    suggestion: 'fundamental change / architectural shift',
+    replacement: 'fundamental change',
+  },
+  {
+    pattern: /\bunlock(?:ing)?\s+(?:the\s+)?(?:full\s+)?potential\b/i,
+    name: 'unlock potential',
+    suggestion: 'enable / optimize / maximize',
+    replacement: 'enable',
   },
   {
     pattern: /\brich\s+tapestry\b/i,
@@ -203,6 +283,56 @@ const TIER_1_TEXT_PATTERNS = [
 // 3. Tier 2: Resume & Tech Buzzwords (Warnings, Exit 1 only with --strict)
 const TIER_2_TEXT_PATTERNS = [
   {
+    pattern: /\bbespoke\b/i,
+    name: 'bespoke',
+    suggestion: 'custom / tailored / specialized',
+    replacement: 'custom',
+  },
+  {
+    pattern: /\bleverag(?:e|es|ed|ing)\b/i,
+    name: 'leverage',
+    suggestion: 'use / build on / utilize',
+    replacement: (m) =>
+      /ing$/i.test(m) ? 'using' : /ed$/i.test(m) ? 'used' : /es$/i.test(m) ? 'uses' : 'use',
+  },
+  {
+    pattern: /\bdeep[- ]dives?\b(?:\s+into\b)?/i,
+    name: 'deep-dive',
+    suggestion: 'technical essay / in-depth analysis / explore',
+    replacement: (m) =>
+      /into$/i.test(m)
+        ? 'explore'
+        : /dives$/i.test(m)
+          ? 'technical analyses'
+          : 'technical analysis',
+  },
+  {
+    pattern: /\blightning[- ]fast\b/i,
+    name: 'lightning-fast',
+    suggestion: 'high-speed / sub-second / instant',
+    replacement: 'high-speed',
+  },
+  {
+    pattern: /\belevat(?:e|es|ing)\b/i,
+    name: 'elevate',
+    suggestion: 'increase / improve / advance',
+    replacement: (m) =>
+      /ing$/i.test(m) ? 'increasing' : /es$/i.test(m) ? 'increases' : 'increase',
+  },
+  {
+    pattern: /\bstreamlin(?:e|es|ed|ing)\b/i,
+    name: 'streamline',
+    suggestion: 'simplify / optimize / unify',
+    replacement: (m) =>
+      /ed$/i.test(m)
+        ? 'simplified'
+        : /ing$/i.test(m)
+          ? 'simplifying'
+          : /es$/i.test(m)
+            ? 'simplifies'
+            : 'simplify',
+  },
+  {
     pattern: /\bproven\s+(?:track\s+)?record\b/i,
     name: 'proven track record',
     suggestion: 'experienced in / history of / demonstrated ability',
@@ -242,11 +372,6 @@ const TIER_2_TEXT_PATTERNS = [
 
 // 4. Tier 2: AI Code Anti-Patterns & Framework Mistakes (Warnings)
 const AI_CODE_PATTERNS = [
-  {
-    pattern: /catch\s*\([^)]*\)\s*\{\s*\}/,
-    name: 'swallowed-error-empty-catch',
-    suggestion: 'log or handle the caught error',
-  },
   {
     pattern: /\/\/\s*TODO:\s*(?:implement|add\s+code\s+here|placeholder)\b/i,
     name: 'ai-placeholder-todo',
@@ -445,6 +570,25 @@ function replaceEmDashes(text, isTitleLine) {
   }
 }
 
+function matchCase(match, replacement) {
+  if (!replacement) return replacement;
+  if (match === match.toUpperCase() && match !== match.toLowerCase()) {
+    return replacement.toUpperCase();
+  }
+  const matchWords = match.split(/\s+/).filter(Boolean);
+  const isTitleCase = matchWords.length > 1 && matchWords.every((w) => /^\p{Lu}/u.test(w));
+  if (isTitleCase) {
+    return replacement
+      .split(/\s+/)
+      .map((w) => (w.length > 0 ? w[0].toUpperCase() + w.slice(1).toLowerCase() : w))
+      .join(' ');
+  }
+  if (/^\p{Lu}/u.test(match)) {
+    return replacement.charAt(0).toUpperCase() + replacement.slice(1);
+  }
+  return replacement;
+}
+
 function applyFixesToProse(text, fullLine) {
   let fixed = text;
   const isTitleLine = /title|name:|pageTitleSuffix/i.test(fullLine);
@@ -460,14 +604,22 @@ function applyFixesToProse(text, fullLine) {
   for (const { pattern, replacement } of TIER_1_TEXT_PATTERNS) {
     if (replacement && pattern.test(fixed)) {
       const globalRegex = new RegExp(pattern.source, 'gi');
-      fixed = fixed.replace(globalRegex, replacement);
+      if (typeof replacement === 'function') {
+        fixed = fixed.replace(globalRegex, (matched) => matchCase(matched, replacement(matched)));
+      } else {
+        fixed = fixed.replace(globalRegex, (matched) => matchCase(matched, replacement));
+      }
     }
   }
 
   for (const { pattern, replacement } of TIER_2_TEXT_PATTERNS) {
     if (replacement && pattern.test(fixed)) {
       const globalRegex = new RegExp(pattern.source, 'gi');
-      fixed = fixed.replace(globalRegex, replacement);
+      if (typeof replacement === 'function') {
+        fixed = fixed.replace(globalRegex, (matched) => matchCase(matched, replacement(matched)));
+      } else {
+        fixed = fixed.replace(globalRegex, (matched) => matchCase(matched, replacement));
+      }
     }
   }
 
@@ -507,22 +659,7 @@ for (const filePath of allFiles) {
       const pkgName = match[1] || match[2];
       if (!pkgName) continue;
 
-      if (
-        pkgName.startsWith('.') ||
-        pkgName.startsWith('/') ||
-        pkgName.startsWith('@/') ||
-        pkgName.startsWith('@components/') ||
-        pkgName.startsWith('@layouts/') ||
-        pkgName.startsWith('@utils/') ||
-        pkgName.startsWith('@const/') ||
-        pkgName.startsWith('@copy/') ||
-        pkgName.startsWith('@data/') ||
-        pkgName.startsWith('@content/') ||
-        pkgName.startsWith('@assets/') ||
-        pkgName.startsWith('@styles/') ||
-        pkgName.startsWith('@plugins/') ||
-        pkgName.startsWith('@scripts/')
-      ) {
+      if (pkgName.startsWith('.') || pkgName.startsWith('/') || isPathAlias(pkgName)) {
         continue;
       }
 
@@ -536,6 +673,8 @@ for (const filePath of allFiles) {
 
       if (
         !installedDeps.has(basePkg) &&
+        !isBuiltin(pkgName) &&
+        !isBuiltin(basePkg) &&
         !BUILTIN_MODULES.has(pkgName) &&
         !BUILTIN_MODULES.has(basePkg)
       ) {
@@ -722,6 +861,20 @@ for (const filePath of allFiles) {
 
   // 3. AI Code Anti-Patterns & Framework Mistakes (Tier 2 Warnings)
   if (isCodeFile(relPath)) {
+    // 3a. Multiline empty catch scanner (detects empty catch blocks across single or multiple lines)
+    const multilineEmptyCatchRegex = /catch\s*(?:\([^)]*\))?\s*\{\s*\}/g;
+    let catchMatch;
+    while ((catchMatch = multilineEmptyCatchRegex.exec(content)) !== null) {
+      aiCodeViolations++;
+      const lineNo = content.slice(0, catchMatch.index).split('\n').length;
+      console.warn(
+        `⚠️  [TIER-2-CODE-SMELL] ${relPath}:${lineNo} violates rule "swallowed-error-empty-catch"`
+      );
+      console.warn(`   "${catchMatch[0].replace(/\s+/g, ' ')}"`);
+      console.warn(`   💡 Recommendation: log or handle the caught error`);
+    }
+
+    // 3b. Line-by-line code patterns
     const lines = content.split('\n');
     lines.forEach((line, idx) => {
       for (const { pattern, name, suggestion } of AI_CODE_PATTERNS) {

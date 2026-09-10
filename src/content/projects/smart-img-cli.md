@@ -1,6 +1,6 @@
 ---
 title: 'Smart Image CLI (AI-Powered Image Optimizer & SEO Renamer)'
-description: 'Lightning-fast image compression and local vision AI SEO renaming CLI built with Bun, TypeScript, and LM Studio.'
+description: 'High-speed image compression and local vision AI SEO renaming CLI built with Bun, TypeScript, and LM Studio.'
 summary: 'Local AI-powered image optimization and semantic SEO file renaming tool running on Bun.'
 category: 'cli-tool'
 tags:

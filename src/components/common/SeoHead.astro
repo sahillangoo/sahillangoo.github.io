@@ -53,6 +53,16 @@ const ogImage = image.startsWith('http')
   ? image
   : `${siteUrl}${image.startsWith('/') ? '' : '/'}${image}`;
 
+// Clean Markdown alternate URL for individual content items per llmstxt.org v2
+const cleanPath = Astro.url.pathname.replace(/\/$/, '');
+const isContentItem =
+  /^\/(blog|notes|projects)\/[^/]+$/.test(cleanPath) &&
+  !cleanPath.startsWith('/blog/category') &&
+  !cleanPath.startsWith('/blog/tag') &&
+  !/^\/blog\/\d+$/.test(cleanPath) &&
+  !/^\/notes\/\d+$/.test(cleanPath);
+const markdownUrl = isContentItem ? `${cleanPath}.md` : null;
+
 // Core Schema: Person & WebSite
 const personSchema = {
   '@type': 'Person',
@@ -162,8 +172,15 @@ const schemaGraph = {
   <Font cssVariable="--ff-mono" />
   <!-- RSS Feed Autodiscovery -->
   <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
-  <!-- AI LLM Discovery -->
-  <link rel="alternate" type="text/markdown" title="LLM Knowledge Base" href="/llms.txt" />
+  <!-- AI LLM Discovery per llmstxt.org v2 standard -->
+  <link rel="describedby" href="/llms.txt" />
+  {
+    markdownUrl ? (
+      <link rel="alternate" type="text/markdown" title={`${title} (Markdown)`} href={markdownUrl} />
+    ) : (
+      <link rel="alternate" type="text/markdown" title="LLM Knowledge Base" href="/llms.txt" />
+    )
+  }
   <meta name="generator" content={Astro.generator} />
 
   {noindex && <meta name="robots" content="noindex, nofollow" />}
@@ -185,14 +202,15 @@ const schemaGraph = {
         meta.name = 'robots';
         meta.content = 'noindex, nofollow, noarchive';
         document.head.appendChild(meta);
-        if (h.includes('github.io') || h.includes('pages.dev') || h.startsWith('www.')) {
-          window.location.replace(
-            'https://sahillangoo.in' +
-              window.location.pathname +
-              window.location.search +
-              window.location.hash
-          );
-        }
+        // Redirect to main domain commented out for pages.dev preview testing
+        // if (h.includes('github.io') || h.includes('pages.dev') || h.startsWith('www.')) {
+        //   window.location.replace(
+        //     'https://sahillangoo.in' +
+        //       window.location.pathname +
+        //       window.location.search +
+        //       window.location.hash
+        //   );
+        // }
       }
     })();
   </script>

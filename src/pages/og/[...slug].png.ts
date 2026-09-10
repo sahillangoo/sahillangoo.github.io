@@ -35,7 +35,7 @@ export async function getStaticPaths() {
         title: 'Engineering Essays & Technical Writing',
         category: 'TECHNICAL JOURNAL',
         description:
-          'Deep dives on distributed edge proxies, TypeScript, Web Performance, and minimalism.',
+          'Technical essays on distributed edge proxies, TypeScript, Web Performance, and minimalism.',
         readingTime: 'Essays & Articles',
       },
     },
