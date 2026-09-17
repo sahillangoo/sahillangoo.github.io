@@ -1,6 +1,6 @@
 /* TEAM */
   Engineer & Architect: Sahil Langoo
-  Role: Full Stack Systems Engineer & Co-Founder at SquadCoders
+  Role: Full Stack Systems Engineer at Eresolution Consultancy Services & Co-Founder at SquadCoders
   Location: Kashmir, India
   Contact: hello@sahillangoo.in
   Website: https://sahillangoo.in
@@ -11,7 +11,7 @@
   Instagram: https://www.instagram.com/sahillangoo.in
 
 /* SITE */
-  Framework: Astro 7.2 (Static Site Generation & Client Prerender)
+  Framework: Astro 7.3 (Static Site Generation & Client Prerender)
   Language: TypeScript (Strict Type Safety)
   Styling: Tailwind CSS v4 & daisyUI 5 (OKLCH Color Spaces)
   Hosting: Cloudflare Pages & Cloudflare Edge Network

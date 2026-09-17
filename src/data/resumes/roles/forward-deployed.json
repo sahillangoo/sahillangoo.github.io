@@ -13,12 +13,15 @@
       "Node.js",
       "Symfony",
       "Tailwind CSS",
+      "daisyUI",
+      "Shadcn UI",
+      "TanStack Table",
       "Drizzle ORM"
     ],
     "cloud": [
       "Cloudflare Workers & Pages",
       "Cloudflare Turnstile",
-      "Meta CAPI Gateways",
+      "Meta Pixel & CAPI Gateways",
       "Vercel",
       "Docker",
       "REST / GraphQL APIs"
@@ -82,22 +85,32 @@
   ],
   "projects": [
     {
-      "name": "EduCore Enterprise ERP",
-      "tech": "Next.js, Razorpay, Better Auth, Drizzle ORM, MySQL",
+      "name": "School Management Application",
+      "tech": "Next.js 16 (Hostinger VPS), Drizzle ORM, MySQL, Better Auth, Cloudflare R2, Telegram Bot",
       "dates": "2024",
       "highlights": [
-        "Architected end-to-end multi-tenant ERP for educational institution, delivering automated student fee collections, guardian self-service pay portals, and real-time ledger reconciliation.",
-        "Mitigated payment drop-offs and administrative overhead by 60% through automated Razorpay webhook processing and instant fee receipt generation."
+        "Architected enterprise school management system on Next.js 16 with Drizzle ORM and MySQL, managing 500+ student records, fee reconciliation, and automated Telegram/email alerts.",
+        "Deployed Better Auth RBAC across 4 user tiers, utilizing Cloudflare CDN/WAF and R2 buckets for high-throughput report card and asset storage."
       ],
-      "link": "https://github.com/SquadCoders/school_management"
+      "link": "http://kwschool.in/"
     },
     {
-      "name": "TAFFin.Tech Marketplace",
-      "tech": "Symfony, React, AI Matching, GDPR, Redux",
+      "name": "Multi-Tenant Ad-Driven Platform",
+      "tech": "Next.js, Vercel, Meta CAPI, Meta Pixel, Razorpay, SHA-256 Hashing",
       "dates": "2024",
       "highlights": [
-        "Engineered client-facing recruitment marketplace connecting European tech talent with hiring partners, achieving 25% user engagement boost and 100% GDPR regulatory compliance.",
-        "Deployed dynamic resume ingestion dropzones and automated bilingual candidate notification pipelines."
+        "Architected multi-tenant ad platform with automated branch-based Vercel deployments, isolated tenant branding, and end-to-end Razorpay subscription billing.",
+        "Implemented privacy-first ad tracking via Meta Pixel and hashed server-side Conversions API (CAPI), securing PII across URL query parameters and payloads."
+      ],
+      "link": "https://www.expertsupport.org/"
+    },
+    {
+      "name": "Responsive Job Portal",
+      "tech": "React, Redux, DaisyUI, TanStack Table, Schema.org (JSON-LD), i18n, TypeScript",
+      "dates": "2024",
+      "highlights": [
+        "Built high-performance, multilingual job portal using React, Redux, and DaisyUI; integrated TanStack Table with lazy loading and shimmer loaders to smoothly handle 10,000+ listings.",
+        "Boosted discoverability and organic search rankings by engineering structured Schema.org markup (JobPosting) for Google Rich Results alongside full SEO metadata optimization."
       ],
       "link": "https://www.taffin.tech/"
     },
@@ -110,16 +123,6 @@
         "Implemented zero-backend static search indexing via Pagefind WebAssembly, enabling offline technical courseware search with sub-15ms latency."
       ],
       "link": "https://github.com/HackerForceDev/hackforce-storefront"
-    },
-    {
-      "name": "XpressSys Logistics",
-      "tech": "Cloudflare Pages, Node.js, JavaScript, Cloudflare WAF",
-      "dates": "2023",
-      "highlights": [
-        "Delivered end-to-end parcel dispatch and real-time tracking interface for logistics provider, integrating Cloudflare edge security to eliminate spam attacks.",
-        "Implemented automated pin-code verification and driver routing dashboards to accelerate package fulfillment."
-      ],
-      "link": "https://xpresssys.com"
     }
   ]
 }

@@ -32,6 +32,7 @@ export const resumeCopy: ResumePageCopy = {
   sections: {
     executiveSummary: 'Executive Summary',
     professionalExperience: 'Professional Experience',
+    technicalProjects: 'Technical Projects',
     coreCompetencies: 'Technical Core Competencies',
     languagesTitle: 'Languages & Core',
     frameworksTitle: 'Frameworks & Web Architecture',

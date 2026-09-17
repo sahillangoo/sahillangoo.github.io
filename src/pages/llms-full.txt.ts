@@ -93,7 +93,7 @@ export const GET: APIRoute = async () => {
 ## 1. Identity & Overview
 - **Name**: ${SITE.name} (${SITE.legalName})
 - **Role**: Full Stack Systems Engineer & Systems Architect
-- **Affiliation**: @SquadCoders (Co-Founder & Lead Engineer)
+- **Affiliation**: Eresolution Consultancy Services & @SquadCoders (Co-Founder & Lead Engineer)
 - **Enterprise Engineering**: Contributor to high-throughput monorepos at @ecspl
 - **Location**: ${SITE.detailedLocation} (Open to global remote engineering & architecture consulting)
 - **Primary Website**: ${SITE.url}
@@ -106,10 +106,10 @@ export const GET: APIRoute = async () => {
 ---
 
 ## 2. Core Technical Competencies & Stacks
-- **Frontend Architecture**: Astro 7, Next.js, React, TypeScript, Tailwind CSS v4, daisyUI 5, Partytown Web Workers, Lenis Smooth Scroll.
+- **Frontend Architecture**: Astro 7.3, Next.js, React, TypeScript, Tailwind CSS v4, daisyUI 5, Partytown Web Workers, Lenis Smooth Scroll.
 - **Backend & Edge Systems**: Cloudflare Workers, Hono, Node.js, Go, Python, Meta Conversions API (CAPI), Cloudflare Turnstile, Cloudflare R2, Cloudflare KV, SQLite / D1, PostgreSQL, Redis.
 - **AI & Automation Tooling**: Local Small Language Models (Google Gemma 2B Vision via LM Studio), Bun runtime zero-copy scripting, automated vision image optimization (smart-img-cli).
-- **Quality Gates & Observability**: Sentry real-time exception telemetry, Playwright E2E browser automation, ESLint 9+ flat config, Prettier, Zod runtime schema validation, zero-dependency build-time quality hooks.
+- **Quality Gates & Observability**: Sentry real-time exception telemetry, Playwright E2E browser automation, ESLint 10 flat config, Prettier, Zod runtime schema validation, zero-dependency build-time quality hooks.
 
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: 'Template Astro Daisy | Production Starter Boilerplate'
-description: 'A production-ready starter template pairing Astro 7, daisyUI 5, Tailwind CSS v4, and OKLCH theming with strict ESLint 10 standards.'
-summary: 'Developer boilerplate combining Astro 7, Tailwind CSS v4, daisyUI 5, and automated linting pipelines.'
+description: 'A production-ready starter template pairing Astro 7.3, daisyUI 5, Tailwind CSS v4, and OKLCH theming with strict ESLint 10 standards.'
+summary: 'Developer boilerplate combining Astro 7.3, Tailwind CSS v4, daisyUI 5, and automated linting pipelines.'
 category: 'open-source'
 tags:
   - astro
@@ -32,7 +32,7 @@ When bootstrapping new content-driven websites with modern UI libraries, develop
 ## Architectural Solutions & Features
 
 ```
-[Astro 7 SSG Core] ──> [Tailwind CSS v4 @ Vite] ──> [daisyUI 5 Semantic Tokens]
+[Astro 7.3 SSG Core] ──> [Tailwind CSS v4 @ Vite] ──> [daisyUI 5 Semantic Tokens]
                               │
             ┌─────────────────┴─────────────────┐
             ▼                                   ▼
@@ -40,7 +40,7 @@ When bootstrapping new content-driven websites with modern UI libraries, develop
 (Zero FOUC Inline Script)            (astro-eslint-parser + typescript-eslint)
 ```
 
-### 1. Astro 7 + daisyUI 5 Semantic Design Tokens
+### 1. Astro 7.3 + daisyUI 5 Semantic Design Tokens
 
 Engineered an opinionated design architecture utilizing **daisyUI 5** component primitives styled with OKLCH color spaces. Provides curated dark (`editorialDark`) and light (`editorialLight`) themes mapped to semantic CSS custom properties.
 

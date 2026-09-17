@@ -29,12 +29,12 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
 >
   <div>
     <div class="text-base-content/60 mb-2 flex items-center justify-between text-xs">
-      <span
-        class="badge badge-sm bg-accent/10 text-accent border-0 font-mono text-xs font-semibold tracking-wider uppercase"
-      >
+      <span class="badge badge-sm bg-accent/10 text-accent border-0 font-mono text-xs font-semibold tracking-wider uppercase">
         {data.topic}
       </span>
-      <time datetime={data.publishDate} class="font-mono text-xs">{formattedDate}</time>
+      <time datetime={data.publishDate} class="font-mono text-xs">
+        {formattedDate}
+      </time>
     </div>
 
     <HeadingTag
@@ -46,18 +46,18 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
       </a>
     </HeadingTag>
 
-    {
-      data.description && (
-        <p class="text-base-content/75 mt-2 line-clamp-2 text-xs leading-relaxed">
-          {data.description}
-        </p>
-      )
-    }
+    {data.description && (
+      <p class="text-base-content/75 mt-2 line-clamp-2 text-xs leading-relaxed">
+        {data.description}
+      </p>
+    )}
   </div>
 
   <div class="border-base-300/40 mt-4 flex items-center justify-between border-t pt-3">
     <div class="flex flex-wrap gap-1">
-      {data.tags.map((tag) => <span class="text-base-content/60 font-mono text-xs">#{tag}</span>)}
+      {data.tags.map((tag) => (
+        <span class="text-base-content/60 font-mono text-xs">#{tag}</span>
+      ))}
     </div>
     <Icon
       name="ph:arrow-up-right-bold"

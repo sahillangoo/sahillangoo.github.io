@@ -6,6 +6,7 @@ const projects = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/projects' }),
   schema: z.object({
     title: z.string(),
+    resumeTitle: z.string().optional(),
     description: z.string(),
     summary: z.string().optional(),
     category: z.enum(['web-app', 'open-source', 'cli-tool', 'systems', 'design-engineering']),
@@ -18,6 +19,7 @@ const projects = defineCollection({
     role: z.string().default('Lead Engineer / Designer'),
     order: z.number().default(99),
     publishDate: z.string(),
+    highlights: z.array(z.string()).optional(),
   }),
 });
 

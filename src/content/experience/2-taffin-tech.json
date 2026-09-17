@@ -6,19 +6,22 @@
   "period": "Apr 2024 - Aug 2025",
   "current": false,
   "highlights": [
-    "Led the engineering of an AI-integrated job board platform for a French startup, driving a 25% increase in user engagement.",
-    "Architecting high-performance responsive web user interfaces using Tailwind CSS, Twig, and React integrated with a Symfony backend, reducing page-load times by 40%.",
-    "Implementing strict EU-compliant GDPR privacy protocols and dynamic SEO rendering pipelines, boosting organic search traffic by 30%."
+    "Led the engineering of a responsive, multilingual job board platform for a French startup, driving a 25% increase in user engagement.",
+    "Architected high-performance tabular interfaces using TanStack Table, React, and DaisyUI, rendering 10,000+ postings with multi-facet filtering and zero UI latency.",
+    "Implemented Schema.org (JobPosting) structured JSON-LD for Google Rich Results and Lingui i18n localization, boosting organic search discoverability by 30%."
   ],
   "skills": [
     "React",
+    "Redux",
+    "DaisyUI",
+    "TanStack Table",
+    "Lingui i18n",
+    "Schema.org",
     "Tailwind CSS",
     "Twig",
     "Symfony",
     "PHP",
-    "AI Integration",
-    "Dynamic SEO",
     "GDPR Compliance"
   ],
-  "order": 2
+  "order": 3
 }

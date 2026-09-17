@@ -15,7 +15,7 @@ const defaultTrack = getFeaturedTrack(0);
 <div
   id="spotify-widget-container"
   class:list={cn(
-    'group border-base-300 bg-base-200/50 hover:bg-base-200/80 inline-flex items-center justify-between gap-3 rounded-lg border px-3.5 py-2 text-xs shadow-xs transition-all duration-200 hover:border-emerald-500/40',
+    'group border-base-300 bg-base-200/50 hover:bg-base-200/80 inline-flex items-center justify-between gap-3 rounded-lg border px-3.5 py-2 text-xs shadow-xs transition-all duration-200 hover:border-success/40',
     variant === 'footer' && 'w-full sm:w-auto',
     className
   )}
@@ -31,33 +31,28 @@ const defaultTrack = getFeaturedTrack(0);
     <!-- Animated 3-Bar Equalizer -->
     <div class="relative flex h-3.5 w-3.5 shrink-0 items-end justify-center gap-0.5">
       <span
-        class="animate-equalizer w-0.5 rounded-full bg-emerald-500"
+        class="animate-equalizer w-0.5 rounded-full bg-success"
         style="height: 12px; animation-delay: 0.1s;"
-      >
-      </span>
+      ></span>
       <span
-        class="animate-equalizer w-0.5 rounded-full bg-emerald-500"
+        class="animate-equalizer w-0.5 rounded-full bg-success"
         style="height: 16px; animation-delay: 0.3s;"
-      >
-      </span>
+      ></span>
       <span
-        class="animate-equalizer w-0.5 rounded-full bg-emerald-500"
+        class="animate-equalizer w-0.5 rounded-full bg-success"
         style="height: 8px; animation-delay: 0.2s;"
-      >
-      </span>
+      ></span>
     </div>
 
     <!-- Track Metadata Column -->
     <div class="flex min-w-0 flex-col">
       <div class="flex min-w-0 items-center gap-1.5">
-        <span
-          class="shrink-0 font-mono text-xs font-semibold tracking-wider text-emerald-500 uppercase"
-        >
+        <span class="text-success shrink-0 font-mono text-xs font-semibold tracking-wider uppercase">
           Listening
         </span>
         <span
           id="spotify-track-tag"
-          class="badge badge-sm hidden shrink-0 border-0 bg-emerald-500/10 font-mono text-xs font-medium whitespace-nowrap text-emerald-400 sm:inline-flex"
+          class="badge badge-sm border-success/30 bg-success/10 text-success hidden shrink-0 border font-mono text-xs font-medium whitespace-nowrap sm:inline-flex"
         >
           {defaultTrack.albumTag || 'Coke Studio'}
         </span>
@@ -66,7 +61,7 @@ const defaultTrack = getFeaturedTrack(0);
       <div class="flex items-center gap-1.5 truncate">
         <span
           id="spotify-track-title"
-          class="text-base-content truncate font-medium transition-colors group-hover:text-emerald-400"
+          class="text-base-content group-hover:text-success truncate font-medium transition-colors"
         >
           {defaultTrack.title}
         </span>
@@ -83,11 +78,11 @@ const defaultTrack = getFeaturedTrack(0);
     <button
       id="spotify-skip-btn"
       type="button"
-      class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:bg-base-300/50 rounded transition-transform hover:text-emerald-400 active:scale-90"
+      class="btn btn-ghost btn-sm btn-square text-base-content/60 hover:bg-base-300/50 hover:text-success rounded-md transition-transform active:scale-99"
       title="Skip to next curated song"
       aria-label="Skip to next curated song"
     >
-      <Icon name="ph:skip-forward-bold" class="h-3.5 w-3.5" />
+      <Icon name="ph:skip-forward-bold" class="h-4 w-4" />
     </button>
 
     <a
@@ -95,13 +90,13 @@ const defaultTrack = getFeaturedTrack(0);
       href={defaultTrack.songUrl}
       target="_blank"
       rel="noopener noreferrer"
-      class="text-base-content/40 p-1 transition-colors hover:text-emerald-400"
+      class="text-base-content/50 hover:text-success hover:bg-base-300/50 flex h-8 w-8 items-center justify-center rounded-md p-1 transition-colors"
       title="Open in Spotify"
       aria-label="Open track in Spotify"
     >
       <Icon
         name="ph:arrow-up-right-bold"
-        class="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+        class="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
       />
     </a>
   </div>

@@ -1,6 +1,6 @@
 ---
 title: 'Hotel Akbar Sonamarg Web Platform'
-description: 'A high-performance luxury hospitality web platform engineered with Astro 7.2, DaisyUI v5, and full legacy WordPress-to-Astro 301 redirection matrix.'
+description: 'A high-performance luxury hospitality web platform engineered with Astro 7.3, daisyUI 5, and full legacy WordPress-to-Astro 301 redirection matrix.'
 summary: 'High-performance static hospitality web portal with dynamic room collections, tour booking inquiries, and automated link verification.'
 category: 'web-app'
 tags:
@@ -26,7 +26,7 @@ Hotel Akbar Sonamarg, a premier luxury hotel in the Kashmir Himalayas, was suffe
 ## Architectural Solutions
 
 ```
-[Astro 7.2 Static Compiler] ──> [HTML & OKLCH CSS] ──> [Cloudflare Global Edge]
+[Astro 7.3 Static Compiler] ──> [HTML & OKLCH CSS] ──> [Cloudflare Global Edge]
                                            │
                                            ▼
                                  [0.00 CLS / < 0.2s TTFB]
@@ -34,7 +34,7 @@ Hotel Akbar Sonamarg, a premier luxury hotel in the Kashmir Himalayas, was suffe
 
 ### 1. WordPress to Astro SSG Migration
 
-Migrated the entire content architecture to static site generation with **Astro 7.2**, eliminating database cold starts and achieving **100/100 Lighthouse scores** across Performance, Accessibility, Best Practices, and SEO.
+Migrated the entire content architecture to static site generation with **Astro 7.3**, eliminating database cold starts and achieving **100/100 Lighthouse scores** across Performance, Accessibility, Best Practices, and SEO.
 
 ### 2. Structured Zod Content Collections
 

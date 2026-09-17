@@ -28,7 +28,7 @@ This document captures the synthesized intelligence gathered from GitHub (`@sahi
    - Automated `FAQPage` and `Service` Schema.org JSON-LD generation.
    - Sentry error logging on custom 404 and 500 error pages.
    - Multi-stage Docker builds with Cloudflare R2 asset synchronization.
-2. **`hotel-akbar-sonmarg`** (Astro 7.2, DaisyUI v5, Tailwind CSS v4):
+2. **`hotel-akbar-sonmarg`** (Astro 7.3, daisyUI 5, Tailwind CSS v4):
    - Luxury hospitality platform with dynamic room collections, tour booking inquiries, local travel guides, and zero-dependency build-time quality hooks (`astroSiteQualityEnforcer`).
 3. **`roohyaseen-portfolio`** (Astro, Tailwind CSS, Lenis, Motion, Zod):
    - High-end editorial portfolio for UK Director of Photography Rooh Yaseen with Facade video embedding, zero CLS, and custom OKLCH dark theme.

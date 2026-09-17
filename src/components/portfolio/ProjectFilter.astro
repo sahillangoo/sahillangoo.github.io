@@ -18,17 +18,18 @@ const categories = [
 
 <div class="space-y-8" id="project-filter-root">
   <!-- Filter Controls -->
-  <div class="border-base-300 flex flex-wrap items-center gap-2 border-b pb-4">
-    <span class="text-base-content/65 mr-1 flex items-center gap-1.5 font-mono text-xs">
-      <Icon name="ph:funnel-bold" class="h-3.5 w-3.5" /> Filter:
+  <div class="border-base-300 flex flex-col gap-2.5 border-b pb-4 sm:flex-row sm:items-center">
+    <span class="text-base-content/65 shrink-0 flex items-center gap-1.5 font-mono text-xs">
+      <Icon name="ph:funnel-bold" class="h-3.5 w-3.5" />
+      Filter:
     </span>
-    {
-      categories.map((cat, idx) => (
+    <div class="flex flex-wrap items-center gap-2">
+      {categories.map((cat, idx) => (
         <button
           type="button"
           data-filter={cat.id}
           class:list={cn(
-            'filter-btn rounded-md px-3 py-1 font-mono text-xs transition-colors',
+            'filter-btn rounded-md px-3 py-1.5 font-mono text-xs transition-colors active:scale-99',
             idx === 0
               ? 'bg-base-content text-base-100 active-filter hover:text-base-100 hover:bg-base-content/90 font-semibold'
               : 'bg-base-200 text-base-content/75 hover:bg-base-300 hover:text-base-content'
@@ -36,19 +37,17 @@ const categories = [
         >
           {cat.label}
         </button>
-      ))
-    }
+      ))}
+    </div>
   </div>
 
   <!-- Projects Grid -->
   <div class="grid grid-cols-1 gap-6 md:grid-cols-2" id="projects-grid">
-    {
-      sortedProjects.map((project) => (
-        <div class="project-item" data-category={project.data.category}>
-          <ProjectCard project={project} />
-        </div>
-      ))
-    }
+    {sortedProjects.map((project) => (
+      <div class="project-item" data-category={project.data.category}>
+        <ProjectCard project={project} />
+      </div>
+    ))}
   </div>
 
   <div id="no-projects-msg" class="text-base-content/50 hidden py-12 text-center font-mono text-sm">

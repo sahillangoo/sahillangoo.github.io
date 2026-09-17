@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { ChangeFreqEnum, type SitemapItem } from '@astrojs/sitemap';
 
-const DEFAULT_BUILD_DATE = new Date().toISOString().split('T')[0] ?? '2026-08-22';
+const DEFAULT_BUILD_DATE = new Date().toISOString().split('T')[0] ?? '2026-09-17';
 
 // Extract content dates from frontmatters
 function extractContentDates(contentDir: string): Map<string, string> {

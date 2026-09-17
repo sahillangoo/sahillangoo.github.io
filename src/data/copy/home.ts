@@ -4,7 +4,7 @@ export const homeCopy: HomePageCopy = {
   seo: {
     title: 'Sahil Langoo | Full Stack Systems Engineer & Systems Architect',
     description:
-      'Personal portfolio, engineering journal, and systems catalog of Sahil Langoo. Specializing in Astro 7 static architectures, TypeScript, distributed edge proxies, and minimalist UI craft.',
+      'Personal portfolio, engineering journal, and systems catalog of Sahil Langoo. Specializing in Astro 7.3 static architectures, TypeScript, distributed edge proxies, and minimalist UI craft.',
     image: '/og/default.png',
   },
   hero: {
@@ -12,7 +12,7 @@ export const homeCopy: HomePageCopy = {
     headline:
       'Engineering resilient edge systems, high-throughput web architectures & crafted interfaces.',
     subheadline:
-      'I am Sahil Langoo, based in Kashmir, India. I specialize in architecting ultra-fast static web platforms, distributed API proxies, and type-safe systems at Eresolution Consultancy Services and in open source.',
+      'I am Sahil Langoo, based in Kashmir, India. I specialize in architecting ultra-fast static web platforms, distributed API proxies, and type-safe systems at Eresolution Consultancy Services, @SquadCoders, and in open source.',
     imageAlt: 'Sahil Langoo - Full Stack Systems Engineer & Systems Architect',
     statusText: 'Available for work',
     locationText: 'Kashmir, India',

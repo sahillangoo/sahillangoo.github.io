@@ -37,7 +37,7 @@ const homeKeywords = [
   'Sahil Langoo',
   'Full Stack Systems Engineer',
   'Systems Architect',
-  'Astro 7',
+  'Astro 7.3',
   'TypeScript',
   'Cloudflare Workers',
   'Hono Edge Proxies',
@@ -59,66 +59,55 @@ const homeKeywords = [
   <div class="mx-auto max-w-6xl space-y-20 px-4 py-8 sm:space-y-28 sm:px-6 sm:py-12">
     <!-- Hero Section -->
     <section class="hero justify-start pt-4 sm:pt-8">
-      <div
-        class="hero-content w-full max-w-none flex-col items-center justify-between gap-10 p-0 lg:flex-row lg:items-start lg:gap-14"
-      >
+      <div class="hero-content w-full max-w-none flex-col items-center justify-between gap-10 p-0 lg:flex-row lg:items-start lg:gap-14">
         <div class="max-w-2xl space-y-6">
-          <div
-            class="border-base-300 bg-base-200/80 text-base-content/80 inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-xs"
-          >
+          <div class="border-base-300 bg-base-200/80 text-base-content/80 inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-xs">
             <span class="bg-accent h-1.5 w-1.5 animate-pulse rounded-full"></span>
             <span>{homeCopy.hero.badge}</span>
           </div>
 
-          <h1
-            class="text-base-content text-2xl leading-tight font-extrabold tracking-tight sm:text-3xl lg:text-4xl"
-          >
+          <h1 class="text-base-content text-2xl leading-tight font-extrabold tracking-tight sm:text-3xl lg:text-4xl">
             {homeCopy.hero.headline}
           </h1>
 
           <p class="text-base-content/75 text-base leading-relaxed sm:text-lg">
-            I am <strong class="text-base-content font-semibold">{SITE.name}</strong>, based in {
-              homeCopy.hero.locationText
-            }. I engineer high-performance web applications, developer tooling, and distributed edge
-            architectures with <a
+            I am<strong class="text-base-content font-semibold">{SITE.name}</strong>, based in
+            {homeCopy.hero.locationText}. I engineer high-performance web applications, developer
+            tooling, and distributed edge architectures with
+            <a
               href="https://github.com/SquadCoders"
               target="_blank"
               rel="noopener noreferrer"
               class="text-accent font-semibold hover:underline"
             >
               @SquadCoders
-            </a> and open source.
+            </a>
+            and open source.
           </p>
 
           <div class="flex flex-wrap items-center gap-3 pt-2">
-            {
-              homeCopy.hero.ctas.map((cta) => (
-                <a
-                  href={cta.href}
-                  class:list={
-                    cta.variant === 'primary'
-                      ? 'btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-5 font-mono text-xs tracking-wider uppercase'
-                      : cta.variant === 'outline'
-                        ? 'btn btn-outline border-base-300 hover:bg-base-200 hover:text-base-content flex items-center gap-2 rounded-md px-5 font-mono text-xs tracking-wider uppercase'
-                        : 'btn btn-ghost hover:bg-base-200/60 text-base-content/80 flex items-center gap-2 rounded-md px-4 font-mono text-xs tracking-wider uppercase'
-                  }
-                >
-                  {cta.icon && <Icon name={cta.icon} class="h-3.5 w-3.5" />}
-                  {cta.label}
-                </a>
-              ))
-            }
+            {homeCopy.hero.ctas.map((cta) => (
+              <a
+                href={cta.href}
+                class:list={
+                  cta.variant === 'primary'
+                    ? 'btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-5 font-mono text-xs tracking-wider uppercase transition-all active:scale-99'
+                    : cta.variant === 'outline'
+                      ? 'btn btn-outline border-base-300 hover:bg-base-200 hover:text-base-content flex items-center gap-2 rounded-md px-5 font-mono text-xs tracking-wider uppercase transition-all active:scale-99'
+                      : 'btn btn-ghost hover:bg-base-200/60 text-base-content/80 flex items-center gap-2 rounded-md px-4 font-mono text-xs tracking-wider uppercase transition-all active:scale-99'
+                }
+              >
+                {cta.icon && <Icon name={cta.icon} class="h-3.5 w-3.5" />}
+                {cta.label}
+              </a>
+            ))}
           </div>
         </div>
 
         <!-- Hero Portrait Image Presentation -->
         <div class="relative shrink-0 self-center lg:self-start">
-          <div
-            class="group border-base-300 bg-base-200 relative overflow-hidden rounded-2xl border p-2 transition-all duration-200 hover:-translate-y-0.5 sm:p-2.5"
-          >
-            <div
-              class="bg-base-300 relative aspect-4/5 w-60 overflow-hidden rounded-xl sm:w-64 md:w-72 lg:w-80"
-            >
+          <div class="group border-base-300 bg-base-200 relative overflow-hidden rounded-2xl border p-2 transition-all duration-200 hover:-translate-y-0.5 sm:p-2.5">
+            <div class="bg-base-300 relative aspect-4/5 w-60 overflow-hidden rounded-xl sm:w-64 md:w-72 lg:w-80">
               <Image
                 src={sahilHeroImage}
                 alt={homeCopy.hero.imageAlt}
@@ -129,18 +118,12 @@ const homeKeywords = [
                 fetchpriority="high"
                 class="h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
               />
-              <div
-                class="from-base-100/40 pointer-events-none absolute inset-0 bg-linear-to-t via-transparent to-transparent opacity-60"
-              >
-              </div>
+              <div class="from-base-100/40 pointer-events-none absolute inset-0 bg-linear-to-t via-transparent to-transparent opacity-60"></div>
             </div>
 
-            <div
-              class="text-base-content/70 mt-2.5 flex flex-wrap items-center justify-between gap-2 px-1 font-mono text-xs"
-            >
+            <div class="text-base-content/70 mt-2.5 flex flex-wrap items-center justify-between gap-2 px-1 font-mono text-xs">
               <span class="inline-flex items-center gap-1.5">
-                <span class="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-500">
-                </span>
+                <span class="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-success"></span>
                 <span>{homeCopy.hero.statusText}</span>
               </span>
               <span class="text-base-content/50">{homeCopy.hero.locationText}</span>
@@ -171,17 +154,15 @@ const homeKeywords = [
       </div>
 
       <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-        {
-          featuredProjects.map((project, idx) => (
-            <ProjectCard project={project} featured={idx === 0} headingLevel="h3" />
-          ))
-        }
+        {featuredProjects.map((project, idx) => (
+          <ProjectCard project={project} featured={idx === 0} headingLevel="h3" />
+        ))}
       </div>
 
       <div class="pt-2 text-center sm:hidden">
         <a
           href="/projects/"
-          class="btn btn-sm btn-outline border-base-300 flex w-full items-center justify-center gap-2 font-mono text-xs font-medium tracking-wider uppercase"
+          class="btn btn-sm btn-outline border-base-300 flex w-full items-center justify-center gap-2 font-mono text-xs font-medium tracking-wider uppercase transition-all active:scale-99"
         >
           <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
           {homeCopy.sections.selectedWork.viewAllText}
@@ -232,7 +213,9 @@ const homeKeywords = [
           </a>
         </div>
         <div class="space-y-4">
-          {recentArticles.map((post) => <ArticleCard post={post} headingLevel="h3" />)}
+          {recentArticles.map((post) => (
+            <ArticleCard post={post} headingLevel="h3" />
+          ))}
         </div>
       </div>
 
@@ -247,42 +230,40 @@ const homeKeywords = [
           </a>
         </div>
         <div class="space-y-4">
-          {recentNotes.map((note) => <NoteCard note={note} headingLevel="h3" />)}
+          {recentNotes.map((note) => (
+            <NoteCard note={note} headingLevel="h3" />
+          ))}
         </div>
       </div>
     </section>
 
     <!-- Engineering Principles -->
-    {
-      principles.length > 0 && (
-        <section class="space-y-8">
-          <div class="border-base-300 border-b pb-4">
-            <span class="text-accent font-mono text-xs font-semibold tracking-widest uppercase">
-              {homeCopy.sections.philosophy.eyebrow}
-            </span>
-            <h2 class="text-base-content mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
-              {homeCopy.sections.philosophy.title}
-            </h2>
-          </div>
+    {principles.length > 0 && (
+      <section class="space-y-8">
+        <div class="border-base-300 border-b pb-4">
+          <span class="text-accent font-mono text-xs font-semibold tracking-widest uppercase">
+            {homeCopy.sections.philosophy.eyebrow}
+          </span>
+          <h2 class="text-base-content mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
+            {homeCopy.sections.philosophy.title}
+          </h2>
+        </div>
 
-          <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {principles.map((p) => (
-              <div class="border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 transition-all duration-200 hover:-translate-y-0.5 active:scale-99">
-                <div>
-                  <h3 class="text-base-content font-mono text-sm font-bold">{p.title}</h3>
-                  <p class="text-base-content/75 mt-2 text-xs leading-relaxed">{p.description}</p>
-                </div>
+        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {principles.map((p) => (
+            <div class="border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 transition-all duration-200 hover:-translate-y-0.5 active:scale-99">
+              <div>
+                <h3 class="text-base-content font-mono text-sm font-bold">{p.title}</h3>
+                <p class="text-base-content/75 mt-2 text-xs leading-relaxed">{p.description}</p>
               </div>
-            ))}
-          </div>
-        </section>
-      )
-    }
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
 
     <!-- Presence & CTA Banner -->
-    <section
-      class="border-base-300 bg-base-200 space-y-4 rounded-xl border p-8 text-center sm:p-10"
-    >
+    <section class="border-base-300 bg-base-200 space-y-4 rounded-xl border p-8 text-center sm:p-10">
       <h2 class="text-base-content text-2xl font-bold tracking-tight sm:text-3xl">
         {homeCopy.sections.ctaBanner.title}
       </h2>
@@ -290,23 +271,21 @@ const homeKeywords = [
         {homeCopy.sections.ctaBanner.description}
       </p>
       <div class="flex flex-wrap items-center justify-center gap-4 pt-3">
-        {
-          homeCopy.sections.ctaBanner.ctas.map((cta) => (
-            <a
-              href={cta.href}
-              target={cta.external ? '_blank' : undefined}
-              rel={cta.external ? 'noopener noreferrer' : undefined}
-              class:list={
-                cta.variant === 'primary'
-                  ? 'btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-6 font-mono text-xs tracking-wider uppercase'
-                  : 'btn btn-outline border-base-300 hover:bg-base-200 hover:text-base-content flex items-center gap-2 rounded-md px-6 font-mono text-xs tracking-wider uppercase'
-              }
-            >
-              {cta.icon && <Icon name={cta.icon} class="h-3.5 w-3.5" />}
-              {cta.label}
-            </a>
-          ))
-        }
+        {homeCopy.sections.ctaBanner.ctas.map((cta) => (
+          <a
+            href={cta.href}
+            target={cta.external ? '_blank' : undefined}
+            rel={cta.external ? 'noopener noreferrer' : undefined}
+            class:list={
+              cta.variant === 'primary'
+                ? 'btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-6 font-mono text-xs tracking-wider uppercase transition-all active:scale-99'
+                : 'btn btn-outline border-base-300 hover:bg-base-200 hover:text-base-content flex items-center gap-2 rounded-md px-6 font-mono text-xs tracking-wider uppercase transition-all active:scale-99'
+            }
+          >
+            {cta.icon && <Icon name={cta.icon} class="h-3.5 w-3.5" />}
+            {cta.label}
+          </a>
+        ))}
       </div>
     </section>
   </div>

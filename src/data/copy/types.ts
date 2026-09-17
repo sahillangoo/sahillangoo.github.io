@@ -227,6 +227,7 @@ export interface ResumePageCopy {
   sections: {
     executiveSummary: string;
     professionalExperience: string;
+    technicalProjects?: string;
     coreCompetencies: string;
     languagesTitle: string;
     frameworksTitle: string;

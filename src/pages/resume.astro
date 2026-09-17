@@ -10,6 +10,16 @@ const experiences = await getCollection('experience');
 const siteData = await getEntry('site', 'profile');
 const skills = siteData?.data.skills;
 
+const allProjects = await getCollection('projects');
+const targetProjectIds = [
+  'taffin-tech-job-board',
+  'enterprise-lead-funnels',
+  'school-management-saas',
+];
+const resumeProjects = targetProjectIds
+  .map((id) => allProjects.find((p) => p.id === id))
+  .filter((p): p is NonNullable<typeof p> => Boolean(p));
+
 const resumeSchema = [
   {
     '@type': 'ProfilePage',
@@ -64,9 +74,7 @@ const breadcrumbs = [
 >
   <div class="mx-auto max-w-4xl space-y-12 px-4 py-8 sm:px-6 sm:py-12">
     <!-- Header with Actions -->
-    <div
-      class="border-base-300 flex flex-col gap-6 border-b pb-8 sm:flex-row sm:items-center sm:justify-between"
-    >
+    <div class="border-base-300 flex flex-col gap-6 border-b pb-8 sm:flex-row sm:items-center sm:justify-between">
       <div>
         <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
           {resumeCopy.header.eyebrow}
@@ -80,43 +88,37 @@ const breadcrumbs = [
       </div>
 
       <div class="flex flex-wrap items-center gap-3">
-        {
-          resumeCopy.header.downloadCta && (
-            <a
-              href={resumeCopy.header.downloadCta.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn btn-sm bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-1.5 rounded-md border-0 font-mono text-xs tracking-wider uppercase"
-            >
-              {resumeCopy.header.downloadCta.icon && (
-                <Icon name={resumeCopy.header.downloadCta.icon} class="h-3.5 w-3.5" />
-              )}
-              {resumeCopy.header.downloadCta.label}
-            </a>
-          )
-        }
+        {resumeCopy.header.downloadCta && (
+          <a
+            href={resumeCopy.header.downloadCta.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-sm bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-1.5 rounded-md border-0 font-mono text-xs tracking-wider uppercase transition-all active:scale-99"
+          >
+            {resumeCopy.header.downloadCta.icon && (
+              <Icon name={resumeCopy.header.downloadCta.icon} class="h-3.5 w-3.5" />
+            )}
+            {resumeCopy.header.downloadCta.label}
+          </a>
+        )}
         <a
           href={resumeCopy.header.contactCta.href}
-          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 flex items-center gap-1.5 rounded-md font-mono text-xs tracking-wider uppercase"
+          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 flex items-center gap-1.5 rounded-md font-mono text-xs tracking-wider uppercase transition-all active:scale-99"
         >
-          {
-            resumeCopy.header.contactCta.icon && (
-              <Icon name={resumeCopy.header.contactCta.icon} class="h-3.5 w-3.5" />
-            )
-          }
+          {resumeCopy.header.contactCta.icon && (
+            <Icon name={resumeCopy.header.contactCta.icon} class="h-3.5 w-3.5" />
+          )}
           {resumeCopy.header.contactCta.label}
         </a>
         <a
           href={resumeCopy.header.githubCta.href}
           target="_blank"
           rel="noopener noreferrer"
-          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 flex items-center gap-1.5 rounded-md font-mono text-xs tracking-wider uppercase"
+          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 flex items-center gap-1.5 rounded-md font-mono text-xs tracking-wider uppercase transition-all active:scale-99"
         >
-          {
-            resumeCopy.header.githubCta.icon && (
-              <Icon name={resumeCopy.header.githubCta.icon} class="h-3.5 w-3.5" />
-            )
-          }
+          {resumeCopy.header.githubCta.icon && (
+            <Icon name={resumeCopy.header.githubCta.icon} class="h-3.5 w-3.5" />
+          )}
           {resumeCopy.header.githubCta.label}
         </a>
       </div>
@@ -142,70 +144,158 @@ const breadcrumbs = [
       </div>
     </section>
 
-    <!-- Skills Breakdown -->
-    {
-      skills && (
-        <section class="space-y-6">
+    <!-- Technical Projects -->
+    {resumeProjects.length > 0 && (
+      <section class="space-y-6">
+        <div class="flex items-center justify-between">
           <h2 class="text-accent font-mono text-xs font-bold tracking-widest uppercase">
-            {resumeCopy.sections.coreCompetencies}
+            {resumeCopy.sections.technicalProjects}
           </h2>
+          <a
+            href="/projects/"
+            class="text-base-content/70 hover:text-accent inline-flex items-center gap-1 font-mono text-xs transition-colors"
+          >
+            View All Projects
+            <Icon name="ph:arrow-right-bold" class="h-3 w-3" />
+          </a>
+        </div>
 
-          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div class="border-base-300 bg-base-200 space-y-2 rounded-xl border p-5">
-              <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
-                {resumeCopy.sections.languagesTitle}
-              </h3>
-              <div class="flex flex-wrap gap-1.5">
-                {skills.languages.map((item) => (
+        <div class="space-y-6">
+          {resumeProjects.map((proj) => (
+            <div class="border-base-300 bg-base-200 space-y-3.5 rounded-xl border p-5 sm:p-6">
+              <div class="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
+                <div class="flex flex-wrap items-center gap-2">
+                  <a
+                    href={`/projects/${proj.id}/`}
+                    class="text-base-content hover:text-accent text-base font-bold tracking-tight transition-colors"
+                  >
+                    {proj.data.resumeTitle ||
+                      proj.data.title.split('|')[0]?.trim() ||
+                      proj.data.title}
+                  </a>
+                  {proj.data.liveUrl && (
+                    <a
+                      href={proj.data.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-base-content/60 hover:text-accent inline-flex items-center gap-1 font-mono text-xs"
+                      title="Live Demo"
+                    >
+                      <Icon name="ph:arrow-square-out-bold" class="h-3.5 w-3.5" />
+                    </a>
+                  )}
+                </div>
+                <span class="text-base-content/60 font-mono text-xs">{proj.data.year}</span>
+              </div>
+
+              {proj.data.summary && (
+                <p class="text-base-content/80 text-xs leading-relaxed sm:text-sm">
+                  {proj.data.summary}
+                </p>
+              )}
+
+              {proj.data.highlights && proj.data.highlights.length > 0 && (
+                <ul class="text-base-content/75 space-y-2 pt-1 text-xs leading-relaxed sm:text-sm">
+                  {proj.data.highlights.map((highlight) => {
+                    const colonIndex = highlight.indexOf(':');
+                    if (colonIndex > 0) {
+                      const category = highlight.slice(0, colonIndex);
+                      const rest = highlight.slice(colonIndex + 1);
+                      return (
+                        <li class="flex items-start gap-2">
+                          <span class="text-accent mt-0.5 select-none font-bold">›</span>
+                          <span>
+                            <strong class="text-base-content font-semibold">{category}:</strong>
+                            {rest}
+                          </span>
+                        </li>
+                      );
+                    }
+                    return (
+                      <li class="flex items-start gap-2">
+                        <span class="text-accent mt-0.5 select-none font-bold">›</span>
+                        <span>{highlight}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                {proj.data.tags.slice(0, 8).map((t) => (
                   <span class="bg-base-300/40 text-base-content/80 rounded px-2 py-0.5 font-mono text-xs">
-                    {item}
+                    {t}
                   </span>
                 ))}
               </div>
             </div>
+          ))}
+        </div>
+      </section>
+    )}
 
-            <div class="border-base-300 bg-base-200 space-y-2 rounded-xl border p-5">
-              <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
-                {resumeCopy.sections.frameworksTitle}
-              </h3>
-              <div class="flex flex-wrap gap-1.5">
-                {skills.frameworks.map((item) => (
-                  <span class="bg-base-300/40 text-base-content/80 rounded px-2 py-0.5 font-mono text-xs">
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
+    <!-- Skills Breakdown -->
+    {skills && (
+      <section class="space-y-6">
+        <h2 class="text-accent font-mono text-xs font-bold tracking-widest uppercase">
+          {resumeCopy.sections.coreCompetencies}
+        </h2>
 
-            <div class="border-base-300 bg-base-200 space-y-2 rounded-xl border p-5">
-              <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
-                {resumeCopy.sections.cloudTitle}
-              </h3>
-              <div class="flex flex-wrap gap-1.5">
-                {skills.cloud.map((item) => (
-                  <span class="bg-base-300/40 text-base-content/80 rounded px-2 py-0.5 font-mono text-xs">
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div class="border-base-300 bg-base-200 space-y-2 rounded-xl border p-5">
-              <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
-                {resumeCopy.sections.databasesToolsTitle}
-              </h3>
-              <div class="flex flex-wrap gap-1.5">
-                {[...skills.databases, ...skills.tools].map((item) => (
-                  <span class="bg-base-300/40 text-base-content/80 rounded px-2 py-0.5 font-mono text-xs">
-                    {item}
-                  </span>
-                ))}
-              </div>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div class="border-base-300 bg-base-200 space-y-2 rounded-xl border p-5">
+            <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
+              {resumeCopy.sections.languagesTitle}
+            </h3>
+            <div class="flex flex-wrap gap-1.5">
+              {skills.languages.map((item) => (
+                <span class="bg-base-300/40 text-base-content/80 rounded px-2 py-0.5 font-mono text-xs">
+                  {item}
+                </span>
+              ))}
             </div>
           </div>
-        </section>
-      )
-    }
+
+          <div class="border-base-300 bg-base-200 space-y-2 rounded-xl border p-5">
+            <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
+              {resumeCopy.sections.frameworksTitle}
+            </h3>
+            <div class="flex flex-wrap gap-1.5">
+              {skills.frameworks.map((item) => (
+                <span class="bg-base-300/40 text-base-content/80 rounded px-2 py-0.5 font-mono text-xs">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div class="border-base-300 bg-base-200 space-y-2 rounded-xl border p-5">
+            <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
+              {resumeCopy.sections.cloudTitle}
+            </h3>
+            <div class="flex flex-wrap gap-1.5">
+              {skills.cloud.map((item) => (
+                <span class="bg-base-300/40 text-base-content/80 rounded px-2 py-0.5 font-mono text-xs">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div class="border-base-300 bg-base-200 space-y-2 rounded-xl border p-5">
+            <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
+              {resumeCopy.sections.databasesToolsTitle}
+            </h3>
+            <div class="flex flex-wrap gap-1.5">
+              {[...skills.databases, ...skills.tools].map((item) => (
+                <span class="bg-base-300/40 text-base-content/80 rounded px-2 py-0.5 font-mono text-xs">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
 
     <!-- Education Section -->
     <section class="space-y-6">
@@ -213,38 +303,36 @@ const breadcrumbs = [
         {resumeCopy.sections.educationTitle}
       </h2>
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {
-          SITE.education.map((edu) => (
-            <div class="border-base-300 bg-base-200 flex flex-col justify-between space-y-4 rounded-xl border p-6">
-              <div class="space-y-2">
-                <div class="flex items-start justify-between gap-2">
-                  <span class="bg-base-300/40 text-accent rounded px-2 py-0.5 font-mono text-xs font-bold">
-                    CGPA: {edu.cgpa}
-                  </span>
-                  <span class="text-base-content/60 font-mono text-xs">{edu.period}</span>
-                </div>
-                <h3 class="text-base-content text-base font-bold tracking-tight">
-                  {edu.institution}
-                </h3>
-                <p class="text-base-content/80 text-xs font-medium">{edu.degree}</p>
-                <p class="text-base-content/60 font-mono text-xs">{edu.location}</p>
+        {SITE.education.map((edu) => (
+          <div class="border-base-300 bg-base-200 flex flex-col justify-between space-y-4 rounded-xl border p-6">
+            <div class="space-y-2">
+              <div class="flex items-start justify-between gap-2">
+                <span class="bg-base-300/40 text-accent rounded px-2 py-0.5 font-mono text-xs font-bold">
+                  CGPA: {edu.cgpa}
+                </span>
+                <span class="text-base-content/60 font-mono text-xs">{edu.period}</span>
               </div>
-
-              {edu.coursework && (
-                <div class="border-base-300/60 border-t pt-3">
-                  <span class="text-base-content/60 block font-mono text-xs">Key Coursework:</span>
-                  <div class="mt-1.5 flex flex-wrap gap-1">
-                    {edu.coursework.map((c) => (
-                      <span class="badge badge-sm bg-base-200 text-base-content/70 border-0 font-mono text-xs">
-                        {c}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
+              <h3 class="text-base-content text-base font-bold tracking-tight">
+                {edu.institution}
+              </h3>
+              <p class="text-base-content/80 text-xs font-medium">{edu.degree}</p>
+              <p class="text-base-content/60 font-mono text-xs">{edu.location}</p>
             </div>
-          ))
-        }
+
+            {edu.coursework && (
+              <div class="border-base-300/60 border-t pt-3">
+                <span class="text-base-content/60 block font-mono text-xs">Key Coursework:</span>
+                <div class="mt-1.5 flex flex-wrap gap-1">
+                  {edu.coursework.map((c) => (
+                    <span class="badge badge-sm bg-base-200 text-base-content/70 border-0 font-mono text-xs">
+                      {c}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
     </section>
 
@@ -254,23 +342,21 @@ const breadcrumbs = [
         {resumeCopy.sections.certificationsTitle}
       </h2>
       <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {
-          SITE.certifications.map((cert) => (
-            <div class="border-base-300 bg-base-200 flex flex-col justify-between space-y-3 rounded-xl border p-5">
-              <div class="space-y-1">
-                <div class="flex items-center justify-between">
-                  <span class="text-accent font-mono text-xs font-medium">{cert.issuer}</span>
-                  <span class="text-base-content/50 font-mono text-xs">{cert.year}</span>
-                </div>
-                <h3 class="text-base-content text-xs leading-snug font-bold">{cert.name}</h3>
+        {SITE.certifications.map((cert) => (
+          <div class="border-base-300 bg-base-200 flex flex-col justify-between space-y-3 rounded-xl border p-5">
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="text-accent font-mono text-xs font-medium">{cert.issuer}</span>
+                <span class="text-base-content/50 font-mono text-xs">{cert.year}</span>
               </div>
-              <div class="text-base-content/60 flex items-center gap-1 font-mono text-xs">
-                <Icon name="ph:seal-check-bold" class="text-accent h-3.5 w-3.5" />
-                <span>Verified Credential</span>
-              </div>
+              <h3 class="text-base-content text-xs leading-snug font-bold">{cert.name}</h3>
             </div>
-          ))
-        }
+            <div class="text-base-content/60 flex items-center gap-1 font-mono text-xs">
+              <Icon name="ph:seal-check-bold" class="text-accent h-3.5 w-3.5" />
+              <span>Verified Credential</span>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   </div>

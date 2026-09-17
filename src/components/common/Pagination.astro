@@ -41,76 +41,70 @@ function getPageUrl(pageNum: number): string {
 >
   <!-- Previous Button -->
   <div>
-    {
-      page.url.prev ? (
-        <a
-          href={page.url.prev.endsWith('/') ? page.url.prev : `${page.url.prev}/`}
-          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 text-base-content flex items-center gap-1.5 rounded-md"
-          rel="prev"
-        >
-          <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" />
-          <span>Previous</span>
-        </a>
-      ) : (
-        <button
-          disabled
-          class="btn btn-sm btn-outline border-base-300/40 text-base-content/30 cursor-not-allowed rounded-md opacity-40"
-          aria-disabled="true"
-        >
-          <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" />
-          <span>Previous</span>
-        </button>
-      )
-    }
+    {page.url.prev ? (
+      <a
+        href={page.url.prev.endsWith('/') ? page.url.prev : `${page.url.prev}/`}
+        class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 text-base-content flex items-center gap-1.5 rounded-md px-3.5 active:scale-99"
+        rel="prev"
+      >
+        <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" />
+        <span>Previous</span>
+      </a>
+    ) : (
+      <button
+        disabled
+        class="btn btn-sm btn-outline border-base-300/40 text-base-content/30 cursor-not-allowed rounded-md px-3.5 opacity-40"
+        aria-disabled="true"
+      >
+        <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" />
+        <span>Previous</span>
+      </button>
+    )}
   </div>
 
   <!-- Page Numbers -->
   <div class="flex items-center gap-1">
-    {
-      pages.map((num) => {
-        const isCurrent = num === currentPage;
-        const url = getPageUrl(num);
-        return (
-          <a
-            href={url}
-            class:list={cn(
-              'btn btn-sm btn-square text-xs font-semibold transition-colors',
-              isCurrent
-                ? 'btn-active bg-base-content text-base-100 hover:text-base-100 hover:bg-base-content/90 border-0 font-bold'
-                : 'btn-ghost text-base-content/70 hover:bg-base-200 hover:text-base-content'
-            )}
-            aria-current={isCurrent ? 'page' : undefined}
-            aria-label={`Go to page ${num}`}
-          >
-            {num}
-          </a>
-        );
-      })
-    }
+    {pages.map((num) => {
+      const isCurrent = num === currentPage;
+      const url = getPageUrl(num);
+      return (
+        <a
+          href={url}
+          class:list={cn(
+            'btn btn-sm btn-square text-xs font-semibold transition-colors active:scale-99',
+            isCurrent
+              ? 'btn-active bg-base-content text-base-100 hover:text-base-100 hover:bg-base-content/90 border-0 font-bold'
+              : 'btn-ghost text-base-content/70 hover:bg-base-200 hover:text-base-content'
+          )}
+          aria-current={isCurrent ? 'page' : undefined}
+          aria-label={`Go to page ${num}`}
+        >
+          {num}
+        </a>
+      );
+    })}
   </div>
 
   <!-- Next Button -->
   <div>
-    {
-      page.url.next ? (
-        <a
-          href={page.url.next.endsWith('/') ? page.url.next : `${page.url.next}/`}
-          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 text-base-content flex items-center gap-1.5 rounded-md"
-          rel="next"
-        >
-          <span>Next</span>
-          <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
-        </a>
-      ) : (
-        <button
-          disabled
-          class="btn btn-sm btn-outline border-base-300/40 text-base-content/30 cursor-not-allowed rounded-md opacity-40"
-          aria-disabled="true"
-        >
-          <span>Next</span>
-          <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
-        </button>
-      )
-    }
+    {page.url.next ? (
+      <a
+        href={page.url.next.endsWith('/') ? page.url.next : `${page.url.next}/`}
+        class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 text-base-content flex items-center gap-1.5 rounded-md px-3.5 active:scale-99"
+        rel="next"
+      >
+        <span>Next</span>
+        <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
+      </a>
+    ) : (
+      <button
+        disabled
+        class="btn btn-sm btn-outline border-base-300/40 text-base-content/30 cursor-not-allowed rounded-md px-3.5 opacity-40"
+        aria-disabled="true"
+      >
+        <span>Next</span>
+        <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
+      </button>
+    )}
   </div>
 </nav>

@@ -71,6 +71,26 @@
   ],
   "projects": [
     {
+      "name": "School Management Application Infrastructure",
+      "tech": "Next.js 16 (Hostinger Standalone), Cloudflare (CDN/WAF/R2), Telegram Bot, MySQL, Sentry",
+      "dates": "2024",
+      "highlights": [
+        "Deployed standalone Next.js 16 output build on Hostinger VPS, reducing runtime memory overhead and optimizing server execution for 500+ student records.",
+        "Configured Cloudflare CDN/WAF security rules, provisioned Cloudflare R2 object buckets, and automated Telegram Bot API transactional alert pipelines."
+      ],
+      "link": "http://kwschool.in/"
+    },
+    {
+      "name": "Multi-Tenant Ad-Driven Platform CI/CD",
+      "tech": "Next.js, Vercel CI/CD, Git Branch Workflows, Meta CAPI, Cloudflare Edge",
+      "dates": "2024",
+      "highlights": [
+        "Automated deployment workflows on Vercel using Git branch-based preview and production environments, accelerating deployment velocity and risk-free staging verifications.",
+        "Configured server-side Meta Conversions API (CAPI) with SHA-256 data hashing and PII stripping across telemetry pipelines."
+      ],
+      "link": "https://www.expertsupport.org/"
+    },
+    {
       "name": "Smart Image CLI",
       "tech": "Bun, TypeScript, Sharp, Local SLMs / LM Studio",
       "dates": "2024",
@@ -79,26 +99,6 @@
         "Integrated local offline vision SLMs via LM Studio for automated semantic image classification, eliminating cloud API costs and data privacy exposure."
       ],
       "link": "https://github.com/sahillangoo/smart-img-cli"
-    },
-    {
-      "name": "EduCore Infrastructure",
-      "tech": "Docker, MySQL, Drizzle Kit, Next.js, Sentry",
-      "dates": "2024",
-      "highlights": [
-        "Architected containerized multi-stage Docker deployment for school ERP, provisioning MySQL database instances, automated database migrations via Drizzle Kit, and Sentry error monitoring.",
-        "Configured automated database backup routines and SSL edge reverse proxies."
-      ],
-      "link": "https://github.com/SquadCoders/school_management"
-    },
-    {
-      "name": "XpressSys Cloud Security",
-      "tech": "Cloudflare Pages, Cloudflare WAF, DNS, Node.js",
-      "dates": "2023",
-      "highlights": [
-        "Architected edge security architecture using Cloudflare WAF and custom rate-limiting rules, mitigating 100% of brute-force spam traffic.",
-        "Configured automated DNS routing and SSL certificate provisioning across staging and production environments."
-      ],
-      "link": "https://xpresssys.com"
     },
     {
       "name": "Portfolio Automated CI/CD Engine",

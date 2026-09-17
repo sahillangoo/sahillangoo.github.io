@@ -36,10 +36,10 @@ export const GET: APIRoute = async () => {
 
   const content = `# Sahil Langoo - Systems Architect & Portfolio
 
-> Full Stack Systems Engineer & Co-Founder at @SquadCoders. Specializing in high-performance web systems (Astro 7, TypeScript, Tailwind CSS v4, daisyUI 5), distributed edge proxies (Hono, Cloudflare Workers, Meta CAPI, Turnstile, Partytown), local AI vision pipelines (Bun, Google Gemma SLMs), and production observability (Sentry, Playwright).
+> Full Stack Systems Engineer & Systems Architect at Eresolution Consultancy Services and Co-Founder at @SquadCoders. Specializing in high-performance web systems (Astro 7.3, TypeScript, Tailwind CSS v4, daisyUI 5), distributed edge proxies (Hono, Cloudflare Workers, Meta CAPI, Turnstile, Partytown), local AI vision pipelines (Bun, Google Gemma SLMs), and production observability (Sentry, Playwright).
 
 - **Role**: Full Stack Systems Engineer & Systems Architect
-- **Affiliation**: @SquadCoders (Co-Founder & Lead Engineer)
+- **Affiliation**: Eresolution Consultancy Services & @SquadCoders (Co-Founder & Lead Engineer)
 - **Location**: ${SITE.detailedLocation} (Open to global remote engineering & consulting)
 - **Primary Website**: ${SITE.url}
 - **Direct Email**: ${SITE.email}

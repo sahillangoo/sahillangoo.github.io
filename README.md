@@ -1,10 +1,10 @@
 # Sahil Langoo - Personal Portfolio & Engineering Journal
 
-Ultra-fast, high-performance static website, digital garden, and engineering portfolio built with [Astro 7.2](https://astro.build), [Tailwind CSS v4](https://tailwindcss.com), [daisyUI 5](https://daisyui.com), and TypeScript. Deployed globally to [Cloudflare Pages](https://pages.cloudflare.com).
+Ultra-fast, high-performance static website, digital garden, and engineering portfolio built with [Astro 7.3](https://astro.build), [Tailwind CSS v4](https://tailwindcss.com), [daisyUI 5](https://daisyui.com), and TypeScript. Deployed globally to [Cloudflare Pages](https://pages.cloudflare.com).
 
 [![Live Site](https://img.shields.io/badge/Live%20Site-sahillangoo.in-38bdf8?style=flat-square&logo=cloudflare)](https://sahillangoo.in)
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg?style=flat-square)](LICENSE)
-[![Built with Astro](https://img.shields.io/badge/Astro-7.2.x-orange.svg?style=flat-square&logo=astro)](https://astro.build)
+[![Built with Astro](https://img.shields.io/badge/Astro-7.3.x-orange.svg?style=flat-square&logo=astro)](https://astro.build)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4.3-38bdf8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
 [![daisyUI 5](https://img.shields.io/badge/daisyUI-v5.7-1ad1a5?style=flat-square&logo=daisyui)](https://daisyui.com)
 
@@ -12,7 +12,7 @@ Ultra-fast, high-performance static website, digital garden, and engineering por
 
 ## Tech Stack & Architecture Highlights
 
-- **Static Site Generation (SSG)**: Zero-JavaScript by default with Astro 7.2, compiling 35+ fully static, pre-rendered routes.
+- **Static Site Generation (SSG)**: Zero-JavaScript by default with Astro 7.3, compiling 35+ fully static, pre-rendered routes.
 - **Zero-Layout-Shift View Transitions**: Integrated with Astro's `<ClientRouter />`, permanent `scrollbar-gutter: stable`, persistent fixed header (`transition:persist="main-header"`), and pure opacity cross-fades without root scale distortion (CLS = 0.00).
 - **Styling Architecture**: Tailwind CSS v4 (`@tailwindcss/vite`) + daisyUI 5 with curated OKLCH dark (`editorialDark`) and light (`editorialLight`) themes.
 - **DaisyUI Swap Theme Switcher**: Accessible, animated `swap swap-rotate` checkbox toggle using Phosphor icons (`ph:sun-bold` / `ph:moon-bold`) and anti-flash `localStorage` persistence.

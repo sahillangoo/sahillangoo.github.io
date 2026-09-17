@@ -67,57 +67,51 @@ const breadcrumbs = [
 
     <!-- Bio Narrative -->
     <section class="text-base-content/80 space-y-4 text-base leading-relaxed sm:text-lg">
-      {aboutCopy.hero.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+      {aboutCopy.hero.paragraphs.map((paragraph) => (
+        <p>{paragraph}</p>
+      ))}
     </section>
 
     <!-- Principles Grid -->
-    {
-      profile?.principles && (
-        <section class="border-base-300 space-y-4 border-t pt-8">
-          <h2 class="text-base-content text-xl font-bold tracking-tight">
-            {aboutCopy.principles.title}
-          </h2>
-          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {profile.principles.map((principle) => (
-              <div class="border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 transition-all duration-200 hover:-translate-y-0.5 active:scale-99 sm:p-6">
-                <h3 class="text-accent font-mono text-xs font-bold tracking-wide uppercase sm:text-sm">
-                  {principle.title}
-                </h3>
-                <p class="text-base-content/75 mt-2 text-xs leading-relaxed">
-                  {principle.description}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )
-    }
+    {profile?.principles && (
+      <section class="border-base-300 space-y-4 border-t pt-8">
+        <h2 class="text-base-content text-xl font-bold tracking-tight">
+          {aboutCopy.principles.title}
+        </h2>
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {profile.principles.map((principle) => (
+            <div class="border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 transition-all duration-200 hover:-translate-y-0.5 active:scale-99 sm:p-6">
+              <h3 class="text-accent font-mono text-xs font-bold tracking-wide uppercase sm:text-sm">
+                {principle.title}
+              </h3>
+              <p class="text-base-content/75 mt-2 text-xs leading-relaxed">
+                {principle.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
 
     <!-- Workspace & Setup -->
     <section class="border-base-300 space-y-4 border-t pt-8">
       <h2 class="text-base-content text-xl font-bold tracking-tight">
         {aboutCopy.dailyStack.title}
       </h2>
-      <div
-        class="border-base-300 bg-base-200 text-base-content/80 space-y-3 rounded-xl border p-6 text-sm sm:p-8"
-      >
-        {
-          aboutCopy.dailyStack.groups.map((group) => (
-            <div class="flex items-start gap-2">
-              <span class="text-accent font-mono select-none">›</span>
-              <span>
-                <strong>{group.label}:</strong> {group.value}
-              </span>
-            </div>
-          ))
-        }
+      <div class="border-base-300 bg-base-200 text-base-content/80 space-y-3 rounded-xl border p-6 text-sm sm:p-8">
+        {aboutCopy.dailyStack.groups.map((group) => (
+          <div class="flex items-start gap-2">
+            <span class="text-accent font-mono select-none">›</span>
+            <span>
+              <strong>{group.label}:</strong> {group.value}
+            </span>
+          </div>
+        ))}
       </div>
     </section>
 
     <!-- Connect Box -->
-    <section
-      class="border-base-300/80 bg-base-200/50 flex flex-col justify-between gap-4 rounded-xl border p-6 sm:flex-row sm:items-center sm:p-8"
-    >
+    <section class="border-base-300/80 bg-base-200/50 flex flex-col justify-between gap-4 rounded-xl border p-6 sm:flex-row sm:items-center sm:p-8">
       <div>
         <h2 class="text-base-content font-bold tracking-tight">{aboutCopy.connectCta.title}</h2>
         <p class="text-base-content/75 mt-0.5 text-xs leading-relaxed">
@@ -126,13 +120,11 @@ const breadcrumbs = [
       </div>
       <a
         href={aboutCopy.connectCta.cta.href}
-        class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-4 font-mono text-xs font-medium tracking-wider uppercase"
+        class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-4 font-mono text-xs font-medium tracking-wider uppercase transition-all active:scale-99"
       >
-        {
-          aboutCopy.connectCta.cta.icon && (
-            <Icon name={aboutCopy.connectCta.cta.icon} class="h-3.5 w-3.5" />
-          )
-        }
+        {aboutCopy.connectCta.cta.icon && (
+          <Icon name={aboutCopy.connectCta.cta.icon} class="h-3.5 w-3.5" />
+        )}
         {aboutCopy.connectCta.cta.label}
       </a>
     </section>

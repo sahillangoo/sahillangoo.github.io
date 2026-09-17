@@ -35,54 +35,46 @@ const currentYear = new Date().getFullYear();
       <div class="grid grid-cols-2 gap-6 sm:gap-8 md:col-span-1 lg:col-span-4">
         <!-- Col 2: Navigation Links -->
         <div class="flex flex-col gap-3">
-          <span
-            class="text-base-content/50 font-mono text-xs font-semibold tracking-wider uppercase"
-          >
+          <span class="text-base-content/50 font-mono text-xs font-semibold tracking-wider uppercase">
             {navigationCopy.footerSections.navigation.title}
           </span>
           <ul class="flex flex-col gap-2 font-mono text-xs">
-            {
-              navigationCopy.footerSections.navigation.links.map((item) => (
-                <li>
-                  <a
-                    href={item.href}
-                    class="text-base-content/70 hover:text-accent transition-colors"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))
-            }
+            {navigationCopy.footerSections.navigation.links.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="text-base-content/70 hover:text-accent transition-colors"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 
         <!-- Col 3: System & Resources -->
         <div class="flex flex-col gap-3">
-          <span
-            class="text-base-content/50 font-mono text-xs font-semibold tracking-wider uppercase"
-          >
+          <span class="text-base-content/50 font-mono text-xs font-semibold tracking-wider uppercase">
             {navigationCopy.footerSections.system.title}
           </span>
           <ul class="flex flex-col gap-2 font-mono text-xs">
-            {
-              navigationCopy.footerSections.system.links.map((item) => (
-                <li>
-                  <a
-                    href={item.href}
-                    class="text-base-content/70 hover:text-accent transition-colors"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))
-            }
+            {navigationCopy.footerSections.system.links.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="text-base-content/70 hover:text-accent transition-colors"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
             <li>
               <a
                 href="/rss.xml"
                 target="_blank"
                 class="text-base-content/70 hover:text-accent inline-flex items-center gap-1.5 transition-colors"
               >
-                <Icon name="ph:rss-bold" class="h-3.5 w-3.5 text-amber-500/80" />
+                <Icon name="ph:rss-bold" class="text-warning/80 h-3.5 w-3.5" />
                 RSS
               </a>
             </li>
@@ -97,13 +89,13 @@ const currentYear = new Date().getFullYear();
         </span>
         <div class="flex flex-col gap-3">
           <SpotifyWidget variant="compact" class="w-full" />
-          <div class="flex flex-wrap items-center gap-1 pt-0.5">
+          <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
             <a
               href={SITE.social.github}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
-              class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
+              class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content hover:bg-base-200 rounded-md transition-all active:scale-99"
             >
               <Icon name="ph:github-logo-bold" class="h-4 w-4" />
             </a>
@@ -112,7 +104,7 @@ const currentYear = new Date().getFullYear();
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
+              class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content hover:bg-base-200 rounded-md transition-all active:scale-99"
             >
               <Icon name="ph:linkedin-logo-bold" class="h-4 w-4" />
             </a>
@@ -121,7 +113,7 @@ const currentYear = new Date().getFullYear();
               target="_blank"
               rel="noopener noreferrer"
               aria-label="X (Twitter)"
-              class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
+              class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content hover:bg-base-200 rounded-md transition-all active:scale-99"
             >
               <Icon name="ph:x-logo-bold" class="h-4 w-4" />
             </a>
@@ -130,7 +122,7 @@ const currentYear = new Date().getFullYear();
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
-              class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
+              class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content hover:bg-base-200 rounded-md transition-all active:scale-99"
             >
               <Icon name="ph:facebook-logo-bold" class="h-4 w-4" />
             </a>
@@ -139,7 +131,7 @@ const currentYear = new Date().getFullYear();
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
+              class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content hover:bg-base-200 rounded-md transition-all active:scale-99"
             >
               <Icon name="ph:instagram-logo-bold" class="h-4 w-4" />
             </a>
@@ -147,7 +139,7 @@ const currentYear = new Date().getFullYear();
             <a
               href={SITE.social.email}
               aria-label="Email"
-              class="btn btn-ghost btn-xs btn-square text-base-content/70 hover:text-base-content"
+              class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content hover:bg-base-200 rounded-md transition-all active:scale-99"
             >
               <Icon name="ph:envelope-simple-bold" class="h-4 w-4" />
             </a>
@@ -157,9 +149,7 @@ const currentYear = new Date().getFullYear();
       </div>
     </div>
 
-    <div
-      class="border-base-300/60 text-base-content/60 flex flex-col items-center justify-between gap-3 border-t pt-6 text-xs sm:flex-row"
-    >
+    <div class="border-base-300/60 text-base-content/60 flex flex-col items-center justify-between gap-3 border-t pt-6 text-xs sm:flex-row">
       <span>{navigationCopy.footerTelemetry.copyright(currentYear)}</span>
       <span class="text-base-content/50 font-mono text-xs">
         {navigationCopy.footerTelemetry.metrics}

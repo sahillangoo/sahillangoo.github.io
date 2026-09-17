@@ -84,7 +84,8 @@ const breadcrumbs = [
       href="/blog/"
       class="text-base-content/60 hover:text-accent inline-flex items-center gap-1.5 font-mono text-xs transition-colors"
     >
-      <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Back to all writing
+      <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" />
+      Back to all writing
     </a>
 
     <!-- Header -->
@@ -92,21 +93,25 @@ const breadcrumbs = [
       <div class="text-accent flex items-center gap-2 font-mono text-xs">
         <span class="tracking-widest uppercase">Category</span>
         <span>•</span>
-        <span>{posts.length} {posts.length === 1 ? 'Article' : 'Articles'}</span>
+        <span>
+          {posts.length}
+          {posts.length === 1 ? 'Article' : 'Articles'}
+        </span>
       </div>
       <h1 class="text-base-content mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">
         {categoryName}
       </h1>
       <p class="text-base-content/75 mt-3 text-sm leading-relaxed sm:text-base">
-        Curated engineering essays and architecture breakdowns focusing on {
-          categoryName.toLowerCase()
-        }.
+        Curated engineering essays and architecture breakdowns focusing on
+        {categoryName.toLowerCase()}.
       </p>
     </div>
 
     <!-- Posts Grid -->
     <div class="space-y-6">
-      {posts.map((post) => <ArticleCard post={post} />)}
+      {posts.map((post) => (
+        <ArticleCard post={post} />
+      ))}
     </div>
   </div>
 </BaseLayout>

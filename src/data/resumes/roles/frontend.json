@@ -11,7 +11,9 @@
       "Astro",
       "Tailwind CSS",
       "daisyUI",
+      "Shadcn UI",
       "Redux Toolkit",
+      "TanStack Table",
       "TanStack Query",
       "TanStack Router",
       "Vite"
@@ -19,6 +21,7 @@
     "cloud": [
       "Cloudflare Pages & Workers",
       "Vercel",
+      "Meta Pixel & CAPI",
       "Cloudflare Turnstile",
       "PWA / Service Workers",
       "Trusted Web Activities (TWA)"
@@ -81,24 +84,34 @@
   ],
   "projects": [
     {
-      "name": "TAFFin.Tech Marketplace",
-      "tech": "React, Redux Toolkit, TanStack Router & Query, Lingui i18n, daisyUI",
+      "name": "Responsive Job Portal",
+      "tech": "React, Redux, DaisyUI, TanStack Table, Schema.org (JSON-LD), i18n, TypeScript",
       "dates": "2024",
       "highlights": [
-        "Architected bilingual European recruitment marketplace featuring Redux recruiter workspaces, instant talent filtering, and drag-and-drop resume parsing.",
-        "Integrated compile-time Lingui i18n catalogs and custom daisyUI themes delivering sub-800ms LCP on mobile networks."
+        "Engineered responsive, mobile-first job portal with React, DaisyUI, and TanStack Table, rendering 10,000+ postings with facet filtering and zero UI latency.",
+        "Cut First Contentful Paint (FCP) by 35% with route code splitting and shimmer loaders with 0.00 CLS; implemented Schema.org JobPosting for Google Rich Results."
       ],
       "link": "https://www.taffin.tech/"
     },
     {
-      "name": "EduCore Portal UI",
-      "tech": "Next.js, React, Tailwind CSS, TanStack Query, visx, Nuqs",
+      "name": "School Management Application UI",
+      "tech": "Next.js 16, React, Shadcn UI, TanStack (Table, Form, Query, Router), Zod",
       "dates": "2024",
       "highlights": [
-        "Engineered accessible dashboard and public guardian payment portals with React, TanStack Query, and URL-driven data table state via Nuqs.",
-        "Integrated visx charting libraries for real-time exam distribution analytics and client-side printable PDF receipt generation with pdfmake."
+        "Engineered administrative data grids with TanStack Table and Shadcn UI to efficiently manage 500+ student profiles, enrollment records, and attendance logs with zero latency.",
+        "Standardized data intake using TanStack Form with strict Zod validation, cutting API redundancy by 40% via TanStack Query and Router caching."
       ],
-      "link": "https://github.com/SquadCoders/school_management"
+      "link": "http://kwschool.in/"
+    },
+    {
+      "name": "Multi-Tenant Ad-Driven Platform",
+      "tech": "Next.js, React, Vercel, Meta Pixel, Meta CAPI, Razorpay, SHA-256",
+      "dates": "2024",
+      "highlights": [
+        "Developed multi-tenant ad-driven web application with isolated tenant configuration, dynamic branding, and automated Vercel branch preview workflows.",
+        "Integrated hybrid Meta Pixel and server-side CAPI tracking with SHA-256 data hashing, sanitizing PII from URL query parameters and telemetry payloads."
+      ],
+      "link": "https://www.expertsupport.org/"
     },
     {
       "name": "HackerForce Storefront",
@@ -109,15 +122,6 @@
         "Engineered in-browser full-text search via WebAssembly with Pagefind, indexing hundreds of MDX curricula files with sub-15ms client query execution."
       ],
       "link": "https://github.com/HackerForceDev/hackforce-storefront"
-    },
-    {
-      "name": "BreedersHub Storefront",
-      "tech": "React, Tailwind CSS, PWA, TWA, Webpack",
-      "dates": "2023",
-      "highlights": [
-        "Architected mobile-first e-commerce frontend supporting 1,000+ SKU catalog with sub-3s 3G network loads, packaged as a PWA and Trusted Web Activity (TWA) on Play Store."
-      ],
-      "link": "https://breedershub.in"
     }
   ]
 }

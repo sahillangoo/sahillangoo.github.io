@@ -29,7 +29,7 @@ const {
       <button
         id="audio-play-btn"
         type="button"
-        class="btn btn-md btn-circle bg-accent text-accent-content hover:bg-accent/90 relative border-0 shadow-md transition-all duration-150 active:scale-95"
+        class="btn btn-md btn-circle bg-accent text-accent-content hover:bg-accent/90 relative border-0 shadow-md transition-all duration-150 active:scale-99"
         aria-label="Play article audio narration"
         title="Listen to this article"
       >
@@ -60,18 +60,15 @@ const {
             <span
               class="bg-accent h-4.5 w-0.5 animate-pulse rounded-full"
               style="animation-delay: 150ms;"
-            >
-            </span>
+            ></span>
             <span
               class="bg-accent h-2 w-0.5 animate-pulse rounded-full"
               style="animation-delay: 300ms;"
-            >
-            </span>
+            ></span>
             <span
               class="bg-accent h-4 w-0.5 animate-pulse rounded-full"
               style="animation-delay: 75ms;"
-            >
-            </span>
+            ></span>
           </div>
         </div>
         <span id="audio-status-text" class="text-base-content/65 font-mono text-xs">
@@ -112,7 +109,7 @@ const {
         <button
           id="audio-skip-back-btn"
           type="button"
-          class="btn btn-ghost btn-xs btn-square text-base-content/60 hover:text-base-content"
+          class="btn btn-ghost btn-xs btn-square text-base-content/60 hover:text-base-content transition-transform active:scale-99"
           aria-label="Rewind 1 sentence"
           title="Previous sentence"
         >
@@ -121,7 +118,7 @@ const {
         <button
           id="audio-skip-fwd-btn"
           type="button"
-          class="btn btn-ghost btn-xs btn-square text-base-content/60 hover:text-base-content"
+          class="btn btn-ghost btn-xs btn-square text-base-content/60 hover:text-base-content transition-transform active:scale-99"
           aria-label="Skip forward 1 sentence"
           title="Next sentence"
         >
@@ -142,7 +139,7 @@ const {
       <button
         id="audio-stop-btn"
         type="button"
-        class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:text-base-content"
+        class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:text-base-content transition-transform active:scale-99"
         aria-label="Stop audio"
         title="Stop and reset speech"
       >
@@ -158,8 +155,7 @@ const {
         id="audio-progress-bar"
         class="bg-accent h-1.5 rounded-full transition-all duration-200"
         style="width: 0%"
-      >
-      </div>
+      ></div>
     </div>
     <span
       id="audio-progress-text"
@@ -181,7 +177,7 @@ const {
     <button
       id="pip-play-btn"
       type="button"
-      class="btn btn-xs btn-circle bg-accent text-accent-content border-0 shadow-xs active:scale-90"
+      class="btn btn-xs btn-circle bg-accent text-accent-content border-0 shadow-xs active:scale-99"
       aria-label="Play/Pause narration"
     >
       <Icon
@@ -206,17 +202,18 @@ const {
             id="pip-progress-bar"
             class="bg-accent h-1 rounded-full transition-all duration-300"
             style="width: 0%"
-          >
-          </div>
+          ></div>
         </div>
-        <span id="pip-percent" class="text-base-content/60 shrink-0 font-mono text-xs">0%</span>
+        <span id="pip-percent" class="text-base-content/60 shrink-0 font-mono text-xs">
+          0%
+        </span>
       </div>
     </div>
 
     <button
       id="pip-close-btn"
       type="button"
-      class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:text-base-content"
+      class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:text-base-content transition-transform active:scale-99"
       title="Stop and close player"
       aria-label="Close audio player"
     >

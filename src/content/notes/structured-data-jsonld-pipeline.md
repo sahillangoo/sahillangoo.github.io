@@ -54,7 +54,7 @@ const schema = {
 };
 ---
 
-<script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+<script is:inline type="application/ld+json" set:html={JSON.stringify(schema)}></script>
 ```
 
 ### Validation

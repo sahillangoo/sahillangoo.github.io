@@ -6,7 +6,7 @@ import { Icon } from 'astro-icon/components';
 
 const colophonKeywords = [
   'Website Colophon',
-  'Astro 7 Architecture',
+  'Astro 7.3 Architecture',
   'Tailwind CSS v4 Spec',
   'daisyUI 5 Theming',
   'Typography JetBrains Mono',
@@ -41,9 +41,7 @@ const breadcrumbs = [
   <div class="mx-auto max-w-4xl space-y-12 px-4 py-8 sm:px-6 sm:py-12">
     <!-- Header -->
     <div class="border-base-300 space-y-4 border-b pb-8">
-      <div
-        class="border-base-300 bg-base-200 text-base-content/80 inline-flex items-center gap-2 rounded-full border px-3 py-0.5 font-mono text-xs"
-      >
+      <div class="border-base-300 bg-base-200 text-base-content/80 inline-flex items-center gap-2 rounded-full border px-3 py-0.5 font-mono text-xs">
         <span>{colophonCopy.header.badge}</span>
       </div>
       <h1 class="text-base-content text-2xl font-bold tracking-tight sm:text-3xl">
@@ -56,45 +54,37 @@ const breadcrumbs = [
 
     <!-- Specifications Table / Matrix -->
     <div class="border-base-300 bg-base-200 space-y-6 rounded-xl border p-6 sm:p-8">
-      <h2
-        class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase"
-      >
+      <h2 class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase">
         <Icon name="ph:cpu-bold" class="h-4 w-4" />
         {colophonCopy.sections.specificationsTitle}
       </h2>
 
       <div class="divide-base-300/80 divide-y">
-        {
-          colophonCopy.sections.specifications.map((item) => (
-            <div class="flex flex-col gap-1 py-3 text-xs sm:flex-row sm:items-center sm:justify-between">
-              <span class="text-base-content/60 font-mono font-medium">{item.label}</span>
-              <span class="text-base-content font-mono font-semibold">{item.value}</span>
-            </div>
-          ))
-        }
+        {colophonCopy.sections.specifications.map((item) => (
+          <div class="flex flex-col gap-1 py-3 text-xs sm:flex-row sm:items-center sm:justify-between">
+            <span class="text-base-content/60 font-mono font-medium">{item.label}</span>
+            <span class="text-base-content font-mono font-semibold">{item.value}</span>
+          </div>
+        ))}
       </div>
     </div>
 
     <!-- Design & Performance Principles -->
     <div class="space-y-4">
-      <h2
-        class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase"
-      >
+      <h2 class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase">
         <Icon name="ph:paint-brush-broad-bold" class="h-4 w-4" />
         {colophonCopy.sections.principlesTitle}
       </h2>
 
       <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-        {
-          colophonCopy.sections.principles.map((principle) => (
-            <div class="border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between space-y-3 rounded-xl border p-6 transition-all duration-200 hover:-translate-y-0.5 active:scale-99">
-              <h3 class="text-accent font-mono text-xs font-bold tracking-wider uppercase">
-                {principle.title}
-              </h3>
-              <p class="text-base-content/75 text-xs leading-relaxed">{principle.description}</p>
-            </div>
-          ))
-        }
+        {colophonCopy.sections.principles.map((principle) => (
+          <div class="border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between space-y-3 rounded-xl border p-6 transition-all duration-200 hover:-translate-y-0.5 active:scale-99">
+            <h3 class="text-accent font-mono text-xs font-bold tracking-wider uppercase">
+              {principle.title}
+            </h3>
+            <p class="text-base-content/75 text-xs leading-relaxed">{principle.description}</p>
+          </div>
+        ))}
       </div>
     </div>
   </div>

@@ -12,19 +12,15 @@ import { Icon } from 'astro-icon/components';
   <div class="mx-auto max-w-md space-y-6 px-4 py-24 text-center">
     <div class="text-accent font-mono text-5xl font-bold">{notFoundCopy.code}</div>
     <h1 class="text-base-content text-2xl font-bold tracking-tight">{notFoundCopy.title}</h1>
-    <p class="text-base-content/70 text-sm">
-      {notFoundCopy.description}
-    </p>
+    <p class="text-base-content/70 text-sm">{notFoundCopy.description}</p>
     <div class="pt-2">
       <a
         href={notFoundCopy.homeButton.href}
-        class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 inline-flex items-center gap-2 rounded-md border-0 font-mono text-xs tracking-wider uppercase"
+        class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 inline-flex items-center gap-2 rounded-md border-0 font-mono text-xs tracking-wider uppercase transition-all active:scale-99"
       >
-        {
-          notFoundCopy.homeButton.icon && (
-            <Icon name={notFoundCopy.homeButton.icon} class="h-3.5 w-3.5" />
-          )
-        }
+        {notFoundCopy.homeButton.icon && (
+          <Icon name={notFoundCopy.homeButton.icon} class="h-3.5 w-3.5" />
+        )}
         {notFoundCopy.homeButton.label}
       </a>
     </div>

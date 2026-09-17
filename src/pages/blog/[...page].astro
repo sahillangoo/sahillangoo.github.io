@@ -44,7 +44,7 @@ const canonicalUrl = isFirstPage ? `${SITE.url}/blog/` : `${SITE.url}/blog/${pag
 const blogKeywords = [
   'Engineering Journal',
   'Software Architecture Essays',
-  'Astro 7 Tutorials',
+  'Astro 7.3 Tutorials',
   'Cloudflare Workers Guide',
   'Server-Side Meta CAPI',
   'Local SLM Pipelines',
@@ -107,26 +107,28 @@ const breadcrumbs = [
       </p>
 
       <!-- Category Filter Pills -->
-      <div class="flex flex-wrap items-center gap-2 pt-6">
-        <span class="text-base-content/50 font-mono text-xs tracking-wider uppercase">
+      <div class="flex flex-col gap-2.5 pt-6 sm:flex-row sm:items-center">
+        <span class="text-base-content/50 shrink-0 font-mono text-xs tracking-wider uppercase">
           {blogCopy.header.topicsLabel}
         </span>
-        {
-          categories.map((category) => (
+        <div class="flex flex-wrap items-center gap-2">
+          {categories.map((category) => (
             <a
               href={`/blog/category/${slugify(category)}/`}
               class="bg-base-200 border-base-300 text-base-content/75 hover:border-accent/40 hover:text-accent rounded-full border px-3 py-1 font-mono text-xs transition-colors"
             >
               {category}
             </a>
-          ))
-        }
+          ))}
+        </div>
       </div>
     </div>
 
     <!-- Articles List -->
     <div class="space-y-6">
-      {articles.map((post) => <ArticleCard post={post} />)}
+      {articles.map((post) => (
+        <ArticleCard post={post} />
+      ))}
     </div>
 
     <!-- Pagination Controls -->

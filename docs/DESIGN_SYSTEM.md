@@ -174,7 +174,7 @@ All icons use Phosphor icons (`astro-icon` with `ph:*`) in bold weight for consi
 <div
   class="border-base-300 bg-base-200 text-base-content/80 inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-xs"
 >
-  <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400"></span>
+  <span class="bg-success h-1.5 w-1.5 animate-pulse rounded-full"></span>
   <span>Available for select projects</span>
 </div>
 ```

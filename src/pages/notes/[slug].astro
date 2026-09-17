@@ -78,15 +78,14 @@ const breadcrumbs = [
       href="/notes/"
       class="text-base-content/60 hover:text-accent inline-flex items-center gap-1.5 font-mono text-xs transition-colors"
     >
-      <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Back to digital garden
+      <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" />
+      Back to digital garden
     </a>
 
     <!-- Note Header -->
     <header class="border-base-300 space-y-4 border-b pb-8">
       <div class="text-base-content/60 flex items-center gap-2 font-mono text-xs">
-        <span
-          class="badge badge-sm bg-accent/10 text-accent border-0 font-mono text-xs font-semibold tracking-wider uppercase"
-        >
+        <span class="badge badge-sm bg-accent/10 text-accent border-0 font-mono text-xs font-semibold tracking-wider uppercase">
           {data.topic}
         </span>
         <span>•</span>
@@ -100,13 +99,9 @@ const breadcrumbs = [
         {data.title}
       </h1>
 
-      {
-        data.description && (
-          <p class="text-base-content/80 text-base leading-relaxed sm:text-lg">
-            {data.description}
-          </p>
-        )
-      }
+      {data.description && (
+        <p class="text-base-content/80 text-base leading-relaxed sm:text-lg">{data.description}</p>
+      )}
     </header>
 
     <!-- Note Content -->
@@ -115,45 +110,43 @@ const breadcrumbs = [
     </div>
 
     <!-- Adjacent Note Navigation / Slug Pagination -->
-    {
-      (prevNote || nextNote) && (
-        <nav
-          aria-label="Adjacent Notes Navigation"
-          class="border-base-300 grid grid-cols-1 gap-4 border-t pt-8 sm:grid-cols-2"
-        >
-          {prevNote ? (
-            <a
-              href={`/notes/${prevNote.id}/`}
-              class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-left transition-all duration-200 hover:-translate-y-0.5 active:scale-99"
-              rel="prev"
-            >
-              <span class="text-base-content/60 flex items-center gap-1 font-mono text-xs font-medium tracking-wider uppercase">
-                <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Previous Note
-              </span>
-              <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
-                {prevNote.data.title}
-              </span>
-            </a>
-          ) : (
-            <div />
-          )}
+    {(prevNote || nextNote) && (
+      <nav
+        aria-label="Adjacent Notes Navigation"
+        class="border-base-300 grid grid-cols-1 gap-4 border-t pt-8 sm:grid-cols-2"
+      >
+        {prevNote ? (
+          <a
+            href={`/notes/${prevNote.id}/`}
+            class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-left transition-all duration-200 hover:-translate-y-0.5 active:scale-99"
+            rel="prev"
+          >
+            <span class="text-base-content/60 flex items-center gap-1 font-mono text-xs font-medium tracking-wider uppercase">
+              <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Previous Note
+            </span>
+            <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
+              {prevNote.data.title}
+            </span>
+          </a>
+        ) : (
+          <div />
+        )}
 
-          {nextNote && (
-            <a
-              href={`/notes/${nextNote.id}/`}
-              class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-right transition-all duration-200 hover:-translate-y-0.5 active:scale-99 sm:col-start-2"
-              rel="next"
-            >
-              <span class="text-base-content/60 flex items-center justify-end gap-1 font-mono text-xs font-medium tracking-wider uppercase">
-                Next Note <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
-              </span>
-              <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
-                {nextNote.data.title}
-              </span>
-            </a>
-          )}
-        </nav>
-      )
-    }
+        {nextNote && (
+          <a
+            href={`/notes/${nextNote.id}/`}
+            class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-right transition-all duration-200 hover:-translate-y-0.5 active:scale-99 sm:col-start-2"
+            rel="next"
+          >
+            <span class="text-base-content/60 flex items-center justify-end gap-1 font-mono text-xs font-medium tracking-wider uppercase">
+              Next Note <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
+            </span>
+            <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
+              {nextNote.data.title}
+            </span>
+          </a>
+        )}
+      </nav>
+    )}
   </article>
 </BaseLayout>

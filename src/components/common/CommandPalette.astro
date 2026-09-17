@@ -129,14 +129,11 @@ const searchIndex = [
   <div
     id="command-palette-backdrop"
     class="fixed inset-0 bg-black/70 backdrop-blur-xs transition-opacity"
-  >
-  </div>
+  ></div>
 
   <!-- Palette Container -->
   <div class="fixed inset-0 z-10 flex items-start justify-center p-4 pt-16 sm:pt-24">
-    <div
-      class="border-base-300 bg-base-100/95 max-h-modal flex w-full max-w-xl flex-col overflow-hidden rounded-xl border shadow-2xl backdrop-blur-md"
-    >
+    <div class="border-base-300 bg-base-100/95 max-h-modal flex w-full max-w-xl flex-col overflow-hidden rounded-xl border shadow-2xl backdrop-blur-md">
       <!-- Search Input Header -->
       <div class="border-base-300 flex items-center gap-3 border-b px-4 py-3.5">
         <Icon name="ph:magnifying-glass-bold" class="text-base-content/50 h-4 w-4 shrink-0" />
@@ -148,9 +145,7 @@ const searchIndex = [
           autocomplete="off"
           spellcheck="false"
         />
-        <kbd
-          class="kbd kbd-sm border-base-300 bg-base-200 text-base-content/60 hidden items-center gap-0.5 font-mono text-xs sm:inline-flex"
-        >
+        <kbd class="kbd kbd-sm border-base-300 bg-base-200 text-base-content/60 hidden items-center gap-0.5 font-mono text-xs sm:inline-flex">
           ESC
         </kbd>
       </div>
@@ -161,16 +156,14 @@ const searchIndex = [
       </div>
 
       <!-- Palette Footer -->
-      <div
-        class="border-base-300/80 bg-base-200/50 text-base-content/60 flex items-center justify-between border-t px-4 py-2.5 font-mono text-xs"
-      >
+      <div class="border-base-300/80 bg-base-200/50 text-base-content/60 flex items-center justify-between border-t px-4 py-2.5 font-mono text-xs">
         <div class="flex items-center gap-3">
           <span class="flex items-center gap-1">
             <kbd class="kbd kbd-xs border-base-300 bg-base-100 font-mono">↑</kbd>
-            <kbd class="kbd kbd-xs border-base-300 bg-base-100 font-mono">↓</kbd> Navigate
+            <kbd class="kbd kbd-xs border-base-300 bg-base-100 font-mono">↓</kbd>Navigate
           </span>
           <span class="flex items-center gap-1">
-            <kbd class="kbd kbd-xs border-base-300 bg-base-100 font-mono">↵</kbd> Select
+            <kbd class="kbd kbd-xs border-base-300 bg-base-100 font-mono">↵</kbd>Select
           </span>
         </div>
         <span>{SITE.name}</span>

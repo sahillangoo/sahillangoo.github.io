@@ -1,6 +1,6 @@
 ---
 title: 'HackerForce | Red Team Operations & Tactical Intelligence Platform'
-description: 'High-performance static cybersecurity storefront, MDX intelligence publications, and SMTP exploitation course platform built with Astro 7 and Tailwind CSS v4.'
+description: 'High-performance static cybersecurity storefront, MDX intelligence publications, and SMTP exploitation course platform built with Astro 7.3 and Tailwind CSS v4.'
 summary: 'Tactical cybersecurity storefront, red team courseware engine, and zero-server Pagefind search architecture.'
 category: 'web-app'
 tags:
@@ -33,7 +33,7 @@ Key engineering challenges included:
 ## Architectural Solutions & System Pipeline
 
 ```
-[Markdown & MDX Curricula] ──> [Astro 7 Static Compiler]
+[Markdown & MDX Curricula] ──> [Astro 7.3 Static Compiler]
                                         │
            ┌────────────────────────────┼────────────────────────────┐
            ▼                            ▼                            ▼
@@ -45,9 +45,9 @@ Key engineering challenges included:
                            [< 300ms LCP / 0.00 CLS]
 ```
 
-### 1. Zero-JS Static Site Generation with Astro 7
+### 1. Zero-JS Static Site Generation with Astro 7.3
 
-Architected the entire platform using **Astro 7** with static output mode (`output: 'static'`). By default, pages compile to pure, semantic HTML and CSS with zero client-side JavaScript execution, eliminating hydration waterfalls and reducing page load times to under 300ms worldwide.
+Architected the entire platform using **Astro 7.3** with static output mode (`output: 'static'`). By default, pages compile to pure, semantic HTML and CSS with zero client-side JavaScript execution, eliminating hydration waterfalls and reducing page load times to under 300ms worldwide.
 
 ### 2. Static Full-Text Search with Pagefind & WebAssembly
 

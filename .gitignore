@@ -57,6 +57,9 @@ Thumbs.db
 .cursor/
 
 # Temporary & Swap Files
+.temp/
+temp/
 *.tmp
 *.bak
 *.swp
+

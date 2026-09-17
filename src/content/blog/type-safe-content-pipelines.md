@@ -108,11 +108,9 @@ const isCli = data.category === 'cli-tool';
   <p class="text-base-content/75 text-sm">{data.description}</p>
 
   <div class="mt-4 flex gap-2">
-    {
-      data.tags.map((tag) => (
-        <span class="bg-base-300 rounded px-2 py-0.5 font-mono text-xs">#{tag}</span>
-      ))
-    }
+    {data.tags.map((tag) => (
+      <span class="bg-base-300 rounded px-2 py-0.5 font-mono text-xs">#{tag}</span>
+    ))}
   </div>
 </article>
 ```

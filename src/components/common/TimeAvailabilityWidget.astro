@@ -9,6 +9,15 @@ export interface Props {
 }
 
 const { variant = 'compact', showWeather = true, class: className = '' } = Astro.props;
+
+// Build-time initial fallback timestamp in IST
+const initialTime = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'Asia/Kolkata',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  hour12: true,
+}).format(new Date());
 ---
 
 <div
@@ -19,44 +28,42 @@ const { variant = 'compact', showWeather = true, class: className = '' } = Astro
   )}
 >
   <div class="flex items-center gap-1.5">
-    <Icon name="ph:map-pin-bold" class="h-3.5 w-3.5 shrink-0 text-emerald-500" />
+    <Icon name="ph:map-pin-bold" class="text-accent h-3.5 w-3.5 shrink-0" />
     <span class="text-base-content/80 font-medium">Kashmir, India</span>
   </div>
 
-  {
-    showWeather && (
-      <>
-        <span class="text-base-content/30">•</span>
-        <div
-          id="live-weather-badge"
-          class="text-base-content/70 flex items-center gap-1.5 transition-opacity duration-300"
-        >
-          <Icon id="weather-icon-sun" name="ph:sun-bold" class="h-3.5 w-3.5 text-amber-400" />
-          <span id="weather-temp-text" class="font-medium tabular-nums">
-            --°C
-          </span>
-          <span id="weather-desc-text" class="text-base-content/50 hidden text-xs sm:inline">
-            Loading...
-          </span>
-        </div>
-      </>
-    )
-  }
+  {showWeather && (
+    <>
+      <span class="text-base-content/30">•</span>
+      <div
+        id="live-weather-badge"
+        class="text-base-content/70 flex items-center gap-1.5 transition-opacity duration-300"
+      >
+        <Icon id="weather-icon-sun" name="ph:sun-bold" class="text-warning h-3.5 w-3.5" />
+        <span id="weather-temp-text" class="font-medium tabular-nums">
+          18°C
+        </span>
+        <span id="weather-desc-text" class="text-base-content/50 hidden text-xs sm:inline">
+          Clear
+        </span>
+      </div>
+    </>
+  )}
 
   <span class="text-base-content/30">•</span>
 
   <div class="text-base-content/70 flex items-center gap-1.5">
     <Icon name="ph:clock-bold" class="text-accent h-3.5 w-3.5" />
-    <span id="kashmir-live-clock" class="font-mono font-medium tabular-nums">--:--:-- IST</span>
+    <span id="kashmir-live-clock" class="font-mono font-medium tabular-nums">
+      {initialTime}IST
+    </span>
   </div>
 
-  {
-    variant === 'full' && (
-      <div class="badge badge-sm ml-auto hidden border-emerald-800/40 bg-emerald-950/40 font-mono text-xs font-medium text-emerald-400 sm:inline-flex">
-        Open to Select Projects
-      </div>
-    )
-  }
+  {variant === 'full' && (
+    <div class="badge badge-sm border-success/30 bg-success/10 text-success ml-auto hidden font-mono text-xs font-medium sm:inline-flex">
+      Open to Select Projects
+    </div>
+  )}
 </div>
 
 <script>
@@ -113,6 +120,8 @@ const { variant = 'compact', showWeather = true, class: className = '' } = Astro
     updateWeatherTelemetry();
   }
 
+  // Initialize immediately on script load as well as on Astro View Transitions
+  setupWidgets();
   document.addEventListener('astro:page-load', setupWidgets);
   document.addEventListener('astro:before-swap', () => {
     if (clockInterval) {

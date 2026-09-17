@@ -1,8 +1,8 @@
 {
   "name": "Sahil Langoo",
   "title": "Full Stack Systems Engineer & Systems Architect",
-  "bio": "Full Stack Systems Engineer at Eresolution Consultancy Services. Architecting ultra-fast static web architectures, distributed edge proxies, and local AI pipelines.",
-  "about": "Full Stack Systems Engineer with a B.Tech in Computer Science Engineering (CGPA: 7.07) from the University of Kashmir, currently engineering systems at Eresolution Consultancy Services. Specializes in crafting high-performance, responsive web architectures, distributed edge computing proxies, and AI integrations. Demonstrated ability to boost website performance by 30-40% (sub-50ms TTFB, 0.00 CLS) and increase organic reach and user engagement by 20-30%. Dedicated to building software that is fast by default, zero-waste, and engineered with strict type safety.",
+  "bio": "Full Stack Systems Engineer at Eresolution Consultancy Services & Co-Founder at SquadCoders. Architecting ultra-fast static web architectures, distributed edge proxies, and local AI pipelines.",
+  "about": "Full Stack Systems Engineer with a B.Tech in Computer Science Engineering (CGPA: 7.07) from the University of Kashmir, currently engineering systems at Eresolution Consultancy Services and Co-Founder at SquadCoders. Specializes in crafting high-performance, responsive web architectures, distributed edge computing proxies, and AI integrations. Demonstrated ability to boost website performance by 30-40% (sub-50ms TTFB, 0.00 CLS) and increase organic reach and user engagement by 20-30%. Dedicated to building software that is fast by default, zero-waste, and engineered with strict type safety.",
   "skills": {
     "languages": [
       "TypeScript",
@@ -22,12 +22,13 @@
     "frameworks": [
       "Next.js 16",
       "React 19",
-      "Astro 7",
+      "Astro 7.3",
       "Hono",
       "Node.js",
       "Express",
       "Tailwind CSS v4",
       "daisyUI 5",
+      "Shadcn UI",
       "Drizzle ORM",
       "Better Auth",
       "Twig",
@@ -36,6 +37,7 @@
       "TanStack Router",
       "TanStack Query",
       "TanStack Table",
+      "TanStack Form",
       "Lingui i18n",
       "Partytown",
       "WordPress"
@@ -55,6 +57,7 @@
       "Cloudflare R2",
       "Cloudflare WAF & DNS",
       "Meta CAPI Gateways",
+      "Meta Pixel",
       "Vercel",
       "Docker",
       "Azure",
@@ -69,6 +72,9 @@
       "Sentry",
       "Postman",
       "Zod",
+      "Razorpay",
+      "Telegram Bot API",
+      "Nodemailer",
       "Figma",
       "Adobe Photoshop",
       "Adobe Illustrator",

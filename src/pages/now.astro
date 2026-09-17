@@ -42,18 +42,14 @@ const nowSchema = {
   <div class="mx-auto max-w-4xl space-y-12 px-4 py-8 sm:px-6 sm:py-12">
     <!-- Header -->
     <div class="border-base-300 space-y-4 border-b pb-8">
-      <div
-        class="border-base-300 bg-base-200 text-base-content/80 inline-flex items-center gap-2 rounded-full border px-3 py-0.5 font-mono text-xs"
-      >
-        <span class="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400"></span>
+      <div class="border-base-300 bg-base-200 text-base-content/80 inline-flex items-center gap-2 rounded-full border px-3 py-0.5 font-mono text-xs">
+        <span class="bg-success h-1.5 w-1.5 animate-pulse rounded-full"></span>
         <span>{nowCopy.header.badge}</span>
       </div>
       <h1 class="text-base-content text-2xl font-bold tracking-tight sm:text-3xl">
         {nowCopy.header.title}
       </h1>
-      <p class="text-base-content/75 text-base leading-relaxed">
-        {nowCopy.header.description}
-      </p>
+      <p class="text-base-content/75 text-base leading-relaxed">{nowCopy.header.description}</p>
       <div class="flex flex-wrap items-center gap-3 pt-2">
         <TimeAvailabilityWidget variant="compact" />
         <SpotifyWidget variant="compact" />
@@ -62,45 +58,37 @@ const nowSchema = {
 
     <!-- Content Sections -->
     <div class="space-y-10">
-      {
-        nowCopy.sections.map((section) => (
-          <div class="border-base-300 bg-base-200 space-y-4 rounded-xl border p-6 sm:p-8">
-            <h2 class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase">
-              <Icon name={section.icon} class="h-4 w-4" />
-              {section.category}
-            </h2>
-            <ul class="text-base-content/80 space-y-3 text-sm leading-relaxed">
-              {section.items.map((item) => (
-                <li class="flex items-start gap-3">
-                  <span class="text-accent mt-0.5 font-bold select-none">›</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))
-      }
+      {nowCopy.sections.map((section) => (
+        <div class="border-base-300 bg-base-200 space-y-4 rounded-xl border p-6 sm:p-8">
+          <h2 class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase">
+            <Icon name={section.icon} class="h-4 w-4" />
+            {section.category}
+          </h2>
+          <ul class="text-base-content/80 space-y-3 text-sm leading-relaxed">
+            {section.items.map((item) => (
+              <li class="flex items-start gap-3">
+                <span class="text-accent mt-0.5 font-bold select-none">›</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
 
     <!-- Location & Status note -->
-    <div
-      class="border-base-300/80 bg-base-200/50 flex flex-col justify-between gap-4 rounded-xl border p-6 sm:flex-row sm:items-center"
-    >
+    <div class="border-base-300/80 bg-base-200/50 flex flex-col justify-between gap-4 rounded-xl border p-6 sm:flex-row sm:items-center">
       <div>
         <h2 class="text-base-content text-sm font-bold">{nowCopy.availabilityCard.title}</h2>
-        <p class="text-base-content/60 mt-0.5 text-xs">
-          {nowCopy.availabilityCard.description}
-        </p>
+        <p class="text-base-content/60 mt-0.5 text-xs">{nowCopy.availabilityCard.description}</p>
       </div>
       <a
         href={nowCopy.availabilityCard.cta.href}
-        class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 self-start rounded-md border-0 px-4 font-mono text-xs tracking-wider uppercase sm:self-auto"
+        class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 self-start rounded-md border-0 px-4 font-mono text-xs tracking-wider uppercase transition-all active:scale-99 sm:self-auto"
       >
-        {
-          nowCopy.availabilityCard.cta.icon && (
-            <Icon name={nowCopy.availabilityCard.cta.icon} class="h-3.5 w-3.5" />
-          )
-        }
+        {nowCopy.availabilityCard.cta.icon && (
+          <Icon name={nowCopy.availabilityCard.cta.icon} class="h-3.5 w-3.5" />
+        )}
         {nowCopy.availabilityCard.cta.label}
       </a>
     </div>

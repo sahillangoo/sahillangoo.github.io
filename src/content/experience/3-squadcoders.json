@@ -1,12 +1,12 @@
 {
-  "role": "Freelance Software Engineer",
+  "role": "Co-Founder & Lead Systems Engineer",
   "company": "SquadCoders",
   "companyUrl": "https://github.com/SquadCoders",
   "location": "Kashmir, India",
-  "period": "Dec 2023 - Mar 2024",
-  "current": false,
+  "period": "Dec 2023 - Present",
+  "current": true,
   "highlights": [
-    "Architected and deployed static web systems at SquadCoders, delivering sub-50ms global TTFB and 0.00 CLS across client platforms built on Astro, TypeScript, and Cloudflare Pages.",
+    "Co-founded and engineered static web architectures at SquadCoders, delivering sub-50ms global TTFB and 0.00 CLS across client platforms built on Astro 7.3, TypeScript, and Cloudflare Pages.",
     "Engineered custom web systems including SoulMedia, Hotel Akbar Sonamarg, and TravelKit, reducing bundle payloads by 65% and achieving 100/100 Lighthouse performance benchmarks through zero-JS baselines.",
     "Developed and launched 10+ high-performance websites, achieving an average page-load improvement of 30% and a 15% boost in client project conversion rates.",
     "Developed custom zero-dependency build-time quality hooks in Node.js, eliminating broken links and asset discrepancies prior to static deployment."
@@ -21,5 +21,5 @@
     "Sentry",
     "Docker"
   ],
-  "order": 3
+  "order": 2
 }

@@ -14,12 +14,15 @@
       "Symfony",
       "Tailwind CSS",
       "daisyUI",
+      "Shadcn UI",
+      "TanStack Table",
       "Drizzle ORM"
     ],
     "cloud": [
       "Cloudflare Pages & Workers",
       "Cloudflare R2 & KV",
       "Cloudflare Turnstile",
+      "Meta Pixel & CAPI",
       "Vercel",
       "Docker",
       "REST / GraphQL"
@@ -84,14 +87,34 @@
   ],
   "projects": [
     {
-      "name": "EduCore SaaS",
-      "tech": "Next.js, React, Drizzle ORM, MySQL, Better Auth, Razorpay",
+      "name": "School Management Application",
+      "tech": "Next.js 16 (Hostinger Standalone), Shadcn UI, TanStack Ecosystem, Drizzle ORM, MySQL, Better Auth",
       "dates": "2024",
       "highlights": [
-        "Architected Next.js App Router multi-tenant SaaS with Drizzle ORM and MySQL, modeling student lifecycles, automated fee ledgers, and role-based access controls (RBAC).",
-        "Engineered webhook-verified Razorpay payment pipeline with automated PDF invoice dispatching via pdfmake, eliminating billing discrepancies across 500+ active students."
+        "Architected enterprise school management system on Next.js 16 (Hostinger standalone build) with Drizzle ORM and MySQL, managing 500+ student records, fee reconciliation, and automated Telegram/email alerts.",
+        "Implemented high-performance interfaces using Shadcn UI and TanStack (Query, Router, Table, Form with Zod), backed by Better Auth RBAC tiers, Cloudflare CDN/WAF, and Cloudflare R2."
       ],
-      "link": "https://github.com/SquadCoders/school_management"
+      "link": "http://kwschool.in/"
+    },
+    {
+      "name": "Multi-Tenant Ad-Driven Platform",
+      "tech": "Next.js, React, Vercel, Git Branch Workflows, Meta CAPI, Meta Pixel, Razorpay, SHA-256",
+      "dates": "2024",
+      "highlights": [
+        "Architected multi-tenant ad-driven platform with automated branch-based Vercel deployments, isolated tenant branding, and end-to-end Razorpay subscription billing.",
+        "Implemented privacy-first ad tracking via Meta Pixel and hashed server-side Conversions API (CAPI), securing PII across URL query parameters and telemetry payloads."
+      ],
+      "link": "https://www.expertsupport.org/"
+    },
+    {
+      "name": "Responsive Job Portal",
+      "tech": "React, Redux, DaisyUI, TanStack Table, Schema.org (JSON-LD), i18n, TypeScript",
+      "dates": "2024",
+      "highlights": [
+        "Built high-performance, multilingual job portal using React, Redux, and DaisyUI; integrated TanStack Table with lazy loading and shimmer loaders to smoothly handle 10,000+ job listings.",
+        "Boosted discoverability and organic search rankings by engineering structured Schema.org markup (JobPosting) for Google Rich Results alongside full SEO metadata optimization."
+      ],
+      "link": "https://www.taffin.tech/"
     },
     {
       "name": "HackerForce Storefront",
@@ -102,26 +125,6 @@
         "Engineered in-browser full-text search via WebAssembly with Pagefind, indexing hundreds of MDX curricula files with sub-15ms client query execution."
       ],
       "link": "https://github.com/HackerForceDev/hackforce-storefront"
-    },
-    {
-      "name": "TAFFin.Tech Marketplace",
-      "tech": "React, Symfony, Redux Toolkit, TanStack Query, Tailwind CSS",
-      "dates": "2024",
-      "highlights": [
-        "Constructed hybrid React SPA and Symfony recruitment marketplace featuring Redux state management, bilingual Lingui i18n (EN/FR), and GDPR-compliant candidate ingestion.",
-        "Optimized high-density candidate search filters and application funnels with TanStack Query, achieving sub-100ms client-side state transitions."
-      ],
-      "link": "https://www.taffin.tech/"
-    },
-    {
-      "name": "XpressSys Logistics",
-      "tech": "Cloudflare Pages, Node.js, JavaScript, Cloudflare WAF",
-      "dates": "2023",
-      "highlights": [
-        "Engineered logistics dispatch platform with automated consignment tracking, delivery pin-code routing, and Cloudflare edge proxying.",
-        "Hardened edge security perimeter via Cloudflare WAF and custom IP rate-limiting rules, eliminating 99% of automated bot and spam requests."
-      ],
-      "link": "https://xpresssys.com"
     }
   ]
 }

@@ -48,28 +48,21 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
     </HeadingTag>
 
     <!-- Description -->
-    <p class="text-base-content/70 mt-2 text-sm leading-relaxed">
-      {data.description}
-    </p>
+    <p class="text-base-content/70 mt-2 text-sm leading-relaxed">{data.description}</p>
   </div>
 
   <!-- Tags & Read indicator -->
   <div class="border-base-300/60 mt-5 flex items-center justify-between border-t pt-4 text-xs">
     <div class="flex flex-wrap gap-1.5">
-      {
-        data.tags
-          .slice(0, 3)
-          .map((tag) => (
-            <span class="badge badge-sm bg-base-300/40 text-base-content/70 border-0 font-mono text-xs">
-              #{tag}
-            </span>
-          ))
-      }
+      {data.tags.slice(0, 3).map((tag) => (
+        <span class="badge badge-sm bg-base-300/40 text-base-content/70 border-0 font-mono text-xs">
+          #{tag}
+        </span>
+      ))}
     </div>
-    <span
-      class="text-accent flex items-center gap-1 font-mono text-xs font-medium transition-transform group-hover:translate-x-0.5"
-    >
-      Read <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
+    <span class="text-accent flex items-center gap-1 font-mono text-xs font-medium transition-transform group-hover:translate-x-0.5">
+      Read
+      <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
     </span>
   </div>
 </article>

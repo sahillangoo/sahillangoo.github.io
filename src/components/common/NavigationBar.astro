@@ -1,5 +1,6 @@
 ---
 import { SITE } from '@const/site.ts';
+import { homeCopy } from '@copy/home.ts';
 import ThemeToggle from '@components/common/ThemeToggle.astro';
 import AudioToggle from '@components/common/AudioToggle.astro';
 import { Icon } from 'astro-icon/components';
@@ -24,16 +25,14 @@ function isActive(href: string): boolean {
       href="/"
       class="group text-base-content flex items-center gap-3 font-semibold transition-opacity hover:opacity-80"
     >
-      <span
-        class="bg-base-200 border-base-300 text-accent flex h-8 w-8 items-center justify-center rounded-md border font-mono text-xs font-bold"
-      >
+      <span class="bg-base-200 border-base-300 text-accent flex h-8 w-8 items-center justify-center rounded-md border font-mono text-xs font-bold">
         SL
       </span>
       <div class="flex flex-col">
         <span class="text-sm leading-tight font-semibold tracking-tight">{SITE.name}</span>
         <span class="text-base-content/60 flex items-center gap-1.5 text-xs">
-          <Icon name="ph:briefcase-bold" class="h-3 w-3 shrink-0 text-emerald-500" />
-          Available for work
+          <Icon name="ph:briefcase-bold" class="h-3 w-3 shrink-0 text-success" />
+          <span class="truncate max-w-36 sm:max-w-none">{homeCopy.hero.statusText}</span>
         </span>
       </div>
     </a>
@@ -43,30 +42,28 @@ function isActive(href: string): boolean {
       id="desktop-nav"
       class="border-base-300 bg-base-200/60 hidden items-center gap-1 rounded-full border px-3 py-1.5 backdrop-blur-md md:flex"
     >
-      {
-        SITE.nav.map((item) => {
-          const active = isActive(item.href);
-          return (
-            <a
-              href={item.href}
-              data-nav-link={item.href}
-              class:list={cn(
-                'nav-item rounded-full px-3.5 py-1 text-xs font-medium transition-all duration-150 active:scale-95',
-                active
-                  ? 'bg-base-content text-base-100 hover:text-base-100 hover:bg-base-content/90 font-semibold shadow-xs'
-                  : 'text-base-content/70 hover:text-base-content hover:bg-base-300/50'
-              )}
-            >
-              {item.label}
-            </a>
-          );
-        })
-      }
+      {SITE.nav.map((item) => {
+        const active = isActive(item.href);
+        return (
+          <a
+            href={item.href}
+            data-nav-link={item.href}
+            class:list={cn(
+              'nav-item rounded-full px-3.5 py-1 text-xs font-medium transition-all duration-150 active:scale-99',
+              active
+                ? 'bg-base-content text-base-100 hover:text-base-100 hover:bg-base-content/90 font-semibold shadow-xs'
+                : 'text-base-content/70 hover:text-base-content hover:bg-base-300/50'
+            )}
+          >
+            {item.label}
+          </a>
+        );
+      })}
       <a
         href="/now/"
         data-nav-link="/now/"
         class:list={cn(
-          'nav-item flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-medium transition-all duration-150 active:scale-95',
+          'nav-item flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-medium transition-all duration-150 active:scale-99',
           isActive('/now/')
             ? 'bg-base-content text-base-100 hover:text-base-100 hover:bg-base-content/90 font-semibold shadow-xs'
             : 'text-base-content/70 hover:text-base-content hover:bg-base-300/50'
@@ -83,7 +80,7 @@ function isActive(href: string): boolean {
       <button
         type="button"
         data-open-palette
-        class="btn btn-sm btn-outline border-base-300 bg-base-200/80 text-base-content/60 hover:text-base-content hover:border-base-content/30 hidden items-center gap-2 font-mono text-xs font-normal normal-case transition-all active:scale-95 sm:inline-flex"
+        class="btn btn-sm btn-outline border-base-300 bg-base-200/80 text-base-content/60 hover:text-base-content hover:border-base-content/30 hidden items-center gap-2 font-mono text-xs font-normal normal-case transition-all active:scale-99 sm:inline-flex"
       >
         <Icon name="ph:magnifying-glass-bold" class="h-3.5 w-3.5" />
         <span class="text-xs">Search</span>
@@ -100,7 +97,7 @@ function isActive(href: string): boolean {
         type="button"
         data-open-palette
         aria-label="Open command palette"
-        class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content rounded-md sm:hidden"
+        class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content rounded-md transition-transform active:scale-99 sm:hidden"
       >
         <Icon name="ph:magnifying-glass-bold" class="h-4 w-4" />
       </button>
@@ -113,7 +110,7 @@ function isActive(href: string): boolean {
         id="mobile-menu-open"
         type="button"
         aria-label="Open mobile menu"
-        class="btn btn-ghost btn-sm btn-square text-base-content/80 hover:text-base-content rounded-md md:hidden"
+        class="btn btn-ghost btn-sm btn-square text-base-content/80 hover:text-base-content rounded-md transition-transform active:scale-99 md:hidden"
       >
         <Icon name="ph:list-bold" class="h-5 w-5" />
       </button>

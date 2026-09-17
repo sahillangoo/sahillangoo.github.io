@@ -106,7 +106,8 @@ const breadcrumbs = [
       href="/blog/"
       class="text-base-content/60 hover:text-accent inline-flex items-center gap-1.5 font-mono text-xs transition-colors"
     >
-      <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Back to all articles
+      <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" />
+      Back to all articles
     </a>
 
     <!-- Article Header -->
@@ -120,14 +121,12 @@ const breadcrumbs = [
         </a>
         <span>•</span>
         <time datetime={data.publishDate}>{formattedDate}</time>
-        {
-          data.readingTime && (
-            <>
-              <span>•</span>
-              <span>{data.readingTime}</span>
-            </>
-          )
-        }
+        {data.readingTime && (
+          <>
+            <span>•</span>
+            <span>{data.readingTime}</span>
+          </>
+        )}
       </div>
 
       <h1
@@ -137,22 +136,18 @@ const breadcrumbs = [
         {data.title}
       </h1>
 
-      <p class="text-base-content/80 text-base leading-relaxed sm:text-lg">
-        {data.description}
-      </p>
+      <p class="text-base-content/80 text-base leading-relaxed sm:text-lg">{data.description}</p>
 
       <!-- Tags with linked routes -->
       <div class="flex flex-wrap gap-2 pt-2">
-        {
-          data.tags.map((tag) => (
-            <a
-              href={`/blog/tag/${slugify(tag)}/`}
-              class="bg-base-200 border-base-300 text-base-content/70 hover:border-accent/40 hover:text-accent rounded border px-2.5 py-0.5 font-mono text-xs transition-colors"
-            >
-              #{tag}
-            </a>
-          ))
-        }
+        {data.tags.map((tag) => (
+          <a
+            href={`/blog/tag/${slugify(tag)}/`}
+            class="bg-base-200 border-base-300 text-base-content/70 hover:border-accent/40 hover:text-accent rounded border px-2.5 py-0.5 font-mono text-xs transition-colors"
+          >
+            #{tag}
+          </a>
+        ))}
       </div>
     </header>
 
@@ -168,57 +163,51 @@ const breadcrumbs = [
     </div>
 
     <!-- Adjacent Article Navigation / Slug Pagination -->
-    {
-      (prevPost || nextPost) && (
-        <nav
-          aria-label="Adjacent Articles Navigation"
-          class="border-base-300 grid grid-cols-1 gap-4 border-t pt-8 sm:grid-cols-2"
-        >
-          {prevPost ? (
-            <a
-              href={`/blog/${prevPost.id}/`}
-              class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-left transition-all duration-200 hover:-translate-y-0.5 active:scale-99"
-              rel="prev"
-            >
-              <span class="text-base-content/60 flex items-center gap-1 font-mono text-xs font-medium tracking-wider uppercase">
-                <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Previous Article
-              </span>
-              <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
-                {prevPost.data.title}
-              </span>
-            </a>
-          ) : (
-            <div />
-          )}
+    {(prevPost || nextPost) && (
+      <nav
+        aria-label="Adjacent Articles Navigation"
+        class="border-base-300 grid grid-cols-1 gap-4 border-t pt-8 sm:grid-cols-2"
+      >
+        {prevPost ? (
+          <a
+            href={`/blog/${prevPost.id}/`}
+            class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-left transition-all duration-200 hover:-translate-y-0.5 active:scale-99"
+            rel="prev"
+          >
+            <span class="text-base-content/60 flex items-center gap-1 font-mono text-xs font-medium tracking-wider uppercase">
+              <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Previous Article
+            </span>
+            <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
+              {prevPost.data.title}
+            </span>
+          </a>
+        ) : (
+          <div />
+        )}
 
-          {nextPost && (
-            <a
-              href={`/blog/${nextPost.id}/`}
-              class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-right transition-all duration-200 hover:-translate-y-0.5 active:scale-99 sm:col-start-2"
-              rel="next"
-            >
-              <span class="text-base-content/60 flex items-center justify-end gap-1 font-mono text-xs font-medium tracking-wider uppercase">
-                Next Article <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
-              </span>
-              <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
-                {nextPost.data.title}
-              </span>
-            </a>
-          )}
-        </nav>
-      )
-    }
+        {nextPost && (
+          <a
+            href={`/blog/${nextPost.id}/`}
+            class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-right transition-all duration-200 hover:-translate-y-0.5 active:scale-99 sm:col-start-2"
+            rel="next"
+          >
+            <span class="text-base-content/60 flex items-center justify-end gap-1 font-mono text-xs font-medium tracking-wider uppercase">
+              Next Article <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
+            </span>
+            <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
+              {nextPost.data.title}
+            </span>
+          </a>
+        )}
+      </nav>
+    )}
 
     <!-- Article Footer / Author Box -->
     <footer class="border-base-300 mt-12 border-t pt-8">
-      <div
-        class="border-base-300 bg-base-200 flex flex-col justify-between gap-6 rounded-xl border p-6 sm:flex-row sm:items-center sm:p-7"
-      >
+      <div class="border-base-300 bg-base-200 flex flex-col justify-between gap-6 rounded-xl border p-6 sm:flex-row sm:items-center sm:p-7">
         <div class="flex items-start gap-4">
           <!-- Author Avatar / Badge -->
-          <div
-            class="bg-base-300 border-base-300/80 text-accent flex h-12 w-12 shrink-0 items-center justify-center rounded-full border font-mono text-base font-bold shadow-xs"
-          >
+          <div class="bg-base-300 border-base-300/80 text-accent flex h-12 w-12 shrink-0 items-center justify-center rounded-full border font-mono text-base font-bold shadow-xs">
             SL
           </div>
           <div class="space-y-1">
@@ -228,15 +217,11 @@ const breadcrumbs = [
                   {SITE.name}
                 </a>
               </span>
-              <span
-                class="badge badge-sm bg-accent/15 text-accent border-0 font-mono text-xs font-semibold"
-              >
+              <span class="badge badge-sm bg-accent/15 text-accent border-0 font-mono text-xs font-semibold">
                 Author
               </span>
             </div>
-            <p class="text-base-content/70 max-w-md text-xs leading-relaxed">
-              {SITE.bio}
-            </p>
+            <p class="text-base-content/70 max-w-md text-xs leading-relaxed">{SITE.bio}</p>
             <div class="flex items-center gap-3 pt-1 text-xs">
               <a
                 href={SITE.social.github}
@@ -244,7 +229,8 @@ const breadcrumbs = [
                 rel="noopener noreferrer"
                 class="text-base-content/60 hover:text-accent flex items-center gap-1 transition-colors"
               >
-                <Icon name="ph:github-logo-bold" class="h-3.5 w-3.5" /> GitHub
+                <Icon name="ph:github-logo-bold" class="h-3.5 w-3.5" />
+                GitHub
               </a>
               <a
                 href={SITE.social.linkedin}
@@ -252,7 +238,8 @@ const breadcrumbs = [
                 rel="noopener noreferrer"
                 class="text-base-content/60 hover:text-accent flex items-center gap-1 transition-colors"
               >
-                <Icon name="ph:linkedin-logo-bold" class="h-3.5 w-3.5" /> LinkedIn
+                <Icon name="ph:linkedin-logo-bold" class="h-3.5 w-3.5" />
+                LinkedIn
               </a>
               <a
                 href={SITE.social.twitter}
@@ -260,7 +247,7 @@ const breadcrumbs = [
                 rel="noopener noreferrer"
                 class="text-base-content/60 hover:text-accent flex items-center gap-1 transition-colors"
               >
-                <Icon name="ph:x-logo-bold" class="h-3.5 w-3.5" /> X
+                <Icon name="ph:x-logo-bold" class="h-3.5 w-3.5" />X
               </a>
             </div>
           </div>
@@ -269,7 +256,7 @@ const breadcrumbs = [
         <Fragment set:html="<!--email_off-->" />
         <a
           href={SITE.social.email}
-          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 flex shrink-0 items-center gap-1.5 self-start rounded-md font-mono text-xs sm:self-auto"
+          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 flex shrink-0 items-center gap-1.5 self-start rounded-md font-mono text-xs transition-all active:scale-99 sm:self-auto"
         >
           <Icon name="ph:paper-plane-tilt-bold" class="h-3.5 w-3.5" />
           Say Hello

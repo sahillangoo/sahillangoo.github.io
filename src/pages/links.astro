@@ -45,67 +45,55 @@ const breadcrumbs = [
   <div class="mx-auto max-w-lg space-y-8 px-4 py-8 text-center sm:py-12">
     <!-- Header -->
     <div class="space-y-3">
-      <div
-        class="bg-base-200 border-base-300 text-accent mx-auto flex h-16 w-16 items-center justify-center rounded-full border font-mono text-xl font-bold shadow-md"
-      >
+      <div class="bg-base-200 border-base-300 text-accent mx-auto flex h-16 w-16 items-center justify-center rounded-full border font-mono text-xl font-bold shadow-md">
         {linksCopy.header.initials}
       </div>
-      <h1 class="text-base-content text-2xl font-extrabold tracking-tight">
-        {SITE.name}
-      </h1>
-      <p class="text-base-content/70 mx-auto max-w-sm text-xs sm:text-sm">
-        {SITE.tagline}
-      </p>
+      <h1 class="text-base-content text-2xl font-extrabold tracking-tight">{SITE.name}</h1>
+      <p class="text-base-content/70 mx-auto max-w-sm text-xs sm:text-sm">{SITE.tagline}</p>
     </div>
 
     <!-- Link List -->
     <Fragment set:html="<!--email_off-->" />
     <div class="space-y-3 text-left">
-      {
-        sortedLinks.map((item) => (
-          <a
-            href={item.data.url}
-            target={item.data.url.startsWith('http') ? '_blank' : '_self'}
-            rel={item.data.url.startsWith('http') ? 'noopener noreferrer' : ''}
-            class:list={cn(
-              'group border-base-300 bg-base-200 hover:border-accent/40 flex items-center justify-between rounded-xl border p-4 transition-all duration-200 hover:-translate-y-0.5 active:scale-99',
-              item.data.highlight && 'border-accent/40 bg-base-200/80 shadow-xs'
-            )}
-          >
-            <div>
-              <div class="text-base-content group-hover:text-accent flex items-center gap-2 text-sm font-bold transition-colors">
-                {item.data.title}
-                {item.data.highlight && (
-                  <span class="badge badge-sm bg-accent/15 text-accent border-0 font-mono text-xs font-semibold">
-                    Featured
-                  </span>
-                )}
-              </div>
-              {item.data.description && (
-                <p class="text-base-content/60 mt-0.5 text-xs">{item.data.description}</p>
+      {sortedLinks.map((item) => (
+        <a
+          href={item.data.url}
+          target={item.data.url.startsWith('http') ? '_blank' : '_self'}
+          rel={item.data.url.startsWith('http') ? 'noopener noreferrer' : ''}
+          class:list={cn(
+            'group border-base-300 bg-base-200 hover:border-accent/40 flex items-center justify-between rounded-xl border p-4 transition-all duration-200 hover:-translate-y-0.5 active:scale-99',
+            item.data.highlight && 'border-accent/40 bg-base-200/80 shadow-xs'
+          )}
+        >
+          <div>
+            <div class="text-base-content group-hover:text-accent flex items-center gap-2 text-sm font-bold transition-colors">
+              {item.data.title}
+              {item.data.highlight && (
+                <span class="badge badge-sm bg-accent/15 text-accent border-0 font-mono text-xs font-semibold">
+                  Featured
+                </span>
               )}
             </div>
-            <Icon
-              name="ph:arrow-up-right-bold"
-              class="text-base-content/60 group-hover:text-accent ml-2 h-4 w-4 shrink-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            />
-          </a>
-        ))
-      }
+            {item.data.description && (
+              <p class="text-base-content/60 mt-0.5 text-xs">{item.data.description}</p>
+            )}
+          </div>
+          <Icon
+            name="ph:arrow-up-right-bold"
+            class="text-base-content/60 group-hover:text-accent ml-2 h-4 w-4 shrink-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+          />
+        </a>
+      ))}
 
       <a
         href={linksCopy.mainSiteCard.href}
         class="group border-base-300/80 bg-base-200 hover:border-base-300 flex items-center justify-between rounded-xl border border-dashed p-4 transition-all duration-200 hover:-translate-y-0.5 active:scale-99"
       >
         <div>
-          <div
-            class="text-base-content group-hover:text-accent text-sm font-semibold transition-colors"
-          >
+          <div class="text-base-content group-hover:text-accent text-sm font-semibold transition-colors">
             {linksCopy.mainSiteCard.title}
           </div>
-          <p class="text-base-content/60 mt-0.5 text-xs">
-            {linksCopy.mainSiteCard.description}
-          </p>
+          <p class="text-base-content/60 mt-0.5 text-xs">{linksCopy.mainSiteCard.description}</p>
         </div>
         <Icon
           name="ph:arrow-right-bold"

@@ -43,10 +43,11 @@ const TURNSTILE_SITE_KEY = '0x4AAAAAAABBBBBBCCCCCC';
     data-sitekey={TURNSTILE_SITE_KEY}
     data-theme="dark"
     data-appearance="interaction-only"
-  >
-  </div>
+  ></div>
 
-  <button type="submit" class="btn btn-primary">Submit Securely</button>
+  <button type="submit" class="btn btn-primary">
+    Submit Securely
+  </button>
 </form>
 
 <!-- Load Turnstile Script -->

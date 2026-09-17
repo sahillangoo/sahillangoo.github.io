@@ -16,7 +16,7 @@ export const colophonCopy: ColophonPageCopy = {
   sections: {
     specificationsTitle: 'System Specifications & Stack',
     specifications: [
-      { label: 'Framework', value: 'Astro 7.2 (Static Site Generation)' },
+      { label: 'Framework', value: 'Astro 7.3 (Static Site Generation)' },
       { label: 'Styling Architecture', value: 'Tailwind CSS v4 + daisyUI 5' },
       { label: 'Color System', value: 'OKLCH (editorialDark & editorialLight)' },
       { label: 'Primary Typeface', value: 'Plus Jakarta Sans (Variable)' },

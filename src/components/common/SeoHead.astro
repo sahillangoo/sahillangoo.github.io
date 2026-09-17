@@ -40,7 +40,7 @@ const {
 const formattedKeywords = Array.isArray(keywords)
   ? keywords.join(', ')
   : keywords ||
-    'Sahil Langoo, Full Stack Engineer, Systems Architect, Astro 7, TypeScript, Cloudflare Workers, Hono, Web Performance, SquadCoders, Distributed Edge Systems';
+    'Sahil Langoo, Full Stack Engineer, Systems Architect, Astro 7.3, TypeScript, Cloudflare Workers, Hono, Web Performance, SquadCoders, Distributed Edge Systems';
 
 // Ensure trailing slash consistency for canonical URLs (unless file with extension)
 const formattedCanonical =
@@ -174,24 +174,20 @@ const schemaGraph = {
   <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
   <!-- AI LLM Discovery per llmstxt.org v2 standard -->
   <link rel="describedby" href="/llms.txt" />
-  {
-    markdownUrl ? (
-      <link rel="alternate" type="text/markdown" title={`${title} (Markdown)`} href={markdownUrl} />
-    ) : (
-      <link rel="alternate" type="text/markdown" title="LLM Knowledge Base" href="/llms.txt" />
-    )
-  }
+  {markdownUrl ? (
+    <link rel="alternate" type="text/markdown" title={`${title} (Markdown)`} href={markdownUrl} />
+  ) : (
+    <link rel="alternate" type="text/markdown" title="LLM Knowledge Base" href="/llms.txt" />
+  )}
   <meta name="generator" content={Astro.generator} />
 
   {noindex && <meta name="robots" content="noindex, nofollow" />}
-  {
-    !noindex && (
-      <meta
-        name="robots"
-        content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
-      />
-    )
-  }
+  {!noindex && (
+    <meta
+      name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
+  )}
 
   <!-- Duplicate Content & Crawler Shield for Preview / Secondary Subdomains -->
   <script is:inline>
@@ -214,7 +210,6 @@ const schemaGraph = {
       }
     })();
   </script>
-
   <!-- Astro View Transitions Router -->
   <ClientRouter />
 
@@ -252,8 +247,7 @@ const schemaGraph = {
   <meta name="twitter:image:alt" content={formattedTitle} />
 
   <!-- Linked Data Structured Schema (JSON-LD) -->
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
-
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaGraph)}></script>
   <!-- Theme script for anti-flash and View Transitions sync -->
   <script is:inline>
     const normalizeTheme = (theme) => {

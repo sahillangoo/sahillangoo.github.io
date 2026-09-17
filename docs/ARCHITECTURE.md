@@ -1,4 +1,4 @@
-# ARCHITECTURE.md — Technical Architecture & Systems Guide
+# ARCHITECTURE.md | Technical Architecture & Systems Guide
 
 This document specifies the technical architecture, technology stack, directory conventions, and operational patterns for the **Sahil Langoo Personal Portfolio & Engineering Journal**.
 
@@ -6,7 +6,7 @@ This document specifies the technical architecture, technology stack, directory 
 
 ## 1. Core Principles
 
-- **Zero-JS by Default**: Static Site Generation (SSG) via Astro 7.2. Client-side JavaScript is shipped only for essential interactions (e.g. Lenis smooth scrolling singleton, theme toggle, and mobile menu).
+- **Zero-JS by Default**: Static Site Generation (SSG) via Astro 7.3. Client-side JavaScript is shipped only for essential interactions (e.g. Lenis smooth scrolling singleton, theme toggle, and mobile menu).
 - **Zero Layout Shifts (CLS = 0.00)**: All image containers, SVG vector icons, and typography blocks declare explicit dimensions and aspect ratios. The `html` element enforces `scrollbar-gutter: stable` and `overflow-y: scroll` to eliminate horizontal page width jumps across route transitions.
 - **Persistent Header View Transitions**: `<ClientRouter />` cross-fades page bodies while keeping the fixed `<header id="site-header" transition:persist="main-header">` docked in place.
 - **Predictable Type Safety**: Strict TypeScript compiler options with comprehensive path aliases (`@/*`, `@components/*`, `@content/*`) and compile-time schema validation with Zod.
@@ -18,7 +18,7 @@ This document specifies the technical architecture, technology stack, directory 
 
 | Layer                         | Technology             | Details                                                                                                |
 | :---------------------------- | :--------------------- | :----------------------------------------------------------------------------------------------------- |
-| **Framework**                 | Astro `v7.2.x`         | Static SSG mode (`output: 'static'`), Content Collections loader API, and View Transitions router.     |
+| **Framework**                 | Astro `v7.3.x`         | Static SSG mode (`output: 'static'`), Content Collections loader API, and View Transitions router.     |
 | **Styling**                   | Tailwind CSS `v4.3.x`  | `@tailwindcss/vite` plugin with `@tailwindcss/typography`.                                             |
 | **UI Component Library**      | daisyUI `v5.7.x`       | Curated OKLCH semantic theme tokens (`editorialDark` and `editorialLight`) + `swap swap-rotate`.       |
 | **Icons & Media**             | `astro-icon` + Iconify | Phosphor (`ph:*`) and Line MD (`line-md:*`) SVG icons with zero layout shift.                          |

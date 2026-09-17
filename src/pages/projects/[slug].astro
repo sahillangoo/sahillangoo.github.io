@@ -87,15 +87,14 @@ const breadcrumbs = [
       href="/projects/"
       class="text-base-content/60 hover:text-accent inline-flex items-center gap-1.5 font-mono text-xs transition-colors"
     >
-      <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Back to all projects
+      <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" />
+      Back to all projects
     </a>
 
     <!-- Project Header -->
     <header class="border-base-300 space-y-4 border-b pb-8">
       <div class="text-base-content/60 flex flex-wrap items-center gap-3 font-mono text-xs">
-        <span
-          class="badge badge-sm bg-accent/10 text-accent border-0 font-mono text-xs font-semibold tracking-wider uppercase"
-        >
+        <span class="badge badge-sm bg-accent/10 text-accent border-0 font-mono text-xs font-semibold tracking-wider uppercase">
           {data.category.replace('-', ' ')}
         </span>
         <span>•</span>
@@ -117,30 +116,26 @@ const breadcrumbs = [
 
       <!-- Action buttons -->
       <div class="flex flex-wrap items-center gap-3 pt-2">
-        {
-          data.githubUrl && (
-            <a
-              href={data.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn btn-sm bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 font-mono text-xs tracking-wider uppercase"
-            >
-              <Icon name="ph:github-logo-bold" class="h-4 w-4" /> Source Code
-            </a>
-          )
-        }
-        {
-          data.liveUrl && (
-            <a
-              href={data.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 hover:text-base-content flex items-center gap-2 rounded-md font-mono text-xs tracking-wider uppercase"
-            >
-              <Icon name="ph:arrow-square-out-bold" class="h-4 w-4" /> Live Demo
-            </a>
-          )
-        }
+        {data.githubUrl && (
+          <a
+            href={data.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-sm bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 font-mono text-xs tracking-wider uppercase transition-all active:scale-99"
+          >
+            <Icon name="ph:github-logo-bold" class="h-4 w-4" /> Source Code
+          </a>
+        )}
+        {data.liveUrl && (
+          <a
+            href={data.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 hover:text-base-content flex items-center gap-2 rounded-md font-mono text-xs tracking-wider uppercase transition-all active:scale-99"
+          >
+            <Icon name="ph:arrow-square-out-bold" class="h-4 w-4" /> Live Demo
+          </a>
+        )}
       </div>
     </header>
 
@@ -150,63 +145,57 @@ const breadcrumbs = [
         Technologies & Tools
       </h2>
       <div class="flex flex-wrap gap-2">
-        {
-          data.tags.map((tag) => (
-            <span class="badge badge-sm bg-base-300/50 text-base-content/80 border-0 font-mono text-xs">
-              {tag}
-            </span>
-          ))
-        }
+        {data.tags.map((tag) => (
+          <span class="badge badge-sm bg-base-300/50 text-base-content/80 border-0 font-mono text-xs">
+            {tag}
+          </span>
+        ))}
       </div>
     </div>
 
     <!-- Case Study Body Content -->
-    <div
-      class="prose prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-base-content prose-p:text-base-content/80 prose-a:text-accent hover:prose-a:underline prose-code:font-mono prose-code:text-accent prose-pre:border prose-pre:border-base-300 prose-pre:bg-base-200 max-w-none"
-    >
+    <div class="prose prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-base-content prose-p:text-base-content/80 prose-a:text-accent hover:prose-a:underline prose-code:font-mono prose-code:text-accent prose-pre:border prose-pre:border-base-300 prose-pre:bg-base-200 max-w-none">
       <Content />
     </div>
 
     <!-- Adjacent Project Navigation / Slug Pagination -->
-    {
-      (prevProject || nextProject) && (
-        <nav
-          aria-label="Adjacent Projects Navigation"
-          class="border-base-300 grid grid-cols-1 gap-4 border-t pt-8 sm:grid-cols-2"
-        >
-          {prevProject ? (
-            <a
-              href={`/projects/${prevProject.id}/`}
-              class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-left transition-all duration-200 hover:-translate-y-0.5 active:scale-99"
-              rel="prev"
-            >
-              <span class="text-base-content/60 flex items-center gap-1 font-mono text-xs font-medium tracking-wider uppercase">
-                <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Previous Project
-              </span>
-              <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
-                {prevProject.data.title}
-              </span>
-            </a>
-          ) : (
-            <div />
-          )}
+    {(prevProject || nextProject) && (
+      <nav
+        aria-label="Adjacent Projects Navigation"
+        class="border-base-300 grid grid-cols-1 gap-4 border-t pt-8 sm:grid-cols-2"
+      >
+        {prevProject ? (
+          <a
+            href={`/projects/${prevProject.id}/`}
+            class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-left transition-all duration-200 hover:-translate-y-0.5 active:scale-99"
+            rel="prev"
+          >
+            <span class="text-base-content/60 flex items-center gap-1 font-mono text-xs font-medium tracking-wider uppercase">
+              <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Previous Project
+            </span>
+            <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
+              {prevProject.data.title}
+            </span>
+          </a>
+        ) : (
+          <div />
+        )}
 
-          {nextProject && (
-            <a
-              href={`/projects/${nextProject.id}/`}
-              class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-right transition-all duration-200 hover:-translate-y-0.5 active:scale-99 sm:col-start-2"
-              rel="next"
-            >
-              <span class="text-base-content/60 flex items-center justify-end gap-1 font-mono text-xs font-medium tracking-wider uppercase">
-                Next Project <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
-              </span>
-              <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
-                {nextProject.data.title}
-              </span>
-            </a>
-          )}
-        </nav>
-      )
-    }
+        {nextProject && (
+          <a
+            href={`/projects/${nextProject.id}/`}
+            class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-right transition-all duration-200 hover:-translate-y-0.5 active:scale-99 sm:col-start-2"
+            rel="next"
+          >
+            <span class="text-base-content/60 flex items-center justify-end gap-1 font-mono text-xs font-medium tracking-wider uppercase">
+              Next Project <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
+            </span>
+            <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
+              {nextProject.data.title}
+            </span>
+          </a>
+        )}
+      </nav>
+    )}
   </article>
 </BaseLayout>

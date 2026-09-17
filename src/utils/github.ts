@@ -42,7 +42,7 @@ function loadCachedActivity(): GitHubActivityData {
   }
 
   return {
-    totalContributions: 1870,
+    totalContributions: 2042,
     lastUpdated: new Date().toISOString(),
     contributions: [],
     recentCommits: [],
@@ -73,7 +73,7 @@ export async function getGitHubActivity(
 ): Promise<GitHubActivityFeed> {
   const cached = loadCachedActivity();
   let contributions = cached.contributions || [];
-  let totalContributions = cached.totalContributions || 1870;
+  let totalContributions = cached.totalContributions || 2042;
   const recentCommits = cached.recentCommits || [];
 
   // 1. Fetch live green contributions grid (with 3s timeout)
@@ -121,7 +121,7 @@ export async function getGitHubActivity(
     for (let i = 0; i < 52; i++) {
       const week: GitHubDayContribution[] = [];
       for (let j = 0; j < 7; j++) {
-        week.push({ date: '2026-08-22', count: 0, level: 0 });
+        week.push({ date: '2026-09-17', count: 0, level: 0 });
       }
       weeks.push(week);
     }
