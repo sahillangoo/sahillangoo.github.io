@@ -2,7 +2,7 @@
   "name": "Sahil Langoo",
   "title": "Full Stack Systems Engineer & Systems Architect",
   "bio": "Full Stack Systems Engineer at Eresolution Consultancy Services & Co-Founder at SquadCoders. Architecting ultra-fast static web architectures, distributed edge proxies, and local AI pipelines.",
-  "about": "Full Stack Systems Engineer with a B.Tech in Computer Science Engineering (CGPA: 7.07) from the University of Kashmir, currently engineering systems at Eresolution Consultancy Services and Co-Founder at SquadCoders. Specializes in crafting high-performance, responsive web architectures, distributed edge computing proxies, and AI integrations. Demonstrated ability to boost website performance by 30-40% (sub-50ms TTFB, 0.00 CLS) and increase organic reach and user engagement by 20-30%. Dedicated to building software that is fast by default, zero-waste, and engineered with strict type safety.",
+  "about": "Full Stack Systems Engineer with a B.Tech in Computer Science Engineering (2020-2023, CGPA: 7.07, Capstone: Listify) from the University of Kashmir following a 3-Year Diploma in Computer Science Engineering from Kashmir Govt Polytechnic (2016-2019, CGPA: 6.22), currently engineering systems at Eresolution Consultancy Services and Co-Founder at SquadCoders. Specializes in crafting high-performance, responsive web architectures, distributed edge computing proxies, and AI integrations. Dedicated to building software that is fast by default, zero-waste, and engineered with strict type safety.",
   "skills": {
     "languages": [
       "TypeScript",
@@ -48,8 +48,7 @@
       "SQLite / Cloudflare D1",
       "MariaDB",
       "Cloudflare KV",
-      "Redis",
-      "MongoDB"
+      "Redis"
     ],
     "cloud": [
       "Cloudflare Pages & Workers",
@@ -70,6 +69,12 @@
       "Wrangler",
       "Playwright",
       "Sentry",
+      "Google Search Console",
+      "Google Analytics 4",
+      "Google Tag Manager",
+      "Microsoft Clarity",
+      "Technical SEO & Schema.org",
+      "Programmatic SEO (pSEO)",
       "Postman",
       "Zod",
       "Razorpay",

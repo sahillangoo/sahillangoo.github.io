@@ -3,10 +3,12 @@ packages:
 
 # Package manager enforcement (see packageManager in package.json; pnpm 11+)
 pmOnFail: warn
+engineStrict: true
 
 # Install reproducibility & store integrity
 preferFrozenLockfile: true
 verifyStoreIntegrity: true
+saveExact: true
 
 # Peer dependency policy
 autoInstallPeers: false
@@ -39,6 +41,13 @@ overrides:
   yaml: '>=2.8.3'
 
 # Native/build scripts — only packages that require postinstall binaries
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - workerd
+  - wrangler
+  - vue-demi
+
 allowBuilds:
   esbuild: true
   sharp: true

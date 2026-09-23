@@ -1,5 +1,5 @@
 {
-  "role": "Full Stack Developer",
+  "role": "Full Stack Developer (Fixed-Term European Contract)",
   "company": "Taffin.Tech",
   "companyUrl": "https://www.taffin.tech/",
   "location": "Remote, Srinagar, Kashmir",
@@ -8,7 +8,8 @@
   "highlights": [
     "Led the engineering of a responsive, multilingual job board platform for a French startup, driving a 25% increase in user engagement.",
     "Architected high-performance tabular interfaces using TanStack Table, React, and DaisyUI, rendering 10,000+ postings with multi-facet filtering and zero UI latency.",
-    "Implemented Schema.org (JobPosting) structured JSON-LD for Google Rich Results and Lingui i18n localization, boosting organic search discoverability by 30%."
+    "Implemented Schema.org (JobPosting) structured JSON-LD for Google Rich Results and Lingui i18n localization, boosting organic search discoverability by 30%.",
+    "Architected programmatic SEO (pSEO) taxonomy routes, automated XML sitemaps, and Google Search Console crawl diagnostics, securing zero-error indexing across multilingual job archives."
   ],
   "skills": [
     "React",
@@ -17,11 +18,14 @@
     "TanStack Table",
     "Lingui i18n",
     "Schema.org",
+    "Programmatic SEO",
+    "Google Search Console",
+    "Technical SEO",
     "Tailwind CSS",
     "Twig",
     "Symfony",
     "PHP",
     "GDPR Compliance"
   ],
-  "order": 3
+  "order": 2
 }

@@ -134,3 +134,11 @@ const results = await Promise.all(
 1. **Right-Size the Model**: Do not pay cloud API costs for deterministic classification, metadata generation, or image tagging. Local 2B-4B parameter SLMs are faster, cheaper, and private.
 2. **Bun as the Scripting Engine**: Bun's instant startup time (< 10ms) and built-in SQLite, file system, and TypeScript compilation make it the ideal runtime for local AI developer tooling.
 3. **Structured JSON Mode**: Always enforce `temperature: 0.1 - 0.2` and specify JSON schema outputs to guarantee 100% parseable responses from local models.
+
+---
+
+## Related Tooling & Pipelines
+
+- Related Open Source Tool: [Smart Image CLI](/projects/smart-img-cli/)
+- Type Safety: [Type-Safe Content Pipelines with Zod](/blog/type-safe-content-pipelines/)
+- Engineering Philosophy: [The Lost Art of Minimalist Engineering](/blog/the-lost-art-of-minimalist-engineering/)

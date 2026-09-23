@@ -1,0 +1,102 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { slugify } from '@utils/slugify.ts';
+import { SITE } from '@const/site.ts';
+import { Icon } from 'astro-icon/components';
+
+const allPosts = await getCollection('blog');
+const publishedPosts = allPosts.filter((post) => !post.data.draft);
+
+const tagsMap = new Map<string, number>();
+
+for (const post of publishedPosts) {
+  for (const tag of post.data.tags) {
+    tagsMap.set(tag, (tagsMap.get(tag) || 0) + 1);
+  }
+}
+
+const tags = Array.from(tagsMap.entries())
+  .map(([name, count]) => ({
+    name,
+    slug: slugify(name),
+    count,
+  }))
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+const pageUrl = `${SITE.url}/blog/tag/`;
+
+const tagsSchema = {
+  '@type': 'CollectionPage',
+  '@id': `${pageUrl}#collectionpage`,
+  name: `Article Tags | ${SITE.name}`,
+  url: pageUrl,
+  description:
+    'Alphabetical directory of topics and technologies discussed across engineering articles.',
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: tags.map((tag, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: `#${tag.name}`,
+      url: `${SITE.url}/blog/tag/${tag.slug}/`,
+    })),
+  },
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'Writing', item: '/blog/' },
+  { name: 'Tags', item: '/blog/tag/' },
+];
+---
+
+<BaseLayout
+  title="Article Tags"
+  description="Alphabetical directory of technical topics, libraries, and architectural patterns covered in essays."
+  breadcrumbs={breadcrumbs}
+  structuredData={tagsSchema}
+  noindex={true}
+>
+  <div class="mx-auto max-w-4xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">
+    <!-- Back Link -->
+    <a
+      href="/blog/"
+      class="text-base-content/60 hover:text-accent inline-flex items-center gap-1.5 font-mono text-xs transition-colors"
+    >
+      <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" />
+      Back to all writing
+    </a>
+
+    <!-- Header -->
+    <div class="border-base-300 border-b pb-6">
+      <div class="text-accent flex items-center gap-2 font-mono text-xs">
+        <span class="tracking-widest uppercase">Taxonomy</span>
+        <span>•</span>
+        <span>{tags.length}Tags</span>
+      </div>
+      <h1 class="text-base-content mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">
+        Article Tags
+      </h1>
+      <p class="text-base-content/75 mt-3 text-sm leading-relaxed sm:text-base">
+        Alphabetical index of engineering topics, patterns, and technologies covered in technical
+        essays.
+      </p>
+    </div>
+
+    <!-- Tags Cloud / Grid -->
+    <div class="flex flex-wrap gap-2.5">
+      {tags.map((tag) => (
+        <a
+          href={`/blog/tag/${tag.slug}/`}
+          class="border-base-300 bg-base-200/40 hover:border-accent hover:bg-base-200/80 group inline-flex items-center gap-2 rounded-md border px-3 py-1.5 font-mono text-xs transition-all"
+        >
+          <span class="text-base-content group-hover:text-accent font-medium transition-colors">
+            #{tag.name}
+          </span>
+          <span class="text-base-content/40 text-2xs">{tag.count}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

@@ -37,7 +37,9 @@ const pageTitle = isFirstPage
   ? blogCopy.seo.title
   : `${blogCopy.seo.title}${blogCopy.seo.pageTitleSuffix(page.currentPage)}`;
 
-const pageDescription = blogCopy.seo.description;
+const pageDescription = isFirstPage
+  ? blogCopy.seo.description
+  : `${blogCopy.seo.description} - Page ${page.currentPage} of ${page.lastPage}.`;
 
 const canonicalUrl = isFirstPage ? `${SITE.url}/blog/` : `${SITE.url}/blog/${page.currentPage}/`;
 
@@ -59,7 +61,7 @@ const blogSchema = {
   url: canonicalUrl,
   description: pageDescription,
   publisher: {
-    '@id': `${SITE.url}/#person`,
+    '@id': `${SITE.url}/#organization`,
   },
   blogPost: articles.map((post) => ({
     '@type': 'BlogPosting',

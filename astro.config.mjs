@@ -15,6 +15,7 @@ export default defineConfig({
   site: 'https://sahillangoo.in',
   trailingSlash: 'always',
   output: 'static',
+  compressHTML: true,
   redirects: {
     '/contact/': '/links/',
   },

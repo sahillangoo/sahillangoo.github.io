@@ -146,3 +146,12 @@ export function astroSiteQualityEnforcer(): AstroIntegration {
 1. **Default to Static**: Static files deployed to Cloudflare Pages or AWS CloudFront have no server memory limits, no SQL connection pooling issues, and 100% cache hit rates.
 2. **Treat JavaScript as an Expense**: Every client-side script must justify its byte size against measurable user value.
 3. **Verify at Build Time**: Catch data errors, missing image assets, and broken routes during compilation, not in user error logs.
+
+---
+
+## Related Engineering & Architecture
+
+- In-Depth Guide: [Type-Safe Content Pipelines with Zod](/blog/type-safe-content-pipelines/)
+- Playbook: [Hosting Astro View Transitions on Cloudflare](/blog/hosting-astro-view-transitions-cloudflare-playbook/)
+- Digital Garden Note: [Eliminating Layout Shifts in Astro View Transitions](/notes/astro-view-transitions-layout-shift/)
+- Production Template: [Astro Daisy Starter Template](/projects/template-astro-daisy/)

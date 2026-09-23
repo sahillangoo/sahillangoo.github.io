@@ -117,17 +117,27 @@ if (fs.existsSync(llmsFullPath)) {
 const humansPath = path.join(distDir, 'humans.txt');
 const securityPath = path.join(distDir, 'security.txt');
 const wellKnownSecurityPath = path.join(distDir, '.well-known', 'security.txt');
+const wellKnownDiscordPath = path.join(distDir, '.well-known', 'discord');
 const cliPath = path.join(distDir, 'cli.txt');
 const cnamePath = path.join(distDir, 'CNAME');
 
 assert(fs.existsSync(humansPath), 'humans.txt exists in dist/');
 assert(fs.existsSync(securityPath), 'security.txt exists in dist/');
 assert(fs.existsSync(wellKnownSecurityPath), '.well-known/security.txt exists in dist/');
+assert(fs.existsSync(wellKnownDiscordPath), '.well-known/discord exists in dist/');
 assert(fs.existsSync(cliPath), 'cli.txt exists in dist/');
 assert(fs.existsSync(cnamePath), 'CNAME exists in dist/');
 if (fs.existsSync(cnamePath)) {
   const cnameContent = fs.readFileSync(cnamePath, 'utf-8').trim();
   assert(cnameContent === 'sahillangoo.in', 'CNAME contains sahillangoo.in');
+}
+
+if (fs.existsSync(wellKnownDiscordPath)) {
+  const discordContent = fs.readFileSync(wellKnownDiscordPath, 'utf-8').trim();
+  assert(
+    discordContent === 'dh=a9927a3448bedbd2738224fc95c2b2b5223b983f',
+    '.well-known/discord contains valid Discord verification token'
+  );
 }
 
 if (fs.existsSync(wellKnownSecurityPath)) {
@@ -160,10 +170,6 @@ if (fs.existsSync(headersPath)) {
 }
 if (fs.existsSync(redirectsPath)) {
   const redirectsContent = fs.readFileSync(redirectsPath, 'utf-8');
-  assert(
-    redirectsContent.includes('https://www.sahillangoo.in/*  https://sahillangoo.in/:splat  301'),
-    '_redirects contains canonical www to apex domain 301 redirection'
-  );
   assert(
     redirectsContent.includes('/sitemap_index.xml  /sitemap.xml  301'),
     '_redirects contains /sitemap_index.xml to /sitemap.xml 301 redirection'

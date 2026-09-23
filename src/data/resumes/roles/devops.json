@@ -4,7 +4,7 @@
   "filename": "Resume-Sahil-Langoo-DevOps.pdf",
   "summary": "Cloud & DevOps Systems Engineer with deep expertise in edge serverless infrastructure, automated CI/CD pipelines, containerization, and production reliability. Specializing in Cloudflare (Workers, Pages, R2), GitHub Actions automation, Docker multi-stage workflows, and supply-chain lockfile security.",
   "skills": {
-    "languages": ["Bash / Shell Scripting", "TypeScript", "Python", "Go", "YAML", "SQL"],
+    "languages": ["Bash / Shell Scripting", "TypeScript", "Go", "Python", "YAML", "SQL"],
     "frameworks": ["Node.js", "Docker", "Hono", "Playwright", "Vitest", "Astro"],
     "cloud": [
       "Cloudflare (Workers, Pages, R2, KV, Turnstile, WAF)",
@@ -15,12 +15,13 @@
     "databasesAndTools": [
       "Git & GitHub CLI",
       "pnpm Lockfile Integrity",
-      "Sentry Telemetry",
+      "Sentry & Clarity Telemetry",
       "Wrangler",
       "Linux / POSIX",
       "MySQL",
       "PostgreSQL",
       "SQLite / D1",
+      "GSC & Technical SEO Gates",
       "ESLint / Prettier"
     ]
   },
@@ -37,7 +38,7 @@
       ]
     },
     {
-      "role": "DevOps & Infrastructure Developer",
+      "role": "DevOps & Infrastructure Developer (Fixed-Term European Contract)",
       "company": "Taffin.Tech",
       "location": "Remote, Srinagar",
       "dates": "Apr 2024 - Aug 2025",
@@ -48,10 +49,10 @@
       ]
     },
     {
-      "role": "Freelance DevOps Engineer",
+      "role": "Co-Founder & Principal Consultant (Independent Studio / Contract)",
       "company": "SquadCoders",
       "location": "Kashmir, India",
-      "dates": "Dec 2023 - Mar 2024",
+      "dates": "Dec 2023 - Present",
       "highlights": [
         "Architected multi-stage Docker deployment pipelines and automated GitHub Actions workflows, deploying static web platforms to Cloudflare Pages with zero-downtime rollouts.",
         "Engineered custom pre-flight build-time quality hooks in Node.js (astroSiteQualityEnforcer), eliminating broken links, missing assets, and unoptimized payloads before artifact publishing.",
@@ -73,17 +74,17 @@
     {
       "name": "School Management Application Infrastructure",
       "tech": "Next.js 16 (Hostinger Standalone), Cloudflare (CDN/WAF/R2), Telegram Bot, MySQL, Sentry",
-      "dates": "2024",
+      "dates": "2026",
       "highlights": [
         "Deployed standalone Next.js 16 output build on Hostinger VPS, reducing runtime memory overhead and optimizing server execution for 500+ student records.",
         "Configured Cloudflare CDN/WAF security rules, provisioned Cloudflare R2 object buckets, and automated Telegram Bot API transactional alert pipelines."
       ],
-      "link": "http://kwschool.in/"
+      "link": "https://kwschool.in/"
     },
     {
       "name": "Multi-Tenant Ad-Driven Platform CI/CD",
       "tech": "Next.js, Vercel CI/CD, Git Branch Workflows, Meta CAPI, Cloudflare Edge",
-      "dates": "2024",
+      "dates": "2025",
       "highlights": [
         "Automated deployment workflows on Vercel using Git branch-based preview and production environments, accelerating deployment velocity and risk-free staging verifications.",
         "Configured server-side Meta Conversions API (CAPI) with SHA-256 data hashing and PII stripping across telemetry pipelines."
@@ -101,14 +102,14 @@
       "link": "https://github.com/sahillangoo/smart-img-cli"
     },
     {
-      "name": "Portfolio Automated CI/CD Engine",
-      "tech": "Astro, TypeScript, GitHub Actions, Wrangler, Cloudflare",
+      "name": "SoulMedia Creative Agency Platform",
+      "tech": "Astro, Docker, Strapi Headless CMS, Cloudflare R2, Sentry",
       "dates": "2024",
       "highlights": [
-        "Constructed automated static site generation pipeline with Astro, TypeScript, and Wrangler, publishing immutable edge builds via Cloudflare Pages in under 60 seconds.",
-        "Enforced zero-warning linting, formatting, and strict type-checking gates in GitHub Actions."
+        "Architected multi-stage Docker build and deployment pipelines for Strapi headless CMS with Cloudflare R2 media storage, slashing media delivery latency by 55%.",
+        "Integrated Sentry exception monitoring and automated container health checks, maintaining 99.9% service availability across agency portfolio sites."
       ],
-      "link": "https://sahillangoo.in"
+      "link": "https://soulmedia.uk/"
     }
   ]
 }

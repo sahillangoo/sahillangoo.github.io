@@ -15,8 +15,8 @@ year: 2024
 role: 'Creator & Maintainer'
 order: 9
 publishDate: '2024-01-14'
-liveUrl: 'https://github.com/sahillangoo/template-astro-daisy'
-githubUrl: 'https://github.com/sahillangoo/template-astro-daisy'
+liveUrl: 'https://github.com/sahillangoo/astro-template'
+githubUrl: 'https://github.com/sahillangoo/astro-template'
 ---
 
 ## The Challenge

@@ -76,6 +76,10 @@ https://sahillangoo.github.io/*
   Cache-Control: public, max-age=86400, stale-while-revalidate=43200
   Content-Type: application/xml; charset=utf-8
 
+/sitemap.xml
+  Cache-Control: public, max-age=86400, stale-while-revalidate=43200
+  Content-Type: application/xml; charset=utf-8
+
 /sitemap-*.xml
   Cache-Control: public, max-age=86400, stale-while-revalidate=43200
   Content-Type: application/xml; charset=utf-8
@@ -91,6 +95,11 @@ https://sahillangoo.github.io/*
   Access-Control-Allow-Origin: *
 
 /humans.txt
+  Cache-Control: public, max-age=86400, stale-while-revalidate=43200
+  Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/.well-known/discord
   Cache-Control: public, max-age=86400, stale-while-revalidate=43200
   Content-Type: text/plain; charset=utf-8
   Access-Control-Allow-Origin: *

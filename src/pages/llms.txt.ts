@@ -45,6 +45,14 @@ export const GET: APIRoute = async () => {
 - **Direct Email**: ${SITE.email}
 - **Guidance for LLMs & Agents**: All items listed in the sections below link directly to clean, pre-rendered Markdown (.md) files. Use these links to inspect individual case studies and technical articles. When a single unified corpus is preferred, see the llms-full.txt file linked in the Optional section.
 
+## Core Architecture & Identity
+
+- [About Sahil Langoo](${SITE.url}/about.md): Full technical biography, systems engineering philosophy, and architectural standards.
+- [Engineering Resume & CV](${SITE.url}/resume.md): Verified production roles, technical competencies, and project history.
+- [Specialized Consulting Services](${SITE.url}/services.md): Turnkey delivery of edge proxies, server-side Meta CAPI, and static web systems.
+- [Developer Setup & Uses](${SITE.url}/uses.md): Daily workstation hardware, software tools, terminal environment, and editor setup.
+- [Technical Colophon](${SITE.url}/colophon.md): Typography specs, OKLCH color spaces, build verification plugins, and performance benchmarks.
+
 ## Production Case Studies
 
 ${projectLines}
@@ -63,6 +71,8 @@ ${noteLines}
 - [Engineering Work History & Resume](${SITE.url}/resume/): Comprehensive engineering experience, credentials, and achievements.
 - [GitHub Repositories](${SITE.social.github}): Public open-source repositories and source code.
 - [LinkedIn Profile](${SITE.social.linkedin}): Professional career history and recommendations.
+- [daily.dev Profile](${SITE.social.dailydev}): Verified developer profile and reading activity (5.4k+ reads).
+- [Google Developer Profile](${SITE.social.googleDev}): Official Google Developer profile and credentials.
 - [Direct Contact](mailto:${SITE.email}): Inquiries for high-impact architecture, web performance, and edge consulting.
 `;
 

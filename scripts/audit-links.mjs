@@ -45,7 +45,13 @@ try {
     recurse: false,
     checkFragments: true,
     allowInsecureCerts: true,
-    linksToSkip: checkAll ? [] : ['^(https?:\\/\\/(?!localhost|127\\.0\\.0\\.1|sahillangoo\\.in))'],
+    urlRewriteExpressions: [
+      {
+        pattern: /^https?:\/\/sahillangoo\.in/,
+        replacement: '',
+      },
+    ],
+    linksToSkip: checkAll ? [] : ['^(https?:\\/\\/(?!localhost|127\\.0\\.0\\.1))'],
   });
 
   const durationSec = ((Date.now() - startTime) / 1000).toFixed(2);

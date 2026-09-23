@@ -122,3 +122,12 @@ const isCli = data.category === 'cli-tool';
 1. **Zero Runtime Null Checks**: You never have to write defensive checks like `if (project.data.tags && project.data.tags.length > 0)` because Zod guarantees the structure at build time.
 2. **Deterministic SEO Metadata**: Every page automatically receives valid dates, character-capped titles, and validated URLs for Schema.org JSON-LD generation.
 3. **Effortless Refactoring**: If you rename a field in `src/content.config.ts`, TypeScript immediately highlights every component that needs updating.
+
+---
+
+## Related Type-Safe Engineering
+
+- Garden Note: [Advanced TypeScript Utility Patterns](/notes/typescript-utility-patterns/)
+- Structured Data: [Automating Schema.org JSON-LD Pipelines](/notes/structured-data-jsonld-pipeline/)
+- Systems Guide: [Architecting Modern Astro Systems](/blog/architecting-modern-astro-systems/)
+- Open Source CLI: [Smart Image CLI](/projects/smart-img-cli/)

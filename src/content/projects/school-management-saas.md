@@ -25,11 +25,11 @@ tags:
   - typescript
   - sentry
 featured: true
-year: 2024
+year: 2026
 role: 'Lead Full Stack & Systems Architect'
 order: 2
-publishDate: '2024-08-18'
-liveUrl: 'http://kwschool.in/'
+publishDate: '2026-06-15'
+liveUrl: 'https://kwschool.in/'
 highlights:
   - 'Full-Stack Architecture & Deployment: Architected and deployed an enterprise-grade school management platform using Next.js 16 configured with a standalone output build hosted on Hostinger VPS, reducing runtime memory overhead and optimizing server-side execution.'
   - 'Student Data Management: Engineered scalable administrative data grids using TanStack Table and Shadcn UI to smoothly manage 500+ student profiles, enrollment records, academic standings, and attendance logs with zero UI latency.'

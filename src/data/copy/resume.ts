@@ -4,7 +4,7 @@ export const resumeCopy: ResumePageCopy = {
   seo: {
     title: 'Resume & Curriculum Vitae | Sahil Langoo',
     description:
-      'Professional engineering resume, verified career experience at Eresolution Consultancy Services, core technical competencies, and architectural timeline of Sahil Langoo.',
+      'Engineering resume and CV of Sahil Langoo. Career experience at Eresolution, technical competencies, and software systems timeline.',
     image: '/og/resume.png',
   },
   header: {

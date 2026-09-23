@@ -152,3 +152,11 @@ export default app;
 - **99.9% Spam Elimination**: Completely eliminated automated headless form spam bots.
 - **Zero Friction**: 97% of visitors pass with invisible passive validation in < 100ms.
 - **Strict Privacy**: Turnstile never sets cross-site tracking cookies or fingerprints users for ad networks.
+
+---
+
+## Related Security & Edge Reading
+
+- Edge Conversions: [Server-Side Meta CAPI with Cloudflare Workers](/blog/server-side-capi-cloudflare-workers/)
+- Performance Architecture: [Offloading Third-Party Scripts with Partytown](/blog/offloading-third-party-scripts-partytown-astro/)
+- Systems Case Study: [Enterprise Lead Funnels](/projects/enterprise-lead-funnels/)

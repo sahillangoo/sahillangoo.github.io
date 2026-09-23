@@ -100,6 +100,8 @@ export const GET: APIRoute = async () => {
 - **Verified Repositories**: ${SITE.social.github}
 - **LinkedIn**: ${SITE.social.linkedin}
 - **Twitter / X**: ${SITE.social.twitter}
+- **daily.dev Profile**: ${SITE.social.dailydev} (5.4k+ reads)
+- **Google Developer Profile**: ${SITE.social.googleDev}
 - **Direct Email**: ${SITE.email}
 - **Personal Email**: ${SITE.personalEmail}
 

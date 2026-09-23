@@ -119,3 +119,11 @@ On Cloudflare Pages or Cloudflare Workers, configure a lightweight redirect rule
 | **Interaction to Next Paint (INP)** | 140ms                      | **< 16ms**                      | Sub-frame responsiveness              |
 | **Lighthouse Performance Score**    | 78 / 100                   | **100 / 100**                   | Perfect 100 across mobile & desktop   |
 | **Main Thread CPU Usage**           | 1,420ms                    | **65ms**                        | 95.4% CPU freed for user interactions |
+
+---
+
+## Related Performance Engineering
+
+- Core Architecture: [Architecting Modern Astro Systems](/blog/architecting-modern-astro-systems/)
+- Conversion Telemetry: [Server-Side Meta CAPI with Cloudflare Workers](/blog/server-side-capi-cloudflare-workers/)
+- Digital Garden Note: [PWA Offline Caching with Service Workers](/notes/pwa-offline-caching-service-workers/)

@@ -11,12 +11,11 @@ const EXPECTED_FILES = [
   'Resume-Sahil-Langoo.pdf',
 ];
 
+const MAX_PAGE_BUDGET = 2;
+
 const REQUIRED_TOKENS = [
-  'Sahil Langoo',
-  '7006 588 022',
-  'sahilahmed3066@gmail.com',
+  'hello@sahillangoo.in',
   'Education',
-  'University of Kashmir',
   'Technical Skills',
   'Professional Experience',
   'Technical Projects',
@@ -52,18 +51,22 @@ export function validateGeneratedResumes(): boolean {
     }
 
     const pageCount = countPdfPages(buffer);
-    if (pageCount > 2) {
+    if (pageCount > MAX_PAGE_BUDGET) {
       console.error(
-        `❌ Page budget violation: ${filename} has ${pageCount} pages (must be at most 2 pages)`
+        `❌ Page budget violation: ${filename} has ${pageCount} pages (must be at most ${MAX_PAGE_BUDGET} pages)`
       );
       hasErrors = true;
     } else {
       const rawText = buffer.toString('utf-8');
       const missingTokens = REQUIRED_TOKENS.filter((t) => !rawText.includes(t));
       if (missingTokens.length > 0) {
-        console.warn(`⚠️ Warning: Some tokens may be encoded in PDF stream for ${filename}`);
+        console.error(
+          `❌ Missing required section tokens in ${filename}: ${missingTokens.join(', ')}`
+        );
+        hasErrors = true;
+      } else {
+        console.log(`✓ [${pageCount} Page(s) Budget Passed] ${filename} (${sizeKb} KB)`);
       }
-      console.log(`✓ [${pageCount} Page(s) Budget Passed] ${filename} (${sizeKb} KB)`);
     }
   }
 

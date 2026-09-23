@@ -4,7 +4,7 @@
   "filename": "Resume-Sahil-Langoo-Frontend.pdf",
   "summary": "Frontend Systems Engineer with 3+ years experience building high-performance web applications, accessible design systems, and responsive user interfaces. Consistently achieves sub-50ms TTFB, 0.00 CLS, and 100/100 Lighthouse performance metrics across production platforms.",
   "skills": {
-    "languages": ["TypeScript", "JavaScript", "HTML5", "CSS3 / OKLCH", "SQL", "Go"],
+    "languages": ["TypeScript", "JavaScript", "HTML5", "CSS3 / OKLCH", "SQL", "Go", "Typst"],
     "frameworks": [
       "React",
       "Next.js",
@@ -30,11 +30,11 @@
       "Git & GitHub CLI",
       "Figma",
       "Playwright",
-      "Sentry Telemetry",
-      "ESLint",
-      "Prettier",
-      "Postman",
-      "Responsive Design"
+      "Sentry & Clarity",
+      "GSC & GA4",
+      "Technical SEO & Schema.org",
+      "ESLint & Prettier",
+      "Postman"
     ]
   },
   "experience": [
@@ -45,12 +45,12 @@
       "dates": "Apr 2025 - Present",
       "highlights": [
         "Architected high-concurrency client interfaces and checkout flows integrated with Hono proxy gateways, processing 15K daily transactions with sub-800ms Largest Contentful Paint (LCP).",
-        "Instrumented real-time Sentry frontend telemetry and exception monitoring, triaging UI race conditions and reducing customer-facing checkout errors by 14%.",
+        "Instrumented real-time Sentry, Google Search Console, and Microsoft Clarity telemetry, triaging UI race conditions and lifting checkout conversion by 14%.",
         "Authored comprehensive Playwright end-to-end regression suites integrated into CI pipelines, eliminating cross-browser layout discrepancies across Chromium, Firefox, and WebKit."
       ]
     },
     {
-      "role": "Frontend Architect & Developer",
+      "role": "Frontend Architect & Developer (Fixed-Term European Contract)",
       "company": "Taffin.Tech",
       "location": "Remote, Srinagar",
       "dates": "Apr 2024 - Aug 2025",
@@ -61,14 +61,14 @@
       ]
     },
     {
-      "role": "Freelance Frontend Engineer",
+      "role": "Co-Founder & Principal Consultant (Independent Studio / Contract)",
       "company": "SquadCoders",
       "location": "Kashmir, India",
-      "dates": "Dec 2023 - Mar 2024",
+      "dates": "Dec 2023 - Present",
       "highlights": [
         "Engineered static-first client platforms using Astro, TypeScript, and Tailwind CSS, delivering sub-50ms global TTFB and strict 0.00 Cumulative Layout Shift (CLS).",
         "Designed modular component design systems with daisyUI and OKLCH color palettes, cutting client CSS payloads by 65% and attaining 100/100 mobile Lighthouse benchmarks.",
-        "Shipped 10+ high-performance commercial websites, accelerating mobile page load velocity by 30% and lifting customer checkout conversion by 15%.",
+        "Shipped 10+ high-performance commercial websites with technical SEO and GA4 telemetry, accelerating mobile page load velocity by 30% and lifting customer checkout conversion by 15%.",
         "Automated pre-flight build-time quality hooks in Node.js, validating link integrity, semantic metadata, and image aspect ratios prior to production publishing."
       ]
     },
@@ -96,17 +96,17 @@
     {
       "name": "School Management Application UI",
       "tech": "Next.js 16, React, Shadcn UI, TanStack (Table, Form, Query, Router), Zod",
-      "dates": "2024",
+      "dates": "2026",
       "highlights": [
         "Engineered administrative data grids with TanStack Table and Shadcn UI to efficiently manage 500+ student profiles, enrollment records, and attendance logs with zero latency.",
         "Standardized data intake using TanStack Form with strict Zod validation, cutting API redundancy by 40% via TanStack Query and Router caching."
       ],
-      "link": "http://kwschool.in/"
+      "link": "https://kwschool.in/"
     },
     {
       "name": "Multi-Tenant Ad-Driven Platform",
       "tech": "Next.js, React, Vercel, Meta Pixel, Meta CAPI, Razorpay, SHA-256",
-      "dates": "2024",
+      "dates": "2025",
       "highlights": [
         "Developed multi-tenant ad-driven web application with isolated tenant configuration, dynamic branding, and automated Vercel branch preview workflows.",
         "Integrated hybrid Meta Pixel and server-side CAPI tracking with SHA-256 data hashing, sanitizing PII from URL query parameters and telemetry payloads."
@@ -116,7 +116,7 @@
     {
       "name": "HackerForce Storefront",
       "tech": "Astro, TypeScript, Tailwind CSS, Pagefind WASM, MDX",
-      "dates": "2024",
+      "dates": "2026",
       "highlights": [
         "Architected zero-server cybersecurity storefront with Astro and Tailwind CSS, achieving sub-300ms LCP and zero client JavaScript overhead.",
         "Engineered in-browser full-text search via WebAssembly with Pagefind, indexing hundreds of MDX curricula files with sub-15ms client query execution."

@@ -272,7 +272,7 @@ export function buildResumeData(
       title: roleProfile.roleTitle,
       location: SITE.detailedLocation || SITE.location,
       phone: SITE.phone || '+91 7006 588 022',
-      email: SITE.personalEmail || SITE.email,
+      email: SITE.email,
       website: SITE.url,
       github: SITE.social.github,
       linkedin: SITE.social.linkedin,

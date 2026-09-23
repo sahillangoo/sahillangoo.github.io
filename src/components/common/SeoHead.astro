@@ -47,7 +47,7 @@ const formattedCanonical =
   canonicalUrl.endsWith('/') || canonicalUrl.includes('.') ? canonicalUrl : `${canonicalUrl}/`;
 
 const formattedTitle =
-  title === SITE.title || title.endsWith(SITE.name) ? title : `${title} | ${SITE.name}`;
+  title === SITE.title || title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
 const siteUrl = SITE.url;
 const ogImage = image.startsWith('http')
   ? image
@@ -63,7 +63,26 @@ const isContentItem =
   !/^\/notes\/\d+$/.test(cleanPath);
 const markdownUrl = isContentItem ? `${cleanPath}.md` : null;
 
-// Core Schema: Person & WebSite
+// Core Schema: Person, Organization & WebSite
+const organizationSchema = {
+  '@type': 'Organization',
+  '@id': `${siteUrl}/#organization`,
+  name: 'SquadCoders',
+  url: 'https://github.com/SquadCoders',
+  logo: {
+    '@type': 'ImageObject',
+    url: `${siteUrl}/og/default.png`,
+    width: 1200,
+    height: 630,
+  },
+  sameAs: [
+    'https://github.com/SquadCoders',
+    SITE.social.github,
+    SITE.social.linkedin,
+    SITE.social.twitter,
+  ],
+};
+
 const personSchema = {
   '@type': 'Person',
   '@id': `${siteUrl}/#person`,
@@ -73,6 +92,7 @@ const personSchema = {
   jobTitle: 'Full Stack Systems Engineer & Co-Founder',
   worksFor: {
     '@type': 'Organization',
+    '@id': `${siteUrl}/#organization`,
     name: 'SquadCoders',
     url: 'https://github.com/SquadCoders',
   },
@@ -94,6 +114,7 @@ const personSchema = {
     SITE.social.instagram,
     SITE.social.devto,
     SITE.social.dailydev,
+    SITE.social.googleDev,
   ],
   knowsAbout: [
     'TypeScript',
@@ -120,17 +141,9 @@ const webSiteSchema = {
   url: SITE.url,
   description: SITE.description,
   publisher: {
-    '@id': `${siteUrl}/#person`,
+    '@id': `${siteUrl}/#organization`,
   },
   inLanguage: 'en-US',
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: `${siteUrl}/blog/?q={search_term_string}`,
-    },
-    'query-input': 'required name=search_term_string',
-  },
 };
 
 // Breadcrumb Schema
@@ -154,6 +167,7 @@ const breadcrumbSchema =
 const schemaGraph = {
   '@context': 'https://schema.org',
   '@graph': [
+    organizationSchema,
     personSchema,
     webSiteSchema,
     ...(breadcrumbSchema ? [breadcrumbSchema] : []),
@@ -166,6 +180,8 @@ const schemaGraph = {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
   <link rel="canonical" href={formattedCanonical} />
   <!-- Self-hosted optimized fonts via Astro Font Provider API with font-display: swap -->
   <Font cssVariable="--ff-sans" preload={[{ weight: 400, style: 'normal' }]} />
@@ -181,8 +197,12 @@ const schemaGraph = {
   )}
   <meta name="generator" content={Astro.generator} />
 
-  {noindex && <meta name="robots" content="noindex, nofollow" />}
-  {!noindex && (
+  {noindex ? (
+    <meta
+      name="robots"
+      content="noindex, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
+  ) : (
     <meta
       name="robots"
       content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
@@ -232,9 +252,13 @@ const schemaGraph = {
   <meta property="og:image:type" content="image/png" />
   <meta property="og:site_name" content={SITE.name} />
   <meta property="og:locale" content="en_US" />
-  {publishDate && <meta property="article:published_time" content={publishDate} />}
-  {updatedDate && <meta property="article:modified_time" content={updatedDate} />}
-  {publishDate && <meta property="article:author" content={SITE.name} />}
+  {type === 'article' && publishDate && (
+    <meta property="article:published_time" content={publishDate} />
+  )}
+  {type === 'article' && updatedDate && (
+    <meta property="article:modified_time" content={updatedDate} />
+  )}
+  {type === 'article' && <meta property="article:author" content={`${siteUrl}/about/`} />}
 
   <!-- Twitter / X Cards -->
   <meta name="twitter:card" content="summary_large_image" />

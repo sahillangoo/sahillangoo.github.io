@@ -190,3 +190,12 @@ By routing all conversions through Cloudflare Workers edge execution context (`c
 - **Client Latency Impact**: **0.00ms** on First Input Delay (FID) and Interaction to Next Paint (INP).
 - **Edge Execution Time**: ~1.8ms CPU time per request on Cloudflare's serverless edge.
 - **Signal Recovery**: Successfully captured over 34% of conversion events that were suppressed on Safari and ad-blocked user sessions.
+
+---
+
+## Related Edge Engineering & Projects
+
+- Related Case Study: [Enterprise Lead Funnels Architecture](/projects/enterprise-lead-funnels/)
+- Security Hardening: [Hardening Edge Security with Cloudflare Turnstile](/blog/hardening-edge-security-turnstile-astro/)
+- Performance Optimization: [Offloading Third-Party Scripts with Partytown](/blog/offloading-third-party-scripts-partytown-astro/)
+- Engineering Background: [About Sahil Langoo's Edge Stack](/about/)

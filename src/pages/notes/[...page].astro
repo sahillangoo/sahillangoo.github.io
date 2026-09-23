@@ -28,7 +28,9 @@ const pageTitle = isFirstPage
   ? notesCopy.seo.title
   : `${notesCopy.seo.title}${notesCopy.seo.pageTitleSuffix(page.currentPage)}`;
 
-const pageDescription = notesCopy.seo.description;
+const pageDescription = isFirstPage
+  ? notesCopy.seo.description
+  : `${notesCopy.seo.description} - Page ${page.currentPage} of ${page.lastPage}.`;
 
 const canonicalUrl = isFirstPage ? `${SITE.url}/notes/` : `${SITE.url}/notes/${page.currentPage}/`;
 

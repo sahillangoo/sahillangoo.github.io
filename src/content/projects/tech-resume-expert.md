@@ -10,7 +10,7 @@ tags:
   - open-source
   - agent-skills
   - ast
-featured: true
+featured: false
 year: 2026
 role: 'Creator & Lead Systems Architect'
 order: 1

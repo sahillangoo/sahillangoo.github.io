@@ -55,7 +55,11 @@ export const usesCopy: UsesPageCopy = {
         {
           name: 'Package Managers & Runtimes',
           description:
-            'pnpm (configured strictly with lockfile immutability), Bun, Node.js (nvm), and Go.',
+            'pnpm (configured strictly with lockfile immutability), Bun, Node.js (nvm), Go, Python, and PHP.',
+        },
+        {
+          name: 'Containerization & Caching',
+          description: 'Docker for multi-stage container builds and Redis for low-latency caching.',
         },
         {
           name: 'Version Control',
@@ -78,9 +82,14 @@ export const usesCopy: UsesPageCopy = {
             'GitHub Actions with strict lockfile integrity checks, type-checking, and asset verification.',
         },
         {
-          name: 'Observability & Telemetry',
+          name: 'Search Telemetry & Behavioral Analytics',
           description:
-            'Sentry for real-time frontend/backend exception triage and performance telemetry.',
+            'Google Search Console for crawl budget & indexation health, GA4 & GTM for conversion funnels, and Microsoft Clarity for user session replay and heatmap analysis.',
+        },
+        {
+          name: 'Exception Tracing & Performance Observability',
+          description:
+            'Sentry for real-time edge, server, and client exception triage, transaction profiling, and latency tracking.',
         },
       ],
     },

@@ -8,6 +8,8 @@ tags:
   - typescript
   - cloudflare-r2
   - sentry
+  - google-analytics
+  - technical-seo
   - docker
   - tailwindcss
 featured: false
@@ -43,9 +45,9 @@ Constructed robust `BlogService` and `ProjectService` abstractions in TypeScript
 
 Engineered programmatic JSON-LD generators producing `FAQPage`, `Organization`, and `Service` structured data schemas for Google rich results and AI search engine visibility.
 
-### 3. Sentry Observability & Telemetry
+### 3. Sentry, GA4 & Microsoft Clarity Telemetry
 
-Integrated `@sentry/astro` across error boundaries and client interactive islands to capture uncaught exceptions and network latency bottlenecks in real time.
+Integrated `@sentry/astro` across error boundaries and client interactive islands to capture uncaught exceptions and latency bottlenecks in real time. Connected Google Analytics 4 and Microsoft Clarity to track user engagement with video case studies and generate behavioral heatmaps without degrading Core Web Vitals.
 
 ### 4. Cloudflare R2 Media Distribution
 

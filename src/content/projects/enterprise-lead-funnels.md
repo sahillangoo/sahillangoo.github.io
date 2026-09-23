@@ -20,10 +20,10 @@ tags:
   - playwright
   - zod
 featured: true
-year: 2024
+year: 2025
 role: 'Backend & Systems Architect'
 order: 3
-publishDate: '2024-09-02'
+publishDate: '2025-05-10'
 liveUrl: 'https://www.expertsupport.org/'
 highlights:
   - 'Multi-Tenant Architecture: Developed and scaled a multi-tenant ad-driven web application with isolated tenant configuration, dynamic branding, and scoped data access across client environments.'

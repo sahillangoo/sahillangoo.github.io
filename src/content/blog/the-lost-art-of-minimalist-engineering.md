@@ -81,3 +81,12 @@ Across our production repositories at `@SquadCoders` and `@ecspl`:
 3. **Delete Dead Code Ruthlessly**: We don't comment out deprecated routes or leave unused functions "just in case". Git commit history is our permanent backup.
 
 When you strip away the unnecessary, what remains is fast, readable, and virtually impossible to break.
+
+---
+
+## Related Engineering & Standards
+
+- Architecture Blueprint: [Architecting Modern Astro Systems](/blog/architecting-modern-astro-systems/)
+- Engineering Principles: [About Sahil Langoo](/about/)
+- Verified Systems: [Engineered Projects & Systems](/projects/)
+- Stack & Specifications: [Colophon & Design Specs](/colophon/)

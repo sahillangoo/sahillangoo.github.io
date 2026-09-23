@@ -17,13 +17,13 @@ export const SITE = {
   status:
     'Systems Engineer at Eresolution Consultancy Services & Co-Founder at SquadCoders | Open to high-impact engineering opportunities',
   summary:
-    'Full-stack systems engineer with a B.Tech in Computer Science Engineering. Architect of high-throughput web architectures, distributed edge proxies, and resilient applications using TypeScript, Astro 7.3, and Cloudflare. Experienced in optimizing Core Web Vitals and reducing server latency across production systems.',
+    'Full-stack systems engineer with a B.Tech in Computer Science Engineering. Architect of high-throughput web architectures, distributed edge proxies, and technical SEO/AEO pipelines using TypeScript, Astro 7.3, and Cloudflare. Experienced in optimizing Core Web Vitals, Google Search Console indexing, and server latency across production systems.',
   education: [
     {
       institution: 'University of Kashmir (North Campus)',
       location: 'Baramulla, Kashmir, India',
       degree: 'Bachelor of Technology in Computer Science Engineering (B.Tech CSE)',
-      period: '2021 - 2023',
+      period: '2020 - 2023',
       graduationDate: 'December 2023',
       cgpa: '7.07 / 10.0',
       coursework: [
@@ -32,6 +32,7 @@ export const SITE = {
         'Cloud Computing',
         'Software Engineering',
         'Web Technologies',
+        'Capstone: Listify (PHP & MySQL Business Directory)',
       ],
     },
     {
@@ -133,6 +134,11 @@ export const SITE = {
       'Postman',
       'Playwright',
       'Sentry',
+      'Google Search Console',
+      'Google Analytics 4 & GTM',
+      'Microsoft Clarity',
+      'Technical SEO & Schema.org',
+      'Programmatic SEO (pSEO)',
       'Zod',
       'Figma',
       'Adobe Photoshop',
@@ -149,7 +155,9 @@ export const SITE = {
     instagram: 'https://www.instagram.com/sahillangoo.in',
     dribbble: 'https://dribbble.com/sahillangoo',
     devto: 'https://dev.to/sahillangoo',
-    dailydev: 'https://app.daily.dev/sahillangoo',
+    dailydev: 'https://daily.dev/sahillangoo',
+    googleDev: 'https://g.dev/sahillangoo',
+    squadcoders: 'https://github.com/SquadCoders',
     email: 'mailto:hello@sahillangoo.in',
     rss: '/rss.xml',
   },
@@ -166,4 +174,6 @@ export const SITE = {
   ],
 } as const;
 
-export const NON_INDEXABLE_PATHS = ['/404/', '/rss.xml', '/blog/tag/'] as const;
+export const NON_INDEXABLE_PATHS = ['/404/', '/rss.xml'] as const;
+
+export const ROBOTS_DISALLOWED_PATHS = ['/api/', '/private/'] as const;

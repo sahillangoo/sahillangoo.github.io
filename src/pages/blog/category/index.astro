@@ -1,0 +1,115 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { slugify } from '@utils/slugify.ts';
+import { SITE } from '@const/site.ts';
+import { Icon } from 'astro-icon/components';
+
+const allPosts = await getCollection('blog');
+const publishedPosts = allPosts.filter((post) => !post.data.draft);
+
+const categoriesMap = new Map<string, typeof publishedPosts>();
+
+for (const post of publishedPosts) {
+  const cat = post.data.category;
+  if (!categoriesMap.has(cat)) {
+    categoriesMap.set(cat, []);
+  }
+  categoriesMap.get(cat)!.push(post);
+}
+
+const categories = Array.from(categoriesMap.entries())
+  .map(([name, posts]) => ({
+    name,
+    slug: slugify(name),
+    count: posts.length,
+    recentPostTitle: posts.sort(
+      (a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
+    )[0]?.data.title,
+  }))
+  .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+
+const pageUrl = `${SITE.url}/blog/category/`;
+
+const categoriesSchema = {
+  '@type': 'CollectionPage',
+  '@id': `${pageUrl}#collectionpage`,
+  name: `Article Categories | ${SITE.name}`,
+  url: pageUrl,
+  description:
+    'Explore technical essays and engineering analyses categorized by architectural domain.',
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: categories.map((cat, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: cat.name,
+      url: `${SITE.url}/blog/category/${cat.slug}/`,
+    })),
+  },
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'Writing', item: '/blog/' },
+  { name: 'Categories', item: '/blog/category/' },
+];
+---
+
+<BaseLayout
+  title="Article Categories"
+  description="Explore technical essays and systems architecture breakdowns across engineering domains."
+  breadcrumbs={breadcrumbs}
+  structuredData={categoriesSchema}
+>
+  <div class="mx-auto max-w-4xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">
+    <!-- Back Link -->
+    <a
+      href="/blog/"
+      class="text-base-content/60 hover:text-accent inline-flex items-center gap-1.5 font-mono text-xs transition-colors"
+    >
+      <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" />
+      Back to all writing
+    </a>
+
+    <!-- Header -->
+    <div class="border-base-300 border-b pb-6">
+      <div class="text-accent flex items-center gap-2 font-mono text-xs">
+        <span class="tracking-widest uppercase">Taxonomy</span>
+        <span>•</span>
+        <span>{categories.length}Categories</span>
+      </div>
+      <h1 class="text-base-content mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">
+        Article Categories
+      </h1>
+      <p class="text-base-content/75 mt-3 text-sm leading-relaxed sm:text-base">
+        Browse systems engineering essays, edge architecture breakdowns, and performance benchmarks
+        organized by topic area.
+      </p>
+    </div>
+
+    <!-- Category Grid -->
+    <div class="grid gap-4 sm:grid-cols-2">
+      {categories.map((cat) => (
+        <a
+          href={`/blog/category/${cat.slug}/`}
+          class="border-base-300 bg-base-200/30 hover:border-accent hover:bg-base-200/60 group block rounded-lg border p-5 transition-all"
+        >
+          <div class="flex items-center justify-between">
+            <h2 class="text-base-content group-hover:text-accent text-lg font-bold tracking-tight transition-colors">
+              {cat.name}
+            </h2>
+            <span class="badge badge-neutral font-mono text-xs">
+              {cat.count} {cat.count === 1 ? 'post' : 'posts'}
+            </span>
+          </div>
+          {cat.recentPostTitle && (
+            <p class="text-base-content/65 mt-2 line-clamp-1 text-xs">
+              Latest: {cat.recentPostTitle}
+            </p>
+          )}
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

@@ -1,7 +1,8 @@
 ---
 title: 'HackerForce | Red Team Operations & Tactical Intelligence Platform'
-description: 'High-performance static cybersecurity storefront, MDX intelligence publications, and SMTP exploitation course platform built with Astro 7.3 and Tailwind CSS v4.'
-summary: 'Tactical cybersecurity storefront, red team courseware engine, and zero-server Pagefind search architecture.'
+resumeTitle: 'HackerForce Storefront'
+description: 'High-performance static offensive security training ecosystem, Armory operation sandboxes, and structured course platform built with Astro and Tailwind CSS.'
+summary: 'Offensive security training ecosystem, scenario-driven Armory sandboxes, and zero-server Pagefind search architecture.'
 category: 'web-app'
 tags:
   - astro
@@ -11,62 +12,98 @@ tags:
   - pagefind
   - security
 featured: true
-year: 2024
+year: 2026
 role: 'Lead Frontend & Systems Architect'
 order: 4
-publishDate: '2024-08-29'
-liveUrl: 'https://hackerforce.dev/'
+publishDate: '2026-09-19'
+liveUrl: 'https://hackerforce.io'
+githubUrl: 'https://github.com/HackerForceDev/hackforce-storefront'
+highlights:
+  - 'Architected zero-server static cybersecurity platform with Astro and Tailwind CSS, achieving sub-300ms LCP and zero client-side JavaScript overhead.'
+  - 'Engineered in-browser full-text search via WebAssembly with Pagefind, indexing hundreds of MDX curricula files with sub-15ms client query execution.'
 ---
 
-## The Challenge
+## What HackerForce Does
 
-**HackerForce** is an elite tactical web platform delivering offensive security curricula, red-team exploitation walkthroughs, and specialized cybersecurity armory listings to security operators.
+**HackerForce** is an offensive cybersecurity training ecosystem designed for students, penetration testers, and red team operators who demand rigorous, practical tradecraft rather than gamified shortcuts. Founded in Belgium, the platform replaces rushed video courses and contrived capture-the-flag exercises with realistic practice environments shaped around live enterprise constraints.
 
-Key engineering challenges included:
+The platform ecosystem encompasses four core pillars:
 
-1. **Zero-Server Attack Surface**: Given the adversarial target audience (penetration testers and security researchers), hosting a traditional backend CMS (e.g. WordPress, Drupal) introduced high vulnerability risks and maintenance overhead.
-2. **Heavy Curricula & Content Scale**: In-depth courseware - such as _SMTP Protocol Exploitation_, _Subdomain Hijacking_, and _Active Directory Kerberoasting_ - required rich code snippets, interactive terminals, and searchability across hundreds of technical markdown files.
-3. **Strict Design & Accessibility Integrity**: The interface demanded a tailored _"tactical obsidian"_ aesthetic with high typographic hierarchy, zero neon glows, and strict WCAG AA contrast compliance for prolonged low-light operating environments.
+1. **The Armory**: Scenario-driven red team sandboxes (_Darkglass_, _Northwood Timber_, _Medisys_, _Obscura_, _Cairnmoor_, _Irontown_, _Zenith Markets_, and the introductory _Uplink_ lab). Each operation features an internal mission brief, operational constraints, and dynamic network topologies with organic misconfigurations rather than artificial, single-path footholds.
+2. **Curriculum & Tracks**: Structured tracks spanning the full assessment lifecycle. Offerings include the comprehensive pathway course **Red Cell Operator I (RCO I)** (covering reconnaissance, OSINT, phishing infrastructure, MFA bypass, Command and Control with Sliver, Active Directory abuse, lateral movement, and executive reporting) alongside focused standalone tracks like **SMTP Exploitation & Advanced Email Spoofing**.
+3. **Five Operational Tiers**: A standardized capability progression model scoping operational friction and target maturity across five distinct levels:
+   - **Candidate**: Internal systems only, no live target.
+   - **Recruit**: Legacy systems, minimal threat detection.
+   - **Agent**: Hardened environments, active EDR and XDR controls.
+   - **APT**: Segregated networks, defense-in-depth monitoring.
+   - **Zero**: Unknown perimeter, zero margin for operator error.
+4. **Intelligence Reports**: Technical publications, field notes from the Area of Operations, and tactical research deconstructing offensive tradecraft and security career navigation.
+
+---
+
+## Operational Philosophy & Platform Goals
+
+The driving ethos behind HackerForce is simple: _"Learn it properly, or don't bother."_
+
+Too much industry training relies on rushed production, recycled exploit paths, and multiple-choice quizzes that fail when operators face real production networks. HackerForce is anchored to four core constitutional beliefs:
+
+- **Judgment before complexity**: Advanced tools cannot compensate for a lack of sound, structured, and logical thinking.
+- **Evidence before assertion**: Claims without detailed notes, repeatable observations, and verifiable artifacts are treated as guesses.
+- **Why before how**: Operators must master the root cause behind why an attack succeeds and where it fits in an engagement, not merely copy command syntax.
+- **Realism before theatre**: Training difficulty must stem from genuine friction, uncertainty, and enterprise defensive maturity rather than contrived puzzle mechanics.
 
 ---
 
 ## Architectural Solutions & System Pipeline
 
 ```
-[Markdown & MDX Curricula] ──> [Astro 7.3 Static Compiler]
-                                        │
-           ┌────────────────────────────┼────────────────────────────┐
-           ▼                            ▼                            ▼
-   [HTML & OKLCH CSS]           [Pagefind Indexer]           [Edge Distribution]
-   (Zero Client JS)             (Static WASM Shards)         (Cloudflare Global CDN)
-           │                            │                            │
-           └────────────────────────────┼────────────────────────────┘
-                                        ▼
-                           [< 300ms LCP / 0.00 CLS]
+[Markdown & MDX Operations] ──> [Astro Static Compiler]
+                                         │
+            ┌────────────────────────────┼────────────────────────────┐
+            ▼                            ▼                            ▼
+    [HTML & Semantic Tokens]     [Pagefind Indexer]           [Edge Distribution]
+    (Zero Client JS Core)        (Static WASM Shards)         (Cloudflare Global CDN)
+            │                            │                            │
+            └────────────────────────────┼────────────────────────────┘
+                                         ▼
+                            [< 300ms LCP / 0.00 CLS]
 ```
 
-### 1. Zero-JS Static Site Generation with Astro 7.3
+### 1. Zero-JS Static Site Generation with Astro
 
-Architected the entire platform using **Astro 7.3** with static output mode (`output: 'static'`). By default, pages compile to pure, semantic HTML and CSS with zero client-side JavaScript execution, eliminating hydration waterfalls and reducing page load times to under 300ms worldwide.
+Architected the entire platform using **Astro** in static output mode (`output: 'static'`). Pages compile down to semantic HTML and CSS with zero client-side JavaScript execution required for base content delivery. This architecture eliminates hydration waterfalls, protects user privacy, and ensures page loads remain under 300ms worldwide.
 
-### 2. Static Full-Text Search with Pagefind & WebAssembly
+### 2. Zero-Server Attack Surface
 
-Implemented zero-server search using **Pagefind**. During build time, Pagefind indexes all rendered MDX articles, course modules, and armory products into sharded static binary indexes.
+Given an adversarial audience composed of security researchers and penetration testers, hosting an administrative CMS backend would introduce unneeded attack surface. Deploying purely static pre-rendered assets across Cloudflare edge nodes eliminates database exploitation vectors, server-side code execution vulnerabilities, and ongoing infrastructure maintenance overhead.
 
-- **Sub-15ms Search**: Client search queries execute via WebAssembly in browser memory with zero backend API roundtrips.
-- **Offline Capable**: The search index works completely offline and consumes under 30KB of network payload.
+### 3. Static Full-Text Search with Pagefind & WebAssembly
 
-### 3. Tailwind CSS v4 Responsive Design System & Typography Hierarchy
+Integrated zero-server full-text search powered by **Pagefind**:
 
-Developed a custom design system built on **Tailwind CSS v4** with mathematical typography tokens:
+- **Sub-15ms Execution**: Client search queries execute locally in browser memory using lightweight WebAssembly shards, eliminating server roundtrips.
+- **Complete Offline Support**: All operations, curriculum modules, and intelligence reports are indexed during build time into compact static binary chunks.
+- **Minimal Footprint**: The initial search runtime loads under 30KB of assets without impacting Core Web Vitals.
 
-- **60:30:10 Tactical Palette**: Muted obsidian base (`#0c0c0e`), titanium structural borders (`#27272a`), and high-contrast chalk typography (`#fafafa`).
-- **Responsive Tracking & Spacing**: Enforced standardized fluid typography scale (`text-xs` to `text-4xl`) and tracking rules (`tracking-tight` for titles, `tracking-wider` for monospace headers) across all breakpoints.
-- **Zero Layout Shift (CLS = 0.00)**: Explicit aspect ratios and stable scrollbar gutters eliminate layout shifts during route transitions.
+### 4. Responsive Tactical Design System with Tailwind CSS
 
-### 4. Interactive Armory & Exploitation Courseware Modules
+Engineered an interface tailored for prolonged operation in low-light environments using **Tailwind CSS**:
 
-Authored modular content collections for:
+- **Tactical Theme Switcher**: Built a zero-FOUC theme controller supporting dedicated operational palettes (_Purple Metal_, _Red Fusion_, and _Amber Phosphor_) with strict contrast ratios exceeding WCAG AA standards.
+- **Terminal Typography**: Standardized typography tokens combining clean sans-serif reading type with monospace terminal prompts, fluid scaling, and tracking tokens.
+- **Zero Layout Shifts (CLS = 0.00)**: Defined explicit dimensions, aspect ratios, and stable scrollbar gutters across all responsive breakpoints to eliminate layout shifts during navigation.
 
-- **Red Team Courseware**: Structured step-by-step labs for SMTP mailer exploitation, SPF/DKIM spoofing, and lateral privilege escalation.
-- **Armory Product Catalog**: High-density hardware tool specifications with filterable operational tags and instant link verification.
+### 5. Content Collections for Curricula & Field Briefs
+
+Structured type-safe content collections to manage modular technical content:
+
+- **Armory Lab Briefs**: Standardized schema capturing operation tiers, operational scopes, targeted operating systems, and evidence deliverables.
+- **Structured Courseware**: Modular lessons integrating code blocks, execution flows, and step-by-step methodology checkpoints.
+
+### 6. Technical SEO, Machine-Readable AI Knowledge & Telemetry
+
+Implemented an automated technical SEO and discovery pipeline:
+
+- **Dynamic Metadata & Social Protocols**: Automated build-time generation of OpenGraph images, Twitter cards, and canonical tags for every lab scenario and curriculum module.
+- **Google Search Console & Sitemaps**: Structured automated XML sitemap generation (`sitemap-index.xml`) with dynamic priority scoring, achieving zero-error crawl status in Google Search Console.
+- **Machine-Readable Knowledge Endpoints (GEO / AEO)**: Implemented `/llms.txt` and clean Markdown API endpoints enabling precise retrieval by AI assistants and answer engines.
