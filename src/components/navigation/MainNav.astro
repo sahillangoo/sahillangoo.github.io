@@ -1,0 +1,113 @@
+---
+import NavLink from '@components/navigation/NavLinks.astro';
+import { Icon } from 'astro-icon/components';
+
+import { SITE } from '@consts';
+const links = [
+  { href: '/blog', text: 'Blog', icon: 'blog' },
+  { href: '/projects', text: 'Projects', icon: 'project' },
+  { href: '/contact', text: 'Contact', icon: 'contact' },
+  { href: '/resume/Sahil_Resume_W_2024.pdf', text: 'Resume', icon: 'resume' },
+];
+---
+
+<div
+  class="drawer mx-auto font-display text-primary-content shadow-lg shadow-black/20"
+  transition:persist>
+  <input id="mobile-menu" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content flex flex-col">
+    <!-- Navbar -->
+    <div class="navbar w-full bg-primary lg:px-12">
+      <div class="flex-none lg:hidden">
+        <label for="mobile-menu" aria-label="open sidebar" class="btn btn-square btn-ghost">
+          <Icon name="menu" class="size-8" />
+        </label>
+      </div>
+
+      <div class="mx-2 flex-1 px-2 text-2xl font-semibold italic hover:underline lg:text-3xl">
+        <a href="/" aria-label="Home">{SITE.AUTHOR}.</a>
+      </div>
+
+      <div class="hidden flex-none lg:block">
+        <ul class="menu menu-horizontal text-lg font-medium lowercase text-primary-content">
+          <!-- Navbar menu content here -->
+          {
+            links.map((link) => (
+              <NavLink
+                href={link.href}
+                class="transition-transform duration-300 hover:bg-secondary hover:text-primary  hover:shadow-lg hover:shadow-secondary hover:transition  hover:duration-500 hover:ease-in-out active:scale-90 active:bg-secondary ">
+                {link.text}
+              </NavLink>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Theme Switcher -->
+      <span class="mr-2">
+        <label class="swap swap-rotate">
+          <input
+            name="theme"
+            type="checkbox"
+            class="theme-controller"
+            value="InfinityLight"
+            aria-label="Theme switcher"
+          />
+          <Icon name="light" class="swap-on size-8" />
+          <Icon name="dark" class="swap-off size-8" />
+          <span class="sr-only">Theme switcher</span>
+        </label>
+      </span>
+    </div>
+  </div>
+
+  <!-- Rest of the code remains the same -->
+
+  <div class="drawer-side z-20">
+    <label for="mobile-menu" aria-label="close sidebar" class="drawer-overlay"></label>
+    <ul
+      class="menu flex min-h-full w-80 flex-col items-center space-y-4 bg-base-100 p-4 pt-12 text-2xl font-medium lowercase text-base-content">
+      <!-- Sidebar content here -->
+      <li class="border-b-2 border-b-base-300 pb-4 font-bold">Main Menu</li>
+      <li>
+        <a href="/">
+          <Icon name="home" class="size-8" />
+          Home.
+        </a>
+      </li>
+      {
+        links.map((link) => (
+          <li>
+            <a href={link.href}>
+              <Icon name={link.icon} class="size-8" />
+              {link.text}.
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a href="/rss.xml">
+          <Icon name="rss" class="size-8" />
+          RSS.
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Themes -->
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
+    function initTheme() {
+      let theme = localStorage.getItem('theme') || 'InfinityDark';
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+    }
+    initTheme();
+    document.addEventListener('astro:after-swap', initTheme);
+  });
+</script>
+<script>
+  import { themeChange } from 'theme-change';
+  themeChange();
+</script>

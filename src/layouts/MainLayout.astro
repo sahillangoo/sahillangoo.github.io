@@ -1,0 +1,28 @@
+---
+import MainFooter from '@components/MainFooter.astro';
+import MainHead from '@components/head/MainHeader.astro';
+import MainNav from '@components/navigation/MainNav.astro';
+import { SITE } from '@consts';
+
+const { TITLE, DESCRIPTION, IMAGE } = SITE;
+---
+
+<!doctype html>
+<html lang="en" data-theme="InfinityDark" class="scroll-smooth antialiased">
+  <head>
+    <MainHead title={TITLE} description={DESCRIPTION} image={IMAGE} />
+  </head>
+
+  <body transition:animate="initial" class="h-full selection:bg-primary">
+    <noscript>
+      <p class="m-2 text-center font-medium italic text-primary">
+        Please enable JavaScript for the best experience on this site.
+      </p>
+    </noscript>
+    <MainNav />
+    <main class="doted">
+      <slot />
+    </main>
+    <MainFooter />
+  </body>
+</html>
