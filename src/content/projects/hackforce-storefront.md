@@ -14,7 +14,7 @@ tags:
 featured: true
 year: 2026
 role: 'Lead Frontend & Systems Architect'
-order: 4
+order: 5
 publishDate: '2026-09-19'
 liveUrl: 'https://hackerforce.io'
 githubUrl: 'https://github.com/HackerForceDev/hackforce-storefront'

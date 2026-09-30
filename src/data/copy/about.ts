@@ -13,7 +13,7 @@ export const aboutCopy: AboutPageCopy = {
     paragraphs: [
       'I am Sahil Langoo, a Full Stack Systems Engineer at Eresolution Consultancy Services & Co-Founder at SquadCoders based in Kashmir, India. I hold a Bachelor of Technology in Computer Science Engineering (CGPA: 7.07, Capstone: Listify) from the University of Kashmir and a 3-Year Diploma in Computer Science Engineering from Kashmir Govt Polytechnic.',
       'My engineering philosophy is rooted in minimalism: building software that is fast by default, respectful of user resources, and designed with zero unnecessary runtime bloat. I prioritize static generation first, minimal client-side JavaScript, and strict end-to-end type safety.',
-      'Across Eresolution Consultancy Services, SquadCoders, and Taffin.Tech, I have engineered AI-integrated applications, high-concurrency Cloudflare Worker API gateways (Hono, Meta CAPI, Turnstile), programmatic SEO taxonomies, and telemetry pipelines (Google Search Console, GA4, Clarity, Sentry).',
+      'Across Eresolution Consultancy Services, SquadCoders, and Taffin.Tech, I have engineered high-concurrency Cloudflare Worker API gateways (Hono, Meta CAPI, Turnstile), Go REST microservices (Chi, Huma v2), full-stack platforms (Rooh Yaseen, Hotel Akbar Sonamarg, HackerForce), and comprehensive telemetry pipelines (Google Search Console, GA4, Clarity, Sentry).',
     ],
   },
   principles: {
@@ -29,7 +29,7 @@ export const aboutCopy: AboutPageCopy = {
       },
       {
         label: 'Frameworks & Architecture',
-        value: 'Astro 7.3, Next.js, React, Hono, Cloudflare Workers, Partytown.',
+        value: 'Astro 7.3, Next.js, React, Hono, Huma v2, Chi, Cloudflare Workers, Partytown.',
       },
       {
         label: 'Styling & Design Craft',
@@ -42,7 +42,7 @@ export const aboutCopy: AboutPageCopy = {
       {
         label: 'Tooling & Quality Gates',
         value:
-          'pnpm, ESLint 10 Flat Config, Prettier, Zod, Sentry, Google Search Console, GA4 / GTM, Microsoft Clarity, Schema.org JSON-LD, Playwright, Docker, Git / GitHub CLI.',
+          'pnpm, ESLint 10 Flat Config, Prettier, Zod, Typst CLI, Pandoc, Sentry, Google Search Console, GA4 / GTM, Microsoft Clarity, Schema.org JSON-LD, Playwright, Docker, Git / GitHub CLI.',
       },
     ],
   },

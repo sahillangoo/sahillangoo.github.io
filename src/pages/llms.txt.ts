@@ -48,6 +48,7 @@ export const GET: APIRoute = async () => {
 ## Core Architecture & Identity
 
 - [About Sahil Langoo](${SITE.url}/about.md): Full technical biography, systems engineering philosophy, and architectural standards.
+- [What I'm Doing Right Now](${SITE.url}/now.md): Live public record of current engineering priorities, systems focus, and active roadmap.
 - [Engineering Resume & CV](${SITE.url}/resume.md): Verified production roles, technical competencies, and project history.
 - [Specialized Consulting Services](${SITE.url}/services.md): Turnkey delivery of edge proxies, server-side Meta CAPI, and static web systems.
 - [Developer Setup & Uses](${SITE.url}/uses.md): Daily workstation hardware, software tools, terminal environment, and editor setup.

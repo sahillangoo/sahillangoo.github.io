@@ -119,10 +119,14 @@ function isActive(href: string): boolean {
 </header>
 
 <script>
+  type LenisWindow = Window & { lenis?: import('lenis').default };
+
   const handleScroll = () => {
     const header = document.getElementById('site-header');
     if (!header) return;
-    if (window.scrollY > 20) {
+    const win = window as unknown as LenisWindow;
+    const currentY = win.lenis?.scroll ?? window.scrollY;
+    if (currentY > 20) {
       header.classList.add('backdrop-blur-md', 'border-base-300', 'bg-base-100/85');
       header.classList.remove('border-transparent');
     } else {
@@ -175,5 +179,11 @@ function isActive(href: string): boolean {
 
   window.addEventListener('popstate', () => setTimeout(syncNavLinks, 0));
   document.addEventListener('astro:after-swap', syncNavLinks);
-  document.addEventListener('astro:page-load', syncNavLinks);
+  document.addEventListener('astro:page-load', () => {
+    syncNavLinks();
+    const win = window as unknown as LenisWindow;
+    if (win.lenis) {
+      win.lenis.on('scroll', handleScroll);
+    }
+  });
 </script>

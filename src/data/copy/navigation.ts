@@ -40,6 +40,7 @@ export const navigationCopy: NavigationCopy = {
       title: 'System',
       links: [
         { label: 'Now', href: '/now/' },
+        { label: 'Services', href: '/services.md' },
         { label: 'Uses', href: '/uses/' },
         { label: 'Colophon', href: '/colophon/' },
         { label: 'Links', href: '/links/' },

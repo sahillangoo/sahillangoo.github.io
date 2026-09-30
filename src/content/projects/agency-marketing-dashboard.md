@@ -16,7 +16,7 @@ tags:
 featured: false
 year: 2026
 role: 'Lead Backend & Systems Architect'
-order: 13
+order: 16
 publishDate: '2026-09-22'
 highlights:
   - 'High-Throughput Go Event Service: Architected a concurrent REST API service in Go, ingesting client marketing lead forms with sub-15ms p99 response times.'

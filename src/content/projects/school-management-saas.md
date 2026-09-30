@@ -27,7 +27,7 @@ tags:
 featured: true
 year: 2026
 role: 'Lead Full Stack & Systems Architect'
-order: 2
+order: 4
 publishDate: '2026-06-15'
 liveUrl: 'https://kwschool.in/'
 highlights:

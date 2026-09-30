@@ -10,10 +10,10 @@ tags:
   - typescript
   - cloudflare-pages
 featured: false
-year: 2024
+year: 2026
 role: 'Lead Frontend Architect'
-order: 7
-publishDate: '2024-08-15'
+order: 10
+publishDate: '2026-09-13'
 liveUrl: 'https://hotelakbarsonamarg.com/'
 ---
 

@@ -6,13 +6,18 @@
   "period": "Dec 2023 - Present",
   "current": true,
   "highlights": [
-    "Co-founded and engineered static web architectures at SquadCoders, delivering sub-50ms global TTFB and 0.00 CLS across client platforms built on Astro, TypeScript, and Cloudflare Pages.",
-    "Engineered custom web systems including SoulMedia, Hotel Akbar Sonamarg, and TravelKit, reducing bundle payloads by 65% and achieving 100/100 Lighthouse performance benchmarks through zero-JS baselines.",
+    "Co-founded and engineered static web architectures and backend services at SquadCoders, delivering sub-50ms global TTFB and 0.00 CLS across client platforms on Astro, TypeScript, and Cloudflare Pages.",
+    "Architected high-performance Go REST API (Chi, Huma v2, pure-Go SQLite) featuring RFC 9457 error contracts, constant-time auth, and deterministic in-memory pure-Go PDF proposal and invoice generation.",
+    "Engineered custom web systems including Rooh Yaseen cinematography showcase, SoulMedia UK, Hotel Akbar Sonamarg, and TravelKit, reducing bundle payloads by 65% with zero-JS baselines.",
     "Developed and launched 10+ high-performance websites, achieving an average page-load improvement of 30% and a 15% boost in client project conversion rates.",
     "Integrated technical SEO, machine-readable GEO/AEO knowledge bases (llms.txt, XML sitemaps, OpenGraph protocols), and GA4/Clarity behavioral tracking across client projects including SoulMedia and HackerForce.",
     "Developed custom zero-dependency build-time quality hooks in Node.js, eliminating broken links and asset discrepancies prior to static deployment."
   ],
   "skills": [
+    "Go",
+    "Huma v2",
+    "Chi",
+    "SQLite",
     "Astro",
     "TypeScript",
     "Tailwind CSS",

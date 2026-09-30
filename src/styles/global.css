@@ -134,6 +134,7 @@
 html {
   background-color: var(--color-base-100);
   overflow-y: scroll;
+  scroll-behavior: auto !important;
   scrollbar-gutter: stable;
   color: var(--color-base-content);
 }

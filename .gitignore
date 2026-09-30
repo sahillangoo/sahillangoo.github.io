@@ -63,3 +63,11 @@ temp/
 *.bak
 *.swp
 
+# Scratch & Local Data Dumps
+/*_repos.json
+/all_accessible_repos.json
+/contributions.json
+/events*.json
+/repos.json
+/*.csv
+

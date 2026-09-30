@@ -45,7 +45,7 @@ const articleSchema = {
   headline: data.title,
   description: data.description,
   url: pageUrl,
-  image: `${SITE.url}/og/blog/${id}.png`,
+  image: data.coverImage ? `${SITE.url}${data.coverImage}` : `${SITE.url}/og/blog/${id}.png`,
   datePublished: data.publishDate,
   dateModified: data.updatedDate || data.publishDate,
   author: {
@@ -93,7 +93,7 @@ const breadcrumbs = [
   title={data.title}
   description={data.description}
   keywords={data.tags}
-  image={`/og/blog/${id}.png`}
+  image={data.coverImage || `/og/blog/${id}.png`}
   type="article"
   publishDate={data.publishDate}
   updatedDate={data.updatedDate}
@@ -152,6 +152,21 @@ const breadcrumbs = [
         ))}
       </div>
     </header>
+
+    <!-- Featured Cover Image -->
+    {data.coverImage && (
+      <figure class="border-base-300 bg-base-200 overflow-hidden rounded-xl border">
+        <img
+          src={data.coverImage}
+          alt={data.title}
+          class="aspect-video w-full object-cover"
+          loading="eager"
+          decoding="async"
+          width="1280"
+          height="720"
+        />
+      </figure>
+    )}
 
     <!-- In-Article Audio Reader -->
     <ArticleAudioReader readingTime={data.readingTime || '6 min read'} articleTitle={data.title} />
@@ -249,7 +264,8 @@ const breadcrumbs = [
                 rel="noopener noreferrer"
                 class="text-base-content/60 hover:text-accent flex items-center gap-1 transition-colors"
               >
-                <Icon name="ph:x-logo-bold" class="h-3.5 w-3.5" />X
+                <Icon name="ph:x-logo-bold" class="h-3.5 w-3.5" />
+                <span>X</span>
               </a>
             </div>
           </div>

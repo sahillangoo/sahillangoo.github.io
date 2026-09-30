@@ -19,10 +19,10 @@ tags:
   - symfony
   - php
   - gdpr
-featured: true
+featured: false
 year: 2024
 role: 'Frontend Architect & Full Stack Engineer'
-order: 5
+order: 6
 publishDate: '2024-06-28'
 liveUrl: 'https://www.taffin.tech/'
 highlights:

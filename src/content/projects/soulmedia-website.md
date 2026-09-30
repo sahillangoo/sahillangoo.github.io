@@ -13,10 +13,10 @@ tags:
   - docker
   - tailwindcss
 featured: false
-year: 2024
+year: 2026
 role: 'Lead Systems Architect'
-order: 8
-publishDate: '2024-08-17'
+order: 11
+publishDate: '2026-09-30'
 liveUrl: 'https://soulmedia.uk/'
 ---
 

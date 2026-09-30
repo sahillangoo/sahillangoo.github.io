@@ -13,7 +13,7 @@ tags:
 featured: false
 year: 2024
 role: 'Lead Full Stack Architect'
-order: 10
+order: 14
 publishDate: '2024-08-18'
 liveUrl: 'https://travelarc.in/'
 ---

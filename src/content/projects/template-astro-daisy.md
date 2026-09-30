@@ -11,10 +11,10 @@ tags:
   - eslint
   - open-source
 featured: false
-year: 2024
+year: 2026
 role: 'Creator & Maintainer'
-order: 9
-publishDate: '2024-01-14'
+order: 13
+publishDate: '2026-08-10'
 liveUrl: 'https://github.com/sahillangoo/astro-template'
 githubUrl: 'https://github.com/sahillangoo/astro-template'
 ---

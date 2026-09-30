@@ -18,18 +18,27 @@ export const nowCopy: NowPageCopy = {
       category: 'Engineering & Systems Architecture at Eresolution Consultancy Services',
       icon: 'ph:code-bold',
       items: [
-        'Engineering distributed API gateways, edge proxies, and server-side event streaming at Eresolution Consultancy Services.',
-        'Refining zero-dependency build-time quality gates (verifying asset references, internal links, and SEO redirects).',
-        'Implementing resilient edge proxies and payment integrations on Cloudflare Workers and Hono.',
+        'Architecting high-concurrency Cloudflare Worker API gateways and server-side Meta Conversions API (CAPI) event streams with Hono.',
+        'Hardening payment and verification proxies (Experian OTP, Razorpay order lifecycle bounding) and multi-tenant observability.',
+        'Triaging production Sentry exceptions, suppressing synthetic in-app browser errors across Meta IAB and iOS WebKit frames.',
       ],
     },
     {
-      category: 'Exploring & Learning',
+      category: 'Client Platforms & Studio Engineering at @SquadCoders',
+      icon: 'ph:laptop-bold',
+      items: [
+        'Delivering the editorial cinematography showcase for UK Director of Photography Rooh Yaseen (roohyaseen.com) with Astro 7, Lenis kinetic scrolling, and 0.00 CLS.',
+        'Architecting the SquadCoders Go REST API (Chi, Huma v2, pure-Go SQLite) with RFC 9457 error contracts, constant-time auth, and in-memory pure-Go PDF document generation.',
+        'Scaling full-stack platforms including SoulMedia UK (soulmedia.uk), Hotel Akbar Sonamarg (hotelakbarsonamarg.com), and HackerForce tactical platform (hackerforce.io).',
+      ],
+    },
+    {
+      category: 'Systems Tooling, Local AI & Consulting Packaging',
       icon: 'ph:sparkle-bold',
       items: [
-        'Deepening systems programming with Go: concurrent network APIs, micro-proxies, and CLI tooling.',
-        'Local AI workflows: Experimenting with local vision models (Gemma 2B via Bun) and offline embedding pipelines.',
-        'Fine-tuning CSS Subgrid patterns and multi-tier OKLCH color spaces in Tailwind CSS v4.',
+        'Packaging specialized systems architecture consulting services covering edge proxies, server-side CAPI, static migrations, and AEO/GEO discovery endpoints.',
+        'Open-source systems tooling: Windows 11 & WSL2 Maintenance Suite (zero-dependency PowerShell engine for developer storage reclamation) and Bio Dissertation Generator.',
+        'Maintaining Tech Resume Expert, encoding Harvard MCS and FAANG screening heuristics into an open-source career intelligence platform.',
       ],
     },
     {
@@ -38,7 +47,7 @@ export const nowCopy: NowPageCopy = {
       items: [
         'Designing Data-Intensive Applications by Martin Kleppmann.',
         'Refactoring UI by Adam Wathan & Steve Schoger.',
-        'Distributed systems, edge caching, and database query optimization research papers.',
+        'RFC 9457 (Problem Details for HTTP APIs) and distributed edge caching research papers.',
       ],
     },
   ],

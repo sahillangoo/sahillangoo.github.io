@@ -66,9 +66,10 @@ export const homeCopy: HomePageCopy = {
         'Open to high-impact software engineering roles, distributed edge systems design, and select technical consulting engagements.',
       ctas: [
         {
-          label: 'Explore Links & Socials',
-          href: '/links/',
-          icon: 'ph:link-bold',
+          label: 'Consulting Services',
+          href: '/services.md',
+          icon: 'ph:briefcase-bold',
+          external: true,
           variant: 'primary',
         },
         {
@@ -84,6 +85,12 @@ export const homeCopy: HomePageCopy = {
           icon: 'ph:github-logo-bold',
           external: true,
           variant: 'outline',
+        },
+        {
+          label: 'Connect & Links',
+          href: '/links/',
+          icon: 'ph:link-bold',
+          variant: 'ghost',
         },
       ],
     },

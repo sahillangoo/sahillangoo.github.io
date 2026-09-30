@@ -10,11 +10,11 @@ tags:
   - motion
   - zod
   - cloudflare-pages
-featured: false
-year: 2024
+featured: true
+year: 2026
 role: 'Creative Technologist & Lead Engineer'
-order: 11
-publishDate: '2024-08-15'
+order: 3
+publishDate: '2026-10-01'
 liveUrl: 'https://roohyaseen.com/'
 ---
 

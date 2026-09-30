@@ -12,9 +12,11 @@ const skills = siteData?.data.skills;
 
 const allProjects = await getCollection('projects');
 const targetProjectIds = [
-  'taffin-tech-job-board',
+  'tech-resume-expert',
   'enterprise-lead-funnels',
+  'roohyaseen-portfolio',
   'school-management-saas',
+  'squadcoders-api',
 ];
 const resumeProjects = targetProjectIds
   .map((id) => allProjects.find((p) => p.id === id))
@@ -123,6 +125,26 @@ const breadcrumbs = [
         </a>
       </div>
     </div>
+
+    <!-- Role-Specific Resume Targets -->
+    {resumeCopy.header.roleResumes && (
+      <div class="border-base-300 bg-base-200/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-lg border px-4 py-3 text-xs">
+        <span class="text-base-content/70 font-mono">Role-Specific Tracks:</span>
+        <div class="flex flex-wrap items-center gap-2">
+          {resumeCopy.header.roleResumes.map((role) => (
+            <a
+              href={role.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="border-base-300 bg-base-100 text-base-content/80 hover:border-accent/50 hover:text-accent inline-flex items-center gap-1.5 rounded border px-2.5 py-1 font-mono transition-colors active:scale-99"
+            >
+              <Icon name="ph:file-pdf-bold" class="h-3 w-3 opacity-60" />
+              <span>{role.label}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    )}
 
     <!-- Summary -->
     <section class="space-y-3">

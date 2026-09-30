@@ -8,6 +8,8 @@
 ></div>
 
 <script>
+  type LenisWindow = Window & { lenis?: import('lenis').default };
+
   const updateProgress = () => {
     const bar = document.getElementById('reading-progress-bar');
     if (!bar) return;
@@ -17,10 +19,19 @@
       bar.style.transform = 'scaleX(0)';
       return;
     }
-    const progress = Math.min(1, Math.max(0, window.scrollY / totalHeight));
+    const win = window as unknown as LenisWindow;
+    const currentScroll = win.lenis ? win.lenis.scroll : window.scrollY;
+    const progress = Math.min(1, Math.max(0, currentScroll / totalHeight));
     bar.style.transform = `scaleX(${progress})`;
   };
 
   window.addEventListener('scroll', updateProgress, { passive: true });
-  document.addEventListener('astro:page-load', updateProgress);
+
+  document.addEventListener('astro:page-load', () => {
+    updateProgress();
+    const win = window as unknown as LenisWindow;
+    if (win.lenis) {
+      win.lenis.on('scroll', updateProgress);
+    }
+  });
 </script>

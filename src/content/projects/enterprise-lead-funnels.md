@@ -20,9 +20,9 @@ tags:
   - playwright
   - zod
 featured: true
-year: 2025
+year: 2026
 role: 'Backend & Systems Architect'
-order: 3
+order: 2
 publishDate: '2025-05-10'
 liveUrl: 'https://www.expertsupport.org/'
 highlights:

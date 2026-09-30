@@ -221,6 +221,7 @@ export interface ResumePageCopy {
     eyebrow: string;
     roleSubtitle: string;
     downloadCta?: CtaButton;
+    roleResumes?: { label: string; href: string }[];
     contactCta: CtaButton;
     githubCta: CtaButton;
   };

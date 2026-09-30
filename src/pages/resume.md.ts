@@ -25,9 +25,11 @@ ${resp}`;
     .join('\n\n');
 
   const targetProjectIds = [
-    'taffin-tech-job-board',
+    'tech-resume-expert',
     'enterprise-lead-funnels',
+    'roohyaseen-portfolio',
     'school-management-saas',
+    'squadcoders-api',
   ];
   const resumeProjects = targetProjectIds
     .map((id) => allProjects.find((p) => p.id === id))
@@ -61,6 +63,10 @@ author: "${SITE.name}"
 - **daily.dev**: ${SITE.social.dailydev} (5.4k+ reads)
 - **Google Developer**: ${SITE.social.googleDev}
 - **Direct PDF Download**: ${SITE.url}/resumes/Resume-Sahil-Langoo.pdf
+- **Full-Stack Resume**: ${SITE.url}/resumes/Resume-Sahil-Langoo-FullStack.pdf
+- **Frontend Resume**: ${SITE.url}/resumes/Resume-Sahil-Langoo-Frontend.pdf
+- **DevOps Resume**: ${SITE.url}/resumes/Resume-Sahil-Langoo-DevOps.pdf
+- **Forward-Deployed Resume**: ${SITE.url}/resumes/Resume-Sahil-Langoo-Forward-Deployed.pdf
 
 ## Technical Core Competencies
 

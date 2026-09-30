@@ -16,6 +16,12 @@ export const resumeCopy: ResumePageCopy = {
       icon: 'ph:file-pdf-bold',
       external: true,
     },
+    roleResumes: [
+      { label: 'Full-Stack', href: '/resumes/Resume-Sahil-Langoo-FullStack.pdf' },
+      { label: 'Frontend', href: '/resumes/Resume-Sahil-Langoo-Frontend.pdf' },
+      { label: 'DevOps & Infra', href: '/resumes/Resume-Sahil-Langoo-DevOps.pdf' },
+      { label: 'Forward-Deployed', href: '/resumes/Resume-Sahil-Langoo-Forward-Deployed.pdf' },
+    ],
     contactCta: {
       label: 'Email Me',
       href: 'mailto:hello@sahillangoo.in',

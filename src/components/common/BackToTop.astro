@@ -12,10 +12,14 @@ import { Icon } from 'astro-icon/components';
 </button>
 
 <script>
+  type LenisWindow = Window & { lenis?: import('lenis').default };
+
   const toggleVisibility = () => {
     const btn = document.getElementById('back-to-top');
     if (!btn) return;
-    if (window.scrollY > 400) {
+    const win = window as unknown as LenisWindow;
+    const currentY = win.lenis?.scroll ?? window.scrollY;
+    if (currentY > 400) {
       btn.classList.remove('hidden');
       btn.classList.add('flex');
     } else {
@@ -29,9 +33,27 @@ import { Icon } from 'astro-icon/components';
   document.addEventListener('click', (e) => {
     const btn = (e.target as HTMLElement | null)?.closest('#back-to-top');
     if (btn) {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      e.preventDefault();
+      e.stopPropagation();
+      const win = window as unknown as LenisWindow;
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (win.lenis) {
+        win.lenis.scrollTo(0, {
+          duration: prefersReducedMotion ? 0 : 1.4,
+          immediate: prefersReducedMotion,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        });
+      } else {
+        window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+      }
     }
   });
 
-  document.addEventListener('astro:page-load', toggleVisibility);
+  document.addEventListener('astro:page-load', () => {
+    toggleVisibility();
+    const win = window as unknown as LenisWindow;
+    if (win.lenis) {
+      win.lenis.on('scroll', toggleVisibility);
+    }
+  });
 </script>

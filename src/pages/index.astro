@@ -85,21 +85,10 @@ const homeSchema = {
             {homeCopy.hero.headline}
           </h1>
 
-          <p class="text-base-content/75 text-base leading-relaxed sm:text-lg">
-            I am<strong class="text-base-content font-semibold">{SITE.name}</strong>, based in
-            {homeCopy.hero.locationText}. I specialize in architecting ultra-fast static web
-            platforms, distributed API proxies, and type-safe systems at
-            <strong class="text-base-content font-medium">Eresolution Consultancy Services</strong>,
-            <a
-              href="https://github.com/SquadCoders"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-accent font-semibold hover:underline"
-            >
-              @SquadCoders
-            </a>
-            , and in open source.
-          </p>
+          <p
+            class="text-base-content/75 text-base leading-relaxed sm:text-lg"
+            set:html={`I am <strong class="text-base-content font-semibold">${SITE.name}</strong>, based in ${homeCopy.hero.locationText}. I specialize in architecting ultra-fast static web platforms, distributed API proxies, and type-safe systems at <strong class="text-base-content font-medium">Eresolution Consultancy Services</strong>, <a href="https://github.com/SquadCoders" target="_blank" rel="noopener noreferrer" class="text-accent font-semibold hover:underline">@SquadCoders</a>, and in open source.`}
+          />
 
           <div class="flex flex-wrap items-center gap-3 pt-2">
             {homeCopy.hero.ctas.map((cta) => (

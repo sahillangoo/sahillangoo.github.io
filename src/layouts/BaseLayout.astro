@@ -81,54 +81,116 @@ const {
     {!hideFooter && <SiteFooter />}
 
     <script>
-      type LenisType = import('lenis').default;
-      let lenisInstance: LenisType | null = null;
-      let lenisPromise: Promise<LenisType | null> | null = null;
+      import Lenis from 'lenis';
 
-      async function getLenis(): Promise<LenisType | null> {
-        if (typeof window === 'undefined') return null;
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          return null;
+      type LenisWindow = Omit<Window, 'lenis'> & { lenis?: Lenis };
+
+      function getOrCreateLenis(): Lenis {
+        const win = window as unknown as LenisWindow;
+        if (!win.lenis) {
+          win.lenis = new Lenis({
+            autoRaf: true, // Managed requestAnimationFrame loop
+            lerp: 0.055, // Ultra-Liquid Cinematic Float (buttery Awwwards/Antigravity inertia)
+            smoothWheel: true, // Smooth wheel events for physical mice & trackpads
+            syncTouch: false, // Strictly false: Preserve native 120Hz mobile compositor momentum
+            wheelMultiplier: 0.9, // Balanced luxury wheel travel ratio (prevents runaway acceleration)
+            touchMultiplier: 1.0,
+            autoResize: true, // Auto-detect container size changes via ResizeObserver
+            stopInertiaOnNavigate: true, // Cut momentum immediately when navigating across pages
+            respectReducedMotion: true, // Automatically disable smoothing on prefers-reduced-motion
+          });
         }
-        if (lenisInstance) return lenisInstance;
-        if (lenisPromise) return lenisPromise;
-
-        lenisPromise = import('lenis')
-          .then(({ default: Lenis }) => {
-            lenisInstance = new Lenis({
-              autoRaf: true,
-              duration: 0.9,
-              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            });
-            return lenisInstance;
-          })
-          .catch(() => null);
-
-        return lenisPromise;
+        return win.lenis;
       }
 
-      getLenis();
+      // Initialize immediately on first script load
+      getOrCreateLenis();
 
+      // Lifecycle Coordination for Astro View Transitions (<ClientRouter />)
+      let hashClickListener: ((e: MouseEvent) => void) | null = null;
+
+      function setupHashSmoothScroll(): void {
+        if (hashClickListener) {
+          document.removeEventListener('click', hashClickListener);
+        }
+
+        hashClickListener = (e: MouseEvent): void => {
+          if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+          const anchor = (e.target as Element | null)?.closest<HTMLAnchorElement>('a[href*="#"]');
+          if (!anchor) return;
+
+          const rawHref = anchor.getAttribute('href');
+          if (!rawHref) return;
+
+          let targetUrl: URL;
+          try {
+            targetUrl = new URL(rawHref, window.location.href);
+          } catch {
+            return;
+          }
+
+          // Only handle same-page hash links; let ClientRouter handle cross-page routes
+          const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+          const targetPath = targetUrl.pathname.replace(/\/$/, '') || '/';
+          if (targetUrl.origin !== window.location.origin || currentPath !== targetPath) return;
+
+          const hash = targetUrl.hash;
+          if (!hash || hash === '#') return;
+
+          const targetEl =
+            hash === '#top'
+              ? (document.querySelector('#top') as HTMLElement | null) || document.body
+              : (document.querySelector(hash) as HTMLElement | null);
+
+          if (!targetEl) return;
+
+          e.preventDefault();
+
+          const lenis = getOrCreateLenis();
+          const prefersReducedMotion = window.matchMedia(
+            '(prefers-reduced-motion: reduce)'
+          ).matches;
+
+          // Programmatic transitions use the signature 1.4s editorial easing curve
+          lenis.scrollTo(targetEl, {
+            duration: prefersReducedMotion ? 0 : 1.4,
+            immediate: prefersReducedMotion,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          });
+
+          if (window.location.hash !== hash) {
+            window.history.pushState(null, '', hash);
+          }
+        };
+
+        document.addEventListener('click', hashClickListener);
+      }
+
+      // Teardown Lenis and listeners before Astro swaps the DOM
       document.addEventListener('astro:before-swap', () => {
-        if (lenisInstance) {
-          lenisInstance.stop();
+        document.body.style.overflow = '';
+        if (hashClickListener) {
+          document.removeEventListener('click', hashClickListener);
+          hashClickListener = null;
+        }
+        const win = window as unknown as LenisWindow;
+        if (win.lenis) {
+          win.lenis.destroy();
+          win.lenis = undefined;
         }
       });
 
-      document.addEventListener('astro:after-swap', () => {
-        document.body.style.overflow = '';
-      });
+      // Reinitialize and restore hash position on page load
+      document.addEventListener('astro:page-load', () => {
+        const lenis = getOrCreateLenis();
+        setupHashSmoothScroll();
 
-      document.addEventListener('astro:page-load', async () => {
-        const lenis = await getLenis();
-        if (lenis) {
-          lenis.resize();
-          lenis.start();
-          if (window.location.hash) {
-            const target = document.querySelector(window.location.hash);
-            if (target) {
-              lenis.scrollTo(target as HTMLElement, { immediate: true });
-            }
+        if (window.location.hash) {
+          const hash = window.location.hash;
+          const target = hash === '#top' ? 0 : document.querySelector(hash);
+          if (target instanceof HTMLElement || target === 0) {
+            lenis.scrollTo(target, { immediate: true });
           }
         }
       });
