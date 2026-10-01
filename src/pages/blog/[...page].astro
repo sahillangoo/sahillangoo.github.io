@@ -7,6 +7,7 @@ import type { GetStaticPaths, Page } from 'astro';
 import { SITE } from '@const/site.ts';
 import { blogCopy } from '@copy/blog.ts';
 import { slugify } from '@utils/slugify.ts';
+import { formatIsoDateTime } from '@utils/date.ts';
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
   const articles = await getCollection('blog');
@@ -69,7 +70,7 @@ const blogSchema = {
     description: post.data.description,
     url: `${SITE.url}/blog/${post.id}/`,
     image: `${SITE.url}/og/blog/${post.id}.png`,
-    datePublished: post.data.publishDate,
+    datePublished: formatIsoDateTime(post.data.publishDate),
     author: {
       '@id': `${SITE.url}/#person`,
     },

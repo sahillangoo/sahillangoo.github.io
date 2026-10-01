@@ -2,6 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 import { SITE } from '@const/site.ts';
+import { formatIsoDateTime } from '@utils/date.ts';
 import { Icon } from 'astro-icon/components';
 
 export async function getStaticPaths() {
@@ -31,6 +32,7 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
 });
 
 const pageUrl = `${SITE.url}/notes/${id}/`;
+const isoDatePublished = formatIsoDateTime(data.publishDate);
 
 const noteSchema = {
   '@type': 'TechArticle',
@@ -39,8 +41,8 @@ const noteSchema = {
   description: data.description || `Digital garden note by Sahil Langoo on ${data.topic}`,
   url: pageUrl,
   image: `${SITE.url}/og/notes/${id}.png`,
-  datePublished: data.publishDate,
-  dateModified: data.publishDate,
+  datePublished: isoDatePublished,
+  dateModified: isoDatePublished,
   author: {
     '@id': `${SITE.url}/#person`,
   },
@@ -68,7 +70,14 @@ const breadcrumbs = [
   description={data.description || `Digital note by Sahil Langoo on ${data.topic}`}
   keywords={data.tags}
   image={`/og/notes/${id}.png`}
-  publishDate={data.publishDate}
+  imageWidth={1200}
+  imageHeight={630}
+  imageType="image/png"
+  imageAlt={data.title}
+  type="article"
+  publishDate={isoDatePublished}
+  articleSection={data.topic}
+  articleTags={data.tags}
   breadcrumbs={breadcrumbs}
   structuredData={noteSchema}
 >

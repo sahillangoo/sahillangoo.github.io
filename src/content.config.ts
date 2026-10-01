@@ -25,18 +25,27 @@ const projects = defineCollection({
 
 const blog = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/blog' }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    publishDate: z.string(),
-    updatedDate: z.string().optional(),
-    category: z.string().default('Engineering'),
-    tags: z.array(z.string()).default([]),
-    featured: z.boolean().default(false),
-    coverImage: z.string().optional(),
-    draft: z.boolean().default(false),
-    readingTime: z.string().optional(),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      publishDate: z.string(),
+      updatedDate: z.string().optional(),
+      category: z.string().default('Engineering'),
+      tags: z.array(z.string()).default([]),
+      featured: z.boolean().default(false),
+      coverImage: image().optional(),
+      draft: z.boolean().default(false),
+      readingTime: z.string().optional(),
+      faqs: z
+        .array(
+          z.object({
+            question: z.string(),
+            answer: z.string(),
+          })
+        )
+        .optional(),
+    }),
 });
 
 const notes = defineCollection({

@@ -61,8 +61,17 @@ export const GET: APIRoute = async () => {
         .join('\n');
 
       const bodyText = b.body?.trim() ? `\n\n#### Article Content\n\n${b.body.trim()}` : '';
+      const faqText =
+        b.data.faqs && b.data.faqs.length > 0
+          ? `\n\n#### Frequently Asked Questions\n\n` +
+            b.data.faqs
+              .map(
+                (f: { question: string; answer: string }) => `##### ${f.question}\n\n${f.answer}`
+              )
+              .join('\n\n')
+          : '';
 
-      return `### 4.${index + 1} ${b.data.title}\n\n${details}${bodyText}`;
+      return `### 4.${index + 1} ${b.data.title}\n\n${details}${bodyText}${faqText}`;
     })
     .join('\n\n---\n\n');
 

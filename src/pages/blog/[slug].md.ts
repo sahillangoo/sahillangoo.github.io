@@ -20,6 +20,14 @@ export const GET: APIRoute<Props> = async ({ props }) => {
   const { post } = props;
   const { data, body } = post;
 
+  const faqContent =
+    data.faqs && data.faqs.length > 0
+      ? `\n\n## Frequently Asked Questions\n\n` +
+        data.faqs
+          .map((f: { question: string; answer: string }) => `### ${f.question}\n\n${f.answer}`)
+          .join('\n\n')
+      : '';
+
   const content = `---
 title: "${data.title.replace(/"/g, '\\"')}"
 description: "${data.description.replace(/"/g, '\\"')}"
@@ -37,7 +45,7 @@ canonicalUrl: "${SITE.url}/blog/${post.id}/"
 - **Category**: ${data.category}
 - **Tags**: ${data.tags.join(', ')}
 ${data.readingTime ? `- **Reading Time**: ${data.readingTime}\n` : ''}
-${body?.trim() ?? ''}
+${body?.trim() ?? ''}${faqContent}
 `;
 
   return new Response(content.trim() + '\n', {

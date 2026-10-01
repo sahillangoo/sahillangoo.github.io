@@ -5,7 +5,9 @@ import ArticleAudioReader from '@components/blog/ArticleAudioReader.astro';
 import { getCollection, render } from 'astro:content';
 import { SITE } from '@const/site.ts';
 import { slugify } from '@utils/slugify.ts';
+import { formatIsoDateTime, formatReadingTimeIso } from '@utils/date.ts';
 import { Icon } from 'astro-icon/components';
+import { Image, getImage } from 'astro:assets';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -39,15 +41,102 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
 const pageUrl = `${SITE.url}/blog/${id}/`;
 const categorySlug = slugify(data.category);
 
+const optimizedOgImage = data.coverImage
+  ? await getImage({
+      src: data.coverImage,
+      width: 1200,
+      height: 630,
+      format: 'png',
+    })
+  : null;
+
+const coverImageUrl = data.coverImage
+  ? `${SITE.url}${data.coverImage.src}`
+  : `${SITE.url}/og/blog/${id}.png`;
+
+const ogImageUrl = optimizedOgImage
+  ? `${SITE.url}${optimizedOgImage.src}`
+  : `${SITE.url}/og/blog/${id}.png`;
+
+const isoDatePublished = formatIsoDateTime(data.publishDate);
+const isoDateModified = formatIsoDateTime(data.updatedDate || data.publishDate);
+const timeRequired = formatReadingTimeIso(data.readingTime);
+const wordCount = typeof post.body === 'string' ? post.body.trim().split(/\s+/).length : undefined;
+
+const faqSchema =
+  data.faqs && data.faqs.length > 0
+    ? {
+        '@type': 'FAQPage',
+        '@id': `${pageUrl}#faq`,
+        name: `${data.title} FAQs`,
+        url: `${pageUrl}#faq`,
+        isPartOf: {
+          '@id': `${pageUrl}#article`,
+        },
+        inLanguage: 'en-US',
+        mainEntity: data.faqs.map((faq, index) => ({
+          '@type': 'Question',
+          '@id': `${pageUrl}#faq-q${index + 1}`,
+          name: faq.question,
+          url: `${pageUrl}#faq-q${index + 1}`,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            '@id': `${pageUrl}#faq-a${index + 1}`,
+            text: faq.answer,
+            url: `${pageUrl}#faq-q${index + 1}`,
+          },
+        })),
+      }
+    : null;
+
+const topicEntities = [
+  ...(data.tags.includes('go')
+    ? [
+        {
+          '@type': 'Thing',
+          name: 'Go (Programming Language)',
+          sameAs: 'https://en.wikipedia.org/wiki/Go_(programming_language)',
+        },
+      ]
+    : []),
+  ...(data.tags.includes('ai-agents') || data.tags.includes('ai-engineering')
+    ? [
+        {
+          '@type': 'Thing',
+          name: 'Artificial Intelligence',
+          sameAs: 'https://en.wikipedia.org/wiki/Artificial_intelligence',
+        },
+      ]
+    : []),
+  ...(data.tags.includes('sqlite')
+    ? [
+        {
+          '@type': 'Thing',
+          name: 'SQLite',
+          sameAs: 'https://en.wikipedia.org/wiki/SQLite',
+        },
+      ]
+    : []),
+  ...(data.tags.includes('backend') || data.tags.includes('web-architecture')
+    ? [
+        {
+          '@type': 'Thing',
+          name: 'Application Programming Interface',
+          sameAs: 'https://en.wikipedia.org/wiki/API',
+        },
+      ]
+    : []),
+];
+
 const articleSchema = {
   '@type': 'TechArticle',
   '@id': `${pageUrl}#article`,
   headline: data.title,
   description: data.description,
   url: pageUrl,
-  image: data.coverImage ? `${SITE.url}${data.coverImage}` : `${SITE.url}/og/blog/${id}.png`,
-  datePublished: data.publishDate,
-  dateModified: data.updatedDate || data.publishDate,
+  image: data.coverImage ? [ogImageUrl, coverImageUrl] : ogImageUrl,
+  datePublished: isoDatePublished,
+  dateModified: isoDateModified,
   author: {
     '@type': 'Person',
     '@id': `${SITE.url}/#person`,
@@ -71,6 +160,14 @@ const articleSchema = {
   inLanguage: 'en-US',
   articleSection: data.category,
   keywords: data.tags.join(', '),
+  proficiencyLevel: 'Expert',
+  isAccessibleForFree: true,
+  timeRequired,
+  ...(wordCount ? { wordCount } : {}),
+  ...(data.tags.includes('go')
+    ? { dependencies: 'Go 1.24+, SQLite (modernc.org/sqlite), Chi, Huma v2' }
+    : {}),
+  ...(topicEntities.length > 0 ? { about: topicEntities } : {}),
   speakable: {
     '@type': 'SpeakableSpecification',
     cssSelector: ['article header h1', 'article .prose'],
@@ -79,7 +176,10 @@ const articleSchema = {
     '@type': 'WebPage',
     '@id': pageUrl,
   },
+  ...(faqSchema ? { hasPart: [{ '@id': `${pageUrl}#faq` }] } : {}),
 };
+
+const structuredData = [articleSchema, ...(faqSchema ? [faqSchema] : [])];
 
 const breadcrumbs = [
   { name: 'Home', item: '/' },
@@ -93,12 +193,18 @@ const breadcrumbs = [
   title={data.title}
   description={data.description}
   keywords={data.tags}
-  image={data.coverImage || `/og/blog/${id}.png`}
+  image={ogImageUrl}
+  imageWidth={1200}
+  imageHeight={630}
+  imageType="image/png"
+  imageAlt={data.title}
   type="article"
-  publishDate={data.publishDate}
-  updatedDate={data.updatedDate}
+  publishDate={isoDatePublished}
+  updatedDate={isoDateModified}
+  articleSection={data.category}
+  articleTags={data.tags}
   breadcrumbs={breadcrumbs}
-  structuredData={articleSchema}
+  structuredData={structuredData}
 >
   <ReadingProgressBar />
 
@@ -156,14 +262,14 @@ const breadcrumbs = [
     <!-- Featured Cover Image -->
     {data.coverImage && (
       <figure class="border-base-300 bg-base-200 overflow-hidden rounded-xl border">
-        <img
+        <Image
           src={data.coverImage}
           alt={data.title}
           class="aspect-video w-full object-cover"
           loading="eager"
           decoding="async"
-          width="1280"
-          height="720"
+          width={1280}
+          height={720}
         />
       </figure>
     )}
@@ -178,6 +284,49 @@ const breadcrumbs = [
     >
       <Content />
     </div>
+
+    <!-- FAQ Accordion (daisyUI 5) -->
+    {data.faqs && data.faqs.length > 0 && (
+      <section
+        id="faq"
+        class="border-base-300 space-y-6 border-t pt-10"
+        aria-labelledby="faq-heading"
+      >
+        <div class="space-y-2">
+          <h2
+            id="faq-heading"
+            class="text-base-content text-xl font-bold tracking-tight sm:text-2xl"
+          >
+            Frequently Asked Questions
+          </h2>
+          <p class="text-base-content/70 text-sm">
+            Key insights, architecture decisions, and technical trade-offs.
+          </p>
+        </div>
+
+        <div class="join join-vertical border-base-300 bg-base-200/50 w-full overflow-hidden rounded-xl border">
+          {data.faqs.map((faq, index) => (
+            <div
+              id={`faq-q${index + 1}`}
+              class="collapse collapse-arrow join-item border-base-300 border-b last:border-b-0"
+            >
+              <input
+                type="radio"
+                name={`faq-accordion-${id}`}
+                checked={index === 0 ? 'checked' : undefined}
+                aria-label={faq.question}
+              />
+              <div class="collapse-title text-base-content text-base font-semibold">
+                {faq.question}
+              </div>
+              <div class="collapse-content text-base-content/80 text-sm leading-relaxed">
+                <p>{faq.answer}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
 
     <!-- Adjacent Article Navigation / Slug Pagination -->
     {(prevPost || nextPost) && (

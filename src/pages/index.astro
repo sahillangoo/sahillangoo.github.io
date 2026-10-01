@@ -10,7 +10,7 @@ import { SITE } from '@const/site.ts';
 import { homeCopy } from '@copy/home.ts';
 import { Icon } from 'astro-icon/components';
 import { Image } from 'astro:assets';
-import sahilHeroImage from '@assets/images/IMG_20260510_183207.jpg';
+import sahilHeroImage from '@assets/images/sahil-langoo-portrait.webp';
 
 const projects = await getCollection('projects');
 const featuredProjects = projects
@@ -121,7 +121,7 @@ const homeSchema = {
                 quality={90}
                 loading="eager"
                 fetchpriority="high"
-                class="h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
+                class="h-full w-full object-cover object-center grayscale transition-all duration-500 ease-out group-hover:scale-105 group-hover:grayscale-0 hover:grayscale-0"
               />
               <div class="from-base-100/40 pointer-events-none absolute inset-0 bg-linear-to-t via-transparent to-transparent opacity-60"></div>
             </div>

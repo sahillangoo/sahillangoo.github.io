@@ -196,7 +196,10 @@ for (const htmlFile of htmlFiles) {
     }
   }
 
-  if (!is404) {
+  const isRedirect =
+    content.includes('http-equiv="refresh"') || content.includes('Redirecting to:');
+
+  if (!is404 && !isRedirect) {
     // Check canonical link
     const canonicalMatch = content.match(
       /<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)["']/i
@@ -224,6 +227,58 @@ for (const htmlFile of htmlFiles) {
       assert(
         ogUrl.startsWith(TARGET_DOMAIN),
         `og:url starts with ${TARGET_DOMAIN} in ${relativePath} (found: ${ogUrl})`
+      );
+    }
+
+    // Check OpenGraph Logo
+    const ogLogoMatch = content.match(
+      /<meta[^>]+property=["']og:logo["'][^>]+content=["']([^"']+)["']/i
+    );
+    assert(
+      Boolean(ogLogoMatch && ogLogoMatch[1].startsWith(TARGET_DOMAIN)),
+      `og:logo starts with ${TARGET_DOMAIN} in ${relativePath}`
+    );
+
+    // Check OpenGraph Image and Secure URL
+    const ogImgMatch = content.match(
+      /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i
+    );
+    const ogImgSecureMatch = content.match(
+      /<meta[^>]+property=["']og:image:secure_url["'][^>]+content=["']([^"']+)["']/i
+    );
+    assert(
+      Boolean(ogImgMatch && ogImgMatch[1].startsWith(TARGET_DOMAIN)),
+      `og:image starts with ${TARGET_DOMAIN} in ${relativePath}`
+    );
+    assert(
+      Boolean(ogImgSecureMatch && ogImgSecureMatch[1].startsWith(TARGET_DOMAIN)),
+      `og:image:secure_url starts with ${TARGET_DOMAIN} in ${relativePath}`
+    );
+
+    // Check OpenGraph Image Type
+    const ogImgTypeMatch = content.match(
+      /<meta[^>]+property=["']og:image:type["'][^>]+content=["']([^"']+)["']/i
+    );
+    if (ogImgMatch && ogImgTypeMatch) {
+      const imgUrl = ogImgMatch[1].split('?')[0].toLowerCase();
+      const imgType = ogImgTypeMatch[1];
+      if (imgUrl.endsWith('.webp')) {
+        assert(imgType === 'image/webp', `og:image:type is image/webp in ${relativePath}`);
+      } else if (imgUrl.endsWith('.png')) {
+        assert(imgType === 'image/png', `og:image:type is image/png in ${relativePath}`);
+      }
+    }
+
+    // Check article tags for article pages
+    const isArticle = content.includes('property="og:type" content="article"');
+    if (isArticle) {
+      assert(
+        content.includes('property="article:section"'),
+        `article:section meta tag present in ${relativePath}`
+      );
+      assert(
+        content.includes('property="article:published_time"'),
+        `article:published_time meta tag present in ${relativePath}`
       );
     }
 

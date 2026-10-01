@@ -153,21 +153,32 @@ function escapeXml(unsafe: string): string {
     .replace(/'/g, '&apos;');
 }
 
-function wrapText(text: string, maxCharsPerLine: number = 38): string[] {
-  const words = text.split(/\s+/);
+function wrapText(text: string, maxCharsPerLine: number = 38, maxLines: number = 3): string[] {
+  const words = text.split(/\s+/).filter(Boolean);
   const lines: string[] = [];
   let currentLine = '';
 
   for (const word of words) {
-    if ((currentLine + ' ' + word).trim().length <= maxCharsPerLine) {
-      currentLine = (currentLine + ' ' + word).trim();
+    const candidate = currentLine ? `${currentLine} ${word}` : word;
+
+    if (candidate.length <= maxCharsPerLine) {
+      currentLine = candidate;
     } else {
-      if (currentLine) lines.push(currentLine);
+      if (lines.length === maxLines - 1) {
+        currentLine = `${currentLine}...`;
+        lines.push(currentLine);
+        currentLine = '';
+        break;
+      }
+      lines.push(currentLine);
       currentLine = word;
     }
-    if (lines.length >= 3) break;
   }
-  if (currentLine && lines.length < 3) lines.push(currentLine);
+
+  if (currentLine && lines.length < maxLines) {
+    lines.push(currentLine);
+  }
+
   return lines;
 }
 
@@ -179,8 +190,8 @@ export const GET: APIRoute = async ({ props }) => {
     readingTime: string;
   };
 
-  const titleLines = wrapText(title, 34);
-  const descLines = wrapText(description || '', 55).slice(0, 2);
+  const titleLines = wrapText(title, 34, 3);
+  const descLines = wrapText(description || '', 55, 2);
 
   const titleTspans = titleLines
     .map(
@@ -215,17 +226,20 @@ export const GET: APIRoute = async ({ props }) => {
   <!-- Outer Border Frame -->
   <rect x="30" y="30" width="1140" height="570" rx="16" fill="none" stroke="#1e293b" stroke-width="2" />
 
-  <!-- Header Category & Domain -->
-  <rect x="80" y="80" width="auto" height="34" rx="6" fill="#1e293b" />
-  <text x="80" y="102" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#38bdf8" letter-spacing="2">
+  <!-- Header Category & Domain with Logo -->
+  <text x="80" y="100" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#38bdf8" letter-spacing="2">
     ${escapeXml(category)}
   </text>
-  <text x="1120" y="102" text-anchor="end" font-family="monospace, monospace" font-size="16" font-weight="500" fill="#64748b">
+  <g transform="translate(1090, 76)">
+    <rect width="30" height="30" rx="8" fill="#0c0d0f" stroke="#24272c" stroke-width="1.5" />
+    <text x="15" y="21" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-weight="900" font-size="14" fill="#38bdf8" letter-spacing="-0.5">SL</text>
+  </g>
+  <text x="1076" y="97" text-anchor="end" font-family="monospace, monospace" font-size="16" font-weight="500" fill="#64748b">
     sahillangoo.in
   </text>
 
   <!-- Title & Description -->
-  <text font-family="system-ui, -apple-system, sans-serif">
+  <text font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
     ${titleTspans}
     ${descTspans}
   </text>
@@ -233,14 +247,16 @@ export const GET: APIRoute = async ({ props }) => {
   <!-- Divider Line -->
   <line x1="80" y1="510" x2="1120" y2="510" stroke="#1e293b" stroke-width="1.5" />
 
-  <!-- Footer Author Badge -->
-  <circle cx="104" cy="552" r="20" fill="#38bdf8" />
-  <text x="104" y="558" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#0c0d12">SL</text>
+  <!-- Footer Author Badge with Official SL Brand Logo -->
+  <g transform="translate(80, 528)">
+    <rect width="46" height="46" rx="12" fill="#0c0d0f" stroke="#24272c" stroke-width="2" />
+    <text x="23" y="32" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-weight="900" font-size="20" fill="#38bdf8" letter-spacing="-1">SL</text>
+  </g>
   
-  <text x="138" y="550" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" fill="#f1f5f9">
+  <text x="142" y="548" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#f1f5f9">
     Sahil Langoo
   </text>
-  <text x="138" y="568" font-family="monospace, monospace" font-size="12" fill="#64748b">
+  <text x="142" y="568" font-family="monospace, monospace" font-size="12" fill="#64748b">
     Full Stack Systems Engineer • @SquadCoders
   </text>
 

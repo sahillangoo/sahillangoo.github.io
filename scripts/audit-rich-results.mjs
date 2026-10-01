@@ -61,6 +61,7 @@ const entityCounts = {
   CreativeWork: 0,
   SoftwareApplication: 0,
   SpeakableSpecification: 0,
+  FAQPage: 0,
   Other: 0,
 };
 
@@ -172,6 +173,11 @@ for (const htmlFile of htmlFiles) {
       // 3. BreadcrumbList Schema Validation
       if (type === 'BreadcrumbList') {
         assert(
+          Boolean(entity.name) && typeof entity.name === 'string',
+          'BreadcrumbList missing valid name attribute (required to prevent "Unnamed item" in Google Rich Results Test)',
+          relative
+        );
+        assert(
           Array.isArray(entity.itemListElement) && entity.itemListElement.length > 0,
           'BreadcrumbList must have non-empty itemListElement array',
           relative
@@ -210,11 +216,19 @@ for (const htmlFile of htmlFiles) {
           'BlogPosting missing headline',
           relative
         );
+        const isoTimezoneRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})$/;
         assert(
-          Boolean(entity.datePublished) && !isNaN(Date.parse(entity.datePublished)),
-          'BlogPosting missing or invalid datePublished',
+          Boolean(entity.datePublished) && isoTimezoneRegex.test(entity.datePublished),
+          `datePublished must be ISO 8601 with timezone (found: "${entity.datePublished}")`,
           relative
         );
+        if (entity.dateModified) {
+          assert(
+            isoTimezoneRegex.test(entity.dateModified),
+            `dateModified must be ISO 8601 with timezone (found: "${entity.dateModified}")`,
+            relative
+          );
+        }
         assert(Boolean(entity.author), 'BlogPosting missing author', relative);
         assert(Boolean(entity.publisher), 'BlogPosting missing publisher', relative);
         assert(Boolean(entity.image), 'BlogPosting missing image', relative);
@@ -233,6 +247,44 @@ for (const htmlFile of htmlFiles) {
           `${type} missing description`,
           relative
         );
+      }
+
+      // 6. FAQPage Schema Validation
+      if (type === 'FAQPage') {
+        assert(
+          Boolean(entity.name) && typeof entity.name === 'string',
+          'FAQPage missing name',
+          relative
+        );
+        assert(
+          Array.isArray(entity.mainEntity) && entity.mainEntity.length > 0,
+          'FAQPage missing non-empty mainEntity array',
+          relative
+        );
+        if (Array.isArray(entity.mainEntity)) {
+          entity.mainEntity.forEach((item, idx) => {
+            assert(
+              item['@type'] === 'Question',
+              `FAQ item ${idx} must have @type "Question"`,
+              relative
+            );
+            assert(
+              Boolean(item.name) && typeof item.name === 'string',
+              `FAQ item ${idx} missing valid question name`,
+              relative
+            );
+            assert(
+              item.acceptedAnswer && item.acceptedAnswer['@type'] === 'Answer',
+              `FAQ item ${idx} missing acceptedAnswer of @type "Answer"`,
+              relative
+            );
+            assert(
+              Boolean(item.acceptedAnswer?.text) && typeof item.acceptedAnswer?.text === 'string',
+              `FAQ item ${idx} missing acceptedAnswer text`,
+              relative
+            );
+          });
+        }
       }
     }
   }
@@ -255,6 +307,7 @@ console.log(
   entityCounts.CreativeWork + entityCounts.SoftwareApplication
 );
 console.log('  * SpeakableSpecification Nodes:', entityCounts.SpeakableSpecification);
+console.log('  * FAQPage Nodes:', entityCounts.FAQPage);
 console.log('  * Other Nodes:', entityCounts.Other);
 console.log(`- Violations / Errors: ${errors.length}`);
 console.log('==================================================\n');

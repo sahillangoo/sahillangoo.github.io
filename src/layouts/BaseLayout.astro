@@ -18,10 +18,16 @@ export interface Props {
   description?: string;
   keywords?: string | string[];
   image?: string;
+  imageWidth?: number | string;
+  imageHeight?: number | string;
+  imageType?: string;
+  imageAlt?: string;
   canonicalUrl?: string;
   type?: 'website' | 'article' | 'profile';
   publishDate?: string;
   updatedDate?: string;
+  articleSection?: string;
+  articleTags?: string[];
   breadcrumbs?: BreadcrumbItem[];
   structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
   noindex?: boolean;
@@ -34,10 +40,16 @@ const {
   description,
   keywords,
   image,
+  imageWidth,
+  imageHeight,
+  imageType,
+  imageAlt,
   canonicalUrl,
   type,
   publishDate,
   updatedDate,
+  articleSection,
+  articleTags,
   breadcrumbs,
   structuredData,
   noindex,
@@ -53,10 +65,16 @@ const {
     description={description}
     keywords={keywords}
     image={image}
+    imageWidth={imageWidth}
+    imageHeight={imageHeight}
+    imageType={imageType}
+    imageAlt={imageAlt}
     canonicalUrl={canonicalUrl}
     type={type}
     publishDate={publishDate}
     updatedDate={updatedDate}
+    articleSection={articleSection}
+    articleTags={articleTags}
     breadcrumbs={breadcrumbs}
     structuredData={structuredData}
     noindex={noindex}

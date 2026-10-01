@@ -15,6 +15,13 @@ tags:
 featured: false
 draft: true
 readingTime: '9 min read'
+faqs:
+  - question: 'When should I move beyond SQLite to microservices with gRPC in Go?'
+    answer: 'Single-file SQLite in WAL mode handles thousands of read queries and moderate write volume on a single server. When your system requires multi-region deployments, horizontal scaling across multiple nodes, or microservice isolation with strict API contracts between independent teams, migrating to gRPC services with Protocol Buffers in Go provides sub-millisecond RPCs, compile-time contract enforcement, and streaming capabilities.'
+  - question: 'Can a frontend developer use Go without building a heavy REST/JSON API?'
+    answer: 'Yes. By pairing Go standard library templates (html/template) or templ with HTMX and Alpine.js, frontend developers can build dynamic, interactive web applications without virtual DOM overhead, client-side state stores, or heavy JavaScript bundlers. The server returns lightweight HTML partials directly into the DOM, creating a fast, hypermedia-driven architecture that runs from a single static Go binary.'
+  - question: 'How does Go cross-compilation compare to Node.js or Python?'
+    answer: 'Go includes a complete cross-compiler directly in its standard toolchain. By setting GOOS (target OS) and GOARCH (target architecture) with CGO_ENABLED=0, you can compile a self-contained static binary for Linux ARM64 or AMD64 from a Windows or macOS workstation in seconds. Node.js and Python require platform-specific native runtimes and often fail when C-extensions (like node-gyp or compiled wheels) must be rebuilt for different architectures.'
 ---
 
 In [Part 1 of this series](/blog/why-go-is-the-definitive-language-for-the-ai-agent-era/), we explored why Go is uniquely suited for human-AI pair programming: 14+ years of unfragmented training data, concrete runtime types without type erasure, and the simplicity of single-binary deployments with embedded SQLite.
@@ -301,19 +308,3 @@ Go demonstrates the enduring power of restraint.
 Whether you are deploying a zero-dependency static binary on an edge server, managing high-throughput gRPC microservice fleets, or powering responsive hypermedia web interfaces with HTMX and Astro, Go gives you full creative freedom. You are bounded by your architectural imagination, not by fragile runtime dependencies or framework deprecation cycles.
 
 When paired with AI coding models, that simplicity becomes a superpower. You write faster, verify with total confidence, and ship systems that remain maintainable for years to come.
-
----
-
-## Frequently Asked Questions
-
-### When should I move beyond SQLite to microservices with gRPC in Go?
-
-Single-file SQLite in WAL mode handles thousands of read queries and moderate write volume on a single server. When your system requires multi-region deployments, horizontal scaling across multiple nodes, or microservice isolation with strict API contracts between independent teams, migrating to gRPC services with Protocol Buffers in Go provides sub-millisecond RPCs, compile-time contract enforcement, and streaming capabilities.
-
-### Can a frontend developer use Go without building a heavy REST/JSON API?
-
-Yes. By pairing Go standard library templates (`html/template`) or `templ` with HTMX and Alpine.js, frontend developers can build dynamic, interactive web applications without virtual DOM overhead, client-side state stores, or heavy JavaScript bundlers. The server returns lightweight HTML partials directly into the DOM, creating a fast, hypermedia-driven architecture that runs from a single static Go binary.
-
-### How does Go cross-compilation compare to Node.js or Python?
-
-Go includes a complete cross-compiler directly in its standard toolchain. By setting `GOOS` (target OS) and `GOARCH` (target architecture) with `CGO_ENABLED=0`, you can compile a self-contained static binary for Linux ARM64 or AMD64 from a Windows or macOS workstation in seconds. Node.js and Python require platform-specific native runtimes and often fail when C-extensions (like `node-gyp` or compiled wheels) must be rebuilt for different architectures.
