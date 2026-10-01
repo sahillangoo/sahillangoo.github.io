@@ -1,7 +1,7 @@
 ---
 title: 'Advanced TypeScript Utility Patterns'
 description: 'Type-level snippets for deep immutability, conditional property mapping, and compile-time contract enforcement.'
-publishDate: '2024-11-01'
+publishDate: '2026-07-01'
 topic: 'TypeScript'
 tags: ['TypeScript', 'Generics', 'TypeLevel']
 order: 1

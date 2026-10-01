@@ -32,7 +32,10 @@ function getAllFiles(dirPath: string, files: string[] = []): string[] {
   return files;
 }
 
-function sortAndFormatSitemap(xmlContent: string): string {
+function sortAndFormatSitemap(xmlContent: string): {
+  formattedSitemap: string;
+  latestLastmod: string;
+} {
   const urlMatches = xmlContent.match(/<url>[\s\S]*?<\/url>/g) || [];
   const entries: SitemapEntry[] = [];
 
@@ -66,7 +69,7 @@ function sortAndFormatSitemap(xmlContent: string): string {
     return a.loc.localeCompare(b.loc);
   });
 
-  return `<?xml version="1.0" encoding="UTF-8"?>
+  const formattedSitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 ${entries
   .map(
@@ -76,6 +79,16 @@ ${entries
   )
   .join('\n')}
 </urlset>\n`;
+
+  const allLastmods = entries
+    .map((e) => e.lastmod)
+    .filter((d): d is string => Boolean(d))
+    .sort()
+    .reverse();
+  const todayDate = new Date().toISOString().split('T')[0] ?? '2026-10-01';
+  const latestLastmod: string = allLastmods[0] ?? todayDate;
+
+  return { formattedSitemap, latestLastmod };
 }
 
 export default function astroSiteQualityEnforcer(): AstroIntegration {
@@ -232,16 +245,28 @@ export default function astroSiteQualityEnforcer(): AstroIntegration {
         // 3. Re-sort, format, and synchronize XML sitemaps
         const sitemap0Path = path.join(outDir, 'sitemap-0.xml');
         const sitemapPath = path.join(outDir, 'sitemap.xml');
+        const sitemapIndexPath = path.join(outDir, 'sitemap-index.xml');
 
         if (fs.existsSync(sitemap0Path)) {
           const rawSitemap = fs.readFileSync(sitemap0Path, 'utf-8');
-          const formattedSitemap = sortAndFormatSitemap(rawSitemap);
+          const { formattedSitemap, latestLastmod } = sortAndFormatSitemap(rawSitemap);
 
           fs.writeFileSync(sitemap0Path, formattedSitemap, 'utf-8');
           fs.writeFileSync(sitemapPath, formattedSitemap, 'utf-8');
 
+          if (fs.existsSync(sitemapIndexPath)) {
+            const rawIndex = fs.readFileSync(sitemapIndexPath, 'utf-8');
+            const updatedIndex = rawIndex.replace(
+              /<lastmod>[^<]+<\/lastmod>/,
+              `<lastmod>${latestLastmod}T00:00:00.000Z</lastmod>`
+            );
+            fs.writeFileSync(sitemapIndexPath, updatedIndex, 'utf-8');
+          }
+
           const entryCount = (formattedSitemap.match(/<url>/g) || []).length;
-          logger.info(`🗺️ Sitemap Processed & Sorted: ${entryCount} URLs with priorities & dates.`);
+          logger.info(
+            `🗺️ Sitemap Processed & Sorted: ${entryCount} URLs with priorities & dates (Latest: ${latestLastmod}).`
+          );
         }
 
         logger.info(

@@ -71,19 +71,136 @@ if (fs.existsSync(robotsPath)) {
   );
 }
 
-// 3. Verify sitemap-index.xml and sitemaps
+// 3. Verify sitemap-index.xml, sitemap-0.xml, and sitemap.xml
 const sitemapIndexPath = path.join(distDir, 'sitemap-index.xml');
+const sitemap0Path = path.join(distDir, 'sitemap-0.xml');
+const sitemapPath = path.join(distDir, 'sitemap.xml');
+
 assert(fs.existsSync(sitemapIndexPath), 'sitemap-index.xml exists in dist/');
-if (fs.existsSync(sitemapIndexPath)) {
-  const sitemapIndexContent = fs.readFileSync(sitemapIndexPath, 'utf-8');
+assert(fs.existsSync(sitemap0Path), 'sitemap-0.xml exists in dist/');
+assert(fs.existsSync(sitemapPath), 'sitemap.xml exists in dist/');
+
+if (fs.existsSync(sitemap0Path) && fs.existsSync(sitemapPath)) {
+  const sitemap0Content = fs.readFileSync(sitemap0Path, 'utf-8');
+  const sitemapContent = fs.readFileSync(sitemapPath, 'utf-8');
+
   assert(
-    sitemapIndexContent.includes(TARGET_DOMAIN),
-    `sitemap-index.xml points to ${TARGET_DOMAIN}`
+    sitemap0Content === sitemapContent,
+    'sitemap.xml and sitemap-0.xml are synchronized identically'
   );
-  assert(
-    !sitemapIndexContent.includes('sahillangoo.com'),
-    'sitemap-index.xml has zero references to sahillangoo.com'
-  );
+
+  const todayIso = new Date().toISOString().split('T')[0];
+  const urlBlocks = sitemap0Content.match(/<url>[\s\S]*?<\/url>/g) || [];
+  assert(urlBlocks.length > 0, `sitemap-0.xml contains active URLs (found ${urlBlocks.length})`);
+
+  let prevPriority = 1.0;
+  let prevLastmod = '9999-99-99';
+  let latestSitemapDate = '0000-00-00';
+
+  const validChangefreqs = new Set([
+    'always',
+    'hourly',
+    'daily',
+    'weekly',
+    'monthly',
+    'yearly',
+    'never',
+  ]);
+
+  for (let i = 0; i < urlBlocks.length; i++) {
+    const block = urlBlocks[i];
+    const locMatch = block.match(/<loc>([^<]+)<\/loc>/);
+    const lastmodMatch = block.match(/<lastmod>([^<]+)<\/lastmod>/);
+    const priorityMatch = block.match(/<priority>([^<]+)<\/priority>/);
+    const changefreqMatch = block.match(/<changefreq>([^<]+)<\/changefreq>/);
+
+    assert(Boolean(locMatch), `Sitemap entry #${i + 1} has valid <loc> tag`);
+    const loc = locMatch ? locMatch[1] : '';
+    assert(loc.startsWith(TARGET_DOMAIN), `Sitemap URL "${loc}" matches TARGET_DOMAIN`);
+    assert(
+      !loc.includes('sahillangoo.com'),
+      `Sitemap URL "${loc}" contains zero references to sahillangoo.com`
+    );
+
+    // Verify lastmod
+    assert(Boolean(lastmodMatch), `Sitemap URL "${loc}" has valid <lastmod> tag`);
+    const lastmod = lastmodMatch ? lastmodMatch[1] : '';
+    assert(
+      /^\d{4}-\d{2}-\d{2}$/.test(lastmod),
+      `Sitemap URL "${loc}" lastmod "${lastmod}" matches YYYY-MM-DD`
+    );
+    assert(
+      lastmod <= todayIso,
+      `Sitemap URL "${loc}" lastmod "${lastmod}" is not in the future (today: ${todayIso})`
+    );
+
+    if (lastmod > latestSitemapDate) {
+      latestSitemapDate = lastmod;
+    }
+
+    // Verify priority
+    assert(Boolean(priorityMatch), `Sitemap URL "${loc}" has valid <priority> tag`);
+    const priority = priorityMatch ? parseFloat(priorityMatch[1]) : -1;
+    assert(
+      priority >= 0.0 && priority <= 1.0,
+      `Sitemap URL "${loc}" priority ${priority} is between 0.0 and 1.0`
+    );
+
+    // Verify changefreq
+    if (changefreqMatch) {
+      assert(
+        validChangefreqs.has(changefreqMatch[1]),
+        `Sitemap URL "${loc}" changefreq "${changefreqMatch[1]}" is valid`
+      );
+    }
+
+    // Verify sorting order: priority descending, then lastmod descending
+    if (i === 0) {
+      assert(loc === `${TARGET_DOMAIN}/`, `First sitemap URL is homepage root: "${loc}"`);
+      assert(priority === 1.0, `Homepage priority is 1.00 (found ${priority})`);
+    } else {
+      if (priority === prevPriority) {
+        assert(
+          lastmod <= prevLastmod || loc.localeCompare(urlBlocks[i - 1]) >= 0,
+          `Sitemap entry "${loc}" date ordering compliance (lastmod ${lastmod} <= prev ${prevLastmod})`
+        );
+      } else {
+        assert(
+          priority < prevPriority,
+          `Sitemap entry "${loc}" priority descending order (priority ${priority} <= prev ${prevPriority})`
+        );
+      }
+    }
+
+    prevPriority = priority;
+    prevLastmod = lastmod;
+  }
+
+  // Verify sitemap-index.xml points to sitemap-0.xml with valid latest date
+  if (fs.existsSync(sitemapIndexPath)) {
+    const sitemapIndexContent = fs.readFileSync(sitemapIndexPath, 'utf-8');
+    assert(
+      sitemapIndexContent.includes(TARGET_DOMAIN),
+      `sitemap-index.xml points to ${TARGET_DOMAIN}`
+    );
+    assert(
+      !sitemapIndexContent.includes('sahillangoo.com'),
+      'sitemap-index.xml has zero references to sahillangoo.com'
+    );
+    const indexLastmodMatch = sitemapIndexContent.match(/<lastmod>([^<]+)<\/lastmod>/);
+    assert(Boolean(indexLastmodMatch), 'sitemap-index.xml contains <lastmod>');
+    if (indexLastmodMatch) {
+      const indexLastmod = indexLastmodMatch[1].split('T')[0];
+      assert(
+        indexLastmod <= todayIso,
+        `sitemap-index.xml lastmod "${indexLastmod}" is not in the future`
+      );
+      assert(
+        indexLastmod === latestSitemapDate,
+        `sitemap-index.xml lastmod "${indexLastmod}" matches latest sitemap date "${latestSitemapDate}"`
+      );
+    }
+  }
 }
 
 // 4. Verify llms.txt & llms-full.txt

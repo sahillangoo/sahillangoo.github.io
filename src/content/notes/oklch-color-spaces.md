@@ -1,7 +1,7 @@
 ---
 title: 'Why OKLCH is Superior for UI Color Systems'
 description: 'Perceptual uniformity in modern web design and predictable contrast accessibility.'
-publishDate: '2024-07-22'
+publishDate: '2026-05-22'
 topic: 'Design Engineering'
 tags: ['CSS', 'OKLCH', 'Color', 'A11y']
 order: 3

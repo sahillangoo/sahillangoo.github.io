@@ -1,7 +1,7 @@
 ---
 title: 'The Lost Art of Minimalist Software Engineering'
 description: 'Why restraint, simplicity (KISS), and YAGNI remain the most potent competitive advantages in software development and systems architecture.'
-publishDate: '2024-08-05'
+publishDate: '2026-06-05'
 updatedDate: '2026-08-12'
 category: 'Engineering Philosophy'
 tags:

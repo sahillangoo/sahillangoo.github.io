@@ -1,7 +1,7 @@
 ---
 title: 'Type-Safe Content Pipelines with Zod & Astro'
 description: 'How to construct schema-validated Markdown and JSON pipelines that catch data anomalies, invalid links, and frontmatter drift at compile-time.'
-publishDate: '2024-05-12'
+publishDate: '2026-05-12'
 updatedDate: '2026-08-10'
 category: 'TypeScript'
 tags:
@@ -16,7 +16,7 @@ readingTime: '6 min read'
 
 Static site generation is only as reliable as the data feeding into it. In traditional Markdown and CMS workflows, data models suffer from continuous "schema drift":
 
-- An author formats a date as `12/05/2024` instead of ISO `2024-05-12`.
+- An author formats a date as `12/05/2026` instead of ISO `2026-05-12`.
 - A tag is misspelled as `['typesript']` instead of `['typescript']`.
 - An optional `featuredImage` URL points to a dead asset path.
 - A required `author` field is omitted entirely.
