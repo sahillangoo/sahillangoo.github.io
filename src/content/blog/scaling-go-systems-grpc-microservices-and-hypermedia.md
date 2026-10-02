@@ -13,7 +13,7 @@ tags:
   - containers
   - distributed-systems
 featured: false
-draft: true
+draft: false
 readingTime: '9 min read'
 faqs:
   - question: 'When should I move beyond SQLite to microservices with gRPC in Go?'
