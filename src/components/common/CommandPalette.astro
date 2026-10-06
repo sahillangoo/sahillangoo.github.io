@@ -5,7 +5,6 @@ import { getCollection } from 'astro:content';
 
 const projects = await getCollection('projects');
 const blog = await getCollection('blog');
-const notes = await getCollection('notes');
 
 const searchIndex = [
   // Core Pages
@@ -28,13 +27,6 @@ const searchIndex = [
     subtitle: 'Technical essays & articles',
     url: '/blog/',
     icon: 'ph:article-bold',
-    category: 'Pages',
-  },
-  {
-    title: 'Digital Garden',
-    subtitle: 'Notes, snippets & TILs',
-    url: '/notes/',
-    icon: 'ph:plant-bold',
     category: 'Pages',
   },
   {
@@ -106,21 +98,12 @@ const searchIndex = [
       icon: 'ph:book-open-text-bold',
       category: 'Articles',
     })),
-
-  // Dynamic Notes
-  ...notes.map((n) => ({
-    title: n.data.title,
-    subtitle: `${n.data.topic} • ${n.data.publishDate}`,
-    url: `/notes/${n.id}/`,
-    icon: 'ph:file-code-bold',
-    category: 'Notes',
-  })),
 ];
 ---
 
 <div
   id="command-palette-modal"
-  class="fixed inset-0 z-50 hidden"
+  class="fixed inset-0 z-modal hidden"
   role="dialog"
   aria-modal="true"
   aria-label="Command Palette"
@@ -128,19 +111,19 @@ const searchIndex = [
   <!-- Backdrop -->
   <div
     id="command-palette-backdrop"
-    class="fixed inset-0 bg-black/70 backdrop-blur-xs transition-opacity"
+    class="fixed inset-0 bg-base-content/70 backdrop-blur-xs transition-opacity"
   ></div>
 
   <!-- Palette Container -->
-  <div class="fixed inset-0 z-10 flex items-start justify-center p-4 pt-16 sm:pt-24">
-    <div class="border-base-300 bg-base-100/95 max-h-modal flex w-full max-w-xl flex-col overflow-hidden rounded-xl border shadow-2xl backdrop-blur-md">
+  <div class="fixed inset-0 z-10 flex items-start justify-center p-3 sm:p-4 sm:pt-24">
+    <div class="max-h-screen-safe sm:max-h-modal flex w-full max-w-xl flex-col overflow-hidden rounded-md border border-base-300 bg-base-100/95 backdrop-blur-md">
       <!-- Search Input Header -->
       <div class="border-base-300 flex items-center gap-3 border-b px-4 py-3.5">
         <Icon name="ph:magnifying-glass-bold" class="text-base-content/50 h-4 w-4 shrink-0" />
         <input
           id="command-palette-input"
           type="text"
-          placeholder="Search pages, projects, articles, notes, or actions..."
+          placeholder="Search pages, projects, articles..."
           class="text-base-content placeholder:text-base-content/60 w-full bg-transparent text-sm focus:outline-none sm:text-base"
           autocomplete="off"
           spellcheck="false"
@@ -151,12 +134,15 @@ const searchIndex = [
       </div>
 
       <!-- Results Container -->
-      <div id="command-palette-results" class="grow space-y-1 overflow-y-auto p-2">
+      <div
+        id="command-palette-results"
+        class="grow space-y-1 overflow-y-auto overscroll-contain p-2"
+      >
         <!-- Results will be dynamically filtered and rendered via client script -->
       </div>
 
       <!-- Palette Footer -->
-      <div class="border-base-300/80 bg-base-200/50 text-base-content/60 flex items-center justify-between border-t px-4 py-2.5 font-mono text-xs">
+      <div class="border-base-300/80 bg-base-200/50 text-base-content/60 hidden sm:flex items-center justify-between border-t px-4 py-2.5 font-mono text-xs">
         <div class="flex items-center gap-3">
           <span class="flex items-center gap-1">
             <kbd class="kbd kbd-xs border-base-300 bg-base-100 font-mono">↑</kbd>
@@ -179,6 +165,8 @@ const searchIndex = [
 </script>
 
 <script>
+  import { navigate } from 'astro:transitions/client';
+
   interface SearchItem {
     title: string;
     subtitle: string;
@@ -190,26 +178,26 @@ const searchIndex = [
   declare global {
     interface Window {
       __SEARCH_INDEX__?: SearchItem[];
-      __PALETTE_INIT__?: boolean;
     }
   }
 
   let selectedIndex = 0;
   let filteredItems: SearchItem[] = [];
+  let isPaletteInitialized = false;
 
-  function getModal() {
+  function getModal(): HTMLElement | null {
     return document.getElementById('command-palette-modal');
   }
 
-  function getInput() {
+  function getInput(): HTMLInputElement | null {
     return document.getElementById('command-palette-input') as HTMLInputElement | null;
   }
 
-  function getResultsContainer() {
+  function getResultsContainer(): HTMLElement | null {
     return document.getElementById('command-palette-results');
   }
 
-  function closePalette() {
+  function closePalette(): void {
     const modal = getModal();
     if (modal) {
       modal.classList.add('hidden');
@@ -217,7 +205,26 @@ const searchIndex = [
     document.body.style.overflow = '';
   }
 
-  function renderResults() {
+  function highlightActiveItem(): void {
+    const container = getResultsContainer();
+    if (!container) return;
+
+    const items = container.querySelectorAll<HTMLAnchorElement>('.palette-result-item');
+    items.forEach((item, index) => {
+      const isSelected = index === selectedIndex;
+      item.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+      item.classList.toggle('bg-base-300', isSelected);
+      item.classList.toggle('text-base-content', isSelected);
+      item.classList.toggle('font-medium', isSelected);
+      item.classList.toggle('text-base-content/75', !isSelected);
+
+      if (isSelected) {
+        item.scrollIntoView({ block: 'nearest' });
+      }
+    });
+  }
+
+  function renderResults(): void {
     const resultsContainer = getResultsContainer();
     if (!resultsContainer) return;
 
@@ -232,7 +239,6 @@ const searchIndex = [
 
     let html = '';
     let currentIndex = 0;
-
     const categories = Array.from(new Set(filteredItems.map((i) => i.category)));
 
     categories.forEach((cat) => {
@@ -244,6 +250,7 @@ const searchIndex = [
           <a
             href="${item.url}"
             data-index="${currentIndex}"
+            aria-selected="${isSelected ? 'true' : 'false'}"
             class="palette-result-item flex items-center justify-between rounded-lg px-3 py-2.5 text-sm transition-colors ${
               isSelected
                 ? 'bg-base-300 text-base-content font-medium'
@@ -264,7 +271,7 @@ const searchIndex = [
     resultsContainer.innerHTML = html;
   }
 
-  function filterItems(query: string) {
+  function filterItems(query: string): void {
     const items: SearchItem[] = window.__SEARCH_INDEX__ || [];
     const q = query.toLowerCase().trim();
     if (!q) {
@@ -281,7 +288,7 @@ const searchIndex = [
     renderResults();
   }
 
-  function openPalette() {
+  function openPalette(): void {
     const modal = getModal();
     const input = getInput();
     if (!modal || !input) return;
@@ -290,14 +297,12 @@ const searchIndex = [
     document.body.style.overflow = 'hidden';
     input.value = '';
     filterItems('');
-    setTimeout(() => input.focus(), 50);
+    requestAnimationFrame(() => input.focus());
   }
 
-  // Register persistent listeners exactly once
-  if (!window.__PALETTE_INIT__) {
-    window.__PALETTE_INIT__ = true;
+  if (!isPaletteInitialized) {
+    isPaletteInitialized = true;
 
-    // Delegated click handler for open triggers, backdrop, and result links
     document.addEventListener('click', (e) => {
       const target = e.target as HTMLElement | null;
       if (!target) return;
@@ -307,13 +312,13 @@ const searchIndex = [
         openPalette();
       } else if (
         target.id === 'command-palette-backdrop' ||
+        target.id === 'command-palette-modal' ||
         target.closest('.palette-result-item')
       ) {
         closePalette();
       }
     });
 
-    // Delegated input handler
     document.addEventListener('input', (e) => {
       const target = e.target as HTMLElement | null;
       if (target && target.id === 'command-palette-input') {
@@ -321,7 +326,6 @@ const searchIndex = [
       }
     });
 
-    // Global keyboard shortcuts
     window.addEventListener('keydown', (e) => {
       const modal = getModal();
       const isHidden = !modal || modal.classList.contains('hidden');
@@ -338,28 +342,31 @@ const searchIndex = [
       } else if (!isHidden) {
         if (e.key === 'ArrowDown') {
           e.preventDefault();
-          selectedIndex = (selectedIndex + 1) % Math.max(1, filteredItems.length);
-          renderResults();
+          if (filteredItems.length > 0) {
+            selectedIndex = (selectedIndex + 1) % filteredItems.length;
+            highlightActiveItem();
+          }
         } else if (e.key === 'ArrowUp') {
           e.preventDefault();
-          selectedIndex =
-            (selectedIndex - 1 + filteredItems.length) % Math.max(1, filteredItems.length);
-          renderResults();
+          if (filteredItems.length > 0) {
+            selectedIndex = (selectedIndex - 1 + filteredItems.length) % filteredItems.length;
+            highlightActiveItem();
+          }
         } else if (e.key === 'Enter') {
           e.preventDefault();
           const target = filteredItems[selectedIndex];
           if (target) {
             closePalette();
-            const link = document.createElement('a');
-            link.href = target.url;
-            link.click();
+            if (target.url.startsWith('mailto:') || target.url.startsWith('http')) {
+              window.location.href = target.url;
+            } else {
+              navigate(target.url);
+            }
           }
         }
       }
     });
 
-    document.addEventListener('astro:before-swap', () => {
-      closePalette();
-    });
+    document.addEventListener('astro:before-swap', closePalette);
   }
 </script>

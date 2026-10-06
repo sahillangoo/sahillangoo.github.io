@@ -9,15 +9,12 @@ export const navigationCopy: NavigationCopy = {
   headerNav: [
     { label: 'Work', href: '/projects/' },
     { label: 'Writing', href: '/blog/' },
-    { label: 'Notes', href: '/notes/' },
-    { label: 'Resume', href: '/resume/' },
     { label: 'About', href: '/about/' },
-    { label: 'Links', href: '/links/' },
+    { label: 'Resume', href: '/resume/' },
   ],
   footerNav: [
     { label: 'Work', href: '/projects/' },
     { label: 'Writing', href: '/blog/' },
-    { label: 'Notes', href: '/notes/' },
     { label: 'Resume', href: '/resume/' },
     { label: 'About', href: '/about/' },
     { label: 'Now', href: '/now/' },
@@ -31,7 +28,6 @@ export const navigationCopy: NavigationCopy = {
       links: [
         { label: 'Work', href: '/projects/' },
         { label: 'Writing', href: '/blog/' },
-        { label: 'Notes', href: '/notes/' },
         { label: 'Resume', href: '/resume/' },
         { label: 'About', href: '/about/' },
       ],
@@ -40,7 +36,6 @@ export const navigationCopy: NavigationCopy = {
       title: 'System',
       links: [
         { label: 'Now', href: '/now/' },
-        { label: 'Services', href: '/services.md' },
         { label: 'Uses', href: '/uses/' },
         { label: 'Colophon', href: '/colophon/' },
         { label: 'Links', href: '/links/' },
@@ -52,6 +47,5 @@ export const navigationCopy: NavigationCopy = {
   },
   footerTelemetry: {
     copyright: (year: number) => `© ${year} Sahil Langoo. All rights reserved.`,
-    metrics: '0.00 CLS • Sub-50ms Global TTFB • Cloudflare Edge',
   },
 };

@@ -10,7 +10,7 @@ tags:
   - motion
   - zod
   - cloudflare-pages
-featured: true
+featured: false
 year: 2026
 role: 'Creative Technologist & Lead Engineer'
 order: 3

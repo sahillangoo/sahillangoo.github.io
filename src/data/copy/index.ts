@@ -3,7 +3,6 @@ export * from './home';
 export * from './about';
 export * from './projects';
 export * from './blog';
-export * from './notes';
 export * from './now';
 export * from './uses';
 export * from './colophon';

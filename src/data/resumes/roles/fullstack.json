@@ -134,7 +134,7 @@
         "Architected zero-server static cybersecurity platform with Astro and Tailwind CSS, achieving sub-300ms LCP and zero client-side JavaScript overhead.",
         "Engineered in-browser full-text search via WebAssembly with Pagefind, indexing hundreds of MDX curricula files with sub-15ms client query execution."
       ],
-      "link": "https://github.com/HackerForceDev/hackforce-storefront"
+      "link": "https://hackerforce.io"
     }
   ]
 }

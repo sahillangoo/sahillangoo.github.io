@@ -42,13 +42,13 @@ const breadcrumbs = [
   breadcrumbs={breadcrumbs}
   structuredData={linksSchema}
 >
-  <div class="mx-auto max-w-lg space-y-8 px-4 py-8 text-center sm:py-12">
+  <div class="mx-auto max-w-lg space-y-8 px-5 py-12 text-center md:py-16">
     <!-- Header -->
-    <div class="space-y-3">
+    <div class="animate-rise space-y-3">
       <div class="bg-base-200 border-base-300 text-accent mx-auto flex h-16 w-16 items-center justify-center rounded-full border font-mono text-xl font-bold shadow-md">
         {linksCopy.header.initials}
       </div>
-      <h1 class="text-base-content text-2xl font-extrabold tracking-tight">{SITE.name}</h1>
+      <h1 class="text-section">{SITE.name}</h1>
       <p class="text-base-content/70 mx-auto max-w-sm text-xs sm:text-sm">{SITE.tagline}</p>
     </div>
 
@@ -61,7 +61,7 @@ const breadcrumbs = [
           target={item.data.url.startsWith('http') ? '_blank' : '_self'}
           rel={item.data.url.startsWith('http') ? 'noopener noreferrer' : ''}
           class:list={cn(
-            'group border-base-300 bg-base-200 hover:border-accent/40 flex items-center justify-between rounded-xl border p-4 transition-all duration-200 hover:-translate-y-0.5 active:scale-99',
+            'group border-base-300 bg-base-200 hover:border-neutral flex items-center justify-between rounded-md border p-4 transition-all duration-200',
             item.data.highlight && 'border-accent/40 bg-base-200/80 shadow-xs'
           )}
         >
@@ -87,7 +87,7 @@ const breadcrumbs = [
 
       <a
         href={linksCopy.mainSiteCard.href}
-        class="group border-base-300/80 bg-base-200 hover:border-base-300 flex items-center justify-between rounded-xl border border-dashed p-4 transition-all duration-200 hover:-translate-y-0.5 active:scale-99"
+        class="group border-base-300/80 bg-base-200 hover:border-base-300 flex items-center justify-between rounded-md border border-dashed p-4 transition-all duration-200"
       >
         <div>
           <div class="text-base-content group-hover:text-accent text-sm font-semibold transition-colors">

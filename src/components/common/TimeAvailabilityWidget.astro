@@ -23,7 +23,7 @@ const initialTime = new Intl.DateTimeFormat('en-US', {
 <div
   class:list={cn(
     'inline-flex flex-wrap items-center gap-2.5 font-mono text-xs',
-    variant === 'full' && 'border-base-300 bg-base-200 rounded-xl border p-4 sm:p-5',
+    variant === 'full' && 'border-base-300 bg-base-200 rounded-md border p-4 sm:p-5',
     className
   )}
 >
@@ -35,17 +35,10 @@ const initialTime = new Intl.DateTimeFormat('en-US', {
   {showWeather && (
     <>
       <span class="text-base-content/30">•</span>
-      <div
-        id="live-weather-badge"
-        class="text-base-content/70 flex items-center gap-1.5 transition-opacity duration-300"
-      >
-        <Icon id="weather-icon-sun" name="ph:sun-bold" class="text-warning h-3.5 w-3.5" />
-        <span id="weather-temp-text" class="font-medium tabular-nums">
-          18°C
-        </span>
-        <span id="weather-desc-text" class="text-base-content/50 hidden text-xs sm:inline">
-          Clear
-        </span>
+      <div class="live-weather-badge text-base-content/70 flex items-center gap-1.5 transition-opacity duration-300">
+        <Icon name="ph:sun-bold" class="text-warning h-3.5 w-3.5" />
+        <span class="weather-temp-text font-medium tabular-nums">18°C</span>
+        <span class="weather-desc-text text-base-content/50 hidden text-xs sm:inline">Clear</span>
       </div>
     </>
   )}
@@ -54,79 +47,101 @@ const initialTime = new Intl.DateTimeFormat('en-US', {
 
   <div class="text-base-content/70 flex items-center gap-1.5">
     <Icon name="ph:clock-bold" class="text-accent h-3.5 w-3.5" />
-    <span id="kashmir-live-clock" class="font-mono font-medium tabular-nums">
+    <span class="kashmir-live-clock font-mono font-medium tabular-nums">
       {`${initialTime} IST`}
     </span>
   </div>
 
   {variant === 'full' && (
-    <div class="badge badge-sm border-success/30 bg-success/10 text-success ml-auto hidden font-mono text-xs font-medium sm:inline-flex">
+    <div class="badge badge-sm badge-soft badge-success ml-auto hidden font-mono font-medium sm:inline-flex">
       Open to Select Projects
     </div>
   )}
 </div>
 
 <script>
+  // Module-level singleton Intl formatter: completely avoids garbage-collection churn on every tick
+  const IST_CLOCK_FORMATTER = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Asia/Kolkata',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true,
+  });
+
   let clockInterval: ReturnType<typeof setInterval> | null = null;
 
-  function updateKashmirClock() {
-    const clockEl = document.getElementById('kashmir-live-clock');
-    if (!clockEl) return;
+  function updateKashmirClock(): void {
+    const clockNodes = document.querySelectorAll<HTMLElement>('.kashmir-live-clock');
+    if (clockNodes.length === 0) {
+      // Auto-terminate timer if widget is unmounted from DOM
+      stopClock();
+      return;
+    }
 
     try {
-      const now = new Date();
-      const options: Intl.DateTimeFormatOptions = {
-        timeZone: 'Asia/Kolkata',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: true,
-      };
-      const formatter = new Intl.DateTimeFormat('en-US', options);
-      clockEl.textContent = `${formatter.format(now)} IST`;
+      const formatted = `${IST_CLOCK_FORMATTER.format(new Date())} IST`;
+      clockNodes.forEach((node) => {
+        node.textContent = formatted;
+      });
     } catch {
       // Fallback
     }
   }
 
-  async function updateWeatherTelemetry() {
-    const tempEl = document.getElementById('weather-temp-text');
-    const descEl = document.getElementById('weather-desc-text');
-    if (!tempEl) return;
+  function startClock(): void {
+    stopClock();
+    updateKashmirClock();
+    if (!document.hidden) {
+      clockInterval = setInterval(updateKashmirClock, 1000);
+    }
+  }
+
+  function stopClock(): void {
+    if (clockInterval) {
+      clearInterval(clockInterval);
+      clockInterval = null;
+    }
+  }
+
+  async function updateWeatherTelemetry(): Promise<void> {
+    const tempNodes = document.querySelectorAll<HTMLElement>('.weather-temp-text');
+    const descNodes = document.querySelectorAll<HTMLElement>('.weather-desc-text');
+    if (!tempNodes.length) return;
 
     try {
       const { fetchLiveWeather } = await import('@utils/weather.ts');
       const weather = await fetchLiveWeather();
       if (weather) {
-        tempEl.textContent = `${weather.temp}°C`;
-        if (descEl) descEl.textContent = weather.description;
-        return;
+        tempNodes.forEach((node) => {
+          node.textContent = `${weather.temp}°C`;
+        });
+        descNodes.forEach((node) => {
+          node.textContent = weather.description;
+        });
       }
     } catch {
-      // Fallback below
+      // Preserve existing server-rendered fallback
     }
-
-    tempEl.textContent = '22°C';
-    if (descEl) descEl.textContent = 'Clear';
   }
 
-  function setupWidgets() {
-    if (clockInterval) {
-      clearInterval(clockInterval);
-      clockInterval = null;
-    }
-    updateKashmirClock();
-    clockInterval = setInterval(updateKashmirClock, 1000);
+  function setupWidgets(): void {
+    startClock();
     updateWeatherTelemetry();
   }
 
-  // Initialize immediately on script load as well as on Astro View Transitions
-  setupWidgets();
-  document.addEventListener('astro:page-load', setupWidgets);
-  document.addEventListener('astro:before-swap', () => {
-    if (clockInterval) {
-      clearInterval(clockInterval);
-      clockInterval = null;
+  // Handle background tab power saving
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopClock();
+    } else {
+      startClock();
     }
   });
+
+  // Lifecycle registration
+  document.addEventListener('astro:page-load', setupWidgets);
+  document.addEventListener('astro:before-preparation', stopClock);
+  document.addEventListener('astro:before-swap', stopClock);
+  window.addEventListener('pagehide', stopClock);
 </script>

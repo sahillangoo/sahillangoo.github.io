@@ -1,177 +1,100 @@
 ---
 import { SITE } from '@const/site.ts';
+import { homeCopy } from '@copy/home.ts';
 import { navigationCopy } from '@copy/navigation.ts';
-import TimeAvailabilityWidget from '@components/common/TimeAvailabilityWidget.astro';
 import SpotifyWidget from '@components/common/SpotifyWidget.astro';
 import { Icon } from 'astro-icon/components';
 
 const currentYear = new Date().getFullYear();
+
+const socials = [
+  { label: 'GitHub', href: SITE.social.github, icon: 'ph:github-logo-bold' },
+  { label: 'LinkedIn', href: SITE.social.linkedin, icon: 'ph:linkedin-logo-bold' },
+  { label: 'X', href: SITE.social.twitter, icon: 'ph:x-logo-bold' },
+  { label: 'Facebook', href: SITE.social.facebook, icon: 'ph:facebook-logo-bold' },
+  { label: 'Instagram', href: SITE.social.instagram, icon: 'ph:instagram-logo-bold' },
+  { label: 'daily.dev', href: SITE.social.dailydev, icon: 'ph:newspaper-clipping-bold' },
+  { label: 'Google', href: SITE.social.googleDev, icon: 'ph:google-logo-bold' },
+];
+
+const pipeLinks = [
+  ...navigationCopy.footerSections.navigation.links,
+  ...navigationCopy.footerSections.system.links,
+  { label: 'RSS', href: '/rss.xml' },
+];
+
+const linkClass =
+  'text-sm text-secondary transition-colors duration-150 ease-out hover:text-base-content';
 ---
 
-<footer
-  id="site-footer"
-  class="border-base-300 bg-base-100/50 text-base-content/70 w-full border-t py-12"
-  transition:persist="site-footer"
->
-  <div class="mx-auto max-w-6xl space-y-10 px-4 sm:px-6">
-    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
-      <!-- Col 1: Identity & Presence (lg:col-span-4) -->
-      <div class="flex flex-col gap-3 md:col-span-1 lg:col-span-4">
-        <a
-          href="/"
-          class="text-base-content hover:text-accent font-mono text-sm font-bold tracking-tight transition-colors"
-        >
-          {navigationCopy.brand.name}
-        </a>
-        <p class="text-base-content/60 max-w-sm text-xs leading-relaxed">
-          {navigationCopy.brand.tagline}
-        </p>
-        <div class="pt-1">
-          <TimeAvailabilityWidget variant="compact" />
-        </div>
-      </div>
-
-      <!-- Cols 2 & 3: Navigation & System Links (lg:col-span-4) -->
-      <div class="grid grid-cols-2 gap-6 sm:gap-8 md:col-span-1 lg:col-span-4">
-        <!-- Col 2: Navigation Links -->
-        <div class="flex flex-col gap-3">
-          <span class="text-base-content/50 font-mono text-xs font-semibold tracking-wider uppercase">
-            {navigationCopy.footerSections.navigation.title}
-          </span>
-          <ul class="flex flex-col gap-2 font-mono text-xs">
-            {navigationCopy.footerSections.navigation.links.map((item) => (
-              <li>
-                <a
-                  href={item.href}
-                  class="text-base-content/70 hover:text-accent transition-colors"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <!-- Col 3: System & Resources -->
-        <div class="flex flex-col gap-3">
-          <span class="text-base-content/50 font-mono text-xs font-semibold tracking-wider uppercase">
-            {navigationCopy.footerSections.system.title}
-          </span>
-          <ul class="flex flex-col gap-2 font-mono text-xs">
-            {navigationCopy.footerSections.system.links.map((item) => (
-              <li>
-                <a
-                  href={item.href}
-                  class="text-base-content/70 hover:text-accent transition-colors"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-            <li>
-              <a
-                href="/rss.xml"
-                target="_blank"
-                class="text-base-content/70 hover:text-accent inline-flex items-center gap-1.5 transition-colors"
-              >
-                <Icon name="ph:rss-bold" class="text-warning/80 h-3.5 w-3.5" />
-                RSS
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- Col 4: Activity & Connect (lg:col-span-4) -->
-      <div class="flex flex-col gap-3 md:col-span-2 lg:col-span-4">
-        <span class="text-base-content/50 font-mono text-xs font-semibold tracking-wider uppercase">
-          {navigationCopy.footerSections.connect.title}
-        </span>
-        <div class="flex flex-col gap-3">
-          <SpotifyWidget variant="compact" class="w-full" />
-          <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
-            <a
-              href={SITE.social.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-              class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content hover:bg-base-200 rounded-md transition-all active:scale-99"
-            >
-              <Icon name="ph:github-logo-bold" class="h-4 w-4" />
-            </a>
-            <a
-              href={SITE.social.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="LinkedIn"
-              class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content hover:bg-base-200 rounded-md transition-all active:scale-99"
-            >
-              <Icon name="ph:linkedin-logo-bold" class="h-4 w-4" />
-            </a>
-            <a
-              href={SITE.social.twitter}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="X (Twitter)"
-              class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content hover:bg-base-200 rounded-md transition-all active:scale-99"
-            >
-              <Icon name="ph:x-logo-bold" class="h-4 w-4" />
-            </a>
-            <a
-              href={SITE.social.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-              class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content hover:bg-base-200 rounded-md transition-all active:scale-99"
-            >
-              <Icon name="ph:facebook-logo-bold" class="h-4 w-4" />
-            </a>
-            <a
-              href={SITE.social.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content hover:bg-base-200 rounded-md transition-all active:scale-99"
-            >
-              <Icon name="ph:instagram-logo-bold" class="h-4 w-4" />
-            </a>
-            <a
-              href={SITE.social.dailydev}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="daily.dev Profile (5.4k+ reads)"
-              class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content hover:bg-base-200 rounded-md transition-all active:scale-99"
-            >
-              <Icon name="ph:newspaper-clipping-bold" class="h-4 w-4" />
-            </a>
-            <a
-              href={SITE.social.googleDev}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Google Developer Profile"
-              class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content hover:bg-base-200 rounded-md transition-all active:scale-99"
-            >
-              <Icon name="ph:google-logo-bold" class="h-4 w-4" />
-            </a>
-            <Fragment set:html="<!--email_off-->" />
-            <a
-              href={SITE.social.email}
-              aria-label="Email"
-              class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content hover:bg-base-200 rounded-md transition-all active:scale-99"
-            >
-              <Icon name="ph:envelope-simple-bold" class="h-4 w-4" />
-            </a>
-            <Fragment set:html="<!--/email_off-->" />
-          </div>
-        </div>
-      </div>
+<footer id="site-footer" class="border-t border-base-300 text-secondary">
+  <div class="page-container flex flex-col gap-8 py-16 md:gap-10 md:py-20">
+    <div>
+      <a
+        href="/"
+        class="font-display w-fit text-3xl font-medium italic leading-none tracking-tight text-base-content transition-colors duration-150 ease-out hover:text-accent sm:text-4xl"
+      >
+        {navigationCopy.brand.name}
+      </a>
+      <p class="font-display mt-3 text-base italic text-base-content sm:text-lg">
+        {homeCopy.hero.imageQuote}
+      </p>
     </div>
 
-    <div class="border-base-300/60 text-base-content/60 flex flex-col items-center justify-between gap-3 border-t pt-6 text-xs sm:flex-row">
-      <span>{navigationCopy.footerTelemetry.copyright(currentYear)}</span>
-      <span class="text-base-content/50 font-mono text-xs">
-        {navigationCopy.footerTelemetry.metrics}
-      </span>
+    <div class="border-t border-base-300 pt-8">
+      <p class="label-caps">{navigationCopy.footerSections.connect.title}</p>
+      <SpotifyWidget variant="compact" class="mt-4 w-full sm:w-auto" />
+      <ul class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2">
+        {socials.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class:list={['inline-flex items-center gap-2 active:scale-98', linkClass]}
+            >
+              <Icon name={item.icon} class="size-3.5 shrink-0" aria-hidden="true" />
+              {item.label}
+            </a>
+          </li>
+        ))}
+        <li>
+          <Fragment set:html="<!--email_off-->" />
+          <a
+            href={SITE.social.email}
+            class:list={['inline-flex items-center gap-2 active:scale-98', linkClass]}
+          >
+            <Icon name="ph:envelope-simple-bold" class="size-3.5 shrink-0" aria-hidden="true" />
+            Email
+          </a>
+          <Fragment set:html="<!--/email_off-->" />
+        </li>
+      </ul>
+    </div>
+
+    <nav class="border-t border-base-300 pt-8" aria-label="Footer">
+      <p class="label-caps">
+        {navigationCopy.footerSections.navigation.title}&
+        {navigationCopy.footerSections.system.title}
+      </p>
+      <ul class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
+        {pipeLinks.map((item, index) => (
+          <li class="flex items-center gap-3">
+            {index > 0 && (
+              <span aria-hidden="true" class="text-neutral">
+                |
+              </span>
+            )}
+            <a href={item.href} class={linkClass}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="border-t border-base-300 pt-6">
+      <span class="meta">{navigationCopy.footerTelemetry.copyright(currentYear)}</span>
     </div>
   </div>
 </footer>

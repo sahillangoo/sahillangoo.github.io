@@ -1,24 +1,15 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { SITE } from '@const/site.ts';
+import type { FaqItem } from '../content.config.ts';
 
 export const GET: APIRoute = async () => {
-  const [projects, allBlog, notes] = await Promise.all([
-    getCollection('projects'),
-    getCollection('blog'),
-    getCollection('notes'),
-  ]);
+  const [projects, allBlog] = await Promise.all([getCollection('projects'), getCollection('blog')]);
 
-  const sortedProjects = [...projects].sort((a, b) => a.data.order - b.data.order);
+  const sortedProjects = projects.toSorted((a, b) => a.data.order - b.data.order);
   const publishedBlog = allBlog
     .filter((post) => !post.data.draft)
-    .sort(
-      (a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
-    );
-  const sortedNotes = [...notes].sort(
-    (a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
-  );
-
+    .toSorted((a, b) => b.data.publishDate.localeCompare(a.data.publishDate));
   const projectSections = sortedProjects
     .map((p, index) => {
       const details = [
@@ -37,8 +28,9 @@ export const GET: APIRoute = async () => {
         .filter(Boolean)
         .join('\n');
 
-      const bodyText = p.body?.trim()
-        ? `\n\n#### Case Study & Technical Implementation\n\n${p.body.trim()}`
+      const trimmedBody = p.body?.trim();
+      const bodyText = trimmedBody
+        ? `\n\n#### Case Study & Technical Implementation\n\n${trimmedBody}`
         : '';
 
       return `### 3.${index + 1} ${p.data.title}\n\n${details}${bodyText}`;
@@ -60,38 +52,15 @@ export const GET: APIRoute = async () => {
         .filter(Boolean)
         .join('\n');
 
-      const bodyText = b.body?.trim() ? `\n\n#### Article Content\n\n${b.body.trim()}` : '';
+      const trimmedBody = b.body?.trim();
+      const bodyText = trimmedBody ? `\n\n#### Article Content\n\n${trimmedBody}` : '';
       const faqText =
         b.data.faqs && b.data.faqs.length > 0
           ? `\n\n#### Frequently Asked Questions\n\n` +
-            b.data.faqs
-              .map(
-                (f: { question: string; answer: string }) => `##### ${f.question}\n\n${f.answer}`
-              )
-              .join('\n\n')
+            b.data.faqs.map((f: FaqItem) => `##### ${f.question}\n\n${f.answer}`).join('\n\n')
           : '';
 
       return `### 4.${index + 1} ${b.data.title}\n\n${details}${bodyText}${faqText}`;
-    })
-    .join('\n\n---\n\n');
-
-  const noteSections = sortedNotes
-    .map((n, index) => {
-      const details = [
-        `- **Title**: ${n.data.title}`,
-        `- **Canonical URL**: ${SITE.url}/notes/${n.id}/`,
-        `- **Markdown Resource**: ${SITE.url}/notes/${n.id}.md`,
-        `- **Published Date**: ${n.data.publishDate}`,
-        `- **Topic**: ${n.data.topic}`,
-        `- **Tags**: ${n.data.tags.join(', ')}`,
-        n.data.description ? `- **Summary**: ${n.data.description}` : null,
-      ]
-        .filter(Boolean)
-        .join('\n');
-
-      const bodyText = n.body?.trim() ? `\n\n#### Note Content\n\n${n.body.trim()}` : '';
-
-      return `### 5.${index + 1} ${n.data.title}\n\n${details}${bodyText}`;
     })
     .join('\n\n---\n\n');
 
@@ -155,13 +124,7 @@ ${blogSections}
 
 ---
 
-## 7. Digital Garden Notes & Mental Models
-
-${noteSections}
-
----
-
-## 8. Contact & Consulting
+## 7. Contact & Consulting
 - **Email**: ${SITE.email}
 - **Consulting**: Open for high-impact architecture, web performance, and edge systems consulting.
 `;
@@ -169,6 +132,7 @@ ${noteSections}
   return new Response(content.trim() + '\n', {
     headers: {
       'Content-Type': 'text/plain; charset=utf-8',
+      'Cache-Control': 'public, max-age=3600',
       'X-Robots-Tag': 'all',
     },
   });

@@ -1,76 +1,230 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { Icon } from 'astro-icon/components';
+import { parseEmphasis } from '@utils/emphasis.ts';
 
 export interface Props {
   experiences: CollectionEntry<'experience'>[];
 }
 
 const { experiences } = Astro.props;
-const sorted = [...experiences].sort((a, b) => a.data.order - b.data.order);
+const sorted = experiences.toSorted((a, b) => a.data.order - b.data.order);
+
+function detailsLabel(count: number): string {
+  if (count === 0) return 'View details · stack';
+  const noun = count === 1 ? 'highlight' : 'highlights';
+  return `View details · ${count} more ${noun} + stack`;
+}
 ---
 
-<div class="border-base-300 relative ml-3 space-y-10 border-l pl-6 md:ml-4 md:pl-8">
+<div class="divide-y divide-base-300">
   {sorted.map((exp) => {
-    const { data } = exp;
+    const { data, id } = exp;
+    const [lead, ...rest] = data.highlights;
+    const panelId = `role-${id}`;
+    const showDetails = rest.length > 0 || data.skills.length > 0;
     return (
-      <div class="group relative">
-        {/* Timeline Node dot */}
-        <div class="border-base-100 bg-base-300 group-hover:bg-accent absolute top-1.5 -left-8 flex h-4 w-4 items-center justify-center rounded-full border-2 transition-all group-hover:scale-125 md:-left-10">
-          {data.current && <div class="bg-accent h-1.5 w-1.5 animate-pulse rounded-full" />}
+      <article class="relative grid gap-x-8 gap-y-3 py-8 first:pt-0 last:pb-0 md:grid-role">
+        <span aria-hidden="true" class="role-bar"></span>
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-1 md:flex-col md:items-start md:gap-2.5 md:pt-1.5">
+          <p class="meta text-base-content tabular-nums">{data.period}</p>
+          {data.current && <p class="meta text-accent">[ current ]</p>}
         </div>
-
-        {/* Header */}
-        <div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-          <div>
-            <h3 class="text-base-content flex items-center gap-2 text-lg font-bold">
-              {data.role}
-              {data.current && (
-                <span class="badge badge-sm border-success/30 bg-success/10 font-mono text-xs font-medium text-success">
-                  Current
+        <div class="min-w-0">
+          <h3 class="text-xl leading-snug font-medium tracking-tight text-base-content">
+            {data.role}
+          </h3>
+          <p class="text-ui mt-1 text-secondary">
+            {data.companyUrl ? (
+              <a
+                href={data.companyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-base-content hover:text-accent"
+              >
+                {data.company}
+              </a>
+            ) : (
+              <span class="text-base-content">{data.company}</span>
+            )}
+            <span aria-hidden="true" class="mx-2 text-neutral">
+              ·
+            </span>
+            <span class="font-mono text-xs">{data.location}</span>
+          </p>
+          {lead && (
+            <p class="measure-wide mt-4 text-base leading-relaxed text-base-content/80">
+              {parseEmphasis(lead).map((segment) =>
+                segment.strong ? (
+                  <strong class="font-medium text-base-content">{segment.text}</strong>
+                ) : (
+                  segment.text
+                )
+              )}
+            </p>
+          )}
+          {showDetails && (
+            <details class="role-details mt-2" open={false}>
+              <summary class="role-summary">
+                <span aria-hidden="true" class="role-plus">
+                  +
                 </span>
-              )}
-            </h3>
-            <div class="text-accent mt-0.5 text-sm font-medium">
-              {data.companyUrl ? (
-                <a
-                  href={data.companyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="inline-flex items-center gap-1 hover:underline"
-                >
-                  {data.company} <Icon name="ph:arrow-square-out-bold" class="inline h-3 w-3" />
-                </a>
-              ) : (
-                <span>{data.company}</span>
-              )}
-              <span class="text-base-content/65 font-normal"> • {data.location}</span>
-            </div>
-          </div>
-          <span class="text-base-content/60 font-mono text-xs">{data.period}</span>
+                <span class="min-w-0 text-left leading-snug">
+                  <span class="role-closed">{detailsLabel(rest.length)}</span>
+                  <span class="role-open">Hide details</span>
+                </span>
+              </summary>
+              <div class="role-panel" id={panelId}>
+                <div class="overflow-hidden">
+                  <div class="pt-2 pb-1">
+                    {rest.length > 0 && (
+                      <ul class="space-y-3">
+                        {rest.map((item) => (
+                          <li class="measure-wide grid grid-cols-[1rem_minmax(0,1fr)] text-ui leading-relaxed text-base-content/80">
+                            <span aria-hidden="true" class="font-mono text-accent">
+                              ›
+                            </span>
+                            <span class="min-w-0">
+                              {parseEmphasis(item).map((segment) =>
+                                segment.strong ? (
+                                  <strong class="font-medium text-base-content">
+                                    {segment.text}
+                                  </strong>
+                                ) : (
+                                  segment.text
+                                )
+                              )}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {data.skills.length > 0 && (
+                      <p class="meta mt-4 text-pretty break-words">
+                        <span class="label-caps mr-2">Stack</span>
+                        {data.skills.join(' · ')}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </details>
+          )}
         </div>
-
-        {/* Highlights List */}
-        <ul class="text-base-content/75 mt-3.5 space-y-2 text-sm leading-relaxed">
-          {data.highlights.map((item) => (
-            <li class="flex items-start gap-2">
-              <span class="text-accent mt-1 select-none">›</span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-
-        {/* Skills tags */}
-        {data.skills.length > 0 && (
-          <div class="mt-4 flex flex-wrap gap-1.5">
-            {data.skills.map((skill) => (
-              <span class="badge badge-sm border-base-300 bg-base-200 text-base-content/70 font-mono text-xs">
-                {skill}
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
+      </article>
     );
   })}
 </div>
+
+<style>
+  .role-bar {
+    position: absolute;
+    top: 0.25rem;
+    bottom: 0.25rem;
+    left: -0.75rem;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    background: var(--color-accent);
+    width: 1px;
+  }
+
+  @media (width >= 48rem) {
+    .role-bar {
+      left: -1.25rem;
+    }
+  }
+
+  article:has(.role-details[open]) .role-bar {
+    transform: scaleY(1);
+  }
+
+  .role-summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    cursor: pointer;
+    border: 1px solid var(--color-neutral);
+    border-radius: 0.375rem;
+    padding: 0.5rem 0.875rem;
+    max-width: 100%;
+    min-height: 2.75rem;
+    color: var(--color-secondary);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    font-family: var(--font-mono);
+    list-style: none;
+    text-wrap: pretty;
+  }
+
+  .role-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .role-summary:hover {
+    color: var(--color-base-content);
+  }
+
+  .role-plus {
+    display: grid;
+    flex: none;
+    place-items: center;
+    transition:
+      transform 200ms cubic-bezier(0.23, 1, 0.32, 1),
+      border-color 150ms,
+      color 150ms;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    width: 1.25rem;
+    height: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1;
+  }
+
+  .role-open {
+    display: none;
+  }
+
+  .role-details[open] .role-closed {
+    display: none;
+  }
+
+  .role-details[open] .role-open {
+    display: inline;
+  }
+
+  .role-details[open] .role-summary {
+    border-color: transparent;
+    padding-inline: 0;
+  }
+
+  .role-details[open] .role-plus {
+    transform: rotate(45deg);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .role-panel {
+    display: grid;
+    grid-template-rows: 1fr;
+    opacity: 1;
+    transition:
+      opacity 200ms ease,
+      transform 200ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .role-details:not([open]) .role-panel {
+    display: none;
+  }
+
+  .role-details[open] .role-panel {
+    display: grid;
+    @starting-style {
+      transform: translateY(-4px);
+      opacity: 0;
+    }
+  }
+
+  .role-panel > div {
+    min-height: 0;
+  }
+</style>

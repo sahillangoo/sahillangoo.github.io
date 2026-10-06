@@ -26,43 +26,77 @@ export interface FeatureCard {
   badge?: string;
 }
 
+export interface HomeFact {
+  label: string;
+  value: string;
+  note?: string;
+  href?: string;
+  icon?: string;
+}
+
 export interface HomePageCopy {
   seo: PageSeoMetadata;
   hero: {
-    badge: string;
-    headline: string;
-    subheadline: string;
+    kicker: string;
+    name: string;
+    leadBefore: string;
+    leadEmphasis: string;
+    leadAfter: string;
+    leadMuted: string;
+    bioBefore: string;
+    bioCompany: string;
+    bioMiddle: string;
+    bioStudio: string;
+    bioAfter: string;
     imageAlt: string;
-    statusText: string;
-    locationText: string;
-    ctas: CtaButton[];
+    imageQuote: string;
+    resumeLabel: string;
+    workLabel: string;
+  };
+  snapshot: {
+    value: string;
+    label: string;
+    note: string;
+    href?: string;
+    facts: HomeFact[];
   };
   sections: {
     selectedWork: {
-      eyebrow: string;
+      index: string;
       title: string;
+      description: string;
       viewAllText: string;
     };
     careerHistory: {
-      eyebrow: string;
+      index: string;
       title: string;
+      description: string;
       viewAllText: string;
     };
     recentWriting: {
+      index: string;
       title: string;
-      viewAllText: string;
-    };
-    digitalGarden: {
-      title: string;
+      description: string;
       viewAllText: string;
     };
     philosophy: {
-      eyebrow: string;
-      title: string;
-    };
-    ctaBanner: {
+      index: string;
       title: string;
       description: string;
+    };
+    about: {
+      index: string;
+      title: string;
+      pull: string;
+      paragraphs: string[];
+      facts: HomeFact[];
+    };
+    contact: {
+      title: string;
+      description: string;
+      email: string;
+      openToLabel: string;
+      openTo: string[];
       ctas: CtaButton[];
     };
   };
@@ -112,19 +146,6 @@ export interface BlogPageCopy {
     title: string;
     description: string;
     topicsLabel: string;
-  };
-}
-
-export interface NotesPageCopy {
-  seo: {
-    title: string;
-    pageTitleSuffix: (page: number) => string;
-    description: string;
-  };
-  header: {
-    badgePrefix: string;
-    title: string;
-    description: string;
   };
 }
 
@@ -287,6 +308,5 @@ export interface NavigationCopy {
   };
   footerTelemetry: {
     copyright: (year: number) => string;
-    metrics: string;
   };
 }

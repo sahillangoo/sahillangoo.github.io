@@ -1,6 +1,6 @@
 /**
  * Open-Meteo Weather Utility for Srinagar, Kashmir (34.0837° N, 74.7973° E)
- * Zero-auth public meteorological API with client-side caching.
+ * Zero-auth public meteorological API with client-side caching & request coalescing.
  */
 
 export interface WeatherData {
@@ -18,6 +18,9 @@ const SRINAGAR_LAT = 34.0837;
 const SRINAGAR_LON = 74.7973;
 const CACHE_KEY = 'sl_weather_data';
 const CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes
+
+let inMemoryCache: { data: WeatherData; timestamp: number } | null = null;
+let inFlightWeatherPromise: Promise<WeatherData | null> | null = null;
 
 export function getWeatherCondition(
   code: number,
@@ -70,14 +73,22 @@ export function getWeatherCondition(
 }
 
 export async function fetchLiveWeather(): Promise<WeatherData | null> {
-  // Check browser cache first
+  const now = Date.now();
+
+  // Tier 1: Check in-memory module cache
+  if (inMemoryCache && now - inMemoryCache.timestamp < CACHE_TTL_MS) {
+    return inMemoryCache.data;
+  }
+
+  // Tier 2: Check sessionStorage in browser context
   if (typeof window !== 'undefined') {
     try {
       const cached = sessionStorage.getItem(CACHE_KEY);
       if (cached) {
         const parsed = JSON.parse(cached);
-        const age = Date.now() - new Date(parsed.timestamp).getTime();
+        const age = now - new Date(parsed.timestamp).getTime();
         if (age < CACHE_TTL_MS) {
+          inMemoryCache = { data: parsed.data, timestamp: now - age };
           return parsed.data;
         }
       }
@@ -86,42 +97,58 @@ export async function fetchLiveWeather(): Promise<WeatherData | null> {
     }
   }
 
-  try {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${SRINAGAR_LAT}&longitude=${SRINAGAR_LON}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,wind_speed_10m`;
-    const response = await fetch(url);
-    if (!response.ok) return null;
-
-    const data = await response.json();
-    const current = data.current;
-    if (!current) return null;
-
-    const isDay = Boolean(current.is_day);
-    const { description, icon } = getWeatherCondition(current.weather_code, isDay);
-
-    const weatherData: WeatherData = {
-      temp: Math.round(current.temperature_2m),
-      feelsLike: Math.round(current.apparent_temperature),
-      humidity: Math.round(current.relative_humidity_2m),
-      windSpeed: Math.round(current.wind_speed_10m),
-      isDay,
-      description,
-      icon,
-      updatedAt: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
-    };
-
-    if (typeof window !== 'undefined') {
-      try {
-        sessionStorage.setItem(
-          CACHE_KEY,
-          JSON.stringify({ timestamp: new Date().toISOString(), data: weatherData })
-        );
-      } catch {
-        // Storage full or unavailable
-      }
-    }
-
-    return weatherData;
-  } catch {
-    return null;
+  // Tier 3: Coalesce concurrent network requests
+  if (inFlightWeatherPromise) {
+    return inFlightWeatherPromise;
   }
+
+  inFlightWeatherPromise = (async () => {
+    try {
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${SRINAGAR_LAT}&longitude=${SRINAGAR_LON}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,wind_speed_10m`;
+      const response = await fetch(url, {
+        signal: AbortSignal.timeout(4000),
+      });
+
+      if (!response.ok) return null;
+
+      const data = await response.json();
+      const current = data.current;
+      if (!current) return null;
+
+      const isDay = Boolean(current.is_day);
+      const { description, icon } = getWeatherCondition(current.weather_code, isDay);
+
+      const weatherData: WeatherData = {
+        temp: Math.round(current.temperature_2m),
+        feelsLike: Math.round(current.apparent_temperature),
+        humidity: Math.round(current.relative_humidity_2m),
+        windSpeed: Math.round(current.wind_speed_10m),
+        isDay,
+        description,
+        icon,
+        updatedAt: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+      };
+
+      inMemoryCache = { data: weatherData, timestamp: Date.now() };
+
+      if (typeof window !== 'undefined') {
+        try {
+          sessionStorage.setItem(
+            CACHE_KEY,
+            JSON.stringify({ timestamp: new Date().toISOString(), data: weatherData })
+          );
+        } catch {
+          // Storage full or quota exceeded
+        }
+      }
+
+      return weatherData;
+    } catch {
+      return null;
+    } finally {
+      inFlightWeatherPromise = null;
+    }
+  })();
+
+  return inFlightWeatherPromise;
 }

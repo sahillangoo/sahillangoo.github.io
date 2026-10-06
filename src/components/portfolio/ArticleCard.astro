@@ -11,7 +11,6 @@ export interface Props {
 
 const { post, headingLevel = 'h2', class: className = '' } = Astro.props;
 const { data, id } = post;
-
 const HeadingTag = headingLevel;
 
 const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
@@ -23,46 +22,32 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
 
 <article
   class:list={cn(
-    'group border-base-300 bg-base-200 hover:border-accent/40 relative flex flex-col justify-between rounded-xl border p-6 transition-all duration-200 hover:-translate-y-0.5 active:scale-99 sm:p-7',
+    'group relative -mx-3 grid gap-x-6 rounded-md border-b border-base-300 px-3 py-7 transition-colors duration-200 hover:bg-base-200 md:-mx-5 md:grid-cols-12 md:px-5 md:py-8',
     className
   )}
 >
-  <div>
-    <!-- Metadata -->
-    <div class="text-base-content/60 mb-3 flex items-center justify-between text-xs">
-      <span class="text-accent font-mono">{data.category}</span>
-      <div class="flex items-center gap-2 font-mono">
-        <time datetime={data.publishDate}>{formattedDate}</time>
-        {data.readingTime && <span>• {data.readingTime}</span>}
-      </div>
-    </div>
-
-    <!-- Title -->
+  <div class="md:col-span-9">
+    <p class="meta">
+      {data.category}
+      {data.readingTime && <span> · {data.readingTime}</span>}
+    </p>
     <HeadingTag
       transition:name={`blog-title-${id}`}
-      class="text-base-content group-hover:text-accent text-lg font-bold tracking-tight transition-colors sm:text-xl"
+      class="text-writing mt-2 text-base-content transition-transform duration-200 ease-editorial group-hover:translate-x-1"
     >
       <a href={`/blog/${id}/`} class="after:absolute after:inset-0 focus:outline-none">
         {data.title}
       </a>
     </HeadingTag>
-
-    <!-- Description -->
-    <p class="text-base-content/70 mt-2 text-sm leading-relaxed">{data.description}</p>
+    <p class="measure-wide mt-3 text-base leading-relaxed text-secondary">{data.description}</p>
   </div>
-
-  <!-- Tags & Read indicator -->
-  <div class="border-base-300/60 mt-5 flex items-center justify-between border-t pt-4 text-xs">
-    <div class="flex flex-wrap gap-1.5">
-      {data.tags.slice(0, 3).map((tag) => (
-        <span class="badge badge-sm bg-base-300/40 text-base-content/70 border-0 font-mono text-xs">
-          #{tag}
-        </span>
-      ))}
-    </div>
-    <span class="text-accent flex items-center gap-1 font-mono text-xs font-medium transition-transform group-hover:translate-x-0.5">
+  <div class="mt-4 flex items-center justify-between md:col-span-3 md:mt-0 md:flex-col md:items-end md:pt-2">
+    <time class="meta text-base-content" datetime={data.publishDate}>
+      {formattedDate}
+    </time>
+    <span class="link-arrow text-sm text-secondary group-hover:text-accent">
       Read
-      <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
+      <Icon name="ph:arrow-up-right-bold" class="size-4" />
     </span>
   </div>
 </article>

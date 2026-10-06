@@ -7,9 +7,7 @@ export async function GET(context: APIContext) {
   const blog = await getCollection('blog');
   const publishedBlog = blog
     .filter((post) => !post.data.draft)
-    .sort(
-      (a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
-    );
+    .toSorted((a, b) => b.data.publishDate.localeCompare(a.data.publishDate));
 
   return rss({
     title: SITE.title,

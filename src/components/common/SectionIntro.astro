@@ -1,0 +1,24 @@
+---
+interface Props {
+  index: string;
+  title: string;
+  titleId: string;
+  description?: string;
+}
+
+const { index, title, titleId, description } = Astro.props;
+---
+
+<div>
+  <p class="meta flex items-center gap-2" aria-hidden="true">
+    <span class="text-accent">{index}</span>
+    <span class="h-px w-6 bg-neutral"></span>
+  </p>
+  <h2 id={titleId} class="text-section mt-3">
+    {title}
+  </h2>
+  {description && (
+    <p class="text-section-copy measure-section mt-3 text-secondary">{description}</p>
+  )}
+  <slot />
+</div>

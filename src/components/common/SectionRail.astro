@@ -1,0 +1,113 @@
+---
+const sections = [
+  { id: 'work', label: 'Work', index: '01' },
+  { id: 'experience', label: 'Experience', index: '02' },
+  { id: 'engineering', label: 'Engineering', index: '03' },
+  { id: 'writing', label: 'Writing', index: '04' },
+  { id: 'about', label: 'About', index: '05' },
+];
+---
+
+<nav
+  aria-label="Section index"
+  class="section-rail animate-fade delay-400 fixed top-1/2 z-30 hidden -translate-y-1/2 wide:block"
+>
+  <ol class="flex flex-col gap-3">
+    {sections.map((section) => (
+      <li>
+        <a
+          href={`#${section.id}`}
+          data-rail={section.id}
+          class="group flex items-center gap-2 font-mono text-2xs text-secondary transition-colors duration-200 hover:text-base-content"
+        >
+          <span class="tabular-nums">{section.index}</span>
+          <span class="rail-line h-px w-5 origin-left bg-current" aria-hidden="true" />
+          <span class="rail-label sr-only xwide:not-sr-only xwide:opacity-60 xwide:transition-opacity xwide:duration-200 group-hover:xwide:opacity-100">
+            {section.label}
+          </span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .section-rail {
+    left: max(1.25rem, env(safe-area-inset-left, 0px));
+  }
+
+  .rail-line {
+    transform: scaleX(0.4);
+    transition: transform 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .group:hover .rail-line {
+    transform: scaleX(0.75);
+  }
+
+  :global(.rail-line[data-active]) {
+    transform: scaleX(1);
+  }
+</style>
+
+<script>
+  const railSelector = '[data-rail]';
+  const sectionLine = 96;
+  let cachedRailLinks: HTMLAnchorElement[] = [];
+  let onRailScroll: (() => void) | null = null;
+
+  function markRail(id: string | null): void {
+    cachedRailLinks.forEach((link) => {
+      const active = link.dataset.rail === id;
+      link.classList.toggle('text-accent', active);
+      link.classList.toggle('text-secondary', !active);
+      if (active) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+
+      const line = link.querySelector('.rail-line');
+      if (active) line?.setAttribute('data-active', '');
+      else line?.removeAttribute('data-active');
+
+      const label = link.querySelector('.rail-label');
+      label?.classList.toggle('xwide:opacity-100', active);
+      label?.classList.toggle('xwide:opacity-60', !active);
+    });
+  }
+
+  function sectionInView(): string | null {
+    let active = cachedRailLinks[0]?.dataset.rail ?? null;
+    for (const link of cachedRailLinks) {
+      const id = link.dataset.rail;
+      if (!id) continue;
+      const section = document.getElementById(id);
+      if (section && section.getBoundingClientRect().top <= sectionLine) active = id;
+    }
+    return active;
+  }
+
+  function setupRail(): void {
+    teardownRail();
+    cachedRailLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>(railSelector));
+    if (!cachedRailLinks.length) return;
+
+    const sync = (): void => {
+      markRail(sectionInView());
+    };
+    onRailScroll = sync;
+    window.addEventListener('scroll', sync, { passive: true });
+    (window as unknown as LenisWindow).lenis?.on('scroll', sync);
+    sync();
+  }
+
+  function teardownRail(): void {
+    if (onRailScroll) {
+      window.removeEventListener('scroll', onRailScroll);
+      (window as unknown as LenisWindow).lenis?.off('scroll', onRailScroll);
+      onRailScroll = null;
+    }
+    cachedRailLinks = [];
+  }
+
+  document.addEventListener('astro:page-load', setupRail);
+  document.addEventListener('astro:before-swap', teardownRail);
+</script>

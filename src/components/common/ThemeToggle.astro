@@ -1,74 +1,119 @@
 ---
 import { Icon } from 'astro-icon/components';
+
+const options = [
+  { value: 'editorialLight', label: 'Light theme', icon: 'ph:sun' },
+  { value: 'editorialDark', label: 'Dark theme', icon: 'ph:moon' },
+  { value: 'system', label: 'System theme', icon: 'ph:monitor' },
+] as const;
 ---
 
-<label
-  id="theme-toggle-label"
-  class="swap swap-rotate btn btn-ghost btn-sm btn-square text-base-content/80 hover:text-base-content hover:bg-base-200 rounded-md transition-transform active:scale-99"
+<div
+  role="group"
+  aria-label="Color theme"
+  class="relative inline-flex items-center rounded-full border border-base-300 bg-elevated p-0.5"
 >
-  <!-- Hidden checkbox controller -->
-  <input
-    type="checkbox"
-    id="theme-toggle-checkbox"
-    class="theme-controller hidden"
-    aria-label="Toggle color theme"
-  />
-
-  <!-- Sun icon (shown when dark theme is active, click to switch to light) -->
-  <span class="swap-on flex items-center justify-center">
-    <Icon name="line-md:moon-to-sunny-outline-transition" class="h-4 w-4" />
-  </span>
-
-  <!-- Moon icon (shown when light theme is active, click to switch to dark) -->
-  <span class="swap-off flex items-center justify-center">
-    <Icon name="line-md:sunny-outline-to-moon-transition" class="h-4 w-4" />
-  </span>
-</label>
+  <span
+    id="theme-indicator"
+    aria-hidden="true"
+    class="absolute top-0.5 left-0.5 size-7 translate-x-7 rounded-full border border-base-300 bg-base-200 transition-transform duration-200 ease-editorial"
+  ></span>
+  {options.map((option) => (
+    <button
+      type="button"
+      data-theme-choice={option.value}
+      title={option.label}
+      aria-pressed="false"
+      class="relative z-10 grid size-7 place-items-center rounded-full text-secondary transition-colors duration-150 hover:text-base-content"
+    >
+      <Icon name={option.icon} class="size-3.5" aria-hidden="true" />
+      <span class="sr-only">{option.label}</span>
+    </button>
+  ))}
+</div>
 
 <script>
-  function normalizeTheme(theme: string | null): 'editorialDark' | 'editorialLight' {
-    if (theme === 'editorialLight' || theme === 'light') return 'editorialLight';
-    if (theme === 'editorialDark' || theme === 'dark') return 'editorialDark';
+  type ThemePreference = 'editorialLight' | 'editorialDark' | 'system';
+  type ResolvedTheme = 'editorialLight' | 'editorialDark';
+
+  const positions: Record<ThemePreference, string> = {
+    editorialLight: 'translate-x-0',
+    editorialDark: 'translate-x-7',
+    system: 'translate-x-14',
+  };
+
+  let isThemeToggleBound = false;
+
+  function readPreference(): ThemePreference {
+    try {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'editorialLight' || saved === 'light') return 'editorialLight';
+      if (saved === 'editorialDark' || saved === 'dark') return 'editorialDark';
+      if (saved === 'system') return 'system';
+    } catch {
+      // LocalStorage access may be restricted
+    }
+    return 'system';
+  }
+
+  function resolveTheme(preference: ThemePreference): ResolvedTheme {
+    if (preference === 'editorialLight' || preference === 'editorialDark') return preference;
     return window.matchMedia('(prefers-color-scheme: dark)').matches
       ? 'editorialDark'
       : 'editorialLight';
   }
 
-  function syncCheckboxState() {
-    const checkbox = document.getElementById('theme-toggle-checkbox') as HTMLInputElement | null;
-    if (!checkbox) return;
-    const currentTheme = normalizeTheme(document.documentElement.getAttribute('data-theme'));
-    // Checked = dark mode (sun visible), Unchecked = light mode (moon visible)
-    checkbox.checked = currentTheme === 'editorialDark';
+  function paintTheme(theme: ResolvedTheme): void {
+    document.documentElement.setAttribute('data-theme', theme);
   }
 
-  function toggleTheme() {
-    const rawCurrent = document.documentElement.getAttribute('data-theme');
-    const current = normalizeTheme(rawCurrent);
-    const next = current === 'editorialDark' ? 'editorialLight' : 'editorialDark';
-    document.documentElement.setAttribute('data-theme', next);
+  function syncThemeControl(): void {
+    const preference = readPreference();
+    const indicator = document.getElementById('theme-indicator');
+    if (indicator) {
+      indicator.classList.remove('translate-x-0', 'translate-x-7', 'translate-x-14');
+      indicator.classList.add(positions[preference]);
+    }
+
+    document.querySelectorAll<HTMLButtonElement>('[data-theme-choice]').forEach((button) => {
+      const active = button.dataset.themeChoice === preference;
+      button.setAttribute('aria-pressed', active ? 'true' : 'false');
+      button.classList.toggle('text-base-content', active);
+      button.classList.toggle('text-secondary', !active);
+    });
+  }
+
+  function setPreference(preference: ThemePreference): void {
     try {
-      localStorage.setItem('theme', next);
+      localStorage.setItem('theme', preference);
     } catch {
       // LocalStorage access may be restricted
     }
-    syncCheckboxState();
+    paintTheme(resolveTheme(preference));
+    syncThemeControl();
   }
 
-  function setupThemeToggle() {
-    const checkbox = document.getElementById('theme-toggle-checkbox') as HTMLInputElement | null;
-    if (!checkbox) return;
+  function setupThemeToggle(): void {
+    syncThemeControl();
+    if (isThemeToggleBound) return;
+    isThemeToggleBound = true;
 
-    syncCheckboxState();
+    document.addEventListener('click', (event) => {
+      const button = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>(
+        '[data-theme-choice]'
+      );
+      const choice = button?.dataset.themeChoice;
+      if (choice === 'editorialLight' || choice === 'editorialDark' || choice === 'system') {
+        setPreference(choice);
+      }
+    });
 
-    if (checkbox.dataset.bound === 'true') return;
-    checkbox.dataset.bound = 'true';
-
-    checkbox.addEventListener('change', () => {
-      toggleTheme();
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      if (readPreference() !== 'system') return;
+      paintTheme(resolveTheme('system'));
     });
   }
 
   document.addEventListener('astro:page-load', setupThemeToggle);
-  document.addEventListener('astro:after-swap', syncCheckboxState);
+  document.addEventListener('astro:after-swap', syncThemeControl);
 </script>

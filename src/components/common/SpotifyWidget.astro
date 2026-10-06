@@ -13,60 +13,60 @@ const defaultTrack = getFeaturedTrack(0);
 ---
 
 <div
-  id="spotify-widget-container"
+  data-spotify-widget
   class:list={cn(
-    'group border-base-300 bg-base-200/50 hover:bg-base-200/80 inline-flex items-center justify-between gap-3 rounded-lg border px-3.5 py-2 text-xs shadow-xs transition-all duration-200 hover:border-success/40',
+    'spotify-widget-container group border-base-300 bg-base-200/50 hover:bg-base-200/80 inline-flex max-w-full items-center justify-between gap-3 rounded-lg border px-3.5 py-2 text-xs shadow-xs transition-all duration-200 hover:border-success/40',
     variant === 'footer' && 'w-full sm:w-auto',
     className
   )}
 >
   <a
-    id="spotify-widget-link"
+    data-spotify-link
     href={defaultTrack.songUrl}
     target="_blank"
     rel="noopener noreferrer"
     class="flex min-w-0 flex-1 items-center gap-3"
     title={`Listen to ${defaultTrack.title} by ${defaultTrack.artist} on Spotify`}
   >
-    <!-- Animated 3-Bar Equalizer -->
-    <div class="relative flex h-3.5 w-3.5 shrink-0 items-end justify-center gap-0.5">
+    <!-- Animated 3-Bar Equalizer (100% Compositor GPU Driven, Zero Layout Reflow) -->
+    <div class="flex h-3.5 w-3.5 shrink-0 items-end justify-center gap-0.5">
       <span
-        class="animate-equalizer w-0.5 rounded-full bg-success"
-        style="height: 12px; animation-delay: 0.1s;"
+        class="animate-equalizer h-3.5 w-0.5 origin-bottom rounded-full bg-success"
+        style="animation-delay: -0.8s;"
       ></span>
       <span
-        class="animate-equalizer w-0.5 rounded-full bg-success"
-        style="height: 16px; animation-delay: 0.3s;"
+        class="animate-equalizer h-3.5 w-0.5 origin-bottom rounded-full bg-success"
+        style="animation-delay: -0.2s;"
       ></span>
       <span
-        class="animate-equalizer w-0.5 rounded-full bg-success"
-        style="height: 8px; animation-delay: 0.2s;"
+        class="animate-equalizer h-3.5 w-0.5 origin-bottom rounded-full bg-success"
+        style="animation-delay: -0.5s;"
       ></span>
     </div>
 
     <!-- Track Metadata Column -->
-    <div class="flex min-w-0 flex-col">
+    <div class="flex min-w-0 flex-1 flex-col">
       <div class="flex min-w-0 items-center gap-1.5">
         <span class="text-success shrink-0 font-mono text-xs font-semibold tracking-wider uppercase">
           Listening
         </span>
         <span
-          id="spotify-track-tag"
-          class="badge badge-sm border-success/30 bg-success/10 text-success hidden shrink-0 border font-mono text-xs font-medium whitespace-nowrap sm:inline-flex"
+          data-spotify-tag
+          class="badge badge-sm badge-soft badge-success hidden shrink-0 font-mono text-xs font-medium whitespace-nowrap sm:inline-flex"
         >
           {defaultTrack.albumTag || 'Coke Studio'}
         </span>
       </div>
 
-      <div class="flex items-center gap-1.5 truncate">
+      <div class="flex min-w-0 items-center gap-1.5 truncate">
         <span
-          id="spotify-track-title"
+          data-spotify-title
           class="text-base-content group-hover:text-success truncate font-medium transition-colors"
         >
           {defaultTrack.title}
         </span>
-        <span class="text-base-content/30">•</span>
-        <span id="spotify-track-artist" class="text-base-content/60 truncate font-mono text-xs">
+        <span class="text-base-content/30 shrink-0">•</span>
+        <span data-spotify-artist class="text-base-content/60 min-w-0 truncate font-mono text-xs">
           {defaultTrack.artist}
         </span>
       </div>
@@ -76,9 +76,9 @@ const defaultTrack = getFeaturedTrack(0);
   <!-- Action buttons: Skip / Next Song & Deep Link -->
   <div class="flex shrink-0 items-center gap-1">
     <button
-      id="spotify-skip-btn"
+      data-spotify-skip-btn
       type="button"
-      class="btn btn-ghost btn-sm btn-square text-base-content/60 hover:bg-base-300/50 hover:text-success rounded-md transition-transform active:scale-99"
+      class="btn btn-ghost btn-sm btn-square text-base-content/60 hover:bg-base-300/50 hover:text-success rounded-md transition-transform"
       title="Skip to next curated song"
       aria-label="Skip to next curated song"
     >
@@ -86,7 +86,7 @@ const defaultTrack = getFeaturedTrack(0);
     </button>
 
     <a
-      id="spotify-open-link"
+      data-spotify-open-link
       href={defaultTrack.songUrl}
       target="_blank"
       rel="noopener noreferrer"
@@ -102,58 +102,86 @@ const defaultTrack = getFeaturedTrack(0);
   </div>
 </div>
 
-<style>
-  @keyframes equalizer {
-    0%,
-    100% {
-      height: 4px;
-    }
-    50% {
-      height: 14px;
-    }
-  }
-</style>
-
 <script>
   type SpotifyTrack = import('@utils/spotify.ts').SpotifyTrack;
   let tracksCache: readonly SpotifyTrack[] | null = null;
-  let currentTrackIdx = 0;
+  const TRACK_STORAGE_KEY = 'sl_spotify_track_idx';
 
-  function updateSpotifyDisplay(track: SpotifyTrack) {
-    const titleEl = document.getElementById('spotify-track-title');
-    const artistEl = document.getElementById('spotify-track-artist');
-    const tagEl = document.getElementById('spotify-track-tag');
-    const linkEl = document.getElementById('spotify-widget-link') as HTMLAnchorElement | null;
-    const openLinkEl = document.getElementById('spotify-open-link') as HTMLAnchorElement | null;
-
-    if (!titleEl || !artistEl || !linkEl) return;
-
-    titleEl.textContent = track.title;
-    artistEl.textContent = track.artist;
-    if (tagEl && track.albumTag) tagEl.textContent = track.albumTag;
-    linkEl.href = track.songUrl;
-    linkEl.title = `Listen to ${track.title} by ${track.artist} on Spotify`;
-    if (openLinkEl) openLinkEl.href = track.songUrl;
+  function getStoredTrackIdx(): number {
+    if (typeof sessionStorage === 'undefined') return 0;
+    const stored = sessionStorage.getItem(TRACK_STORAGE_KEY);
+    return stored ? Math.max(0, parseInt(stored, 10) || 0) : 0;
   }
 
-  function setupSpotifyWidget() {
-    const skipBtn = document.getElementById('spotify-skip-btn');
-    if (!skipBtn) return;
+  function setStoredTrackIdx(idx: number): void {
+    if (typeof sessionStorage !== 'undefined') {
+      sessionStorage.setItem(TRACK_STORAGE_KEY, String(idx));
+    }
+  }
 
-    skipBtn.addEventListener('click', async (e) => {
+  // Updates ALL Spotify widget instances across the document to prevent desync
+  function updateAllSpotifyWidgets(track: SpotifyTrack): void {
+    const widgets = document.querySelectorAll<HTMLElement>('[data-spotify-widget]');
+    widgets.forEach((widget) => {
+      const titleEl = widget.querySelector('[data-spotify-title]');
+      const artistEl = widget.querySelector('[data-spotify-artist]');
+      const tagEl = widget.querySelector('[data-spotify-tag]');
+      const linkEl = widget.querySelector<HTMLAnchorElement>('[data-spotify-link]');
+      const openLinkEl = widget.querySelector<HTMLAnchorElement>('[data-spotify-open-link]');
+
+      if (titleEl) titleEl.textContent = track.title;
+      if (artistEl) artistEl.textContent = track.artist;
+      if (tagEl && track.albumTag) tagEl.textContent = track.albumTag;
+      if (linkEl) {
+        linkEl.href = track.songUrl;
+        linkEl.title = `Listen to ${track.title} by ${track.artist} on Spotify`;
+      }
+      if (openLinkEl) openLinkEl.href = track.songUrl;
+    });
+  }
+
+  let isSpotifyWidgetInitialized = false;
+  if (!isSpotifyWidgetInitialized) {
+    isSpotifyWidgetInitialized = true;
+
+    document.addEventListener('click', async (e) => {
+      const btn = (e.target as HTMLElement | null)?.closest('[data-spotify-skip-btn]');
+      if (!btn) return;
+
       e.preventDefault();
       e.stopPropagation();
+
       if (!tracksCache) {
         const { SPOTIFY_TRACKS } = await import('@utils/spotify.ts');
         tracksCache = SPOTIFY_TRACKS;
       }
-      currentTrackIdx = (currentTrackIdx + 1) % tracksCache.length;
-      const nextTrack = tracksCache[currentTrackIdx];
+
+      const nextIdx = (getStoredTrackIdx() + 1) % tracksCache.length;
+      setStoredTrackIdx(nextIdx);
+
+      const nextTrack = tracksCache[nextIdx];
       if (nextTrack) {
-        updateSpotifyDisplay(nextTrack);
+        updateAllSpotifyWidgets(nextTrack);
+      }
+
+      // Haptic sound feedback if sound effects enabled
+      if (localStorage.getItem('sl_sound_effects') === 'enabled') {
+        const { audioEngine } = await import('@utils/audioEngine.ts');
+        audioEngine.playClick('soft');
       }
     });
   }
 
-  document.addEventListener('astro:page-load', setupSpotifyWidget);
+  // Sync state on page load from sessionStorage
+  document.addEventListener('astro:page-load', async () => {
+    const idx = getStoredTrackIdx();
+    if (idx > 0) {
+      if (!tracksCache) {
+        const { SPOTIFY_TRACKS } = await import('@utils/spotify.ts');
+        tracksCache = SPOTIFY_TRACKS;
+      }
+      const track = tracksCache[idx % tracksCache.length];
+      if (track) updateAllSpotifyWidgets(track);
+    }
+  });
 </script>

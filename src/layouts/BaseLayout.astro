@@ -79,10 +79,13 @@ const {
     structuredData={structuredData}
     noindex={noindex}
   />
-  <body class="bg-base-100 text-base-content relative flex min-h-screen flex-col antialiased">
-    <!-- Non-intrusive Tactile Noise Texture Overlay -->
-    <div class="noise-overlay" aria-hidden="true"></div>
-
+  <body class="flex min-h-screen flex-col antialiased">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-4 focus:z-50 focus:rounded-md focus:bg-base-content focus:px-3 focus:py-2 focus:text-sm focus:text-primary-content"
+    >
+      Skip to content
+    </a>
     {!hideNav && <NavigationBar />}
     <MobileNavigation />
     <CommandPalette />
@@ -92,7 +95,7 @@ const {
     <CloudflareEmailDecoder />
     <CloudflareAnalytics />
 
-    <main id="main-content" class:list={cn('w-full grow', hideNav ? 'pt-0' : 'pt-20 md:pt-24')}>
+    <main id="main-content" class:list={cn('w-full grow', hideNav ? 'pt-0' : 'pt-14')}>
       <slot />
     </main>
 
@@ -101,45 +104,60 @@ const {
     <script>
       import Lenis from 'lenis';
 
-      type LenisWindow = Omit<Window, 'lenis'> & { lenis?: Lenis };
-
       function getOrCreateLenis(): Lenis {
         const win = window as unknown as LenisWindow;
         if (!win.lenis) {
           win.lenis = new Lenis({
-            autoRaf: true, // Managed requestAnimationFrame loop
-            lerp: 0.055, // Ultra-Liquid Cinematic Float (buttery Awwwards/Antigravity inertia)
-            smoothWheel: true, // Smooth wheel events for physical mice & trackpads
-            syncTouch: false, // Strictly false: Preserve native 120Hz mobile compositor momentum
-            wheelMultiplier: 0.9, // Balanced luxury wheel travel ratio (prevents runaway acceleration)
+            autoRaf: true,
+            lerp: 0.055,
+            smoothWheel: true,
+            syncTouch: false,
+            wheelMultiplier: 0.9,
             touchMultiplier: 1.0,
-            autoResize: true, // Auto-detect container size changes via ResizeObserver
-            stopInertiaOnNavigate: true, // Cut momentum immediately when navigating across pages
-            respectReducedMotion: true, // Automatically disable smoothing on prefers-reduced-motion
+            autoResize: true,
+            stopInertiaOnNavigate: true,
+            respectReducedMotion: true,
           });
         }
         return win.lenis;
       }
 
-      // Initialize immediately on first script load
       getOrCreateLenis();
 
-      // Lifecycle Coordination for Astro View Transitions (<ClientRouter />)
-      let hashClickListener: ((e: MouseEvent) => void) | null = null;
+      function getElementByHash(rawHash: string): HTMLElement | null {
+        const cleanId = rawHash.replace(/^#/, '');
+        return cleanId ? document.getElementById(cleanId) : null;
+      }
 
-      function setupHashSmoothScroll(): void {
-        if (hashClickListener) {
-          document.removeEventListener('click', hashClickListener);
-        }
+      let pageLifecycleController: AbortController | null = null;
+      let revealObserver: IntersectionObserver | null = null;
+      let scrollToTopOnLoad = false;
 
-        hashClickListener = (e: MouseEvent): void => {
-          if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      document.addEventListener(
+        'click',
+        (event: MouseEvent): void => {
+          if (
+            event.button !== 0 ||
+            event.metaKey ||
+            event.ctrlKey ||
+            event.shiftKey ||
+            event.altKey
+          ) {
+            return;
+          }
 
-          const anchor = (e.target as Element | null)?.closest<HTMLAnchorElement>('a[href*="#"]');
-          if (!anchor) return;
+          const eventTarget = event.target;
+          const origin =
+            eventTarget instanceof Element
+              ? eventTarget
+              : eventTarget instanceof Node
+                ? eventTarget.parentElement
+                : null;
+          const anchor = origin?.closest<HTMLAnchorElement>('a[href]');
+          if (!anchor || anchor.target === '_blank' || anchor.hasAttribute('download')) return;
 
           const rawHref = anchor.getAttribute('href');
-          if (!rawHref) return;
+          if (!rawHref || rawHref.startsWith('mailto:') || rawHref.startsWith('tel:')) return;
 
           let targetUrl: URL;
           try {
@@ -148,68 +166,151 @@ const {
             return;
           }
 
-          // Only handle same-page hash links; let ClientRouter handle cross-page routes
+          if (targetUrl.origin !== window.location.origin || targetUrl.hash) return;
+
           const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
           const targetPath = targetUrl.pathname.replace(/\/$/, '') || '/';
-          if (targetUrl.origin !== window.location.origin || currentPath !== targetPath) return;
+          scrollToTopOnLoad = currentPath !== targetPath;
+        },
+        true
+      );
 
-          const hash = targetUrl.hash;
-          if (!hash || hash === '#') return;
+      function setupHashSmoothScroll(signal: AbortSignal): void {
+        document.addEventListener(
+          'click',
+          (e: MouseEvent): void => {
+            if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
 
-          const targetEl =
-            hash === '#top'
-              ? (document.querySelector('#top') as HTMLElement | null) || document.body
-              : (document.querySelector(hash) as HTMLElement | null);
+            const eventTarget = e.target;
+            const origin =
+              eventTarget instanceof Element
+                ? eventTarget
+                : eventTarget instanceof Node
+                  ? eventTarget.parentElement
+                  : null;
+            const anchor = origin?.closest<HTMLAnchorElement>('a[href*="#"]');
+            if (!anchor) return;
 
-          if (!targetEl) return;
+            const rawHref = anchor.getAttribute('href');
+            if (!rawHref) return;
 
-          e.preventDefault();
+            let targetUrl: URL;
+            try {
+              targetUrl = new URL(rawHref, window.location.href);
+            } catch {
+              return;
+            }
 
-          const lenis = getOrCreateLenis();
-          const prefersReducedMotion = window.matchMedia(
-            '(prefers-reduced-motion: reduce)'
-          ).matches;
+            const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+            const targetPath = targetUrl.pathname.replace(/\/$/, '') || '/';
+            if (targetUrl.origin !== window.location.origin || currentPath !== targetPath) return;
 
-          // Programmatic transitions use the signature 1.4s editorial easing curve
-          lenis.scrollTo(targetEl, {
-            duration: prefersReducedMotion ? 0 : 1.4,
-            immediate: prefersReducedMotion,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-          });
+            const hash = targetUrl.hash;
+            if (!hash || hash === '#') return;
 
-          if (window.location.hash !== hash) {
-            window.history.pushState(null, '', hash);
-          }
-        };
+            const targetEl = hash === '#top' ? document.body : getElementByHash(hash);
+            if (!targetEl) return;
 
-        document.addEventListener('click', hashClickListener);
+            e.preventDefault();
+            e.stopPropagation();
+
+            const lenis = getOrCreateLenis();
+            const prefersReducedMotion = window.matchMedia(
+              '(prefers-reduced-motion: reduce)'
+            ).matches;
+
+            lenis.scrollTo(targetEl, {
+              duration: prefersReducedMotion ? 0 : 1.2,
+              immediate: prefersReducedMotion,
+              force: true,
+              easing: (t) => 1 - Math.pow(1 - t, 3),
+            });
+
+            if (window.location.hash !== hash) {
+              window.history.pushState(null, '', hash);
+            }
+          },
+          { capture: true, signal }
+        );
       }
 
-      // Teardown Lenis and listeners before Astro swaps the DOM
-      document.addEventListener('astro:before-swap', () => {
+      function setupReveals(): void {
+        revealObserver?.disconnect();
+        const nodes = document.querySelectorAll<HTMLElement>('[data-reveal]');
+        if (!nodes.length) return;
+
+        if (!('IntersectionObserver' in window)) {
+          nodes.forEach((node) => {
+            node.dataset.reveal = 'visible';
+          });
+          return;
+        }
+
+        revealObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              const node = entry.target as HTMLElement;
+              node.dataset.reveal = 'visible';
+              revealObserver?.unobserve(node);
+            });
+          },
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.05 }
+        );
+
+        nodes.forEach((node) => {
+          if (node.dataset.reveal === 'visible') return;
+          revealObserver?.observe(node);
+        });
+      }
+
+      document.addEventListener('astro:before-swap', (event) => {
+        const incoming = (event as Event & { newDocument?: Document }).newDocument;
+        incoming?.documentElement.classList.add('client-nav');
+        document.documentElement.classList.add('client-nav');
+
+        pageLifecycleController?.abort();
+        pageLifecycleController = null;
+
+        revealObserver?.disconnect();
+        revealObserver = null;
+
         document.body.style.overflow = '';
-        if (hashClickListener) {
-          document.removeEventListener('click', hashClickListener);
-          hashClickListener = null;
-        }
         const win = window as unknown as LenisWindow;
-        if (win.lenis) {
-          win.lenis.destroy();
-          win.lenis = undefined;
-        }
+        win.lenis?.stop();
       });
 
-      // Reinitialize and restore hash position on page load
+      document.addEventListener('astro:after-swap', () => {
+        if (!scrollToTopOnLoad || window.location.hash) return;
+        window.scrollTo(0, 0);
+        getOrCreateLenis().scrollTo(0, { immediate: true, force: true });
+      });
+
       document.addEventListener('astro:page-load', () => {
+        pageLifecycleController?.abort();
+        pageLifecycleController = new AbortController();
+
         const lenis = getOrCreateLenis();
-        setupHashSmoothScroll();
+        lenis.resize();
+        lenis.start();
+
+        setupHashSmoothScroll(pageLifecycleController.signal);
+        setupReveals();
+
+        if (scrollToTopOnLoad && !window.location.hash) {
+          scrollToTopOnLoad = false;
+          lenis.scrollTo(0, { immediate: true, force: true });
+        }
 
         if (window.location.hash) {
-          const hash = window.location.hash;
-          const target = hash === '#top' ? 0 : document.querySelector(hash);
-          if (target instanceof HTMLElement || target === 0) {
-            lenis.scrollTo(target, { immediate: true });
-          }
+          requestAnimationFrame(() => {
+            const hash = window.location.hash;
+            const cleanId = hash.replace(/^#/, '');
+            const target = hash === '#top' ? 0 : cleanId ? document.getElementById(cleanId) : null;
+            if (target instanceof HTMLElement || target === 0) {
+              lenis.scrollTo(target, { immediate: true });
+            }
+          });
         }
       });
     </script>

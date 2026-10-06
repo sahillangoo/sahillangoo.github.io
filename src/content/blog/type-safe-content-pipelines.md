@@ -127,7 +127,5 @@ const isCli = data.category === 'cli-tool';
 
 ## Related Type-Safe Engineering
 
-- Garden Note: [Advanced TypeScript Utility Patterns](/notes/typescript-utility-patterns/)
-- Structured Data: [Automating Schema.org JSON-LD Pipelines](/notes/structured-data-jsonld-pipeline/)
 - Systems Guide: [Architecting Modern Astro Systems](/blog/architecting-modern-astro-systems/)
 - Open Source CLI: [Smart Image CLI](/projects/smart-img-cli/)

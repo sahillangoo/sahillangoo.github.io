@@ -58,7 +58,7 @@ const breadcrumbs = [
   structuredData={tagsSchema}
   noindex={true}
 >
-  <div class="mx-auto max-w-4xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">
+  <div class="page-sheet space-y-12 py-12 md:py-16">
     <!-- Back Link -->
     <a
       href="/blog/"
@@ -69,15 +69,13 @@ const breadcrumbs = [
     </a>
 
     <!-- Header -->
-    <div class="border-base-300 border-b pb-6">
+    <div class="animate-rise border-base-300 border-b pb-6">
       <div class="text-accent flex items-center gap-2 font-mono text-xs">
         <span class="tracking-widest uppercase">Taxonomy</span>
         <span>•</span>
         <span>{`${tags.length} Tags`}</span>
       </div>
-      <h1 class="text-base-content mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">
-        Article Tags
-      </h1>
+      <h1 class="text-section mt-3">Article Tags</h1>
       <p class="text-base-content/75 mt-3 text-sm leading-relaxed sm:text-base">
         Alphabetical index of engineering topics, patterns, and technologies covered in technical
         essays.

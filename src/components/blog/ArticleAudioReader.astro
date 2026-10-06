@@ -17,7 +17,7 @@ const {
 <!-- In-Article Audio Player Card -->
 <div
   id="article-audio-player"
-  class="border-base-300/80 bg-base-200/50 my-6 flex flex-col gap-3.5 rounded-xl border p-4 transition-all duration-200 sm:p-5"
+  class="border-base-300/80 bg-base-200/50 my-6 flex flex-col gap-3.5 rounded-md border p-4 transition-all duration-200 sm:p-5"
   data-target={articleSelector}
   data-title={articleTitle}
   data-reading-time={readingTime}
@@ -29,7 +29,7 @@ const {
       <button
         id="audio-play-btn"
         type="button"
-        class="btn btn-md btn-circle bg-accent text-accent-content hover:bg-accent/90 relative border-0 shadow-md transition-all duration-150 active:scale-99"
+        class="btn btn-circle bg-accent text-accent-content hover:bg-accent/90 border-0 shadow-md"
         aria-label="Play article audio narration"
         title="Listen to this article"
       >
@@ -50,7 +50,7 @@ const {
           <span class="text-base-content text-xs font-bold tracking-tight">Audio Narration</span>
           <span
             id="audio-voice-badge"
-            class="badge badge-sm bg-accent/10 text-accent border-0 font-mono text-xs font-medium"
+            class="badge badge-sm badge-soft badge-accent font-mono font-medium"
           >
             Neural AI Voice
           </span>
@@ -58,7 +58,7 @@ const {
           <div id="audio-waveform" class="hidden items-center gap-0.5" aria-hidden="true">
             <span class="bg-accent h-3 w-0.5 animate-pulse rounded-full"></span>
             <span
-              class="bg-accent h-4.5 w-0.5 animate-pulse rounded-full"
+              class="bg-accent h-5 w-0.5 animate-pulse rounded-full"
               style="animation-delay: 150ms;"
             ></span>
             <span
@@ -109,7 +109,7 @@ const {
         <button
           id="audio-skip-back-btn"
           type="button"
-          class="btn btn-ghost btn-xs btn-square text-base-content/60 hover:text-base-content transition-transform active:scale-99"
+          class="btn btn-ghost btn-xs btn-square text-base-content/60 hover:text-base-content"
           aria-label="Rewind 1 sentence"
           title="Previous sentence"
         >
@@ -118,7 +118,7 @@ const {
         <button
           id="audio-skip-fwd-btn"
           type="button"
-          class="btn btn-ghost btn-xs btn-square text-base-content/60 hover:text-base-content transition-transform active:scale-99"
+          class="btn btn-ghost btn-xs btn-square text-base-content/60 hover:text-base-content"
           aria-label="Skip forward 1 sentence"
           title="Next sentence"
         >
@@ -139,7 +139,7 @@ const {
       <button
         id="audio-stop-btn"
         type="button"
-        class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:text-base-content transition-transform active:scale-99"
+        class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:text-base-content"
         aria-label="Stop audio"
         title="Stop and reset speech"
       >
@@ -150,7 +150,7 @@ const {
 
   <!-- Progress Bar & Reading Position -->
   <div class="flex items-center gap-3 pt-1">
-    <div class="bg-base-300/80 relative h-1.5 w-full overflow-hidden rounded-full">
+    <div class="bg-base-300/80 flex-1 h-1.5 overflow-hidden rounded-full">
       <div
         id="audio-progress-bar"
         class="bg-accent h-1.5 rounded-full transition-all duration-200"
@@ -169,7 +169,7 @@ const {
 <!-- Floating PiP Mini Player Dock (Appears bottom-right when playing) -->
 <div
   id="audio-pip-dock"
-  class="border-base-300 bg-base-100/95 animate-in fade-in slide-in-from-bottom-4 fixed right-5 bottom-5 z-40 hidden max-w-sm rounded-xl border p-3.5 shadow-2xl backdrop-blur-md transition-all duration-300"
+  class="border-base-300 bg-base-100/95 safe-bottom shadow-lg fixed inset-x-4 z-40 hidden rounded-md border p-3.5 backdrop-blur-md sm:inset-x-auto sm:right-6 sm:bottom-6 sm:w-80"
   role="region"
   aria-label="Floating Audio Player"
 >
@@ -177,7 +177,7 @@ const {
     <button
       id="pip-play-btn"
       type="button"
-      class="btn btn-xs btn-circle bg-accent text-accent-content border-0 shadow-xs active:scale-99"
+      class="btn btn-xs btn-circle bg-accent text-accent-content border-0 shadow-xs"
       aria-label="Play/Pause narration"
     >
       <Icon
@@ -213,7 +213,7 @@ const {
     <button
       id="pip-close-btn"
       type="button"
-      class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:text-base-content transition-transform active:scale-99"
+      class="btn btn-ghost btn-xs btn-square text-base-content/50 hover:text-base-content"
       title="Stop and close player"
       aria-label="Close audio player"
     >
@@ -230,7 +230,7 @@ const {
   }
 
   // Phonetic & Technical Acronym Normalization Dictionary
-  const PHONETIC_REPLACEMENTS: [RegExp, string][] = [
+  const PHONETIC_REPLACEMENTS: readonly [RegExp, string][] = [
     [/\be\.g\.,?\b/gi, 'for example,'],
     [/\bi\.e\.,?\b/gi, 'that is,'],
     [/\bvs\.?\b/gi, 'versus'],
@@ -285,6 +285,9 @@ const {
     [/\bPartytown\b/g, 'Party-town'],
     [/\bTurnstile\b/g, 'Turn-stile'],
   ];
+
+  // Safari WebKit garbage-collection guard: retaining active utterance prevents premature speech cutoffs
+  let activeUtterance: SpeechSynthesisUtterance | null = null;
 
   function humanizeTextForSpeech(rawText: string): string {
     let clean = rawText
@@ -371,15 +374,30 @@ const {
     }
 
     const synth = window.speechSynthesis;
+    const lifecycleAbort = new AbortController();
+    const { signal } = lifecycleAbort;
+
     let isPlaying = false;
     let isPaused = false;
     let playbackRate = 1;
     let chunks: ParsedChunk[] = [];
     let currentChunkIndex = 0;
     let keepAliveInterval: ReturnType<typeof setInterval> | null = null;
+    let idleHandle: number | ReturnType<typeof setTimeout> | null = null;
     let availableVoices: SpeechSynthesisVoice[] = [];
     let selectedVoice: SpeechSynthesisVoice | null = null;
     let highlightedElement: HTMLElement | null = null;
+
+    // Safe cancel handling Chromium bug where cancel() fails silently when paused
+    function safeCancelSynth() {
+      if (synth.paused) {
+        synth.resume();
+      }
+      synth.cancel();
+      if (activeUtterance !== null) {
+        activeUtterance = null;
+      }
+    }
 
     function populateVoices() {
       const rawVoices = synth.getVoices();
@@ -429,28 +447,31 @@ const {
 
     populateVoices();
     if (synth.onvoiceschanged !== undefined) {
-      synth.addEventListener('voiceschanged', populateVoices);
+      synth.addEventListener('voiceschanged', populateVoices, { signal });
     }
 
     if (voiceSelect) {
-      voiceSelect.addEventListener('change', () => {
-        const val = voiceSelect.value;
-        if (val === 'auto') {
-          selectedVoice = availableVoices[0] || null;
-          localStorage.removeItem('sl_tts_voice');
-        } else {
-          selectedVoice = availableVoices.find((v) => v.name === val) || null;
-          if (selectedVoice) localStorage.setItem('sl_tts_voice', selectedVoice.name);
-        }
+      voiceSelect.addEventListener(
+        'change',
+        () => {
+          const val = voiceSelect.value;
+          if (val === 'auto') {
+            selectedVoice = availableVoices[0] || null;
+            localStorage.removeItem('sl_tts_voice');
+          } else {
+            selectedVoice = availableVoices.find((v) => v.name === val) || null;
+            if (selectedVoice) localStorage.setItem('sl_tts_voice', selectedVoice.name);
+          }
 
-        if (isPlaying) {
-          synth.cancel();
-          speakCurrentChunk();
-        }
-      });
+          if (isPlaying) {
+            safeCancelSynth();
+            speakCurrentChunk();
+          }
+        },
+        { signal }
+      );
     }
 
-    // 2. Pre-parse readable text immediately on idle
     function parseArticleContent(): ParsedChunk[] {
       const targetSelector = player?.getAttribute('data-target') || '#article-content';
       const container = document.querySelector(targetSelector);
@@ -465,7 +486,6 @@ const {
 
         const text = p.textContent?.trim();
         if (text && text.length > 2) {
-          // Split into digestible sentences (10-25 words each) for natural prosody
           const sentences = text.match(/[^.!?]+[.!?]+|\S[^.!?]+$/g) || [text];
           sentences.forEach((s) => {
             const raw = s.trim();
@@ -483,14 +503,16 @@ const {
       return parsed;
     }
 
-    // Parse text in background idle
+    // Parse text during background idle without blocking the main thread
     if (typeof requestIdleCallback !== 'undefined') {
-      requestIdleCallback(() => {
+      idleHandle = requestIdleCallback(() => {
         chunks = parseArticleContent();
+        idleHandle = null;
       });
     } else {
-      setTimeout(() => {
+      idleHandle = setTimeout(() => {
         chunks = parseArticleContent();
+        idleHandle = null;
       }, 50);
     }
 
@@ -544,7 +566,7 @@ const {
       if (pipPercent) pipPercent.textContent = `${progress}%`;
     }
 
-    // Chrome 15s keepalive pinger
+    // Chrome 8s keepalive pinger preventing TTS freeze
     function startKeepAlive() {
       stopKeepAlive();
       keepAliveInterval = setInterval(() => {
@@ -579,6 +601,7 @@ const {
       }
 
       const utterance = new SpeechSynthesisUtterance(current.spokenText);
+      activeUtterance = utterance; // WebKit GC protection
       utterance.rate = playbackRate;
       utterance.pitch = 1.0;
 
@@ -589,25 +612,44 @@ const {
         utterance.voice = selectedVoice;
       }
 
-      utterance.addEventListener('start', () => {
-        setHighlight(current.element);
-      });
+      utterance.addEventListener(
+        'start',
+        () => {
+          setHighlight(current.element);
+        },
+        { signal }
+      );
 
-      utterance.addEventListener('end', () => {
-        if (!isPlaying || isPaused) return;
-        currentChunkIndex++;
-        updateUIState();
-        speakCurrentChunk();
-      });
+      utterance.addEventListener(
+        'end',
+        () => {
+          activeUtterance = null;
+          if (!isPlaying || isPaused) return;
+          currentChunkIndex++;
+          updateUIState();
+          speakCurrentChunk();
+        },
+        { signal }
+      );
 
-      utterance.addEventListener('error', (event) => {
-        if (!isPlaying || isPaused || event.error === 'canceled' || event.error === 'interrupted') {
-          return;
-        }
-        currentChunkIndex++;
-        updateUIState();
-        speakCurrentChunk();
-      });
+      utterance.addEventListener(
+        'error',
+        (event) => {
+          activeUtterance = null;
+          if (
+            !isPlaying ||
+            isPaused ||
+            event.error === 'canceled' ||
+            event.error === 'interrupted'
+          ) {
+            return;
+          }
+          currentChunkIndex++;
+          updateUIState();
+          speakCurrentChunk();
+        },
+        { signal }
+      );
 
       if (statusText) {
         const progress = Math.round((currentChunkIndex / Math.max(1, chunks.length)) * 100);
@@ -630,7 +672,7 @@ const {
         isPlaying = true;
         startKeepAlive();
       } else {
-        synth.cancel();
+        safeCancelSynth();
         isPlaying = true;
         isPaused = false;
         startKeepAlive();
@@ -657,19 +699,20 @@ const {
       isPaused = false;
       currentChunkIndex = 0;
       stopKeepAlive();
-      synth.cancel();
+      safeCancelSynth();
       clearHighlight();
       updateUIState();
       pipDock?.classList.add('hidden');
-      if (statusText)
+      if (statusText) {
         statusText.textContent = `Listen to this article (${player?.getAttribute('data-reading-time') || '5 min read'})`;
+      }
     }
 
     function skipChunk(offset: number) {
       if (chunks.length === 0) return;
       currentChunkIndex = Math.max(0, Math.min(chunks.length - 1, currentChunkIndex + offset));
       if (isPlaying) {
-        synth.cancel();
+        safeCancelSynth();
         speakCurrentChunk();
       } else {
         updateUIState();
@@ -681,60 +724,81 @@ const {
       playBtn.addEventListener(
         'pointerdown',
         () => {
-          // Pre-warm synthesizer on pointer contact
           if (synth.paused) synth.resume();
         },
-        { passive: true }
+        { passive: true, signal }
       );
 
-      playBtn.addEventListener('click', () => {
-        if (isPlaying) {
-          pausePlayback();
-        } else {
-          startPlayback();
-        }
-      });
+      playBtn.addEventListener(
+        'click',
+        () => {
+          if (isPlaying) {
+            pausePlayback();
+          } else {
+            startPlayback();
+          }
+        },
+        { signal }
+      );
     }
 
     if (pipPlayBtn) {
-      pipPlayBtn.addEventListener('click', () => {
-        if (isPlaying) {
-          pausePlayback();
-        } else {
-          startPlayback();
-        }
-      });
+      pipPlayBtn.addEventListener(
+        'click',
+        () => {
+          if (isPlaying) {
+            pausePlayback();
+          } else {
+            startPlayback();
+          }
+        },
+        { signal }
+      );
     }
 
-    if (stopBtn) stopBtn.addEventListener('click', stopPlayback);
-    if (pipCloseBtn) pipCloseBtn.addEventListener('click', stopPlayback);
-    if (skipBackBtn) skipBackBtn.addEventListener('click', () => skipChunk(-1));
-    if (skipFwdBtn) skipFwdBtn.addEventListener('click', () => skipChunk(1));
+    if (stopBtn) stopBtn.addEventListener('click', stopPlayback, { signal });
+    if (pipCloseBtn) pipCloseBtn.addEventListener('click', stopPlayback, { signal });
+    if (skipBackBtn) skipBackBtn.addEventListener('click', () => skipChunk(-1), { signal });
+    if (skipFwdBtn) skipFwdBtn.addEventListener('click', () => skipChunk(1), { signal });
 
     rateBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const rate = parseFloat(btn.dataset.rate || '1');
-        playbackRate = rate;
-        rateBtns.forEach((b) =>
-          b.classList.remove('bg-base-content', 'text-base-100', 'font-bold')
-        );
-        btn.classList.add('bg-base-content', 'text-base-100', 'font-bold');
+      btn.addEventListener(
+        'click',
+        () => {
+          const rate = parseFloat(btn.dataset.rate || '1');
+          playbackRate = rate;
+          rateBtns.forEach((b) =>
+            b.classList.remove('bg-base-content', 'text-base-100', 'font-bold')
+          );
+          btn.classList.add('bg-base-content', 'text-base-100', 'font-bold');
 
-        if (isPlaying) {
-          synth.cancel();
-          speakCurrentChunk();
-        }
-      });
+          if (isPlaying) {
+            safeCancelSynth();
+            speakCurrentChunk();
+          }
+        },
+        { signal }
+      );
     });
 
     // Cleanup on View Transitions & Page Unload
     const handlePageTeardown = () => {
+      if (idleHandle !== null) {
+        if (typeof cancelIdleCallback !== 'undefined' && typeof idleHandle === 'number') {
+          cancelIdleCallback(idleHandle);
+        } else {
+          clearTimeout(idleHandle as ReturnType<typeof setTimeout>);
+        }
+        idleHandle = null;
+      }
       stopPlayback();
+      lifecycleAbort.abort();
     };
 
+    // Teardown narration as soon as navigation starts (astro:before-preparation) to avoid zombie speech
+    document.addEventListener('astro:before-preparation', handlePageTeardown, { once: true });
     document.addEventListener('astro:before-swap', handlePageTeardown, { once: true });
     window.addEventListener('pagehide', handlePageTeardown, { once: true });
-    window.addEventListener('popstate', handlePageTeardown, { once: true });
   }
 
   document.addEventListener('astro:page-load', setupArticleAudio);

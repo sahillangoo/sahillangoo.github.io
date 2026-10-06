@@ -49,7 +49,7 @@ const {
   noindex = false,
 } = Astro.props;
 
-// Format keywords
+// Format keywords with default fallback
 const formattedKeywords = Array.isArray(keywords)
   ? keywords.join(', ')
   : keywords ||
@@ -61,6 +61,7 @@ const formattedCanonical =
 
 const formattedTitle =
   title === SITE.title || title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
+
 const siteUrl = SITE.url;
 const ogImage = image.startsWith('http')
   ? image
@@ -89,14 +90,12 @@ const ogLogoUrl = `${siteUrl}/icon-512.png`;
 // Clean Markdown alternate URL for individual content items per llmstxt.org v2
 const cleanPath = Astro.url.pathname.replace(/\/$/, '');
 const isContentItem =
-  /^\/(blog|notes|projects)\/[^/]+$/.test(cleanPath) &&
+  /^\/(?:blog|projects)\/(?!\d+$)[^/]+$/.test(cleanPath) &&
   !cleanPath.startsWith('/blog/category') &&
-  !cleanPath.startsWith('/blog/tag') &&
-  !/^\/blog\/\d+$/.test(cleanPath) &&
-  !/^\/notes\/\d+$/.test(cleanPath);
+  !cleanPath.startsWith('/blog/tag');
 const markdownUrl = isContentItem ? `${cleanPath}.md` : null;
 
-// Core Schema: Person, Organization & WebSite
+// Core Static Schemas
 const organizationSchema = {
   '@type': 'Organization',
   '@id': `${siteUrl}/#organization`,
@@ -239,6 +238,9 @@ const schemaGraph = {
     ...normalizedStructuredData,
   ],
 };
+
+// Safe JSON-LD script serialization (prevents HTML breakout)
+const safeJsonLdString = JSON.stringify(schemaGraph).replace(/</g, '\\u003c');
 ---
 
 <head>
@@ -248,11 +250,14 @@ const schemaGraph = {
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <link rel="canonical" href={formattedCanonical} />
-  <!-- Self-hosted optimized fonts via Astro Font Provider API with font-display: swap -->
+
+  <!-- Critical Above-the-Fold Self-hosted Font Preloads -->
+  <Font cssVariable="--ff-display" preload={[{ weight: 400, style: 'normal' }]} />
   <Font cssVariable="--ff-sans" preload={[{ weight: 400, style: 'normal' }]} />
-  <Font cssVariable="--ff-mono" />
+
   <!-- RSS Feed Autodiscovery -->
   <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
+
   <!-- AI LLM Discovery per llmstxt.org v2 standard -->
   <link rel="describedby" href="/llms.txt" />
   {markdownUrl ? (
@@ -283,15 +288,6 @@ const schemaGraph = {
         meta.name = 'robots';
         meta.content = 'noindex, nofollow, noarchive';
         document.head.appendChild(meta);
-        // Redirect to main domain commented out for pages.dev preview testing
-        // if (h.includes('github.io') || h.includes('pages.dev') || h.startsWith('www.')) {
-        //   window.location.replace(
-        //     'https://sahillangoo.in' +
-        //       window.location.pathname +
-        //       window.location.search +
-        //       window.location.hash
-        //   );
-        // }
       }
     })();
   </script>
@@ -345,7 +341,7 @@ const schemaGraph = {
   <meta name="twitter:image:alt" content={computedAlt} />
 
   <!-- Linked Data Structured Schema (JSON-LD) -->
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(schemaGraph)}></script>
+  <script is:inline type="application/ld+json" set:html={safeJsonLdString}></script>
   <!-- Theme script for anti-flash and View Transitions sync -->
   <script is:inline>
     const normalizeTheme = (theme) => {
@@ -366,6 +362,18 @@ const schemaGraph = {
     if (!window.__theme_after_swap_bound__) {
       window.__theme_after_swap_bound__ = true;
       document.addEventListener('astro:after-swap', applyTheme);
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        const saved = window.localStorage ? window.localStorage.getItem('theme') : null;
+        if (
+          saved === 'editorialDark' ||
+          saved === 'dark' ||
+          saved === 'editorialLight' ||
+          saved === 'light'
+        ) {
+          return;
+        }
+        applyTheme();
+      });
     }
   </script>
 </head>

@@ -6,54 +6,78 @@ import { Icon } from 'astro-icon/components';
   id="back-to-top"
   type="button"
   aria-label="Scroll back to top"
-  class="btn btn-circle btn-sm border-base-300 bg-base-100/90 text-base-content hover:bg-base-200 hover:text-accent fixed right-6 bottom-6 z-40 hidden shadow-lg backdrop-blur-md transition-all active:scale-99"
+  class="btn btn-circle btn-outline safe-right safe-bottom fixed z-40 hidden size-11 border-neutral bg-base-100 text-base-content hover:bg-base-200 sm:right-6 sm:bottom-6 sm:size-9"
 >
   <Icon name="ph:arrow-up-bold" class="h-4 w-4" />
 </button>
 
 <script>
-  type LenisWindow = Window & { lenis?: import('lenis').default };
+  let btnElement: HTMLElement | null = null;
+  let isVisible = false;
+  let scrollTicking = false;
+  let lenisListenerAttached = false;
 
-  const toggleVisibility = () => {
-    const btn = document.getElementById('back-to-top');
-    if (!btn) return;
+  function updateButtonVisibility(): void {
+    if (!btnElement) return;
     const win = window as unknown as LenisWindow;
     const currentY = win.lenis?.scroll ?? window.scrollY;
-    if (currentY > 400) {
-      btn.classList.remove('hidden');
-      btn.classList.add('flex');
-    } else {
-      btn.classList.add('hidden');
-      btn.classList.remove('flex');
+    const shouldShow = currentY > 400;
+
+    if (shouldShow !== isVisible) {
+      isVisible = shouldShow;
+      btnElement.classList.toggle('hidden', !shouldShow);
+      btnElement.classList.toggle('flex', shouldShow);
     }
-  };
+    scrollTicking = false;
+  }
 
-  window.addEventListener('scroll', toggleVisibility, { passive: true });
+  function onScroll(): void {
+    if (!scrollTicking) {
+      scrollTicking = true;
+      requestAnimationFrame(updateButtonVisibility);
+    }
+  }
 
+  // Delegated click listener registered once at module evaluation
   document.addEventListener('click', (e) => {
     const btn = (e.target as HTMLElement | null)?.closest('#back-to-top');
-    if (btn) {
-      e.preventDefault();
-      e.stopPropagation();
-      const win = window as unknown as LenisWindow;
-      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (win.lenis) {
-        win.lenis.scrollTo(0, {
-          duration: prefersReducedMotion ? 0 : 1.4,
-          immediate: prefersReducedMotion,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        });
-      } else {
-        window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
-      }
+    if (!btn) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const win = window as unknown as LenisWindow;
+    if (win.lenis) {
+      win.lenis.scrollTo(0, {
+        duration: prefersReducedMotion ? 0 : 1.4,
+        immediate: prefersReducedMotion,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     }
   });
 
+  // Native window scroll registered once at module evaluation
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  document.addEventListener('astro:before-swap', () => {
+    btnElement = null;
+    isVisible = false;
+    scrollTicking = false;
+  });
+
   document.addEventListener('astro:page-load', () => {
-    toggleVisibility();
+    btnElement = document.getElementById('back-to-top');
+    isVisible = false;
+    updateButtonVisibility();
+
+    // Attach to Lenis singleton exactly once
     const win = window as unknown as LenisWindow;
-    if (win.lenis) {
-      win.lenis.on('scroll', toggleVisibility);
+    if (win.lenis && !lenisListenerAttached) {
+      win.lenis.on('scroll', onScroll);
+      lenisListenerAttached = true;
     }
   });
 </script>

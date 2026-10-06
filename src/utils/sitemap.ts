@@ -4,6 +4,11 @@ import { ChangeFreqEnum, type SitemapItem } from '@astrojs/sitemap';
 
 const DEFAULT_BUILD_DATE = new Date().toISOString().split('T')[0] ?? '2026-10-01';
 
+const SITEMAP_PAGINATION_REGEX = /^\/blog\/\d+\/?$/;
+const DRAFT_REGEX = /draft:\s*true/;
+const UPDATED_DATE_REGEX = /updatedDate:\s*['"]?([0-9]{4}-[0-9]{2}-[0-9]{2})['"]?/;
+const PUBLISH_DATE_REGEX = /publishDate:\s*['"]?([0-9]{4}-[0-9]{2}-[0-9]{2})['"]?/;
+
 // Extract content dates from frontmatters, ignoring drafts and capping future dates
 function extractContentDates(contentDir: string, buildDate: string): Map<string, string> {
   const map = new Map<string, string>();
@@ -18,10 +23,10 @@ function extractContentDates(contentDir: string, buildDate: string): Map<string,
     const content = fs.readFileSync(path.join(dirPath, file), 'utf-8');
 
     // Skip unpublished draft articles
-    if (/draft:\s*true/.test(content)) continue;
+    if (DRAFT_REGEX.test(content)) continue;
 
-    const updatedMatch = content.match(/updatedDate:\s*['"]?([0-9]{4}-[0-9]{2}-[0-9]{2})['"]?/);
-    const publishMatch = content.match(/publishDate:\s*['"]?([0-9]{4}-[0-9]{2}-[0-9]{2})['"]?/);
+    const updatedMatch = content.match(UPDATED_DATE_REGEX);
+    const publishMatch = content.match(PUBLISH_DATE_REGEX);
 
     let date = updatedMatch?.[1] || publishMatch?.[1] || buildDate;
     // Guard against future timestamps
@@ -36,16 +41,13 @@ function extractContentDates(contentDir: string, buildDate: string): Map<string,
 
 export function createSitemapSerializer(buildDate: string = DEFAULT_BUILD_DATE) {
   const blogDates = extractContentDates('blog', buildDate);
-  const noteDates = extractContentDates('notes', buildDate);
   const projectDates = extractContentDates('projects', buildDate);
 
   // Compute latest update / publish dates per collection
   const allBlogDates = Array.from(blogDates.values()).sort().reverse();
-  const allNoteDates = Array.from(noteDates.values()).sort().reverse();
   const allProjectDates = Array.from(projectDates.values()).sort().reverse();
 
   const latestBlogDate = allBlogDates[0] ?? buildDate;
-  const latestNoteDate = allNoteDates[0] ?? buildDate;
   const latestProjectDate = allProjectDates[0] ?? buildDate;
 
   return function serialize(item: SitemapItem): SitemapItem | undefined {
@@ -60,8 +62,7 @@ export function createSitemapSerializer(buildDate: string = DEFAULT_BUILD_DATE) 
       pathname === '/rss.xml' ||
       pathname.startsWith('/blog/tag/') ||
       pathname.startsWith('/blog/tag') ||
-      pathname.match(/^\/blog\/\d+\/?$/) ||
-      pathname.match(/^\/notes\/\d+\/?$/)
+      SITEMAP_PAGINATION_REGEX.test(pathname)
     ) {
       return undefined;
     }
@@ -95,16 +96,6 @@ export function createSitemapSerializer(buildDate: string = DEFAULT_BUILD_DATE) 
         changefreq: ChangeFreqEnum.WEEKLY,
         priority: 0.9,
         lastmod: latestBlogDate,
-      };
-    }
-
-    if (pathname === '/notes/' || pathname === '/notes') {
-      return {
-        ...item,
-        url,
-        changefreq: ChangeFreqEnum.WEEKLY,
-        priority: 0.9,
-        lastmod: latestNoteDate,
       };
     }
 
@@ -149,20 +140,7 @@ export function createSitemapSerializer(buildDate: string = DEFAULT_BUILD_DATE) 
       };
     }
 
-    // 6. Digital Garden Notes (Priority 0.7)
-    if (pathname.startsWith('/notes/')) {
-      const slug = pathname.replace(/^\/notes\//, '').replace(/\/$/, '');
-      const date = noteDates.get(slug) ?? latestNoteDate;
-      return {
-        ...item,
-        url,
-        changefreq: ChangeFreqEnum.MONTHLY,
-        priority: 0.7,
-        lastmod: date,
-      };
-    }
-
-    // 7. Categories & Secondary Pages (Priority 0.60)
+    // 6. Categories & Secondary Pages (Priority 0.60)
     if (
       pathname.startsWith('/blog/category/') ||
       pathname === '/now/' ||

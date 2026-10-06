@@ -74,28 +74,24 @@ const breadcrumbs = [
   structuredData={resumeSchema}
   type="profile"
 >
-  <div class="mx-auto max-w-4xl space-y-12 px-4 py-8 sm:px-6 sm:py-12">
+  <div class="page-sheet space-y-12 py-12 md:py-16">
     <!-- Header with Actions -->
-    <div class="border-base-300 flex flex-col gap-6 border-b pb-8 sm:flex-row sm:items-center sm:justify-between">
+    <div class="animate-rise border-base-300 flex flex-col gap-6 border-b pb-8 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <span class="text-accent font-mono text-xs font-medium tracking-widest uppercase">
-          {resumeCopy.header.eyebrow}
-        </span>
-        <h1 class="text-base-content mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
-          {SITE.name}
-        </h1>
+        <span class="label-caps">{resumeCopy.header.eyebrow}</span>
+        <h1 class="text-section mt-3">{SITE.name}</h1>
         <p class="text-base-content/80 mt-1 text-sm font-medium">
           {resumeCopy.header.roleSubtitle}
         </p>
       </div>
 
-      <div class="flex flex-wrap items-center gap-3">
+      <div class="flex flex-wrap items-center gap-3 print:hidden">
         {resumeCopy.header.downloadCta && (
           <a
             href={resumeCopy.header.downloadCta.href}
             target="_blank"
             rel="noopener noreferrer"
-            class="btn btn-sm bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-1.5 rounded-md border-0 font-mono text-xs tracking-wider uppercase transition-all active:scale-99"
+            class="btn btn-sm bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 gap-1.5 rounded-md border-0 font-mono text-xs tracking-wider uppercase"
           >
             {resumeCopy.header.downloadCta.icon && (
               <Icon name={resumeCopy.header.downloadCta.icon} class="h-3.5 w-3.5" />
@@ -105,7 +101,7 @@ const breadcrumbs = [
         )}
         <a
           href={resumeCopy.header.contactCta.href}
-          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 flex items-center gap-1.5 rounded-md font-mono text-xs tracking-wider uppercase transition-all active:scale-99"
+          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 gap-1.5 rounded-md font-mono text-xs tracking-wider uppercase"
         >
           {resumeCopy.header.contactCta.icon && (
             <Icon name={resumeCopy.header.contactCta.icon} class="h-3.5 w-3.5" />
@@ -116,7 +112,7 @@ const breadcrumbs = [
           href={resumeCopy.header.githubCta.href}
           target="_blank"
           rel="noopener noreferrer"
-          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 flex items-center gap-1.5 rounded-md font-mono text-xs tracking-wider uppercase transition-all active:scale-99"
+          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 gap-1.5 rounded-md font-mono text-xs tracking-wider uppercase"
         >
           {resumeCopy.header.githubCta.icon && (
             <Icon name={resumeCopy.header.githubCta.icon} class="h-3.5 w-3.5" />
@@ -128,7 +124,10 @@ const breadcrumbs = [
 
     <!-- Role-Specific Resume Targets -->
     {resumeCopy.header.roleResumes && (
-      <div class="border-base-300 bg-base-200/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-lg border px-4 py-3 text-xs">
+      <div
+        data-reveal="hidden"
+        class="border-base-300 bg-base-200/40 flex flex-col justify-between gap-3 rounded-lg border px-4 py-3 text-xs sm:flex-row sm:items-center print:hidden"
+      >
         <span class="text-base-content/70 font-mono">Role-Specific Tracks:</span>
         <div class="flex flex-wrap items-center gap-2">
           {resumeCopy.header.roleResumes.map((role) => (
@@ -136,7 +135,7 @@ const breadcrumbs = [
               href={role.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="border-base-300 bg-base-100 text-base-content/80 hover:border-accent/50 hover:text-accent inline-flex items-center gap-1.5 rounded border px-2.5 py-1 font-mono transition-colors active:scale-99"
+              class="border-base-300 bg-base-100 text-base-content/80 hover:border-accent/50 hover:text-accent inline-flex items-center gap-1.5 rounded border px-2.5 py-1 font-mono transition-colors"
             >
               <Icon name="ph:file-pdf-bold" class="h-3 w-3 opacity-60" />
               <span>{role.label}</span>
@@ -147,32 +146,24 @@ const breadcrumbs = [
     )}
 
     <!-- Summary -->
-    <section class="space-y-3">
-      <h2 class="text-accent font-mono text-xs font-bold tracking-widest uppercase">
-        {resumeCopy.sections.executiveSummary}
-      </h2>
+    <section data-reveal="hidden" class="space-y-3">
+      <h2 class="label-caps">{resumeCopy.sections.executiveSummary}</h2>
       <p class="text-base-content/80 text-sm leading-relaxed sm:text-base">
         {siteData?.data.about}
       </p>
     </section>
 
     <!-- Work Experience -->
-    <section class="space-y-6">
-      <h2 class="text-accent font-mono text-xs font-bold tracking-widest uppercase">
-        {resumeCopy.sections.professionalExperience}
-      </h2>
-      <div class="border-base-300 bg-base-200 rounded-xl border p-6 sm:p-8">
-        <ExperienceTimeline experiences={experiences} />
-      </div>
+    <section data-reveal="hidden" class="space-y-6">
+      <h2 class="label-caps">{resumeCopy.sections.professionalExperience}</h2>
+      <ExperienceTimeline experiences={experiences} />
     </section>
 
     <!-- Technical Projects -->
     {resumeProjects.length > 0 && (
-      <section class="space-y-6">
+      <section data-reveal="hidden" class="space-y-6">
         <div class="flex items-center justify-between">
-          <h2 class="text-accent font-mono text-xs font-bold tracking-widest uppercase">
-            {resumeCopy.sections.technicalProjects}
-          </h2>
+          <h2 class="label-caps">{resumeCopy.sections.technicalProjects}</h2>
           <a
             href="/projects/"
             class="text-base-content/70 hover:text-accent inline-flex items-center gap-1 font-mono text-xs transition-colors"
@@ -184,7 +175,7 @@ const breadcrumbs = [
 
         <div class="space-y-6">
           {resumeProjects.map((proj) => (
-            <div class="border-base-300 bg-base-200 space-y-3.5 rounded-xl border p-5 sm:p-6">
+            <div class="border-base-300 bg-base-200 space-y-3.5 rounded-md border p-5 sm:p-6">
               <div class="flex flex-col justify-between gap-1 sm:flex-row sm:items-baseline">
                 <div class="flex flex-wrap items-center gap-2">
                   <a
@@ -259,13 +250,11 @@ const breadcrumbs = [
 
     <!-- Skills Breakdown -->
     {skills && (
-      <section class="space-y-6">
-        <h2 class="text-accent font-mono text-xs font-bold tracking-widest uppercase">
-          {resumeCopy.sections.coreCompetencies}
-        </h2>
+      <section data-reveal="hidden" class="space-y-6">
+        <h2 class="label-caps">{resumeCopy.sections.coreCompetencies}</h2>
 
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <div class="border-base-300 bg-base-200 space-y-2 rounded-xl border p-5">
+          <div class="border-base-300 bg-base-200 space-y-2 rounded-md border p-5">
             <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
               {resumeCopy.sections.languagesTitle}
             </h3>
@@ -278,7 +267,7 @@ const breadcrumbs = [
             </div>
           </div>
 
-          <div class="border-base-300 bg-base-200 space-y-2 rounded-xl border p-5">
+          <div class="border-base-300 bg-base-200 space-y-2 rounded-md border p-5">
             <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
               {resumeCopy.sections.frameworksTitle}
             </h3>
@@ -291,7 +280,7 @@ const breadcrumbs = [
             </div>
           </div>
 
-          <div class="border-base-300 bg-base-200 space-y-2 rounded-xl border p-5">
+          <div class="border-base-300 bg-base-200 space-y-2 rounded-md border p-5">
             <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
               {resumeCopy.sections.cloudTitle}
             </h3>
@@ -304,7 +293,7 @@ const breadcrumbs = [
             </div>
           </div>
 
-          <div class="border-base-300 bg-base-200 space-y-2 rounded-xl border p-5">
+          <div class="border-base-300 bg-base-200 space-y-2 rounded-md border p-5">
             <h3 class="text-base-content font-mono text-xs font-bold tracking-wider uppercase">
               {resumeCopy.sections.databasesToolsTitle}
             </h3>
@@ -321,13 +310,11 @@ const breadcrumbs = [
     )}
 
     <!-- Education Section -->
-    <section class="space-y-6">
-      <h2 class="text-accent font-mono text-xs font-bold tracking-widest uppercase">
-        {resumeCopy.sections.educationTitle}
-      </h2>
+    <section data-reveal="hidden" class="space-y-6">
+      <h2 class="label-caps">{resumeCopy.sections.educationTitle}</h2>
       <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
         {SITE.education.map((edu) => (
-          <div class="border-base-300 bg-base-200 flex flex-col justify-between space-y-4 rounded-xl border p-6">
+          <div class="border-base-300 bg-base-200 flex flex-col justify-between space-y-4 rounded-md border p-6">
             <div class="space-y-2">
               <div class="flex items-start justify-between gap-2">
                 <span class="bg-base-300/40 text-accent rounded px-2 py-0.5 font-mono text-xs font-bold">
@@ -360,13 +347,11 @@ const breadcrumbs = [
     </section>
 
     <!-- Professional Certifications -->
-    <section class="space-y-6">
-      <h2 class="text-accent font-mono text-xs font-bold tracking-widest uppercase">
-        {resumeCopy.sections.certificationsTitle}
-      </h2>
+    <section data-reveal="hidden" class="space-y-6">
+      <h2 class="label-caps">{resumeCopy.sections.certificationsTitle}</h2>
       <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {SITE.certifications.map((cert) => (
-          <div class="border-base-300 bg-base-200 flex flex-col justify-between space-y-3 rounded-xl border p-5">
+          <div class="border-base-300 bg-base-200 flex flex-col justify-between space-y-3 rounded-md border p-5">
             <div class="space-y-1">
               <div class="flex items-center justify-between">
                 <span class="text-accent font-mono text-xs font-medium">{cert.issuer}</span>
@@ -384,3 +369,43 @@ const breadcrumbs = [
     </section>
   </div>
 </BaseLayout>
+
+<style>
+  @media print {
+    :global(#site-header),
+    :global(#site-footer),
+    :global(#back-to-top),
+    :global(#command-palette-modal),
+    :global(#audio-pip-dock) {
+      display: none !important;
+    }
+
+    :global(body) {
+      background: #ffffff !important;
+      color: #111827 !important;
+    }
+
+    :global(.role-details) {
+      display: block !important;
+    }
+
+    :global(.role-summary) {
+      display: none !important;
+    }
+
+    :global(.role-panel) {
+      display: block !important;
+      opacity: 1 !important;
+      max-height: none !important;
+    }
+
+    :global(.role-panel > div) {
+      display: block !important;
+    }
+
+    :global(article),
+    :global(section) {
+      break-inside: avoid;
+    }
+  }
+</style>

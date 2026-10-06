@@ -4,7 +4,7 @@ import { Icon } from 'astro-icon/components';
 
 <div
   id="text-quote-tooltip"
-  class="border-base-300 bg-base-300/95 animate-in fade-in zoom-in-95 pointer-events-auto fixed z-50 hidden -translate-x-1/2 -translate-y-full rounded-lg border p-1 text-xs shadow-2xl backdrop-blur-md transition-all duration-150"
+  class="border-base-300 bg-base-300/95 fixed z-50 hidden -translate-x-1/2 -translate-y-full rounded-lg border p-1 text-xs backdrop-blur-md shadow-md"
   role="tooltip"
   aria-hidden="true"
 >
@@ -12,7 +12,7 @@ import { Icon } from 'astro-icon/components';
     <button
       id="quote-copy-link-btn"
       type="button"
-      class="btn btn-ghost btn-xs text-base-content hover:bg-base-100/80 flex items-center gap-1.5 px-2.5 font-mono text-xs active:scale-99"
+      class="btn btn-ghost btn-xs text-base-content hover:bg-base-100/80 px-2.5 font-mono text-xs"
       title="Copy direct link to highlighted passage"
     >
       <Icon name="ph:link-bold" class="text-accent h-3.5 w-3.5" />
@@ -24,7 +24,7 @@ import { Icon } from 'astro-icon/components';
     <button
       id="quote-share-x-btn"
       type="button"
-      class="btn btn-ghost btn-xs text-base-content hover:text-accent hover:bg-base-100/80 flex items-center gap-1 px-2 active:scale-99"
+      class="btn btn-ghost btn-xs text-base-content hover:text-accent hover:bg-base-100/80 gap-1 px-2"
       title="Share quote on X (Twitter)"
       aria-label="Share quote on X"
     >
@@ -37,6 +37,8 @@ import { Icon } from 'astro-icon/components';
 
 <script>
   let selectedText = '';
+  let copyTimeoutId: ReturnType<typeof setTimeout> | null = null;
+  let isInitialized = false;
 
   async function playAudioClick(type: 'soft' | 'mechanical' | 'toggle' | 'bell' = 'soft') {
     if (typeof window !== 'undefined' && localStorage.getItem('sl_sound_effects') === 'enabled') {
@@ -83,19 +85,42 @@ import { Icon } from 'astro-icon/components';
     selectedText = text;
     const range = selection.getRangeAt(0);
     const rect = range.getBoundingClientRect();
+    const tooltipWidth = tooltip.offsetWidth || 180;
+    const halfWidth = tooltipWidth / 2;
+    const padding = 12;
 
-    tooltip.style.left = `${rect.left + rect.width / 2}px`;
-    tooltip.style.top = `${rect.top - 8}px`;
+    const rawLeft = rect.left + rect.width / 2;
+    const clampedLeft = Math.max(
+      halfWidth + padding,
+      Math.min(window.innerWidth - halfWidth - padding, rawLeft)
+    );
+    tooltip.style.left = `${clampedLeft}px`;
+
+    if (rect.top < 60) {
+      tooltip.style.top = `${rect.bottom + 12}px`;
+      tooltip.classList.remove('-translate-y-full');
+      tooltip.classList.add('translate-y-0');
+    } else {
+      tooltip.style.top = `${rect.top - 8}px`;
+      tooltip.classList.remove('translate-y-0');
+      tooltip.classList.add('-translate-y-full');
+    }
+
     tooltip.classList.remove('hidden');
     tooltip.setAttribute('aria-hidden', 'false');
   }
 
-  const win = window as unknown as Record<string, unknown>;
-  if (!win.__QUOTE_TOOLTIP_INIT__) {
-    win.__QUOTE_TOOLTIP_INIT__ = true;
+  function scheduleSelection() {
+    requestAnimationFrame(() => {
+      handleSelection();
+    });
+  }
 
-    document.addEventListener('mouseup', () => setTimeout(handleSelection, 20));
-    document.addEventListener('touchend', () => setTimeout(handleSelection, 20));
+  if (!isInitialized) {
+    isInitialized = true;
+
+    document.addEventListener('mouseup', scheduleSelection, { passive: true });
+    document.addEventListener('touchend', scheduleSelection, { passive: true });
     document.addEventListener('scroll', hideTooltip, { passive: true });
     document.addEventListener('mousedown', (e) => {
       const tooltip = getTooltip();
@@ -104,7 +129,13 @@ import { Icon } from 'astro-icon/components';
       }
     });
 
-    document.addEventListener('astro:before-swap', hideTooltip);
+    document.addEventListener('astro:before-swap', () => {
+      if (copyTimeoutId) {
+        clearTimeout(copyTimeoutId);
+        copyTimeoutId = null;
+      }
+      hideTooltip();
+    });
 
     document.addEventListener('click', async (e) => {
       const target = e.target as HTMLElement | null;
@@ -122,9 +153,11 @@ import { Icon } from 'astro-icon/components';
           const labelSpan = document.getElementById('quote-btn-label');
           if (labelSpan) {
             labelSpan.textContent = 'Copied!';
-            setTimeout(() => {
+            if (copyTimeoutId) clearTimeout(copyTimeoutId);
+            copyTimeoutId = setTimeout(() => {
               if (labelSpan) labelSpan.textContent = 'Copy Quote Link';
               hideTooltip();
+              copyTimeoutId = null;
             }, 1200);
           }
         } catch {

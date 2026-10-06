@@ -167,10 +167,8 @@ export const SITE = {
   nav: [
     { label: 'Work', href: '/projects/' },
     { label: 'Writing', href: '/blog/' },
-    { label: 'Notes', href: '/notes/' },
-    { label: 'Resume', href: '/resume/' },
     { label: 'About', href: '/about/' },
-    { label: 'Links', href: '/links/' },
+    { label: 'Resume', href: '/resume/' },
   ],
 } as const;
 

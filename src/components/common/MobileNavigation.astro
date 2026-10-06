@@ -11,43 +11,38 @@ function isActive(href: string): boolean {
 }
 
 const primaryNavHrefs = new Set<string>(SITE.nav.map((item) => item.href));
-const extraLinks = navigationCopy.footerNav.filter((item) => !primaryNavHrefs.has(item.href));
+const hiddenFromNav = new Set(['/links/', '/now/']);
+const extraLinks = navigationCopy.footerNav.filter(
+  (item) => !primaryNavHrefs.has(item.href) && !hiddenFromNav.has(item.href)
+);
 ---
 
-<div id="mobile-drawer" class="fixed inset-0 z-50 hidden md:hidden">
+<div id="mobile-drawer" class="fixed inset-0 z-50 hidden lg:hidden">
   <!-- Backdrop -->
   <div
     id="mobile-drawer-backdrop"
-    class="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
+    class="fixed inset-0 bg-base-content/60 backdrop-blur-xs transition-opacity"
   ></div>
 
   <!-- Drawer Panel -->
-  <div class="bg-base-100 border-base-300 fixed inset-y-0 right-0 flex w-full max-w-xs flex-col justify-between overflow-y-auto border-l p-6 shadow-2xl">
+  <div
+    id="mobile-drawer-panel"
+    class="safe-pt safe-pb fixed inset-y-0 right-0 flex w-full max-w-xs flex-col justify-between overflow-y-auto overscroll-contain border-l border-base-300 bg-base-100 p-6"
+  >
     <div class="space-y-6">
       <div class="border-base-300 flex items-center justify-between border-b pb-4">
-        <span class="text-accent font-mono text-sm font-bold">{SITE.name}</span>
+        <span class="font-display text-2xl font-medium italic leading-none tracking-tight text-base-content">
+          {SITE.name}
+        </span>
         <button
           id="mobile-menu-close"
           type="button"
           aria-label="Close mobile menu"
-          class="btn btn-ghost btn-sm btn-square rounded-md transition-transform active:scale-99"
+          class="btn btn-ghost btn-square size-11 rounded-md transition-transform"
         >
           <Icon name="ph:x-bold" class="h-5 w-5" />
         </button>
       </div>
-
-      <!-- Quick Command Palette Button -->
-      <button
-        type="button"
-        data-open-palette
-        class="btn btn-sm btn-outline border-base-300 bg-base-200/80 text-base-content/70 flex w-full items-center justify-between font-mono text-xs font-normal normal-case transition-all active:scale-99"
-      >
-        <span class="flex items-center gap-2">
-          <Icon name="ph:magnifying-glass-bold" class="text-accent h-4 w-4" />
-          Search everything...
-        </span>
-        <kbd class="kbd kbd-sm border-base-300 bg-base-100 font-mono text-xs">⌘K</kbd>
-      </button>
 
       <!-- Primary Nav -->
       <nav class="flex flex-col gap-1">
@@ -57,10 +52,10 @@ const extraLinks = navigationCopy.footerNav.filter((item) => !primaryNavHrefs.ha
             <a
               href={item.href}
               class:list={cn(
-                'flex items-center justify-between rounded-lg px-4 py-2.5 text-sm font-medium transition-colors',
+                'flex items-center justify-between rounded-md px-4 py-2.5 text-lg transition-colors',
                 active
-                  ? 'bg-base-200 text-base-content border-accent border-l-2 font-semibold'
-                  : 'text-base-content/70 hover:bg-base-200/60 hover:text-base-content'
+                  ? 'bg-base-200 text-base-content'
+                  : 'text-secondary hover:bg-base-200 hover:text-base-content'
               )}
             >
               <span>{item.label}</span>
@@ -97,13 +92,13 @@ const extraLinks = navigationCopy.footerNav.filter((item) => !primaryNavHrefs.ha
 
     <!-- Mobile Drawer Footer with Socials -->
     <div class="border-base-300 mt-6 border-t pt-6">
-      <div class="text-base-content/60 flex items-center justify-center gap-4">
+      <div class="text-base-content/60 flex flex-wrap items-center justify-center gap-2">
         <a
           href={SITE.social.github}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="GitHub"
-          class="hover:text-base-content p-2"
+          class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
         >
           <Icon name="ph:github-logo-bold" class="h-5 w-5" />
         </a>
@@ -112,7 +107,7 @@ const extraLinks = navigationCopy.footerNav.filter((item) => !primaryNavHrefs.ha
           target="_blank"
           rel="noopener noreferrer"
           aria-label="LinkedIn"
-          class="hover:text-base-content p-2"
+          class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
         >
           <Icon name="ph:linkedin-logo-bold" class="h-5 w-5" />
         </a>
@@ -121,7 +116,7 @@ const extraLinks = navigationCopy.footerNav.filter((item) => !primaryNavHrefs.ha
           target="_blank"
           rel="noopener noreferrer"
           aria-label="X (Twitter)"
-          class="hover:text-base-content p-2"
+          class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
         >
           <Icon name="ph:x-logo-bold" class="h-5 w-5" />
         </a>
@@ -130,7 +125,7 @@ const extraLinks = navigationCopy.footerNav.filter((item) => !primaryNavHrefs.ha
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Facebook"
-          class="hover:text-base-content p-2"
+          class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
         >
           <Icon name="ph:facebook-logo-bold" class="h-5 w-5" />
         </a>
@@ -139,7 +134,7 @@ const extraLinks = navigationCopy.footerNav.filter((item) => !primaryNavHrefs.ha
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Instagram"
-          class="hover:text-base-content p-2"
+          class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
         >
           <Icon name="ph:instagram-logo-bold" class="h-5 w-5" />
         </a>
@@ -148,7 +143,7 @@ const extraLinks = navigationCopy.footerNav.filter((item) => !primaryNavHrefs.ha
           target="_blank"
           rel="noopener noreferrer"
           aria-label="daily.dev (5.4k+ reads)"
-          class="hover:text-base-content p-2"
+          class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
         >
           <Icon name="ph:newspaper-clipping-bold" class="h-5 w-5" />
         </a>
@@ -157,11 +152,15 @@ const extraLinks = navigationCopy.footerNav.filter((item) => !primaryNavHrefs.ha
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Google Developer Profile"
-          class="hover:text-base-content p-2"
+          class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
         >
           <Icon name="ph:google-logo-bold" class="h-5 w-5" />
         </a>
-        <a href={SITE.social.email} aria-label="Email" class="hover:text-base-content p-2">
+        <a
+          href={SITE.social.email}
+          aria-label="Email"
+          class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
+        >
           <Icon name="ph:envelope-simple-bold" class="h-5 w-5" />
         </a>
       </div>
@@ -170,25 +169,41 @@ const extraLinks = navigationCopy.footerNav.filter((item) => !primaryNavHrefs.ha
 </div>
 
 <script>
-  function closeMobileDrawer() {
+  function closeMobileDrawer(): void {
     const drawer = document.getElementById('mobile-drawer');
+    const trigger = document.getElementById('mobile-menu-open');
     if (drawer) {
       drawer.classList.add('hidden');
+    }
+    if (trigger) {
+      trigger.setAttribute('aria-expanded', 'false');
     }
     document.body.style.overflow = '';
   }
 
-  function openMobileDrawer() {
+  function openMobileDrawer(): void {
     const drawer = document.getElementById('mobile-drawer');
-    if (drawer) {
-      drawer.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
+    const trigger = document.getElementById('mobile-menu-open');
+    if (!drawer) return;
+
+    drawer.classList.remove('hidden');
+    if (trigger) {
+      trigger.setAttribute('aria-expanded', 'true');
+    }
+    document.body.style.overflow = 'hidden';
+
+    const panel = document.getElementById('mobile-drawer-panel');
+    if (panel) {
+      panel.classList.remove('animate-rise');
+      requestAnimationFrame(() => {
+        panel.classList.add('animate-rise');
+      });
     }
   }
 
-  const win = window as unknown as Record<string, unknown>;
-  if (!win.__MOBILE_NAV_INIT__) {
-    win.__MOBILE_NAV_INIT__ = true;
+  let isMobileNavInitialized = false;
+  if (!isMobileNavInitialized) {
+    isMobileNavInitialized = true;
 
     document.addEventListener('click', (e) => {
       const target = e.target as HTMLElement | null;
@@ -206,6 +221,15 @@ const extraLinks = navigationCopy.footerNav.filter((item) => !primaryNavHrefs.ha
         target.closest('#mobile-drawer a')
       ) {
         closeMobileDrawer();
+      }
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const drawer = document.getElementById('mobile-drawer');
+        if (drawer && !drawer.classList.contains('hidden')) {
+          closeMobileDrawer();
+        }
       }
     });
 

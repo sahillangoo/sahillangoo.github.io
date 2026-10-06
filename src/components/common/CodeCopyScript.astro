@@ -2,37 +2,66 @@
 ---
 
 <script>
-  function setupCodeCopyButtons() {
+  const activeTimers = new WeakMap<HTMLButtonElement, number>();
+
+  function injectCopyButtons(): void {
     const preBlocks = document.querySelectorAll('pre');
     preBlocks.forEach((pre) => {
       if (pre.querySelector('.code-copy-btn')) return;
 
-      pre.style.position = 'relative';
+      if (!pre.classList.contains('relative')) {
+        pre.classList.add('relative');
+      }
+
       const btn = document.createElement('button');
       btn.className =
-        'code-copy-btn btn btn-xs btn-outline absolute top-2 right-2 border-base-300 bg-base-200/90 font-mono text-xs font-normal text-base-content/75 hover:text-accent hover:border-accent transition-all duration-150 active:scale-99';
+        'code-copy-btn btn btn-xs btn-outline absolute top-2 right-2 border-base-300 bg-base-200/90 font-mono text-xs font-normal text-base-content/75 hover:text-accent hover:border-accent transition-all duration-150';
       btn.textContent = 'Copy';
       btn.type = 'button';
       btn.setAttribute('aria-label', 'Copy code to clipboard');
-
-      btn.addEventListener('click', async () => {
-        const code = pre.querySelector('code')?.innerText || pre.innerText;
-        try {
-          await navigator.clipboard.writeText(code);
-          btn.textContent = 'Copied!';
-          btn.classList.add('text-success');
-          setTimeout(() => {
-            btn.textContent = 'Copy';
-            btn.classList.remove('text-success');
-          }, 2000);
-        } catch {
-          btn.textContent = 'Failed';
-        }
-      });
-
       pre.appendChild(btn);
     });
   }
 
-  document.addEventListener('astro:page-load', setupCodeCopyButtons);
+  // Single delegated listener at module level: handles all code copy buttons across all pages
+  document.addEventListener('click', async (e) => {
+    const btn = (e.target as Element | null)?.closest<HTMLButtonElement>('.code-copy-btn');
+    if (!btn) return;
+
+    const pre = btn.closest('pre');
+    if (!pre) return;
+
+    // textContent extracts raw text without triggering synchronous layout reflow
+    const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+
+    // Clear any previous reset timer on this button
+    const existingTimer = activeTimers.get(btn);
+    if (existingTimer !== undefined) {
+      clearTimeout(existingTimer);
+      activeTimers.delete(btn);
+    }
+
+    try {
+      await navigator.clipboard.writeText(code);
+      btn.textContent = 'Copied!';
+      btn.classList.add('text-success');
+
+      const timerId = window.setTimeout(() => {
+        btn.textContent = 'Copy';
+        btn.classList.remove('text-success');
+        activeTimers.delete(btn);
+      }, 2000);
+
+      activeTimers.set(btn, timerId);
+    } catch {
+      btn.textContent = 'Failed';
+      const timerId = window.setTimeout(() => {
+        btn.textContent = 'Copy';
+        activeTimers.delete(btn);
+      }, 2000);
+      activeTimers.set(btn, timerId);
+    }
+  });
+
+  document.addEventListener('astro:page-load', injectCopyButtons);
 </script>

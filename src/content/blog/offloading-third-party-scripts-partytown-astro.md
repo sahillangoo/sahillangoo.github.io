@@ -126,4 +126,3 @@ On Cloudflare Pages or Cloudflare Workers, configure a lightweight redirect rule
 
 - Core Architecture: [Architecting Modern Astro Systems](/blog/architecting-modern-astro-systems/)
 - Conversion Telemetry: [Server-Side Meta CAPI with Cloudflare Workers](/blog/server-side-capi-cloudflare-workers/)
-- Digital Garden Note: [PWA Offline Caching with Service Workers](/notes/pwa-offline-caching-service-workers/)

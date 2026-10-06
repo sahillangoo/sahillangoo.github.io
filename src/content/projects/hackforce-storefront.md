@@ -11,13 +11,12 @@ tags:
   - mdx
   - pagefind
   - security
-featured: true
+featured: false
 year: 2026
 role: 'Lead Frontend & Systems Architect'
 order: 5
 publishDate: '2026-09-19'
 liveUrl: 'https://hackerforce.io'
-githubUrl: 'https://github.com/HackerForceDev/hackforce-storefront'
 highlights:
   - 'Architected zero-server static cybersecurity platform with Astro and Tailwind CSS, achieving sub-300ms LCP and zero client-side JavaScript overhead.'
   - 'Engineered in-browser full-text search via WebAssembly with Pagefind, indexing hundreds of MDX curricula files with sub-15ms client query execution.'

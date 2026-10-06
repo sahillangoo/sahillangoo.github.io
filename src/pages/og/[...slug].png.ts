@@ -3,9 +3,10 @@ import { getCollection } from 'astro:content';
 import sharp from 'sharp';
 
 export async function getStaticPaths() {
-  const blog = await getCollection('blog');
-  const projects = await getCollection('projects');
-  const notes = await getCollection('notes');
+  const [blog, projects] = await Promise.all([getCollection('blog'), getCollection('projects')]);
+
+  const publishedBlog = blog.filter((post) => !post.data.draft);
+  const publishedProjects = projects.filter((project) => !project.data.draft);
 
   const paths = [
     // Core main pages
@@ -37,16 +38,6 @@ export async function getStaticPaths() {
         description:
           'Technical essays on distributed edge proxies, TypeScript, Web Performance, and minimalism.',
         readingTime: 'Essays & Articles',
-      },
-    },
-    {
-      params: { slug: 'notes' },
-      props: {
-        title: 'Digital Garden & System Notes',
-        category: 'DIGITAL GARDEN',
-        description:
-          'Compact mental models, CSS architectures, OKLCH theming, and edge computing notes.',
-        readingTime: 'Knowledge Base',
       },
     },
     {
@@ -110,7 +101,7 @@ export async function getStaticPaths() {
       },
     },
     // Blog articles
-    ...blog.map((post) => ({
+    ...publishedBlog.map((post) => ({
       params: { slug: `blog/${post.id}` },
       props: {
         title: post.data.title,
@@ -120,7 +111,7 @@ export async function getStaticPaths() {
       },
     })),
     // Projects
-    ...projects.map((project) => ({
+    ...publishedProjects.map((project) => ({
       params: { slug: `projects/${project.id}` },
       props: {
         title: project.data.title,
@@ -129,28 +120,22 @@ export async function getStaticPaths() {
         readingTime: `${project.data.year} • Project`,
       },
     })),
-    // Notes
-    ...notes.map((note) => ({
-      params: { slug: `notes/${note.id}` },
-      props: {
-        title: note.data.title,
-        category: `NOTE • ${note.data.topic.toUpperCase()}`,
-        description: note.data.description || 'Digital garden note & mental model.',
-        readingTime: 'Garden Note',
-      },
-    })),
   ];
 
   return paths;
 }
 
+const XML_ESCAPE_MAP: Record<string, string> = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&apos;',
+};
+const XML_ESCAPE_REGEX = /[&<>"']/g;
+
 function escapeXml(unsafe: string): string {
-  return unsafe
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
+  return unsafe.replace(XML_ESCAPE_REGEX, (ch) => XML_ESCAPE_MAP[ch] || ch);
 }
 
 function wrapText(text: string, maxCharsPerLine: number = 38, maxLines: number = 3): string[] {
@@ -267,7 +252,9 @@ export const GET: APIRoute = async ({ props }) => {
 </svg>
 `;
 
-  const pngBuffer = await sharp(Buffer.from(svg)).png().toBuffer();
+  const pngBuffer = await sharp(Buffer.from(svg))
+    .png({ compressionLevel: 8, palette: true })
+    .toBuffer();
 
   return new Response(pngBuffer, {
     headers: {

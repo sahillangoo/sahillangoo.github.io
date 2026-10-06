@@ -8,83 +8,143 @@ export interface Props {
   featured?: boolean;
   headingLevel?: 'h2' | 'h3';
   class?: string;
+  index?: number;
+  editorial?: boolean;
 }
 
-const { project, featured = false, headingLevel = 'h2', class: className = '' } = Astro.props;
+const {
+  project,
+  featured = false,
+  headingLevel = 'h2',
+  class: className = '',
+  index,
+  editorial = false,
+} = Astro.props;
 const { data, id } = project;
-
 const HeadingTag = headingLevel;
+const number = typeof index === 'number' ? String(index + 1).padStart(2, '0') : null;
 ---
 
-<article
-  class:list={cn(
-    'group border-base-300 bg-base-200 hover:border-accent/40 relative flex flex-col justify-between rounded-xl border p-6 transition-all duration-200 hover:-translate-y-0.5 active:scale-99 sm:p-7',
-    featured && 'md:col-span-2',
-    className
-  )}
->
-  <div>
-    <!-- Top Metadata row -->
-    <div class="text-base-content/60 mb-3 flex items-center justify-between gap-2 text-xs">
-      <span class="text-accent font-mono font-medium tracking-wider uppercase">
-        {data.category.replace('-', ' ')}
-      </span>
-      <span class="font-mono">{data.year}</span>
-    </div>
-
-    <!-- Title & Links -->
-    <HeadingTag
-      transition:name={`project-title-${id}`}
-      class="text-base-content group-hover:text-accent text-xl font-bold tracking-tight transition-colors"
+{editorial ? (
+  <article
+    class:list={cn(
+      'group relative -mx-3 grid grid-index gap-x-3 rounded-md border-b border-base-300 px-3 py-8 transition-colors duration-200 hover:bg-base-200 md:-mx-5 md:grid-cols-12 md:gap-x-8 md:px-5 md:py-10',
+      className
+    )}
+  >
+    <span
+      class="meta pt-2.5 tabular-nums transition-colors duration-200 group-hover:text-accent md:col-span-1"
+      aria-hidden="true"
     >
-      <a href={`/projects/${id}/`} class="after:absolute after:inset-0 focus:outline-none">
-        {data.title}
-      </a>
-    </HeadingTag>
-
-    <!-- Description -->
-    <p class="text-base-content/70 mt-2.5 text-sm leading-relaxed">{data.description}</p>
-  </div>
-
-  <!-- Tags and External Action links -->
-  <div class="border-base-300/60 mt-6 flex flex-wrap items-center justify-between gap-4 border-t pt-4">
-    <div class="flex flex-wrap gap-1.5">
-      {data.tags.slice(0, 4).map((tag) => (
-        <span class="badge badge-sm bg-base-300/40 text-base-content/70 border-0 font-mono text-xs">
-          {tag}
-        </span>
-      ))}
+      [{number}]
+    </span>
+    <div class="min-w-0 md:col-span-8">
+      <p class="meta">{data.category.replaceAll('-', ' ')}</p>
+      <HeadingTag
+        transition:name={`project-title-${id}`}
+        class="text-project mt-2 text-base-content transition-transform duration-200 ease-editorial group-hover:translate-x-1"
+      >
+        <a href={`/projects/${id}/`} class="after:absolute after:inset-0 focus:outline-none">
+          {data.title}
+        </a>
+      </HeadingTag>
+      <p class="measure-wide mt-3 text-base leading-relaxed text-secondary">{data.description}</p>
+      <ul
+        class="mt-4 flex flex-wrap items-center font-mono text-xs text-secondary"
+        aria-label="Technologies"
+      >
+        {data.tags.slice(0, 4).map((tag, tagIndex) => (
+          <li class="flex items-center">
+            {tagIndex > 0 && (
+              <span aria-hidden="true" class="mx-2 text-neutral">
+                ·
+              </span>
+            )}
+            {tag}
+          </li>
+        ))}
+      </ul>
+    </div>
+    <div class="col-start-2 mt-5 flex items-center justify-between md:col-span-3 md:col-start-auto md:mt-0 md:flex-col md:items-end md:pt-2">
+      <span class="meta text-base-content tabular-nums">{data.year}</span>
+      <span class="link-arrow text-sm text-secondary group-hover:text-accent">
+        Case study
+        <Icon name="ph:arrow-up-right-bold" class="size-4" />
+      </span>
+    </div>
+  </article>
+) : (
+  <article
+    class:list={cn(
+      'group relative grid gap-x-6 border-b border-base-300 py-8 transition-colors duration-200 hover:bg-base-200 md:grid-cols-12 md:py-10',
+      className
+    )}
+  >
+    <div class="md:col-span-8">
+      <p class="meta">
+        {number && <span class="text-accent">[{number}] </span>}
+        {data.category.replace('-', ' ')}
+        {featured && <span> · Featured</span>}
+      </p>
+      <HeadingTag
+        transition:name={`project-title-${id}`}
+        class="text-project mt-2 text-base-content transition-transform duration-200 ease-editorial group-hover:translate-x-1"
+      >
+        <a href={`/projects/${id}/`} class="after:absolute after:inset-0 focus:outline-none">
+          {data.title}
+        </a>
+      </HeadingTag>
+      <p class="measure-wide mt-3 text-base leading-relaxed text-secondary">{data.description}</p>
+      <ul
+        class="mt-4 flex flex-wrap items-center font-mono text-xs text-secondary"
+        aria-label="Technologies"
+      >
+        {data.tags.slice(0, 4).map((tag, tagIndex) => (
+          <li class="flex items-center">
+            {tagIndex > 0 && (
+              <span aria-hidden="true" class="mx-2 text-neutral">
+                ·
+              </span>
+            )}
+            {tag}
+          </li>
+        ))}
+      </ul>
     </div>
 
-    <div class="text-base-content/70 relative z-10 flex items-center gap-1.5">
-      {!data.githubUrl && !data.liveUrl && (
-        <span class="badge badge-sm border-base-300 bg-base-300/40 text-base-content/60 font-mono text-xs tracking-wider uppercase">
-          Coming Soon
-        </span>
-      )}
-      {data.githubUrl && (
-        <a
-          href={data.githubUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`GitHub repo for ${data.title}`}
-          class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content hover:bg-base-300/60 rounded-md transition-all active:scale-99"
-        >
-          <Icon name="ph:github-logo-bold" class="h-4 w-4" />
-        </a>
-      )}
-      {data.liveUrl && (
-        <a
-          href={data.liveUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`Live link for ${data.title}`}
-          title={`Live link for ${data.title}`}
-          class="btn btn-ghost btn-sm btn-square text-base-content/70 hover:text-base-content hover:bg-base-300/60 rounded-md transition-all active:scale-99"
-        >
-          <Icon name="ph:arrow-square-out-bold" class="h-4 w-4" />
-        </a>
-      )}
+    <div class="mt-5 flex items-center justify-between md:col-span-4 md:mt-0 md:flex-col md:items-end md:pt-2">
+      <span class="meta text-base-content">{data.year}</span>
+      <span class="link-arrow text-sm text-secondary group-hover:text-accent">
+        Case study
+        <Icon name="ph:arrow-up-right-bold" class="size-4" />
+      </span>
+      <div class="relative z-10 flex items-center gap-1">
+        {!data.githubUrl && !data.liveUrl && (
+          <span class="badge badge-ghost font-mono text-2xs">Coming soon</span>
+        )}
+        {data.githubUrl && (
+          <a
+            href={data.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`GitHub repo for ${data.title}`}
+            class="btn btn-ghost btn-sm btn-square text-secondary hover:text-base-content"
+          >
+            <Icon name="ph:github-logo-bold" class="size-4" />
+          </a>
+        )}
+        {data.liveUrl && (
+          <a
+            href={data.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Live link for ${data.title}`}
+            class="btn btn-ghost btn-sm btn-square text-secondary hover:text-base-content"
+          >
+            <Icon name="ph:arrow-square-out-bold" class="size-4" />
+          </a>
+        )}
+      </div>
     </div>
-  </div>
-</article>
+  </article>
+)}

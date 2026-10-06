@@ -19,7 +19,7 @@ tags:
   - symfony
   - php
   - gdpr
-featured: false
+featured: true
 year: 2024
 role: 'Frontend Architect & Full Stack Engineer'
 order: 6

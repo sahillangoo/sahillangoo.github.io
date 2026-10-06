@@ -16,7 +16,6 @@ year: 2026
 role: 'Backend Systems Architect'
 order: 7
 publishDate: '2026-09-07'
-githubUrl: 'https://github.com/SquadCoders/squadcoders-api'
 ---
 
 ## The Challenge

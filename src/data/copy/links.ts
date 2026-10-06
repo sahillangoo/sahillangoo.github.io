@@ -12,7 +12,7 @@ export const linksCopy: LinksPageCopy = {
   },
   mainSiteCard: {
     title: 'Main Website & Engineering Journal',
-    description: 'Explore the full portfolio, system architecture breakdowns, and notes.',
+    description: 'Explore the full portfolio, system architecture breakdowns, and essays.',
     href: '/',
   },
 };

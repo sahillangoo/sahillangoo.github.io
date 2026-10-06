@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
-import ReadingProgressBar from '@components/common/ReadingProgressBar.astro';
 import ArticleAudioReader from '@components/blog/ArticleAudioReader.astro';
 import { getCollection, render } from 'astro:content';
 import { SITE } from '@const/site.ts';
@@ -206,9 +205,7 @@ const breadcrumbs = [
   breadcrumbs={breadcrumbs}
   structuredData={structuredData}
 >
-  <ReadingProgressBar />
-
-  <article class="mx-auto max-w-3xl space-y-10 px-4 py-8 sm:px-6 sm:py-12">
+  <article class="page-read space-y-10 py-12 md:py-16">
     <!-- Back Link -->
     <a
       href="/blog/"
@@ -237,10 +234,7 @@ const breadcrumbs = [
         )}
       </div>
 
-      <h1
-        transition:name={`blog-title-${id}`}
-        class="text-base-content text-2xl leading-tight font-bold tracking-tight sm:text-3xl lg:text-4xl"
-      >
+      <h1 transition:name={`blog-title-${id}`} class="text-writing text-base-content">
         {data.title}
       </h1>
 
@@ -251,7 +245,7 @@ const breadcrumbs = [
         {data.tags.map((tag) => (
           <a
             href={`/blog/tag/${slugify(tag)}/`}
-            class="bg-base-200 border-base-300 text-base-content/70 hover:border-accent/40 hover:text-accent rounded border px-2.5 py-0.5 font-mono text-xs transition-colors"
+            class="bg-base-200 border-base-300 text-base-content/70 hover:border-neutral hover:text-accent rounded border px-2.5 py-0.5 font-mono text-xs transition-colors"
           >
             #{tag}
           </a>
@@ -261,7 +255,7 @@ const breadcrumbs = [
 
     <!-- Featured Cover Image -->
     {data.coverImage && (
-      <figure class="border-base-300 bg-base-200 overflow-hidden rounded-xl border">
+      <figure class="border-base-300 bg-base-200 overflow-hidden rounded-md border">
         <Image
           src={data.coverImage}
           alt={data.title}
@@ -278,10 +272,7 @@ const breadcrumbs = [
     <ArticleAudioReader readingTime={data.readingTime || '6 min read'} articleTitle={data.title} />
 
     <!-- Post Body -->
-    <div
-      id="article-content"
-      class="prose prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-base-content prose-p:text-base-content/80 prose-p:leading-relaxed prose-a:text-accent hover:prose-a:underline prose-code:font-mono prose-code:text-accent prose-pre:border prose-pre:border-base-300 prose-pre:bg-base-200 max-w-none"
-    >
+    <div id="article-content" class="prose max-w-none">
       <Content />
     </div>
 
@@ -304,7 +295,7 @@ const breadcrumbs = [
           </p>
         </div>
 
-        <div class="join join-vertical border-base-300 bg-base-200/50 w-full overflow-hidden rounded-xl border">
+        <div class="join join-vertical border-base-300 bg-base-200/50 w-full overflow-hidden rounded-md border">
           {data.faqs.map((faq, index) => (
             <div
               id={`faq-q${index + 1}`}
@@ -337,7 +328,7 @@ const breadcrumbs = [
         {prevPost ? (
           <a
             href={`/blog/${prevPost.id}/`}
-            class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-left transition-all duration-200 hover:-translate-y-0.5 active:scale-99"
+            class="group border-base-300 bg-base-200 hover:border-neutral flex flex-col justify-between rounded-md border p-5 text-left transition-all duration-200"
             rel="prev"
           >
             <span class="text-base-content/60 flex items-center gap-1 font-mono text-xs font-medium tracking-wider uppercase">
@@ -354,7 +345,7 @@ const breadcrumbs = [
         {nextPost && (
           <a
             href={`/blog/${nextPost.id}/`}
-            class="group border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 text-right transition-all duration-200 hover:-translate-y-0.5 active:scale-99 sm:col-start-2"
+            class="group border-base-300 bg-base-200 hover:border-neutral flex flex-col justify-between rounded-md border p-5 text-right transition-all duration-200 sm:col-start-2"
             rel="next"
           >
             <span class="text-base-content/60 flex items-center justify-end gap-1 font-mono text-xs font-medium tracking-wider uppercase">
@@ -370,7 +361,7 @@ const breadcrumbs = [
 
     <!-- Article Footer / Author Box -->
     <footer class="border-base-300 mt-12 border-t pt-8">
-      <div class="border-base-300 bg-base-200 flex flex-col justify-between gap-6 rounded-xl border p-6 sm:flex-row sm:items-center sm:p-7">
+      <div class="border-base-300 bg-base-200 flex flex-col justify-between gap-6 rounded-md border p-6 sm:flex-row sm:items-center sm:p-7">
         <div class="flex items-start gap-4">
           <!-- Author Avatar / Badge -->
           <div class="bg-base-300 border-base-300/80 text-accent flex h-12 w-12 shrink-0 items-center justify-center rounded-full border font-mono text-base font-bold shadow-xs">
@@ -423,7 +414,7 @@ const breadcrumbs = [
         <Fragment set:html="<!--email_off-->" />
         <a
           href={SITE.social.email}
-          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 flex shrink-0 items-center gap-1.5 self-start rounded-md font-mono text-xs transition-all active:scale-99 sm:self-auto"
+          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 gap-1.5 self-start rounded-md font-mono text-xs sm:self-auto"
         >
           <Icon name="ph:paper-plane-tilt-bold" class="h-3.5 w-3.5" />
           Say Hello

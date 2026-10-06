@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import SectionRail from '@components/common/SectionRail.astro';
+import SectionIntro from '@components/common/SectionIntro.astro';
+import CopyEmailButton from '@components/common/CopyEmailButton.astro';
 import ProjectCard from '@components/portfolio/ProjectCard.astro';
 import ArticleCard from '@components/portfolio/ArticleCard.astro';
-import NoteCard from '@components/portfolio/NoteCard.astro';
 import ExperienceTimeline from '@components/portfolio/ExperienceTimeline.astro';
-import GitHubActivityWidget from '@components/portfolio/GitHubActivityWidget.astro';
+import StackToolbox from '@components/portfolio/StackToolbox.astro';
 import { getCollection, getEntry } from 'astro:content';
 import { SITE } from '@const/site.ts';
 import { homeCopy } from '@copy/home.ts';
@@ -13,21 +15,18 @@ import { Image } from 'astro:assets';
 import sahilHeroImage from '@assets/images/sahil-langoo-portrait.webp';
 
 const projects = await getCollection('projects');
+const snapshotFacts = homeCopy.snapshot.facts.map((fact) =>
+  fact.label === 'Projects' ? { ...fact, value: String(projects.length) } : fact
+);
 const featuredProjects = projects
-  .filter((p) => p.data.featured)
-  .sort((a, b) => a.data.order - b.data.order)
-  .slice(0, 3);
+  .filter((project) => project.data.featured)
+  .sort((a, b) => a.data.order - b.data.order);
 
 const articles = await getCollection('blog');
 const recentArticles = articles
-  .filter((a) => !a.data.draft)
+  .filter((article) => !article.data.draft)
   .sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime())
-  .slice(0, 2);
-
-const notes = await getCollection('notes');
-const recentNotes = notes
-  .sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime())
-  .slice(0, 2);
+  .slice(0, 4);
 
 const experiences = await getCollection('experience');
 const siteData = await getEntry('site', 'profile');
@@ -62,6 +61,11 @@ const homeSchema = {
     '@id': `${SITE.url}/#person`,
   },
 };
+
+const socials = [
+  { label: 'GitHub', href: SITE.social.github, icon: 'ph:github-logo-bold' },
+  { label: 'LinkedIn', href: SITE.social.linkedin, icon: 'ph:linkedin-logo-bold' },
+];
 ---
 
 <BaseLayout
@@ -71,227 +75,351 @@ const homeSchema = {
   image={homeCopy.seo.image}
   structuredData={homeSchema}
 >
-  <div class="mx-auto max-w-6xl space-y-20 px-4 py-8 sm:space-y-28 sm:px-6 sm:py-12">
-    <!-- Hero Section -->
-    <section class="hero justify-start pt-4 sm:pt-8">
-      <div class="hero-content w-full max-w-none flex-col items-center justify-between gap-10 p-0 lg:flex-row lg:items-start lg:gap-14">
-        <div class="max-w-2xl space-y-6">
-          <div class="border-base-300 bg-base-200/80 text-base-content/80 inline-flex items-center gap-2 rounded-full border px-3 py-1 font-mono text-xs">
-            <span class="bg-accent h-1.5 w-1.5 animate-pulse rounded-full"></span>
-            <span>{homeCopy.hero.badge}</span>
-          </div>
+  <SectionRail />
 
-          <h1 class="text-base-content text-2xl leading-tight font-extrabold tracking-tight sm:text-3xl lg:text-4xl">
-            {homeCopy.hero.headline}
-          </h1>
-
-          <p
-            class="text-base-content/75 text-base leading-relaxed sm:text-lg"
-            set:html={`I am <strong class="text-base-content font-semibold">${SITE.name}</strong>, based in ${homeCopy.hero.locationText}. I specialize in architecting ultra-fast static web platforms, distributed API proxies, and type-safe systems at <strong class="text-base-content font-medium">Eresolution Consultancy Services</strong>, <a href="https://github.com/SquadCoders" target="_blank" rel="noopener noreferrer" class="text-accent font-semibold hover:underline">@SquadCoders</a>, and in open source.`}
-          />
-
-          <div class="flex flex-wrap items-center gap-3 pt-2">
-            {homeCopy.hero.ctas.map((cta) => (
-              <a
-                href={cta.href}
-                class:list={
-                  cta.variant === 'primary'
-                    ? 'btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-5 font-mono text-xs tracking-wider uppercase transition-all active:scale-99'
-                    : cta.variant === 'outline'
-                      ? 'btn btn-outline border-base-300 hover:bg-base-200 hover:text-base-content flex items-center gap-2 rounded-md px-5 font-mono text-xs tracking-wider uppercase transition-all active:scale-99'
-                      : 'btn btn-ghost hover:bg-base-200/60 text-base-content/80 flex items-center gap-2 rounded-md px-4 font-mono text-xs tracking-wider uppercase transition-all active:scale-99'
-                }
-              >
-                {cta.icon && <Icon name={cta.icon} class="h-3.5 w-3.5" />}
-                {cta.label}
-              </a>
-            ))}
-          </div>
+  <section
+    id="top"
+    aria-labelledby="hero-title"
+    class="page-container pt-12 pb-16 md:pt-20 md:pb-24 lg:pt-24"
+  >
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-10">
+      <div class="lg:col-span-7 xl:col-span-8">
+        <h1 id="hero-title" class="text-display animate-rise italic text-base-content">
+          {homeCopy.hero.name}
+        </h1>
+        <p class="text-lead measure-tight delay-80 mt-7 animate-rise text-base-content">
+          {homeCopy.hero.leadBefore}
+          <em class="text-lead-em">{homeCopy.hero.leadEmphasis}</em>
+          {homeCopy.hero.leadAfter}
+          <span class="text-secondary">{homeCopy.hero.leadMuted}</span>
+        </p>
+        <p class="text-ui measure delay-120 mt-5 animate-rise text-secondary">
+          {homeCopy.hero.bioBefore}
+          <span class="text-base-content">{homeCopy.hero.bioCompany}</span>
+          {homeCopy.hero.bioMiddle}
+          <a href={SITE.social.squadcoders} class="text-base-content hover:text-accent">
+            {homeCopy.hero.bioStudio}
+          </a>
+          {homeCopy.hero.bioAfter}
+        </p>
+        <div class="delay-160 mt-10 flex animate-rise flex-wrap items-center gap-3">
+          <a
+            href="/resume/"
+            class="link-arrow inline-flex h-11 items-center rounded-md bg-base-content px-5 text-ui font-medium text-base-100 transition-opacity duration-150 hover:opacity-90 active:scale-98"
+          >
+            {homeCopy.hero.resumeLabel}
+            <Icon name="ph:arrow-up-right-bold" class="size-4" />
+          </a>
+          <a
+            href="#work"
+            class="group inline-flex h-11 items-center gap-2 rounded-md border border-neutral bg-transparent px-5 text-ui font-medium text-base-content transition-colors duration-150 hover:bg-base-200 active:scale-98"
+          >
+            {homeCopy.hero.workLabel}
+            <Icon
+              name="ph:arrow-down-bold"
+              class="size-4 transition-transform group-hover:translate-y-0.5"
+            />
+          </a>
         </div>
-
-        <!-- Hero Portrait Image Presentation -->
-        <div class="relative shrink-0 self-center lg:self-start">
-          <div class="group border-base-300 bg-base-200 relative overflow-hidden rounded-2xl border p-2 transition-all duration-200 hover:-translate-y-0.5 sm:p-2.5">
-            <div class="bg-base-300 relative aspect-4/5 w-60 overflow-hidden rounded-xl sm:w-64 md:w-72 lg:w-80">
+        <ul class="delay-240 mt-7 flex animate-fade flex-wrap items-center gap-x-5 gap-y-2 text-sm text-secondary">
+          {socials.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="link-arrow hover:text-base-content"
+              >
+                <Icon name={link.icon} class="size-4" aria-hidden="true" />
+                {link.label}
+                <Icon name="ph:arrow-up-right-bold" class="size-3.5" />
+              </a>
+            </li>
+          ))}
+          <li>
+            <a href={SITE.social.email} class="link-arrow hover:text-base-content">
+              <Icon name="ph:envelope-simple-bold" class="size-4" aria-hidden="true" />
+              {SITE.email}
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="self-center lg:col-span-5 lg:flex lg:justify-end xl:col-span-4">
+        <figure class="portrait-frame group delay-160 flex animate-reveal flex-col">
+          <div class="flex flex-1 flex-col border border-base-300 bg-elevated p-1.5 sm:p-2">
+            <div class="relative aspect-4/5 overflow-hidden bg-base-200">
               <Image
                 src={sahilHeroImage}
                 alt={homeCopy.hero.imageAlt}
                 width={640}
                 height={800}
+                densities={[1, 1.5, 2]}
                 quality={90}
                 loading="eager"
                 fetchpriority="high"
-                class="h-full w-full object-cover object-center grayscale transition-all duration-500 ease-out group-hover:scale-105 group-hover:grayscale-0 hover:grayscale-0"
+                class="absolute inset-0 h-full w-full object-cover object-top grayscale transition-[filter] duration-300 group-hover:grayscale-0"
               />
-              <div class="from-base-100/40 pointer-events-none absolute inset-0 bg-linear-to-t via-transparent to-transparent opacity-60"></div>
             </div>
-
-            <div class="text-base-content/70 mt-2.5 flex flex-wrap items-center justify-between gap-2 px-1 font-mono text-xs">
-              <span class="inline-flex items-center gap-1.5">
-                <span class="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-success"></span>
-                <span>{homeCopy.hero.statusText}</span>
-              </span>
-              <span class="text-base-content/50">{homeCopy.hero.locationText}</span>
-            </div>
+            <figcaption class="font-display py-2 text-center text-sm italic text-base-content">
+              {homeCopy.hero.imageQuote}
+            </figcaption>
           </div>
-        </div>
+        </figure>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Selected Projects Section -->
-    <section class="space-y-8">
-      <div class="border-base-300 flex items-end justify-between border-b pb-4">
-        <div>
-          <span class="text-accent font-mono text-xs font-semibold tracking-widest uppercase">
-            {homeCopy.sections.selectedWork.eyebrow}
-          </span>
-          <h2 class="text-base-content mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
-            {homeCopy.sections.selectedWork.title}
-          </h2>
-        </div>
+  <section aria-label="Career snapshot" class="border-y border-base-300">
+    <div
+      data-reveal="hidden"
+      class="page-container grid gap-y-10 py-10 lg:grid-cols-12 lg:items-end lg:gap-x-10 lg:py-14"
+    >
+      <div class="flex items-end gap-4 sm:gap-5 lg:col-span-5">
         <a
-          href="/projects/"
-          class="text-base-content/70 hover:text-accent hidden items-center gap-1.5 font-mono text-xs font-medium transition-colors sm:inline-flex"
+          href={homeCopy.snapshot.href}
+          class="font-display text-[clamp(3.25rem,10vw,6rem)] leading-[0.78] font-bold tracking-tight tabular-nums whitespace-nowrap text-base-content transition-colors duration-150 hover:text-accent"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          {homeCopy.sections.selectedWork.viewAllText}
-          <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
+          {homeCopy.snapshot.value}
         </a>
+        <div class="pb-1">
+          <p class="label-caps">{homeCopy.snapshot.label}</p>
+          <p class="text-ui measure-note mt-1">{homeCopy.snapshot.note}</p>
+        </div>
       </div>
-
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-        {featuredProjects.map((project, idx) => (
-          <ProjectCard project={project} featured={idx === 0} headingLevel="h3" />
+      <dl class="grid grid-cols-3 gap-x-6 gap-y-8 lg:col-span-7 lg:border-l lg:border-base-300 lg:pl-10">
+        {snapshotFacts.map((fact) => (
+          <div class="flex flex-col">
+            <dt class="label-caps">{fact.label}</dt>
+            <dd class="mt-2">
+              {fact.href ? (
+                <a
+                  href={fact.href}
+                  class="link-underline block font-display text-lg leading-tight font-bold tracking-tight hover:text-accent"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {fact.value}
+                </a>
+              ) : (
+                <span class="block font-display text-lg leading-tight font-bold tracking-tight">
+                  {fact.value}
+                </span>
+              )}
+              {fact.note && (
+                <span class="mt-1 block text-sm leading-snug text-secondary">{fact.note}</span>
+              )}
+            </dd>
+          </div>
         ))}
-      </div>
+      </dl>
+    </div>
+  </section>
 
-      <div class="pt-2 text-center sm:hidden">
-        <a
-          href="/projects/"
-          class="btn btn-sm btn-outline border-base-300 flex w-full items-center justify-center gap-2 font-mono text-xs font-medium tracking-wider uppercase transition-all active:scale-99"
+  <section id="work" class="page-container py-20 md:py-28">
+    <div
+      data-reveal="hidden"
+      class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between"
+    >
+      <SectionIntro
+        index={homeCopy.sections.selectedWork.index}
+        title={homeCopy.sections.selectedWork.title}
+        titleId="work-title"
+        description={homeCopy.sections.selectedWork.description}
+      />
+      <a href="/projects/" class="link-arrow shrink-0 text-sm text-base-content hover:text-accent">
+        {homeCopy.sections.selectedWork.viewAllText}
+        <Icon name="ph:arrow-up-right-bold" class="size-4" />
+      </a>
+    </div>
+    <div data-reveal="hidden" class="delay-80 mt-12 border-t border-base-300">
+      {featuredProjects.map((project, index) => (
+        <ProjectCard project={project} index={index} headingLevel="h3" editorial />
+      ))}
+    </div>
+  </section>
+
+  <section id="experience" class="page-container py-20 md:py-28">
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-10">
+      <div data-reveal="hidden" class="lg:sticky lg:top-24 lg:col-span-4 lg:self-start">
+        <SectionIntro
+          index={homeCopy.sections.careerHistory.index}
+          title={homeCopy.sections.careerHistory.title}
+          titleId="experience-title"
+          description={homeCopy.sections.careerHistory.description}
         >
-          <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
-          {homeCopy.sections.selectedWork.viewAllText}
-        </a>
+          <a href="/resume/" class="link-arrow mt-6 inline-flex text-sm hover:text-accent">
+            {homeCopy.sections.careerHistory.viewAllText}
+            <Icon name="ph:arrow-up-right-bold" class="size-4" />
+          </a>
+        </SectionIntro>
       </div>
-    </section>
-
-    <!-- GitHub Commit Stream & Engineering Activity -->
-    <section class="space-y-4">
-      <GitHubActivityWidget limit={5} />
-    </section>
-
-    <!-- Experience & Career Summary -->
-    <section class="space-y-8">
-      <div class="border-base-300 flex items-end justify-between border-b pb-4">
-        <div>
-          <span class="text-accent font-mono text-xs font-semibold tracking-widest uppercase">
-            {homeCopy.sections.careerHistory.eyebrow}
-          </span>
-          <h2 class="text-base-content mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
-            {homeCopy.sections.careerHistory.title}
-          </h2>
-        </div>
-        <a
-          href="/resume/"
-          class="text-base-content/70 hover:text-accent hidden items-center gap-1.5 font-mono text-xs font-medium transition-colors sm:inline-flex"
-        >
-          {homeCopy.sections.careerHistory.viewAllText}
-          <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
-        </a>
-      </div>
-
-      <div class="border-base-300 bg-base-200 rounded-xl border p-6 sm:p-8">
+      <div
+        data-reveal="hidden"
+        class="delay-80 min-w-0 lg:col-span-8 lg:border-l lg:border-base-300 lg:pl-10"
+      >
         <ExperienceTimeline experiences={experiences} />
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Recent Writing & Digital Garden Notes -->
-    <section class="grid grid-cols-1 gap-10 lg:grid-cols-2">
-      <!-- Writing Column -->
-      <div class="space-y-6">
-        <div class="border-base-300 flex items-center justify-between border-b pb-3">
-          <h2 class="text-base-content text-xl font-bold tracking-tight">
-            {homeCopy.sections.recentWriting.title}
-          </h2>
-          <a href="/blog/" class="text-accent font-mono text-xs hover:underline">
+  {principles.length > 0 && (
+    <section id="engineering" class="page-container py-20 md:py-28">
+      <div class="grid gap-12 lg:grid-cols-12 lg:gap-10">
+        <div data-reveal="hidden" class="lg:sticky lg:top-24 lg:col-span-4 lg:self-start">
+          <SectionIntro
+            index={homeCopy.sections.philosophy.index}
+            title={homeCopy.sections.philosophy.title}
+            titleId="engineering-title"
+            description={homeCopy.sections.philosophy.description}
+          />
+        </div>
+        <div data-reveal="hidden" class="delay-80 lg:col-span-8">
+          <ol class="divide-y divide-base-300">
+            {principles.map((principle, index) => (
+              <li class="grid gap-3 py-6 sm:grid-cols-12">
+                <span class="meta sm:col-span-1">{String(index + 1).padStart(2, '0')}</span>
+                <div class="sm:col-span-11">
+                  <h3 class="text-lg font-medium tracking-tight">{principle.title}</h3>
+                  <p class="measure mt-2 text-base leading-relaxed text-secondary">
+                    {principle.description}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          <StackToolbox />
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section id="writing" class="page-container py-20 md:py-28">
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-10">
+      <div data-reveal="hidden" class="lg:sticky lg:top-24 lg:col-span-4 lg:self-start">
+        <SectionIntro
+          index={homeCopy.sections.recentWriting.index}
+          title={homeCopy.sections.recentWriting.title}
+          titleId="writing-title"
+          description={homeCopy.sections.recentWriting.description}
+        >
+          <a href="/blog/" class="link-arrow mt-6 inline-flex text-sm hover:text-accent">
             {homeCopy.sections.recentWriting.viewAllText}
+            <Icon name="ph:arrow-up-right-bold" class="size-4" />
           </a>
-        </div>
-        <div class="space-y-4">
-          {recentArticles.map((post) => (
-            <ArticleCard post={post} headingLevel="h3" />
-          ))}
-        </div>
+        </SectionIntro>
       </div>
-
-      <!-- Notes Column -->
-      <div class="space-y-6">
-        <div class="border-base-300 flex items-center justify-between border-b pb-3">
-          <h2 class="text-base-content text-xl font-bold tracking-tight">
-            {homeCopy.sections.digitalGarden.title}
-          </h2>
-          <a href="/notes/" class="text-accent font-mono text-xs hover:underline">
-            {homeCopy.sections.digitalGarden.viewAllText}
-          </a>
-        </div>
-        <div class="space-y-4">
-          {recentNotes.map((note) => (
-            <NoteCard note={note} headingLevel="h3" />
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- Engineering Principles -->
-    {principles.length > 0 && (
-      <section class="space-y-8">
-        <div class="border-base-300 border-b pb-4">
-          <span class="text-accent font-mono text-xs font-semibold tracking-widest uppercase">
-            {homeCopy.sections.philosophy.eyebrow}
-          </span>
-          <h2 class="text-base-content mt-1 text-2xl font-bold tracking-tight sm:text-3xl">
-            {homeCopy.sections.philosophy.title}
-          </h2>
-        </div>
-
-        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {principles.map((p) => (
-            <div class="border-base-300 bg-base-200 hover:border-accent/40 flex flex-col justify-between rounded-xl border p-5 transition-all duration-200 hover:-translate-y-0.5 active:scale-99">
-              <div>
-                <h3 class="text-base-content font-mono text-sm font-bold">{p.title}</h3>
-                <p class="text-base-content/75 mt-2 text-xs leading-relaxed">{p.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    )}
-
-    <!-- Presence & CTA Banner -->
-    <section class="border-base-300 bg-base-200 space-y-4 rounded-xl border p-8 text-center sm:p-10">
-      <h2 class="text-base-content text-2xl font-bold tracking-tight sm:text-3xl">
-        {homeCopy.sections.ctaBanner.title}
-      </h2>
-      <p class="text-base-content/70 mx-auto max-w-xl text-sm">
-        {homeCopy.sections.ctaBanner.description}
-      </p>
-      <div class="flex flex-wrap items-center justify-center gap-4 pt-3">
-        {homeCopy.sections.ctaBanner.ctas.map((cta) => (
-          <a
-            href={cta.href}
-            target={cta.external ? '_blank' : undefined}
-            rel={cta.external ? 'noopener noreferrer' : undefined}
-            class:list={
-              cta.variant === 'primary'
-                ? 'btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 flex items-center gap-2 rounded-md border-0 px-6 font-mono text-xs tracking-wider uppercase transition-all active:scale-99'
-                : 'btn btn-outline border-base-300 hover:bg-base-200 hover:text-base-content flex items-center gap-2 rounded-md px-6 font-mono text-xs tracking-wider uppercase transition-all active:scale-99'
-            }
-          >
-            {cta.icon && <Icon name={cta.icon} class="h-3.5 w-3.5" />}
-            {cta.label}
-          </a>
+      <div data-reveal="hidden" class="delay-80 lg:col-span-8">
+        {recentArticles.map((post) => (
+          <ArticleCard post={post} headingLevel="h3" />
         ))}
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
+
+  <section id="about" class="page-container py-20 md:py-28">
+    <div data-reveal="hidden" class="border-t border-base-300 pt-10">
+      <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <SectionIntro
+          index={homeCopy.sections.about.index}
+          title={homeCopy.sections.about.title}
+          titleId="about-title"
+        />
+        <a href="/about/" class="link-arrow shrink-0 text-sm text-base-content hover:text-accent">
+          Full about
+          <Icon name="ph:arrow-up-right-bold" class="size-4" />
+        </a>
+      </div>
+      <p class="text-pull measure-tight mt-10 max-w-3xl text-base-content">
+        {homeCopy.sections.about.pull}
+      </p>
+      <div class="measure mt-6 space-y-4 text-base leading-relaxed text-secondary">
+        {homeCopy.sections.about.paragraphs.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+      </div>
+      <ul class="mt-10 flex flex-col border-t border-base-300 sm:flex-row">
+        {homeCopy.sections.about.facts.map((fact) => (
+          <li class="group/fact border-b border-base-300 sm:flex-1 sm:border-b-0 sm:border-r sm:last:border-r-0">
+            <a
+              href={fact.href}
+              class="group flex h-full items-start gap-3 py-5 transition-colors duration-200 hover:text-accent sm:px-6 sm:group-first/fact:pl-0"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {fact.icon && (
+                <Icon
+                  name={fact.icon}
+                  class="mt-0.5 size-4 shrink-0 text-secondary"
+                  aria-hidden="true"
+                />
+              )}
+              <span>
+                <span class="label-caps block">{fact.label}</span>
+                <span class="mt-1 block text-base text-base-content group-hover:text-accent">
+                  {fact.value}
+                </span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact" class="border-t border-base-300">
+    <div class="page-container grid gap-16 py-24 md:py-32 lg:grid-cols-12 lg:gap-10">
+      <div data-reveal="hidden" class="lg:col-span-7">
+        <h2 class="text-display-sub measure-tight text-base-content">
+          {homeCopy.sections.contact.title}
+        </h2>
+        <p class="measure mt-6 text-base leading-relaxed text-secondary">
+          {homeCopy.sections.contact.description}
+        </p>
+        <div class="mt-10 flex flex-wrap items-center gap-x-4 gap-y-3">
+          <a
+            href={`mailto:${homeCopy.sections.contact.email}`}
+            class="font-display text-2xl tracking-tight text-base-content transition-colors duration-150 hover:text-accent sm:text-3xl"
+          >
+            {homeCopy.sections.contact.email}
+          </a>
+          <CopyEmailButton email={homeCopy.sections.contact.email} />
+        </div>
+        <div class="mt-8 flex flex-wrap gap-3">
+          {homeCopy.sections.contact.ctas.map((cta) => (
+            <a
+              href={cta.href}
+              target={cta.external ? '_blank' : undefined}
+              rel={cta.external ? 'noopener noreferrer' : undefined}
+              class:list={
+                cta.variant === 'primary'
+                  ? 'inline-flex h-11 items-center gap-2 rounded-md bg-base-content px-5 text-ui font-medium text-base-100 transition-opacity duration-150 hover:opacity-90 active:scale-98'
+                  : 'inline-flex h-11 items-center gap-2 rounded-md border border-neutral bg-transparent px-5 text-ui font-medium text-base-content transition-colors duration-150 hover:bg-base-200 active:scale-98'
+              }
+            >
+              {cta.label}
+              {cta.icon && <Icon name={cta.icon} class="size-4" aria-hidden="true" />}
+            </a>
+          ))}
+        </div>
+      </div>
+      <div
+        data-reveal="hidden"
+        class="delay-80 lg:col-span-5 lg:border-l lg:border-base-300 lg:pl-10"
+      >
+        <p class="label-caps">{homeCopy.sections.contact.openToLabel}</p>
+        <ol class="mt-4 border-t border-base-300">
+          {homeCopy.sections.contact.openTo.map((item, index) => (
+            <li class="flex items-baseline gap-4 border-b border-base-300 py-4">
+              <span class="meta text-accent tabular-nums" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <span class="text-base text-base-content">{item}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

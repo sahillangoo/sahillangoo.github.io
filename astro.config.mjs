@@ -4,18 +4,29 @@ import icon from 'astro-icon';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import astroSiteQualityEnforcer from './src/plugins/astro-site-quality.ts';
-import { NON_INDEXABLE_PATHS } from './src/const/site.ts';
+import { NON_INDEXABLE_PATHS, SITE } from './src/const/site.ts';
 import { createSitemapSerializer } from './src/utils/sitemap.ts';
 
 const BUILD_TIME = new Date().toISOString();
 const BUILD_DATE = BUILD_TIME.split('T')[0];
 
+// Pre-compiled sitemap filtering constants
+const SITEMAP_PAGINATION_REGEX = /\/blog\/\d+\/?$/;
+const NON_INDEXABLE_SET = new Set([
+  ...NON_INDEXABLE_PATHS,
+  ...NON_INDEXABLE_PATHS.map((p) => p.replace(/\/$/, '')),
+]);
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://sahillangoo.in',
+  site: SITE.url,
   trailingSlash: 'always',
   output: 'static',
   compressHTML: true,
+  build: {
+    format: 'directory',
+    inlineStylesheets: 'auto',
+  },
   redirects: {
     '/contact/': '/links/',
   },
@@ -25,6 +36,15 @@ export default defineConfig({
   },
   devToolbar: {
     enabled: false,
+  },
+  image: {
+    service: {
+      entrypoint: 'astro/assets/services/sharp',
+      config: {
+        limitInputPixels: true,
+      },
+    },
+    domains: ['sahillangoo.in'],
   },
   experimental: {
     clientPrerender: true,
@@ -40,31 +60,53 @@ export default defineConfig({
       __BUILD_TIME__: JSON.stringify(BUILD_TIME),
       __BUILD_DATE__: JSON.stringify(BUILD_DATE),
     },
+    build: {
+      target: 'es2023',
+      cssCodeSplit: true,
+    },
     optimizeDeps: {
       include: ['motion'],
       exclude: ['@astrojs/sitemap', 'sharp'],
     },
+    ssr: {
+      external: ['sharp'],
+    },
+    server: {
+      watch: {
+        ignored: ['**/.git/**', '**/dist/**'],
+      },
+    },
   },
   fonts: [
     {
-      name: 'Plus Jakarta Sans',
+      name: 'Instrument Serif',
+      provider: fontProviders.google(),
+      cssVariable: '--ff-display',
+      display: 'swap',
+      styles: ['normal', 'italic'],
+      weights: [400],
+      subsets: ['latin'],
+      fallbacks: ['ui-serif', 'Georgia', 'serif'],
+    },
+    {
+      name: 'Geist',
       provider: fontProviders.google(),
       cssVariable: '--ff-sans',
       display: 'swap',
       styles: ['normal'],
-      weights: [400, 500, 600, 700, 800],
+      weights: [400, 500, 600, 700],
       subsets: ['latin'],
-      fallbacks: ['sans-serif'],
+      fallbacks: ['Arial', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
     },
     {
-      name: 'JetBrains Mono',
+      name: 'Geist Mono',
       provider: fontProviders.google(),
       cssVariable: '--ff-mono',
       display: 'swap',
       styles: ['normal'],
       weights: [400, 500, 600, 700],
       subsets: ['latin'],
-      fallbacks: ['monospace'],
+      fallbacks: ['Courier New', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
     },
   ],
   integrations: [
@@ -75,17 +117,17 @@ export default defineConfig({
       },
     }),
     sitemap({
-      filter: (page) =>
-        !NON_INDEXABLE_PATHS.some(
-          (p) =>
-            page === p ||
-            page === p.slice(0, -1) ||
-            page.endsWith(p) ||
-            page.endsWith(p.slice(0, -1)) ||
-            page.includes('/blog/tag/') ||
-            page.match(/\/blog\/\d+\/?$/) ||
-            page.match(/\/notes\/\d+\/?$/)
-        ),
+      filter: (page) => {
+        try {
+          const path = new URL(page).pathname;
+          if (NON_INDEXABLE_SET.has(path) || path.includes('/blog/tag/')) {
+            return false;
+          }
+          return !SITEMAP_PAGINATION_REGEX.test(path);
+        } catch {
+          return false;
+        }
+      },
       serialize: createSitemapSerializer(BUILD_DATE),
     }),
     astroSiteQualityEnforcer(),

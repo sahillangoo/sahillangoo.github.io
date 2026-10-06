@@ -5,7 +5,7 @@ import { Icon } from 'astro-icon/components';
 import { cn } from '@utils/cn.ts';
 
 const projects = await getCollection('projects');
-const sortedProjects = projects.sort((a, b) => a.data.order - b.data.order);
+const sortedProjects = projects.toSorted((a, b) => a.data.order - b.data.order);
 
 const categories = [
   { id: 'all', label: 'All Projects' },
@@ -23,13 +23,13 @@ const categories = [
       <Icon name="ph:funnel-bold" class="h-3.5 w-3.5" />
       Filter:
     </span>
-    <div class="flex flex-wrap items-center gap-2">
+    <div class="flex items-center gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible">
       {categories.map((cat, idx) => (
         <button
           type="button"
           data-filter={cat.id}
           class:list={cn(
-            'filter-btn rounded-md px-3 py-1.5 font-mono text-xs transition-colors active:scale-99',
+            'filter-btn rounded-md px-3 py-2 sm:py-1.5 min-h-10 shrink-0 font-mono text-xs transition-colors',
             idx === 0
               ? 'bg-base-content text-base-100 active-filter hover:text-base-100 hover:bg-base-content/90 font-semibold'
               : 'bg-base-200 text-base-content/75 hover:bg-base-300 hover:text-base-content'
@@ -42,7 +42,7 @@ const categories = [
   </div>
 
   <!-- Projects Grid -->
-  <div class="grid grid-cols-1 gap-6 md:grid-cols-2" id="projects-grid">
+  <div id="projects-grid">
     {sortedProjects.map((project) => (
       <div class="project-item" data-category={project.data.category}>
         <ProjectCard project={project} />
@@ -59,67 +59,55 @@ const categories = [
   function setupProjectFilter() {
     const root = document.getElementById('project-filter-root');
     if (!root) return;
-    if (root.dataset.bound === 'true') return;
-    root.dataset.bound = 'true';
+
+    const lifecycleAbort = new AbortController();
+    const { signal } = lifecycleAbort;
 
     const filterBtns = root.querySelectorAll<HTMLButtonElement>('.filter-btn');
     const items = root.querySelectorAll<HTMLElement>('.project-item');
     const emptyMsg = document.getElementById('no-projects-msg');
 
-    filterBtns.forEach((btn) => {
-      btn.addEventListener('click', () => {
+    root.addEventListener(
+      'click',
+      (e) => {
+        const btn = (e.target as HTMLElement | null)?.closest<HTMLButtonElement>('.filter-btn');
+        if (!btn || !root.contains(btn)) return;
+
         const filter = btn.getAttribute('data-filter');
 
-        // Update button styles
+        // Update button active state
         filterBtns.forEach((b) => {
-          b.classList.remove(
-            'bg-base-content',
-            'text-base-100',
-            'font-semibold',
-            'active-filter',
-            'hover:text-base-100',
-            'hover:bg-base-content/90'
-          );
-          b.classList.add(
-            'bg-base-200',
-            'text-base-content/75',
-            'hover:bg-base-300',
-            'hover:text-base-content'
-          );
+          const isActive = b === btn;
+          b.classList.toggle('bg-base-content', isActive);
+          b.classList.toggle('text-base-100', isActive);
+          b.classList.toggle('font-semibold', isActive);
+          b.classList.toggle('active-filter', isActive);
+          b.classList.toggle('hover:text-base-100', isActive);
+          b.classList.toggle('hover:bg-base-content/90', isActive);
+
+          b.classList.toggle('bg-base-200', !isActive);
+          b.classList.toggle('text-base-content/75', !isActive);
+          b.classList.toggle('hover:bg-base-300', !isActive);
+          b.classList.toggle('hover:text-base-content', !isActive);
         });
 
-        btn.classList.add(
-          'bg-base-content',
-          'text-base-100',
-          'font-semibold',
-          'active-filter',
-          'hover:text-base-100',
-          'hover:bg-base-content/90'
-        );
-        btn.classList.remove(
-          'bg-base-200',
-          'text-base-content/75',
-          'hover:bg-base-300',
-          'hover:text-base-content'
-        );
-
-        // Filter items
+        // Filter items using native hidden attribute
         let visibleCount = 0;
         items.forEach((item) => {
           const category = item.getAttribute('data-category');
-          if (filter === 'all' || category === filter) {
-            item.style.display = 'block';
-            visibleCount++;
-          } else {
-            item.style.display = 'none';
-          }
+          const isMatch = filter === 'all' || category === filter;
+          item.hidden = !isMatch;
+          if (isMatch) visibleCount++;
         });
 
         if (emptyMsg) {
           emptyMsg.classList.toggle('hidden', visibleCount > 0);
         }
-      });
-    });
+      },
+      { signal }
+    );
+
+    document.addEventListener('astro:before-swap', () => lifecycleAbort.abort(), { once: true });
   }
 
   document.addEventListener('astro:page-load', setupProjectFilter);

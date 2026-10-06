@@ -1,0 +1,69 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  email: string;
+}
+
+const { email } = Astro.props;
+---
+
+<button
+  type="button"
+  data-copy-email={email}
+  class="group inline-flex h-8 items-center gap-1.5 rounded-md border border-base-300 px-2.5 font-mono text-xs text-secondary transition-all hover:border-neutral hover:text-base-content active:scale-98"
+>
+  <span class="copy-icon flex items-center">
+    <Icon name="ph:copy-bold" class="icon-copy size-3.5" aria-hidden="true" />
+    <Icon name="ph:check-bold" class="icon-check hidden size-3.5 text-accent" aria-hidden="true" />
+  </span>
+  <span data-copy-label aria-live="polite">
+    Copy
+  </span>
+</button>
+
+<script>
+  let isBound = false;
+  const emailCopyTimers = new WeakMap<HTMLButtonElement, number>();
+
+  if (!isBound) {
+    isBound = true;
+
+    document.addEventListener('click', async (event) => {
+      const button = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>(
+        '[data-copy-email]'
+      );
+      if (!button) return;
+
+      const address = button.dataset.copyEmail;
+      const label = button.querySelector('[data-copy-label]');
+      const iconCopy = button.querySelector('.icon-copy');
+      const iconCheck = button.querySelector('.icon-check');
+      if (!address || !label) return;
+
+      const existingTimer = emailCopyTimers.get(button);
+      if (existingTimer !== undefined) {
+        window.clearTimeout(existingTimer);
+        emailCopyTimers.delete(button);
+      }
+
+      try {
+        await navigator.clipboard.writeText(address);
+        label.textContent = 'Copied';
+        iconCopy?.classList.add('hidden');
+        iconCheck?.classList.remove('hidden');
+      } catch {
+        label.textContent = 'Copy failed';
+      }
+
+      const timerId = window.setTimeout(() => {
+        label.textContent = 'Copy';
+        iconCopy?.classList.remove('hidden');
+        iconCheck?.classList.add('hidden');
+        emailCopyTimers.delete(button);
+      }, 2000);
+
+      emailCopyTimers.set(button, timerId);
+    });
+  }
+</script>

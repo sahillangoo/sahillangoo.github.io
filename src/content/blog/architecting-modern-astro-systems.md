@@ -153,5 +153,4 @@ export function astroSiteQualityEnforcer(): AstroIntegration {
 
 - In-Depth Guide: [Type-Safe Content Pipelines with Zod](/blog/type-safe-content-pipelines/)
 - Playbook: [Hosting Astro View Transitions on Cloudflare](/blog/hosting-astro-view-transitions-cloudflare-playbook/)
-- Digital Garden Note: [Eliminating Layout Shifts in Astro View Transitions](/notes/astro-view-transitions-layout-shift/)
 - Production Template: [Astro Daisy Starter Template](/projects/template-astro-daisy/)

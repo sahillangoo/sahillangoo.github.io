@@ -22,14 +22,30 @@ interface SitemapEntry {
   priority?: number;
 }
 
-function getAllFiles(dirPath: string, files: string[] = []): string[] {
-  if (!fs.existsSync(dirPath)) return files;
-  for (const file of fs.readdirSync(dirPath)) {
-    const full = path.join(dirPath, file);
-    if (fs.statSync(full).isDirectory()) getAllFiles(full, files);
-    else files.push(full);
+function getAllFiles(dirPath: string): string[] {
+  if (!fs.existsSync(dirPath)) return [];
+  try {
+    return fs
+      .readdirSync(dirPath, { withFileTypes: true, recursive: true })
+      .filter((dirent) => dirent.isFile())
+      .map((dirent) =>
+        path.join(
+          dirent.parentPath || (dirent as unknown as { path?: string }).path || dirPath,
+          dirent.name
+        )
+      );
+  } catch {
+    const files: string[] = [];
+    for (const file of fs.readdirSync(dirPath)) {
+      const full = path.join(dirPath, file);
+      if (fs.statSync(full).isDirectory()) {
+        files.push(...getAllFiles(full));
+      } else {
+        files.push(full);
+      }
+    }
+    return files;
   }
-  return files;
 }
 
 function sortAndFormatSitemap(xmlContent: string): {

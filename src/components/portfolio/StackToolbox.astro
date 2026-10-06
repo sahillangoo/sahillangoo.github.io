@@ -1,0 +1,88 @@
+---
+interface StackGroup {
+  label: string;
+  items: string[];
+}
+
+const stackGroups: StackGroup[] = [
+  { label: 'Languages', items: ['TypeScript', 'Go', 'Python', 'PHP', 'SQL'] },
+  { label: 'Frontend', items: ['React', 'Next.js', 'Astro', 'Tailwind CSS', 'daisyUI'] },
+  {
+    label: 'Backend & edge',
+    items: ['Node.js', 'Bun', 'Hono', 'Chi', 'Huma', 'Cloudflare Workers'],
+  },
+  { label: 'Data', items: ['PostgreSQL', 'MySQL', 'SQLite / D1', 'Redis', 'Cloudflare KV & R2'] },
+  { label: 'Quality & ops', items: ['Playwright', 'Zod', 'Sentry', 'Docker', 'Git / GitHub CLI'] },
+  {
+    label: 'Search & analytics',
+    items: ['Google Search Console', 'GA4 & GTM', 'Microsoft Clarity', 'Schema.org'],
+  },
+];
+
+const VISIBLE_GROUPS = 3;
+const visible = stackGroups.slice(0, VISIBLE_GROUPS);
+const extra = stackGroups.slice(VISIBLE_GROUPS);
+---
+
+<div class="mt-16 border-t border-base-300 pt-8">
+  <div class="flex flex-wrap items-baseline justify-between gap-2 sm:gap-4">
+    <h3 class="text-xl font-medium tracking-tight text-base-content">Toolbox</h3>
+    <p class="meta">daily tools, grouped by layer</p>
+  </div>
+
+  <dl class="mt-5 divide-y divide-base-300 border-t border-base-300">
+    {visible.map((group) => (
+      <div class="grid gap-1 py-3.5 sm:grid-cols-12 sm:gap-6">
+        <dt class="label-caps pt-1 sm:col-span-3">{group.label}</dt>
+        <dd class="text-ui leading-relaxed text-base-content sm:col-span-9">
+          {group.items.map((item, i) => (
+            <>
+              {i > 0 && (
+                <span aria-hidden="true" class="mx-2 text-neutral">
+                  ·
+                </span>
+              )}
+              <span class="whitespace-nowrap">{item}</span>
+            </>
+          ))}
+        </dd>
+      </div>
+    ))}
+  </dl>
+
+  {extra.length > 0 && (
+    <details class="group border-t border-base-300">
+      <summary class="flex min-h-11 cursor-pointer list-none items-center gap-2.5 py-3 font-mono text-xs text-secondary transition-colors hover:text-base-content [&::-webkit-details-marker]:hidden">
+        <span
+          aria-hidden="true"
+          class="grid size-5 place-items-center rounded border border-base-300 text-xs transition-transform duration-200 group-open:rotate-45 group-open:border-accent group-open:text-accent"
+        >
+          +
+        </span>
+        <span class="group-open:hidden">
+          Show {extra.length} more layers · data, quality, analytics
+        </span>
+        <span class="hidden group-open:inline">Show fewer</span>
+      </summary>
+      <dl class="divide-y divide-base-300 pb-2">
+        {extra.map((group) => (
+          <div class="grid gap-1 py-3.5 sm:grid-cols-12 sm:gap-6">
+            <dt class="label-caps pt-1 sm:col-span-3">{group.label}</dt>
+            <dd class="text-ui leading-relaxed text-base-content sm:col-span-9">
+              {group.items.map((item, i) => (
+                <>
+                  {i > 0 && (
+                    <span aria-hidden="true" class="mx-2 text-neutral">
+                      ·
+                    </span>
+                  )}
+                  <span class="whitespace-nowrap">{item}</span>
+                </>
+              ))}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </details>
+  )}
+</div>

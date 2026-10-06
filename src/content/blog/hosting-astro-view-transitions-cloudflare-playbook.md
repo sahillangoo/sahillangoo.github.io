@@ -325,7 +325,6 @@ Ensure your stylesheets and fonts are declared globally in your root layout `<he
 
 ## Related Reading & Case Studies
 
-- Digital Garden Note: [Eliminating Layout Shifts in Astro View Transitions](/notes/astro-view-transitions-layout-shift/)
 - Architecture Guide: [Architecting Modern Astro Systems](/blog/architecting-modern-astro-systems/)
 - Production Template: [Astro Daisy Starter Template](/projects/template-astro-daisy/)
 - Engineering Portfolio: [Explore Engineered Projects & Systems](/projects/)

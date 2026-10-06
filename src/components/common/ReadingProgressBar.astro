@@ -3,35 +3,70 @@
 
 <div
   id="reading-progress-bar"
-  class="bg-accent fixed top-0 right-0 left-0 z-50 h-0.5 origin-left scale-x-0 transform transition-transform duration-75"
+  class="bg-accent fixed top-0 right-0 left-0 z-50 h-0.5 origin-left scale-x-0 transition-transform duration-75"
   aria-hidden="true"
 ></div>
 
 <script>
-  type LenisWindow = Window & { lenis?: import('lenis').default };
+  let progressBarEl: HTMLElement | null = null;
+  let cachedDocHeight = 0;
+  let isTickScheduled = false;
+  let readingAbortController: AbortController | null = null;
 
-  const updateProgress = () => {
-    const bar = document.getElementById('reading-progress-bar');
-    if (!bar) return;
+  function updateReadingDimensions(): void {
+    cachedDocHeight = document.documentElement.scrollHeight - window.innerHeight;
+  }
 
-    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-    if (totalHeight <= 0) {
-      bar.style.transform = 'scaleX(0)';
+  function renderReadingProgress(): void {
+    if (!progressBarEl) return;
+
+    if (cachedDocHeight <= 0) {
+      progressBarEl.style.transform = 'scaleX(0)';
+      isTickScheduled = false;
       return;
     }
-    const win = window as unknown as LenisWindow;
-    const currentScroll = win.lenis ? win.lenis.scroll : window.scrollY;
-    const progress = Math.min(1, Math.max(0, currentScroll / totalHeight));
-    bar.style.transform = `scaleX(${progress})`;
-  };
 
-  window.addEventListener('scroll', updateProgress, { passive: true });
+    const win = window as unknown as LenisWindow;
+    const currentScroll = win.lenis?.scroll ?? window.scrollY;
+    const progress = Math.min(1, Math.max(0, currentScroll / cachedDocHeight));
+    progressBarEl.style.transform = `scaleX(${progress})`;
+    isTickScheduled = false;
+  }
+
+  function onScrollTick(): void {
+    if (!isTickScheduled) {
+      isTickScheduled = true;
+      requestAnimationFrame(renderReadingProgress);
+    }
+  }
+
+  document.addEventListener('astro:before-swap', () => {
+    readingAbortController?.abort();
+    readingAbortController = null;
+    progressBarEl = null;
+    isTickScheduled = false;
+  });
 
   document.addEventListener('astro:page-load', () => {
-    updateProgress();
-    const win = window as unknown as LenisWindow;
-    if (win.lenis) {
-      win.lenis.on('scroll', updateProgress);
-    }
+    readingAbortController?.abort();
+
+    progressBarEl = document.getElementById('reading-progress-bar');
+    if (!progressBarEl) return;
+
+    readingAbortController = new AbortController();
+    const { signal } = readingAbortController;
+
+    updateReadingDimensions();
+    renderReadingProgress();
+
+    window.addEventListener('scroll', onScrollTick, { passive: true, signal });
+    window.addEventListener(
+      'resize',
+      () => {
+        updateReadingDimensions();
+        onScrollTick();
+      },
+      { passive: true, signal }
+    );
   });
 </script>

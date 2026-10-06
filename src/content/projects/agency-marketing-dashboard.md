@@ -13,7 +13,7 @@ tags:
   - docker
   - typescript
   - tailwindcss
-featured: false
+featured: true
 year: 2026
 role: 'Lead Backend & Systems Architect'
 order: 16

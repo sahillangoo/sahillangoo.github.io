@@ -199,8 +199,8 @@ importers:
         specifier: ^1.3.26
         version: 1.3.26(@nuxt/kit@4.5.2(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))))(vue@3.5.43(typescript@6.0.3))
       motion:
-        specifier: ^13.5.1
-        version: 13.5.1
+        specifier: ^14.0.0
+        version: 14.0.0
       sharp:
         specifier: ^0.35.5
         version: 0.35.5(@types/node@26.6.4)
@@ -281,8 +281,8 @@ importers:
         specifier: ^8.71.0
         version: 8.71.0(eslint@10.12.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)(typescript@6.0.3)
       unlighthouse:
-        specifier: ^0.18.2
-        version: 0.18.2(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(vue@3.5.43(typescript@6.0.3))(yauzl@2.10.0)(zod@4.6.5)
+        specifier: ^0.19.1
+        version: 0.19.1(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(vue@3.5.43(typescript@6.0.3))(yauzl@2.10.0)(zod@4.6.5)
       wrangler:
         specifier: ^4.147.0
         version: 4.147.0(@types/node@26.6.4)
@@ -2997,17 +2997,17 @@ packages:
       webpack:
         optional: true
 
-  '@unlighthouse/cli@0.18.2':
-    resolution: {integrity: sha512-tzpc/bhH5KtsyOHyST6UDXCllgmHu9AFVlq1As6+tZ0Ckni6eTGNvKdvJzWViVREjoczjFOF/IeCUGQcu+euSg==}
+  '@unlighthouse/cli@0.19.1':
+    resolution: {integrity: sha512-oGHLr8bDfPy998tNIGbhH3pHYRP/78+OCZrWbDavf3yLjZdToelJTkpiicmUhYVz2CFkheHyJHL8DTz7oNk9HQ==}
     engines: {node: '>=22.18.0'}
     hasBin: true
 
-  '@unlighthouse/client@0.18.2':
-    resolution: {integrity: sha512-vUikcj94dYy72w/73dQbA7FjT3sE2BWnnxWLtgTcXfXs3UcgtDqbBJo1WcsnQwfxCULX2O1tFybaweBMsyHIFw==}
+  '@unlighthouse/client@0.19.1':
+    resolution: {integrity: sha512-Ghbz4BZ8hJs9qYX1jKQhJYGx/qqyasTIqZ808LEmDYTiPJlHi1BLdteqyrL1Lg4eHk0XQ6xIgPwF1YG31zQpWg==}
     engines: {node: '>=22.18.0'}
 
-  '@unlighthouse/core@0.18.2':
-    resolution: {integrity: sha512-zNXavPQP2ewxWHUAX4J7gwjJ+W+a/AV5vp8hX8rdBMqIsZbdiMbGikXmglfIPcBiLAwv/QWenNFx6zjl3SM7ZQ==}
+  '@unlighthouse/core@0.19.1':
+    resolution: {integrity: sha512-IVw/TGT7keLRGl52RCOfELZ50ngstzZRESit2nnPv30h9itB+WdNxnPDPKG9fF0JaZ5rjMPx6RrapKx6nnKWBA==}
     engines: {node: '>=22.18.0'}
     peerDependencies:
       puppeteer: '*'
@@ -3015,8 +3015,8 @@ packages:
       puppeteer:
         optional: true
 
-  '@unlighthouse/server@0.18.2':
-    resolution: {integrity: sha512-dAOI6oS4Qg7T/pOXc2yj6eOH/Lu+0NpoR0l1XsOnPTGmDH+0jsCHZ1oOxx7N+a1dcNx46J0FUK3J/SgcQsHP3g==}
+  '@unlighthouse/server@0.19.1':
+    resolution: {integrity: sha512-6bL8qQqPVEwvVKI0nZ59uLoXwY94F0Z7fqEBjW/WzvuLEaBs9TBBVyogM8+pSDDbbW+ezPLIOv0l65W+LkdVVw==}
     engines: {node: '>=22.18.0'}
 
   '@volar/kit@2.4.28':
@@ -4163,6 +4163,17 @@ packages:
       react-dom:
         optional: true
 
+  framer-motion@14.0.0:
+    resolution: {integrity: sha512-QAtHmybrDFSliyW1sexMtSQTQd+1jw2ajibEmzpuI4XdPVzQkn+dAzJMm2sW3pl9MJuSS4xN51djQ7huhlP/VA==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+
   fs-minipass@3.0.3:
     resolution: {integrity: sha512-XUBA9XClHbnJWSfBzjkm6RvPsyg3sryZt06BEQoXcF7EK/xpGaQYJgQKDJSUH5SGZ76Y7pFx1QBnXz09rU5Fbw==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
@@ -5046,8 +5057,14 @@ packages:
   motion-dom@13.5.1:
     resolution: {integrity: sha512-/7CVCD20Mz1KobktorpdgvowV0V41J7UxqE+qWS3GkSJqrRr5ft+2RloOYtEKv+wvBp3JaSFBclhxt4ja8ovHg==}
 
+  motion-dom@14.0.0:
+    resolution: {integrity: sha512-aU3ApXo1yTpeUi3JU+jbDk2TELjxPE3MbBMUP7nZHlARb6RweJK+ojmLjpuB0YsY6zhbBl1YWGo8LMsI1/Llqw==}
+
   motion-utils@13.5.0:
     resolution: {integrity: sha512-Hqe/sqjIKliPZg8sVjWAkdySDPJNIeKH+euVkDOG8ri3DUUU7ZjndmHsGqEPz2iHpiyVaV5I22iguCMHU2he+Q==}
+
+  motion-utils@14.0.0:
+    resolution: {integrity: sha512-jBsyjVxTTRZNeuvd/v+btVXr90LQkYl4HhRu9T2ARc+PMnvkmjsjRVeAg4Qm10b6TlTw+kykWI8gu/6LuvpLSQ==}
 
   motion-v@2.5.2:
     resolution: {integrity: sha512-qMt80s5nVwDkdcyCwN6ZSp9a7qzsGoE+ulwsSyH9PSmyhUTQMRUWtKTEhit/VuALuAD1zOJlyos5wBd2WL6n0A==}
@@ -5055,8 +5072,8 @@ packages:
       '@vueuse/core': '>=10.0.0'
       vue: '>=3.0.0'
 
-  motion@13.5.1:
-    resolution: {integrity: sha512-eV9SUem6KnzEa9+eT+dVBeDlhy5TTdn09YWR1WhUsKoZCJPw/n4TcYhjbxq2Gy5PTwDr//4H3r5vxkcZnNnO1w==}
+  motion@14.0.0:
+    resolution: {integrity: sha512-oGc2lkge2lkRZCP+J8/JsnYu4NFjqP1MtXirNdetn3QbvK2JqwM9A200EdT4C598KfzDhjLT12zF21xDM4Oilw==}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
@@ -6242,8 +6259,8 @@ packages:
   unist-util-visit@5.1.0:
     resolution: {integrity: sha512-m+vIdyeCOpdr/QeQCu2EzxX/ohgS8KbnPDgFni4dQsfSCtpz8UqDyY5GjRru8PDKuYn7Fq19j1CQ+nJSsGKOzg==}
 
-  unlighthouse@0.18.2:
-    resolution: {integrity: sha512-YdpKSl2Txdq+K9MxxbgJRbx497i3MjkTDyK4qWqervOTNF8npIQTBiglDESwBKfOfSVTbHLJG6R/ed0QoqbPBA==}
+  unlighthouse@0.19.1:
+    resolution: {integrity: sha512-O/32ISkGwOJaAHsOs6SYPfE1DwXPN2ncWODBuBDKtDmpmCEhhxTtKMxOr/BJOVSZOOUIjAY25vQBV/CjkbW4gA==}
     engines: {node: '>=22.18.0'}
     hasBin: true
     peerDependencies:
@@ -9291,12 +9308,12 @@ snapshots:
       - rollup
       - unloader
 
-  '@unlighthouse/cli@0.18.2(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(yauzl@2.10.0)(zod@4.6.5)':
+  '@unlighthouse/cli@0.19.1(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(yauzl@2.10.0)(zod@4.6.5)':
     dependencies:
       '@lhci/utils': 0.15.1(supports-color@10.2.2)
-      '@unlighthouse/client': 0.18.2(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(tailwindcss@4.3.3)(typescript@6.0.3)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(zod@4.6.5)
-      '@unlighthouse/core': 0.18.2(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(yauzl@2.10.0)(zod@4.6.5)
-      '@unlighthouse/server': 0.18.2(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(yauzl@2.10.0)(zod@4.6.5)
+      '@unlighthouse/client': 0.19.1(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(tailwindcss@4.3.3)(typescript@6.0.3)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(zod@4.6.5)
+      '@unlighthouse/core': 0.19.1(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(yauzl@2.10.0)(zod@4.6.5)
+      '@unlighthouse/server': 0.19.1(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(yauzl@2.10.0)(zod@4.6.5)
       cac: 7.0.0
       consola: 3.4.2
       defu: 6.1.7
@@ -9385,7 +9402,7 @@ snapshots:
       - yup
       - zod
 
-  '@unlighthouse/client@0.18.2(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(tailwindcss@4.3.3)(typescript@6.0.3)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(zod@4.6.5)':
+  '@unlighthouse/client@0.19.1(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(tailwindcss@4.3.3)(typescript@6.0.3)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(zod@4.6.5)':
     dependencies:
       '@nuxt/ui': 4.11.3(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(tailwindcss@4.3.3)(typescript@6.0.3)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(vue@3.5.43(typescript@6.0.3))(zod@4.6.5)
       '@tailwindcss/vite': 4.3.3(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
@@ -9461,11 +9478,11 @@ snapshots:
       - yup
       - zod
 
-  '@unlighthouse/core@0.18.2(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(yauzl@2.10.0)(zod@4.6.5)':
+  '@unlighthouse/core@0.19.1(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(yauzl@2.10.0)(zod@4.6.5)':
     dependencies:
       '@clack/prompts': 1.8.1
       '@puppeteer/browsers': 3.2.3(yauzl@2.10.0)
-      '@unlighthouse/client': 0.18.2(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(tailwindcss@4.3.3)(typescript@6.0.3)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(zod@4.6.5)
+      '@unlighthouse/client': 0.19.1(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(tailwindcss@4.3.3)(typescript@6.0.3)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(zod@4.6.5)
       c12: 3.3.4(magicast@0.5.5)
       chrome-launcher: 1.2.2(supports-color@10.2.2)
       consola: 3.4.2
@@ -9563,9 +9580,9 @@ snapshots:
       - yup
       - zod
 
-  '@unlighthouse/server@0.18.2(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(yauzl@2.10.0)(zod@4.6.5)':
+  '@unlighthouse/server@0.19.1(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(yauzl@2.10.0)(zod@4.6.5)':
     dependencies:
-      '@unlighthouse/core': 0.18.2(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(yauzl@2.10.0)(zod@4.6.5)
+      '@unlighthouse/core': 0.19.1(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(yauzl@2.10.0)(zod@4.6.5)
       h3: 1.15.11
       listhen: 1.10.1
     transitivePeerDependencies:
@@ -11060,6 +11077,12 @@ snapshots:
       motion-utils: 13.5.0
       tslib: 2.8.1
 
+  framer-motion@14.0.0:
+    dependencies:
+      motion-dom: 14.0.0
+      motion-utils: 14.0.0
+      tslib: 2.8.1
+
   fs-minipass@3.0.3:
     dependencies:
       minipass: 7.1.3
@@ -12010,7 +12033,13 @@ snapshots:
     dependencies:
       motion-utils: 13.5.0
 
+  motion-dom@14.0.0:
+    dependencies:
+      motion-utils: 14.0.0
+
   motion-utils@13.5.0: {}
+
+  motion-utils@14.0.0: {}
 
   motion-v@2.5.2(@vueuse/core@14.4.0(vue@3.5.43(typescript@6.0.3)))(vue@3.5.43(typescript@6.0.3)):
     dependencies:
@@ -12024,9 +12053,9 @@ snapshots:
       - react
       - react-dom
 
-  motion@13.5.1:
+  motion@14.0.0:
     dependencies:
-      framer-motion: 13.5.1
+      framer-motion: 14.0.0
       tslib: 2.8.1
 
   mrmime@2.0.1: {}
@@ -13457,11 +13486,12 @@ snapshots:
       unist-util-is: 6.0.1
       unist-util-visit-parents: 6.0.2
 
-  unlighthouse@0.18.2(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(vue@3.5.43(typescript@6.0.3))(yauzl@2.10.0)(zod@4.6.5):
+  unlighthouse@0.19.1(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(vue@3.5.43(typescript@6.0.3))(yauzl@2.10.0)(zod@4.6.5):
     dependencies:
-      '@unlighthouse/cli': 0.18.2(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(yauzl@2.10.0)(zod@4.6.5)
-      '@unlighthouse/client': 0.18.2(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(tailwindcss@4.3.3)(typescript@6.0.3)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(zod@4.6.5)
-      '@unlighthouse/core': 0.18.2(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(yauzl@2.10.0)(zod@4.6.5)
+      '@unlighthouse/cli': 0.19.1(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(yauzl@2.10.0)(zod@4.6.5)
+      '@unlighthouse/client': 0.19.1(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(tailwindcss@4.3.3)(typescript@6.0.3)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(zod@4.6.5)
+      '@unlighthouse/core': 0.19.1(@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1))(@oxc-project/types@0.150.0)(@tiptap/extensions@3.31.4(@tiptap/core@3.31.4(@tiptap/pm@3.31.4))(@tiptap/pm@3.31.4))(embla-carousel@8.6.0)(esbuild@0.28.2)(lightningcss@1.33.0)(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(supports-color@10.2.2)(tailwindcss@4.3.3)(typescript@6.0.3)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(yauzl@2.10.0)(zod@4.6.5)
+      c12: 3.3.4(magicast@0.5.5)
     optionalDependencies:
       vue: 3.5.43(typescript@6.0.3)
     transitivePeerDependencies:

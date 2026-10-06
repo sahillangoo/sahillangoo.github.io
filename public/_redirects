@@ -21,7 +21,10 @@
 /work       /projects/  301
 /articles   /blog/      301
 /cv         /resume/    301
-/notes/all  /notes/     301
+/notes/all  /blog/      301
+/notes       /blog/      301
+/notes/      /blog/      301
+/notes/*     /blog/      301
 /contact    /links/     301
 /contact/*  /links/     301
 
