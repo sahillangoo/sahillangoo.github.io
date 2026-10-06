@@ -9,6 +9,9 @@ import CodeCopyScript from '@components/common/CodeCopyScript.astro';
 import TextQuoteTooltip from '@components/blog/TextQuoteTooltip.astro';
 import CloudflareEmailDecoder from '@components/common/CloudflareEmailDecoder.astro';
 import CloudflareAnalytics from '@components/common/CloudflareAnalytics.astro';
+import GoogleAnalytics from '@components/common/GoogleAnalytics.astro';
+import MicrosoftClarity from '@components/common/MicrosoftClarity.astro';
+import { SITE } from '@const/site.ts';
 import { cn } from '@utils/cn.ts';
 import '@styles/global.css';
 import 'lenis/dist/lenis.css';
@@ -94,6 +97,8 @@ const {
     <TextQuoteTooltip />
     <CloudflareEmailDecoder />
     <CloudflareAnalytics />
+    {SITE.analytics.googleAnalyticsId && <GoogleAnalytics />}
+    {SITE.analytics.clarityProjectId && <MicrosoftClarity />}
 
     <main id="main-content" class:list={cn('w-full grow', hideNav ? 'pt-0' : 'pt-14')}>
       <slot />
@@ -291,7 +296,9 @@ const {
         pageLifecycleController = new AbortController();
 
         const lenis = getOrCreateLenis();
-        lenis.resize();
+        requestAnimationFrame(() => {
+          lenis.resize();
+        });
         lenis.start();
 
         setupHashSmoothScroll(pageLifecycleController.signal);

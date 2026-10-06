@@ -90,28 +90,7 @@ export const linkSchema = z.object({
   description: z.string().optional(),
 });
 
-// ---------------------------------------------------------------------------
-// Inferred TypeScript Types
-// ---------------------------------------------------------------------------
-export type ProjectEntryData = z.infer<typeof projectSchema>;
-export type ExperienceEntryData = z.infer<typeof experienceSchema>;
-export type SiteEntryData = z.infer<typeof siteSchema>;
-export type LinkEntryData = z.infer<typeof linkSchema>;
 export type FaqItem = z.infer<typeof faqItemSchema>;
-
-export interface BlogEntryData {
-  title: string;
-  description: string;
-  publishDate: string;
-  updatedDate?: string;
-  category: string;
-  tags: string[];
-  featured: boolean;
-  coverImage?: unknown;
-  draft: boolean;
-  readingTime?: string;
-  faqs?: FaqItem[];
-}
 
 // ---------------------------------------------------------------------------
 // Defined Collections

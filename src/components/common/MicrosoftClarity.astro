@@ -1,0 +1,90 @@
+---
+/**
+ * Microsoft Clarity Behavioral Analytics Component
+ *
+ * Runs on the main thread (Clarity cannot execute in Web Workers due to MutationObserver
+ * and CSSMediaRule dependencies), but completely decoupled from the critical path:
+ * - Zero impact on LCP and TBT (loaded exclusively after first user interaction or idle callback).
+ * - Yields via setTimeout to avoid degrading INP on the initial interaction.
+ * - Synchronizes route state and takes fresh DOM snapshots on Astro ClientRouter navigations.
+ *
+ * Safeguards:
+ * - Only tracks on production (sahillangoo.in) with valid non-placeholder project ID.
+ * - Completely dormant during CI, headless tests (navigator.webdriver), and local dev.
+ */
+import { SITE } from '@const/site.ts';
+
+const clarityId = SITE.analytics.clarityProjectId;
+const isConfigured = Boolean(
+  clarityId &&
+  typeof clarityId === 'string' &&
+  clarityId.trim().length > 0 &&
+  clarityId !== 'XXXXXXXXXX'
+);
+---
+
+{isConfigured && <script is:inline define:vars={{ clarityId }}>
+  (function () {
+    if (window.location.hostname !== 'sahillangoo.in' || navigator.webdriver) {
+      return;
+    }
+
+    function injectClarity(projectId) {
+      if (window.__clarity_injected || document.getElementById('ms-clarity-script')) return;
+      window.__clarity_injected = true;
+
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.id = 'ms-clarity-script';
+        t.async = 1;
+        t.src = 'https://www.clarity.ms/tag/' + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, 'clarity', 'script', projectId);
+    }
+
+    const interactionEvents = ['pointerdown', 'scroll', 'keydown', 'touchstart'];
+    const onInteract = () => {
+      interactionEvents.forEach((evt) =>
+        window.removeEventListener(evt, onInteract, { passive: true })
+      );
+      // Yield to main thread so user interaction handler finishes presentation first
+      setTimeout(() => injectClarity(clarityId), 0);
+    };
+
+    interactionEvents.forEach((evt) =>
+      window.addEventListener(evt, onInteract, { passive: true, once: true })
+    );
+
+    const onIdle = () => injectClarity(clarityId);
+
+    if (document.readyState === 'complete') {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(onIdle, { timeout: 4000 });
+      } else {
+        setTimeout(onIdle, 3500);
+      }
+    } else {
+      window.addEventListener('load', () => {
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(onIdle, { timeout: 4000 });
+        } else {
+          setTimeout(onIdle, 3500);
+        }
+      });
+    }
+
+    // Astro ClientRouter (View Transitions) synchronization
+    document.addEventListener('astro:page-load', () => {
+      if (typeof window.clarity === 'function') {
+        window.clarity('set', 'page', window.location.pathname);
+        window.clarity('upgrade', 'page_load');
+      }
+    });
+  })();
+</script>}

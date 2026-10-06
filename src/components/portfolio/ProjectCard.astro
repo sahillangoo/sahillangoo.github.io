@@ -44,7 +44,10 @@ const number = typeof index === 'number' ? String(index + 1).padStart(2, '0') : 
         transition:name={`project-title-${id}`}
         class="text-project mt-2 text-base-content transition-transform duration-200 ease-editorial group-hover:translate-x-1"
       >
-        <a href={`/projects/${id}/`} class="after:absolute after:inset-0 focus:outline-none">
+        <a
+          href={`/projects/${id}/`}
+          class="after:absolute after:inset-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+        >
           {data.title}
         </a>
       </HeadingTag>
@@ -90,7 +93,10 @@ const number = typeof index === 'number' ? String(index + 1).padStart(2, '0') : 
         transition:name={`project-title-${id}`}
         class="text-project mt-2 text-base-content transition-transform duration-200 ease-editorial group-hover:translate-x-1"
       >
-        <a href={`/projects/${id}/`} class="after:absolute after:inset-0 focus:outline-none">
+        <a
+          href={`/projects/${id}/`}
+          class="after:absolute after:inset-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+        >
           {data.title}
         </a>
       </HeadingTag>

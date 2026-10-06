@@ -36,6 +36,7 @@ export const GET: APIRoute = async () => {
 - [Specialized Consulting Services](${SITE.url}/services.md): Turnkey delivery of edge proxies, server-side Meta CAPI, and static web systems.
 - [Developer Setup & Uses](${SITE.url}/uses.md): Daily workstation hardware, software tools, terminal environment, and editor setup.
 - [Technical Colophon](${SITE.url}/colophon.md): Typography specs, OKLCH color spaces, build verification plugins, and performance benchmarks.
+- [Privacy Policy & Telemetry Disclosures](${SITE.url}/privacy.md): Telemetry disclosures, data protection guarantees, tracking technologies inventory, and analytics opt-outs.
 
 ## Production Case Studies
 

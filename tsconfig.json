@@ -22,7 +22,6 @@
       "@utils/*": ["utils/*"],
       "@const/*": ["const/*"],
       "@copy/*": ["data/copy/*"],
-      "@copy": ["data/copy/index.ts"],
       "@data/*": ["data/*"],
       "@content/*": ["content/*"],
       "@assets/*": ["assets/*"],

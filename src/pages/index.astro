@@ -11,7 +11,7 @@ import { getCollection, getEntry } from 'astro:content';
 import { SITE } from '@const/site.ts';
 import { homeCopy } from '@copy/home.ts';
 import { Icon } from 'astro-icon/components';
-import { Image } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import sahilHeroImage from '@assets/images/sahil-langoo-portrait.webp';
 
 const projects = await getCollection('projects');
@@ -97,7 +97,10 @@ const socials = [
           {homeCopy.hero.bioBefore}
           <span class="text-base-content">{homeCopy.hero.bioCompany}</span>
           {homeCopy.hero.bioMiddle}
-          <a href={SITE.social.squadcoders} class="text-base-content hover:text-accent">
+          <a
+            href={SITE.social.squadcoders}
+            class="link-underline text-base-content hover:text-accent"
+          >
             {homeCopy.hero.bioStudio}
           </a>
           {homeCopy.hero.bioAfter}
@@ -148,15 +151,18 @@ const socials = [
         <figure class="portrait-frame group delay-160 flex animate-reveal flex-col">
           <div class="flex flex-1 flex-col border border-base-300 bg-elevated p-1.5 sm:p-2">
             <div class="relative aspect-4/5 overflow-hidden bg-base-200">
-              <Image
+              <Picture
                 src={sahilHeroImage}
                 alt={homeCopy.hero.imageAlt}
                 width={640}
                 height={800}
+                formats={['avif', 'webp']}
+                fallbackFormat="webp"
                 densities={[1, 1.5, 2]}
                 quality={90}
                 loading="eager"
                 fetchpriority="high"
+                pictureAttributes={{ class: 'contents' }}
                 class="absolute inset-0 h-full w-full object-cover object-top grayscale transition-[filter] duration-300 group-hover:grayscale-0"
               />
             </div>
@@ -177,7 +183,7 @@ const socials = [
       <div class="flex items-end gap-4 sm:gap-5 lg:col-span-5">
         <a
           href={homeCopy.snapshot.href}
-          class="font-display text-[clamp(3.25rem,10vw,6rem)] leading-[0.78] font-bold tracking-tight tabular-nums whitespace-nowrap text-base-content transition-colors duration-150 hover:text-accent"
+          class="text-snapshot text-base-content transition-colors duration-150 hover:text-accent"
           target="_blank"
           rel="noopener noreferrer"
         >

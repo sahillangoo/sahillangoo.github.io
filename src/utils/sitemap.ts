@@ -146,7 +146,9 @@ export function createSitemapSerializer(buildDate: string = DEFAULT_BUILD_DATE) 
       pathname === '/now/' ||
       pathname === '/uses/' ||
       pathname === '/colophon/' ||
-      pathname === '/links/'
+      pathname === '/links/' ||
+      pathname === '/privacy/' ||
+      pathname === '/privacy'
     ) {
       return {
         ...item,

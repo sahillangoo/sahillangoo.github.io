@@ -121,60 +121,69 @@ const links = SITE.nav;
   document.addEventListener('astro:after-swap', syncNavLinks);
   document.addEventListener('astro:page-load', syncNavLinks);
 
-  let progressBar: HTMLElement | null = null;
-  let cachedTotalHeight = 0;
-  let isTicking = false;
-  let lenisBound = false;
+  const supportsScrollTimeline =
+    typeof CSS !== 'undefined' &&
+    typeof CSS.supports === 'function' &&
+    CSS.supports('animation-timeline: scroll()');
 
-  function measureScrollDimensions(): void {
-    cachedTotalHeight = document.documentElement.scrollHeight - window.innerHeight;
-  }
+  if (!supportsScrollTimeline) {
+    let progressBar: HTMLElement | null = null;
+    let cachedTotalHeight = 0;
+    let isTicking = false;
+    let lenisBound = false;
 
-  function renderScrollProgress(): void {
-    if (!progressBar) {
-      progressBar = document.querySelector<HTMLElement>('#site-header .scroll-progress');
+    function measureScrollDimensions(): void {
+      cachedTotalHeight = document.documentElement.scrollHeight - window.innerHeight;
     }
-    if (!progressBar) return;
 
-    if (cachedTotalHeight <= 0) {
-      progressBar.style.transform = 'scaleX(0)';
+    function renderScrollProgress(): void {
+      if (!progressBar) {
+        progressBar = document.querySelector<HTMLElement>('#site-header .scroll-progress');
+      }
+      if (!progressBar) return;
+
+      if (cachedTotalHeight <= 0) {
+        progressBar.style.transform = 'scaleX(0)';
+        isTicking = false;
+        return;
+      }
+
+      const win = window as unknown as LenisWindow;
+      const currentScroll = win.lenis?.scroll ?? window.scrollY;
+      const progress = Math.min(1, Math.max(0, currentScroll / cachedTotalHeight));
+      progressBar.style.transform = `scaleX(${progress})`;
       isTicking = false;
-      return;
     }
 
-    const win = window as unknown as LenisWindow;
-    const currentScroll = win.lenis?.scroll ?? window.scrollY;
-    const progress = Math.min(1, Math.max(0, currentScroll / cachedTotalHeight));
-    progressBar.style.transform = `scaleX(${progress})`;
-    isTicking = false;
+    function onScroll(): void {
+      if (!isTicking) {
+        isTicking = true;
+        requestAnimationFrame(renderScrollProgress);
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener(
+      'resize',
+      () => {
+        measureScrollDimensions();
+        onScroll();
+      },
+      { passive: true }
+    );
+
+    document.addEventListener('astro:page-load', () => {
+      progressBar = document.querySelector<HTMLElement>('#site-header .scroll-progress');
+      requestAnimationFrame(() => {
+        measureScrollDimensions();
+        renderScrollProgress();
+      });
+
+      const win = window as unknown as LenisWindow;
+      if (win.lenis && !lenisBound) {
+        win.lenis.on('scroll', onScroll);
+        lenisBound = true;
+      }
+    });
   }
-
-  function onScroll(): void {
-    if (!isTicking) {
-      isTicking = true;
-      requestAnimationFrame(renderScrollProgress);
-    }
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener(
-    'resize',
-    () => {
-      measureScrollDimensions();
-      onScroll();
-    },
-    { passive: true }
-  );
-
-  document.addEventListener('astro:page-load', () => {
-    progressBar = document.querySelector<HTMLElement>('#site-header .scroll-progress');
-    measureScrollDimensions();
-    renderScrollProgress();
-
-    const win = window as unknown as LenisWindow;
-    if (win.lenis && !lenisBound) {
-      win.lenis.on('scroll', onScroll);
-      lenisBound = true;
-    }
-  });
 </script>

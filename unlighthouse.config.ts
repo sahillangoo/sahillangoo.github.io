@@ -12,7 +12,7 @@ const CHROME_PATHS = [
 const executablePath = CHROME_PATHS.find((p) => fs.existsSync(p));
 
 export default {
-  site: 'https://sahillangoo.in',
+  site: process.env.UNLIGHTHOUSE_SITE || 'http://127.0.0.1:4322',
   scanner: {
     device: 'desktop',
     samples: 1,

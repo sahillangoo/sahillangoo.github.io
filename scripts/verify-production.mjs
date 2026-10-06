@@ -294,7 +294,9 @@ if (fs.existsSync(redirectsPath)) {
 }
 
 // 6. Scan all rendered HTML files for canonicals, schemas, and forbidden legacy strings
-const htmlFiles = getAllFiles(distDir).filter((f) => f.endsWith('.html'));
+const htmlFiles = getAllFiles(distDir).filter(
+  (f) => f.endsWith('.html') && !f.includes('~partytown')
+);
 assert(
   htmlFiles.length >= 35,
   `Sufficient static routes generated (found ${htmlFiles.length} pages)`

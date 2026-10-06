@@ -163,6 +163,14 @@ export const SITE = {
   },
   analytics: {
     cloudflareToken: '0898a42bd33b4506bc0c0912a143f843',
+    googleAnalyticsId:
+      (typeof process !== 'undefined' && process.env?.PUBLIC_GA_ID) ||
+      (typeof import.meta !== 'undefined' && import.meta.env?.PUBLIC_GA_ID) ||
+      'G-YPHYZ2Z9EW',
+    clarityProjectId:
+      (typeof process !== 'undefined' && process.env?.PUBLIC_CLARITY_ID) ||
+      (typeof import.meta !== 'undefined' && import.meta.env?.PUBLIC_CLARITY_ID) ||
+      'ytmyf7sf7o',
   },
   nav: [
     { label: 'Work', href: '/projects/' },

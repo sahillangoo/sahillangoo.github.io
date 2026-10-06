@@ -35,7 +35,10 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
       transition:name={`blog-title-${id}`}
       class="text-writing mt-2 text-base-content transition-transform duration-200 ease-editorial group-hover:translate-x-1"
     >
-      <a href={`/blog/${id}/`} class="after:absolute after:inset-0 focus:outline-none">
+      <a
+        href={`/blog/${id}/`}
+        class="after:absolute after:inset-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
+      >
         {data.title}
       </a>
     </HeadingTag>

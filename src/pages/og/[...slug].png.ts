@@ -100,6 +100,16 @@ export async function getStaticPaths() {
         readingTime: 'Links & Social',
       },
     },
+    {
+      params: { slug: 'privacy' },
+      props: {
+        title: 'Privacy Policy & Telemetry Disclosures',
+        category: 'COMPLIANCE & TELEMETRY',
+        description:
+          'Formal privacy statement, telemetry disclosures, and tracking technologies inventory for sahillangoo.in.',
+        readingTime: 'Privacy Policy',
+      },
+    },
     // Blog articles
     ...publishedBlog.map((post) => ({
       params: { slug: `blog/${post.id}` },

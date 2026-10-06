@@ -1,0 +1,217 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { SITE } from '@const/site.ts';
+import { privacyCopy } from '@copy/privacy.ts';
+import { Icon } from 'astro-icon/components';
+
+const privacyKeywords = [
+  'Privacy Policy',
+  'Data Protection',
+  'Telemetry Disclosures',
+  'Cloudflare Web Analytics',
+  'Google Analytics 4',
+  'Google Tag Manager',
+  'Microsoft Clarity',
+  'Cookie Policy',
+  'GDPR Compliance',
+  'CCPA CPRA Disclosure',
+];
+
+const privacySchema = {
+  '@type': 'WebPage',
+  '@id': `${SITE.url}/privacy/#webpage`,
+  name: `${privacyCopy.header.title} | ${SITE.name}`,
+  url: `${SITE.url}/privacy/`,
+  description: privacyCopy.seo.description,
+  inLanguage: 'en-US',
+  isPartOf: {
+    '@type': 'WebSite',
+    '@id': `${SITE.url}/#website`,
+    name: SITE.name,
+    url: SITE.url,
+  },
+  about: {
+    '@type': 'Thing',
+    name: 'Privacy Policy & Telemetry Disclosures',
+  },
+  publisher: {
+    '@id': `${SITE.url}/#person`,
+  },
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'Privacy', item: '/privacy/' },
+];
+---
+
+<BaseLayout
+  title={privacyCopy.seo.title}
+  description={privacyCopy.seo.description}
+  keywords={privacyKeywords}
+  image={privacyCopy.seo.image}
+  breadcrumbs={breadcrumbs}
+  structuredData={privacySchema}
+>
+  <div class="page-sheet space-y-12 py-12 md:py-16">
+    <!-- Header -->
+    <div class="animate-rise border-base-300 space-y-4 border-b pb-8">
+      <div class="badge badge-sm border-base-300 bg-base-200 text-base-content/80 font-mono text-xs">
+        <span>{privacyCopy.header.badge}</span>
+      </div>
+      <h1 class="text-section">{privacyCopy.header.title}</h1>
+      <p class="text-base-content/75 text-base leading-relaxed">{privacyCopy.header.description}</p>
+      <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-secondary">
+        <span>Effective:{privacyCopy.header.effectiveDate}</span>
+        <span aria-hidden="true">•</span>
+        <span>Last Updated:{privacyCopy.header.lastUpdated}</span>
+      </div>
+    </div>
+
+    <!-- Overview / Controller Card -->
+    <section
+      data-reveal="hidden"
+      class="border-base-300 bg-base-200 space-y-5 rounded-md border p-6 sm:p-8"
+    >
+      <h2 class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase">
+        <Icon name="ph:shield-check-bold" class="h-4 w-4" />
+        {privacyCopy.overview.title}
+      </h2>
+
+      <div class="divide-base-300/80 divide-y text-xs">
+        <div class="flex flex-col gap-1 py-2 sm:flex-row sm:items-center sm:justify-between">
+          <span class="text-base-content/60 font-mono font-medium">Data Controller</span>
+          <span class="text-base-content font-mono font-semibold">
+            {privacyCopy.overview.controller}
+          </span>
+        </div>
+        <div class="flex flex-col gap-1 py-2 sm:flex-row sm:items-center sm:justify-between">
+          <span class="text-base-content/60 font-mono font-medium">Direct Inquiries</span>
+          <a
+            href={`mailto:${privacyCopy.overview.contact}`}
+            class="text-accent hover:underline font-mono font-semibold"
+          >
+            {privacyCopy.overview.contact}
+          </a>
+        </div>
+      </div>
+
+      <p class="text-base-content/80 text-xs leading-relaxed pt-2">
+        {privacyCopy.overview.summary}
+      </p>
+    </section>
+
+    <!-- Storage Identifiers Matrix -->
+    <section data-reveal="hidden" class="space-y-6">
+      <div class="border-base-300 border-b pb-3">
+        <h2 class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase">
+          <Icon name="ph:cookie-bold" class="h-4 w-4" />
+          {privacyCopy.cookiesTableTitle}
+        </h2>
+        <p class="text-base-content/75 mt-1 text-xs">{privacyCopy.cookiesTableDescription}</p>
+      </div>
+
+      <div class="border-base-300 divide-base-300/80 divide-y rounded-md border bg-base-200">
+        {privacyCopy.cookies.map((cookie) => (
+          <div class="p-4 sm:p-5 flex flex-col gap-2">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="font-mono text-xs font-bold text-accent">{cookie.name}</span>
+              <div class="flex items-center gap-2">
+                <span class="label-caps">{cookie.category}</span>
+                <span class="meta">• {cookie.lifespan}</span>
+              </div>
+            </div>
+            <p class="text-xs text-base-content/60 font-mono">Provider: {cookie.provider}</p>
+            <p class="text-xs text-base-content/80 leading-relaxed">{cookie.purpose}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Detailed Disclosure Sections -->
+    {privacyCopy.sections.map((section) => (
+      <section data-reveal="hidden" class="space-y-6 border-base-300 border-t pt-8" id={section.id}>
+        <div>
+          {section.badge && <span class="label-caps">{section.badge}</span>}
+          <h2 class="text-base-content mt-1 text-xl font-bold tracking-tight">{section.title}</h2>
+        </div>
+
+        {section.paragraphs.map((paragraph) => (
+          <p class="text-base-content/80 text-sm leading-relaxed">{paragraph}</p>
+        ))}
+
+        {section.subsections && (
+          <div class="space-y-6 pt-2">
+            {section.subsections.map((sub) => (
+              <div class="border-base-300 bg-base-200 rounded-md border p-5 sm:p-6 space-y-3">
+                <h3 class="text-accent font-mono text-xs font-bold tracking-wide uppercase sm:text-sm">
+                  {sub.title}
+                </h3>
+                <p class="text-base-content/80 text-xs leading-relaxed">{sub.description}</p>
+                {sub.bullets && (
+                  <ul class="border-base-300/60 divide-base-300/60 divide-y border-t pt-2 space-y-2">
+                    {sub.bullets.map((bullet) => (
+                      <li class="pt-2 text-xs text-base-content/75 leading-relaxed flex items-start gap-2">
+                        <span class="text-accent mt-0.5 shrink-0" aria-hidden="true">
+                          •
+                        </span>
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+    ))}
+
+    <!-- Data Subject Rights -->
+    <section data-reveal="hidden" class="space-y-6 border-base-300 border-t pt-8">
+      <div>
+        <span class="label-caps">Statutory Entitlements</span>
+        <h2 class="text-base-content mt-1 text-xl font-bold tracking-tight">
+          {privacyCopy.rightsTitle}
+        </h2>
+        <p class="text-base-content/75 mt-2 text-xs leading-relaxed">
+          {privacyCopy.rightsDescription}
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {privacyCopy.rights.map((right) => (
+          <div class="border-base-300 bg-base-200 hover:border-neutral flex flex-col justify-between rounded-md border p-5 transition-all duration-200">
+            <h3 class="text-accent font-mono text-xs font-bold tracking-wider uppercase">
+              {right.title}
+            </h3>
+            <p class="text-base-content/75 mt-2 text-xs leading-relaxed">{right.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Contact & Regulatory Channel -->
+    <section
+      data-reveal="hidden"
+      class="border-base-300 bg-base-200 rounded-md border p-6 sm:p-8 space-y-4"
+    >
+      <h2 class="text-base-content text-lg font-bold tracking-tight flex items-center gap-2">
+        <Icon name="ph:envelope-simple-bold" class="h-4 w-4 text-accent" />
+        {privacyCopy.contactSection.title}
+      </h2>
+      <p class="text-base-content/80 text-xs leading-relaxed">
+        {privacyCopy.contactSection.description}
+      </p>
+      <div class="pt-2">
+        <a
+          href={`mailto:${privacyCopy.contactSection.email}`}
+          class="btn btn-sm bg-base-content text-base-100 hover:bg-base-content/90 font-mono text-xs inline-flex items-center gap-2 active:scale-98"
+        >
+          <Icon name="ph:envelope-simple-bold" class="h-3.5 w-3.5" />
+          {privacyCopy.contactSection.email}
+        </a>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

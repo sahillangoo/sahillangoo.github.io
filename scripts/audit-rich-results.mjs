@@ -42,7 +42,9 @@ if (!fs.existsSync(distDir)) {
   process.exit(1);
 }
 
-const htmlFiles = getAllFiles(distDir).filter((f) => f.endsWith('.html'));
+const htmlFiles = getAllFiles(distDir).filter(
+  (f) => f.endsWith('.html') && !f.includes('~partytown')
+);
 
 if (htmlFiles.length === 0) {
   console.error('❌ No HTML files found in dist/. Run `pnpm build` first.');

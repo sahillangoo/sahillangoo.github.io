@@ -22,10 +22,7 @@ const CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes
 let inMemoryCache: { data: WeatherData; timestamp: number } | null = null;
 let inFlightWeatherPromise: Promise<WeatherData | null> | null = null;
 
-export function getWeatherCondition(
-  code: number,
-  isDay: boolean
-): { description: string; icon: string } {
+function getWeatherCondition(code: number, isDay: boolean): { description: string; icon: string } {
   switch (code) {
     case 0:
       return isDay

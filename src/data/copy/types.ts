@@ -6,24 +6,12 @@ export interface PageSeoMetadata {
   noindex?: boolean;
 }
 
-export interface BreadcrumbItem {
-  name: string;
-  item: string;
-}
-
 export interface CtaButton {
   label: string;
   href: string;
   icon?: string;
   external?: boolean;
   variant?: 'primary' | 'outline' | 'ghost';
-}
-
-export interface FeatureCard {
-  title: string;
-  description: string;
-  icon?: string;
-  badge?: string;
 }
 
 export interface HomeFact {
@@ -206,36 +194,6 @@ export interface ColophonPageCopy {
   };
 }
 
-export interface ContactPageCopy {
-  seo: PageSeoMetadata;
-  header: {
-    eyebrow: string;
-    title: string;
-    description: string;
-  };
-  sidebar: {
-    emailLabel: string;
-    locationLabel: string;
-    statusLabel: string;
-    verifiedProfilesLabel: string;
-  };
-  form: {
-    title: string;
-    description: string;
-    nameLabel: string;
-    namePlaceholder: string;
-    emailLabel: string;
-    emailPlaceholder: string;
-    subjectLabel: string;
-    subjectPlaceholder: string;
-    messageLabel: string;
-    messagePlaceholder: string;
-    submitButton: string;
-    submittingButton: string;
-    statusSuccess: string;
-  };
-}
-
 export interface ResumePageCopy {
   seo: PageSeoMetadata;
   header: {
@@ -285,10 +243,6 @@ export interface NavigationCopy {
     name: string;
     tagline: string;
   };
-  headerNav: {
-    label: string;
-    href: string;
-  }[];
   footerNav: {
     label: string;
     href: string;
@@ -308,5 +262,57 @@ export interface NavigationCopy {
   };
   footerTelemetry: {
     copyright: (year: number) => string;
+  };
+}
+
+export interface PrivacyCookieItem {
+  name: string;
+  provider: string;
+  category: 'Essential' | 'Analytics' | 'Behavioral';
+  lifespan: string;
+  purpose: string;
+}
+
+export interface PrivacySection {
+  id: string;
+  title: string;
+  badge?: string;
+  paragraphs: string[];
+  subsections?: {
+    title: string;
+    description: string;
+    bullets?: string[];
+  }[];
+}
+
+export interface PrivacyPageCopy {
+  seo: PageSeoMetadata;
+  header: {
+    badge: string;
+    title: string;
+    effectiveDate: string;
+    lastUpdated: string;
+    description: string;
+  };
+  overview: {
+    title: string;
+    controller: string;
+    contact: string;
+    summary: string;
+  };
+  cookiesTableTitle: string;
+  cookiesTableDescription: string;
+  cookies: PrivacyCookieItem[];
+  sections: PrivacySection[];
+  rightsTitle: string;
+  rightsDescription: string;
+  rights: {
+    title: string;
+    description: string;
+  }[];
+  contactSection: {
+    title: string;
+    description: string;
+    email: string;
   };
 }

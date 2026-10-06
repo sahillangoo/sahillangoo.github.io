@@ -4,8 +4,7 @@
     "@iconify-json/*",
     "astro-eslint-parser",
     "@astrojs/ts-plugin",
-    "motion",
     "unlighthouse"
   ],
-  "ignore": ["src/data/copy/index.ts", "unlighthouse.config.ts"]
+  "ignore": ["unlighthouse.config.ts"]
 }

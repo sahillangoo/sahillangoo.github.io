@@ -1,0 +1,68 @@
+---
+/**
+ * Google Analytics 4 Component via Partytown Web Worker
+ *
+ * Runs off the main thread in a background Web Worker to preserve 0ms TBT and 0ms LCP.
+ * Seamlessly tracks SPA page transitions triggered by Astro ClientRouter.
+ *
+ * Safeguards:
+ * - Only injects and runs on production (sahillangoo.in) with valid non-placeholder measurement ID.
+ * - Completely dormant during CI, headless tests (navigator.webdriver), and local dev.
+ */
+import { SITE } from '@const/site.ts';
+
+const gaId = SITE.analytics.googleAnalyticsId;
+const isConfigured = Boolean(
+  gaId && typeof gaId === 'string' && gaId.trim().length > 0 && gaId !== 'G-XXXXXXXXXX'
+);
+---
+
+{isConfigured && <script is:inline define:vars={{ gaId }}>
+  (function () {
+    if (window.location.hostname !== 'sahillangoo.in' || navigator.webdriver) {
+      return;
+    }
+
+    // 1. Forwarding shim & queue initialization
+    window.dataLayer = window.dataLayer || [];
+    window.gtag =
+      window.gtag ||
+      function () {
+        window.dataLayer.push(arguments);
+      };
+
+    // 2. Dynamically inject Partytown script tag (ensures zero test/localhost pollution)
+    if (!document.getElementById('ga4-partytown-script')) {
+      const s = document.createElement('script');
+      s.id = 'ga4-partytown-script';
+      s.type = 'text/partytown';
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
+      document.head.appendChild(s);
+
+      const configScript = document.createElement('script');
+      configScript.id = 'ga4-partytown-config';
+      configScript.type = 'text/partytown';
+      configScript.text =
+        'window.dataLayer = window.dataLayer || [];\n' +
+        'function gtag(){window.dataLayer.push(arguments);}\n' +
+        'gtag("js", new Date());\n' +
+        'gtag("config", "' +
+        gaId +
+        '", { send_page_view: false });';
+      document.head.appendChild(configScript);
+
+      window.dispatchEvent(new CustomEvent('ptupdate'));
+    }
+
+    // 3. ClientRouter SPA page navigation synchronization
+    document.addEventListener('astro:page-load', function () {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'page_view', {
+          page_title: document.title,
+          page_location: window.location.href,
+          send_to: gaId,
+        });
+      }
+    });
+  })();
+</script>}

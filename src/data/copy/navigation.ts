@@ -6,12 +6,6 @@ export const navigationCopy: NavigationCopy = {
     tagline:
       'Engineering high-performance web systems, distributed edge architectures, and minimalist interfaces.',
   },
-  headerNav: [
-    { label: 'Work', href: '/projects/' },
-    { label: 'Writing', href: '/blog/' },
-    { label: 'About', href: '/about/' },
-    { label: 'Resume', href: '/resume/' },
-  ],
   footerNav: [
     { label: 'Work', href: '/projects/' },
     { label: 'Writing', href: '/blog/' },
@@ -21,6 +15,7 @@ export const navigationCopy: NavigationCopy = {
     { label: 'Uses', href: '/uses/' },
     { label: 'Colophon', href: '/colophon/' },
     { label: 'Links', href: '/links/' },
+    { label: 'Privacy', href: '/privacy/' },
   ],
   footerSections: {
     navigation: {
@@ -39,6 +34,7 @@ export const navigationCopy: NavigationCopy = {
         { label: 'Uses', href: '/uses/' },
         { label: 'Colophon', href: '/colophon/' },
         { label: 'Links', href: '/links/' },
+        { label: 'Privacy', href: '/privacy/' },
       ],
     },
     connect: {

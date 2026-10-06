@@ -78,7 +78,9 @@ if (!fs.existsSync(distDir)) {
   process.exit(1);
 }
 
-const htmlFiles = getAllFiles(distDir).filter((f) => f.endsWith('.html'));
+const htmlFiles = getAllFiles(distDir).filter(
+  (f) => f.endsWith('.html') && !f.includes('~partytown')
+);
 const routes = htmlFiles.map((file) => {
   const relative = path.relative(distDir, file).replace(/\\/g, '/');
   if (relative === 'index.html') return '/';

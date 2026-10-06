@@ -171,6 +171,9 @@ importers:
 
   .:
     dependencies:
+      '@astrojs/partytown':
+        specifier: 2.1.8
+        version: 2.1.8
       '@astrojs/rss':
         specifier: ^4.0.19
         version: 4.0.19
@@ -198,9 +201,6 @@ importers:
       lenis:
         specifier: ^1.3.26
         version: 1.3.26(@nuxt/kit@4.5.2(magic-string@1.4.2)(magicast@0.5.5)(oxc-parser@0.150.0)(rolldown@1.2.12)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.12)(vite@8.3.2(@types/node@26.6.4)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))))(vue@3.5.43(typescript@6.0.3))
-      motion:
-        specifier: ^14.0.0
-        version: 14.0.0
       sharp:
         specifier: ^0.35.5
         version: 0.35.5(@types/node@26.6.4)
@@ -465,6 +465,9 @@ packages:
 
   '@astrojs/markdown-satteri@0.4.2':
     resolution: {integrity: sha512-g4QehXnB/MzxQWnSf17NciFInMqEJy9948p8cc7zGg/r7995m0Ln5PMr3Xlnj24iey1LchaoZ3SzTOa3D4P/3w==}
+
+  '@astrojs/partytown@2.1.8':
+    resolution: {integrity: sha512-iCRNNPqvdQEORyAYC8jN8nTCN2wW66WS+Pft2fhqq52cj3GcWvzlAZlyfjtpCeiEYI0op6u5OtWqqItiS7INDA==}
 
   '@astrojs/prism@4.0.2':
     resolution: {integrity: sha512-KTivpmnz6lDsC6o9H4+DNm2SrE/GHzw8cNAvEJwAvUT+eoaEnn/4NtbDNfRRaxaJHdp15gf+tfHAWiXR4wB3BA==}
@@ -2260,6 +2263,11 @@ packages:
         optional: true
       yauzl:
         optional: true
+
+  '@qwik.dev/partytown@0.14.5':
+    resolution: {integrity: sha512-DxVGNgz2oWZvNT76LmMwxSroN1+r8rHqH/55fLGpO7tiVbYtC8PoXICyS1vGwL2mvmvfQhccqbudKrDnQO1mgg==}
+    engines: {node: '>=18.0.0'}
+    hasBin: true
 
   '@rolldown/binding-android-arm-eabi@1.2.12':
     resolution: {integrity: sha512-dB/a1214qKfHMXCpgqR4OZT+jS4kTyEXbQGJPqzobt5EwH5rX080pxE37alt3RzvR1bf1Yz/yGqRfrYAxuPw0A==}
@@ -4163,17 +4171,6 @@ packages:
       react-dom:
         optional: true
 
-  framer-motion@14.0.0:
-    resolution: {integrity: sha512-QAtHmybrDFSliyW1sexMtSQTQd+1jw2ajibEmzpuI4XdPVzQkn+dAzJMm2sW3pl9MJuSS4xN51djQ7huhlP/VA==}
-    peerDependencies:
-      react: ^18.0.0 || ^19.0.0
-      react-dom: ^18.0.0 || ^19.0.0
-    peerDependenciesMeta:
-      react:
-        optional: true
-      react-dom:
-        optional: true
-
   fs-minipass@3.0.3:
     resolution: {integrity: sha512-XUBA9XClHbnJWSfBzjkm6RvPsyg3sryZt06BEQoXcF7EK/xpGaQYJgQKDJSUH5SGZ76Y7pFx1QBnXz09rU5Fbw==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
@@ -5057,31 +5054,14 @@ packages:
   motion-dom@13.5.1:
     resolution: {integrity: sha512-/7CVCD20Mz1KobktorpdgvowV0V41J7UxqE+qWS3GkSJqrRr5ft+2RloOYtEKv+wvBp3JaSFBclhxt4ja8ovHg==}
 
-  motion-dom@14.0.0:
-    resolution: {integrity: sha512-aU3ApXo1yTpeUi3JU+jbDk2TELjxPE3MbBMUP7nZHlARb6RweJK+ojmLjpuB0YsY6zhbBl1YWGo8LMsI1/Llqw==}
-
   motion-utils@13.5.0:
     resolution: {integrity: sha512-Hqe/sqjIKliPZg8sVjWAkdySDPJNIeKH+euVkDOG8ri3DUUU7ZjndmHsGqEPz2iHpiyVaV5I22iguCMHU2he+Q==}
-
-  motion-utils@14.0.0:
-    resolution: {integrity: sha512-jBsyjVxTTRZNeuvd/v+btVXr90LQkYl4HhRu9T2ARc+PMnvkmjsjRVeAg4Qm10b6TlTw+kykWI8gu/6LuvpLSQ==}
 
   motion-v@2.5.2:
     resolution: {integrity: sha512-qMt80s5nVwDkdcyCwN6ZSp9a7qzsGoE+ulwsSyH9PSmyhUTQMRUWtKTEhit/VuALuAD1zOJlyos5wBd2WL6n0A==}
     peerDependencies:
       '@vueuse/core': '>=10.0.0'
       vue: '>=3.0.0'
-
-  motion@14.0.0:
-    resolution: {integrity: sha512-oGc2lkge2lkRZCP+J8/JsnYu4NFjqP1MtXirNdetn3QbvK2JqwM9A200EdT4C598KfzDhjLT12zF21xDM4Oilw==}
-    peerDependencies:
-      react: ^18.0.0 || ^19.0.0
-      react-dom: ^18.0.0 || ^19.0.0
-    peerDependenciesMeta:
-      react:
-        optional: true
-      react-dom:
-        optional: true
 
   mrmime@2.0.1:
     resolution: {integrity: sha512-Y3wQdFg2Va6etvQ5I82yUhGdsKrcYox6p7FfL1LbK2J4V01F9TGlepTIhnK24t7koZibmg82KGglhA1XK5IsLQ==}
@@ -7019,6 +6999,11 @@ snapshots:
       github-slugger: 2.0.0
       satteri: 0.10.5
 
+  '@astrojs/partytown@2.1.8':
+    dependencies:
+      '@qwik.dev/partytown': 0.14.5
+      mrmime: 2.0.1
+
   '@astrojs/prism@4.0.2':
     dependencies:
       prismjs: 1.30.0
@@ -8585,6 +8570,8 @@ snapshots:
       yargs: 18.2.0
     optionalDependencies:
       yauzl: 2.10.0
+
+  '@qwik.dev/partytown@0.14.5': {}
 
   '@rolldown/binding-android-arm-eabi@1.2.12':
     optional: true
@@ -11077,12 +11064,6 @@ snapshots:
       motion-utils: 13.5.0
       tslib: 2.8.1
 
-  framer-motion@14.0.0:
-    dependencies:
-      motion-dom: 14.0.0
-      motion-utils: 14.0.0
-      tslib: 2.8.1
-
   fs-minipass@3.0.3:
     dependencies:
       minipass: 7.1.3
@@ -12033,13 +12014,7 @@ snapshots:
     dependencies:
       motion-utils: 13.5.0
 
-  motion-dom@14.0.0:
-    dependencies:
-      motion-utils: 14.0.0
-
   motion-utils@13.5.0: {}
-
-  motion-utils@14.0.0: {}
 
   motion-v@2.5.2(@vueuse/core@14.4.0(vue@3.5.43(typescript@6.0.3)))(vue@3.5.43(typescript@6.0.3)):
     dependencies:
@@ -12052,11 +12027,6 @@ snapshots:
     transitivePeerDependencies:
       - react
       - react-dom
-
-  motion@14.0.0:
-    dependencies:
-      framer-motion: 14.0.0
-      tslib: 2.8.1
 
   mrmime@2.0.1: {}
 

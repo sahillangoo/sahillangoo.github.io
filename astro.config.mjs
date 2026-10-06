@@ -3,6 +3,7 @@ import { defineConfig, fontProviders, svgoOptimizer } from 'astro/config';
 import icon from 'astro-icon';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
+import partytown from '@astrojs/partytown';
 import astroSiteQualityEnforcer from './src/plugins/astro-site-quality.ts';
 import { NON_INDEXABLE_PATHS, SITE } from './src/const/site.ts';
 import { createSitemapSerializer } from './src/utils/sitemap.ts';
@@ -65,7 +66,6 @@ export default defineConfig({
       cssCodeSplit: true,
     },
     optimizeDeps: {
-      include: ['motion'],
       exclude: ['@astrojs/sitemap', 'sharp'],
     },
     ssr: {
@@ -129,6 +129,23 @@ export default defineConfig({
         }
       },
       serialize: createSitemapSerializer(BUILD_DATE),
+    }),
+    partytown({
+      config: {
+        forward: ['dataLayer.push', 'gtag'],
+        resolveUrl: (url, location) => {
+          if (
+            location.hostname === 'sahillangoo.in' &&
+            (url.hostname === 'www.googletagmanager.com' ||
+              url.hostname === 'www.google-analytics.com')
+          ) {
+            const proxyUrl = new URL('/proxy/ga', location.origin);
+            proxyUrl.searchParams.append('url', url.href);
+            return proxyUrl;
+          }
+          return url;
+        },
+      },
     }),
     astroSiteQualityEnforcer(),
   ],

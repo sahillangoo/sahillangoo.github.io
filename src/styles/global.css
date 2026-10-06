@@ -64,7 +64,7 @@
   --color-neutral-content: oklch(0.235 0.012 60);
   --color-info: oklch(0.55 0.12 240);
   --color-info-content: oklch(0.985 0.008 88);
-  --color-success: oklch(0.62 0.15 140);
+  --color-success: oklch(0.46 0.15 140);
   --color-success-content: oklch(0.985 0.008 88);
   --color-warning: oklch(0.72 0.14 80);
   --color-warning-content: oklch(0.235 0.012 60);
@@ -293,6 +293,16 @@
   }
 }
 
+@utility text-snapshot {
+  font-weight: 700;
+  font-size: clamp(3.25rem, 10vw, 6rem);
+  line-height: 0.78;
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+}
+
 @utility text-pull {
   font-size: 1.875rem;
   line-height: 1.18;
@@ -439,6 +449,14 @@ li {
 
 .prose pre {
   padding-top: 2.5rem !important;
+}
+
+/* WCAG 2.2 AA Contrast compliance for Shiki code syntax comments (>= 4.5:1 against dark background) */
+pre.astro-code span[style*='color:#6A737D'],
+pre.astro-code span[style*='color: #6A737D'],
+pre.astro-code span[style*='color:#6a737d'],
+pre.astro-code span[style*='color: #6a737d'] {
+  color: #8b949e !important;
 }
 
 @layer components {

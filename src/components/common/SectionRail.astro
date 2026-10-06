@@ -18,7 +18,7 @@ const sections = [
         <a
           href={`#${section.id}`}
           data-rail={section.id}
-          class="group flex items-center gap-2 font-mono text-2xs text-secondary transition-colors duration-200 hover:text-base-content"
+          class="group flex min-h-6 items-center gap-2 py-1 font-mono text-2xs text-secondary transition-colors duration-200 hover:text-base-content"
         >
           <span class="tabular-nums">{section.index}</span>
           <span class="rail-line h-px w-5 origin-left bg-current" aria-hidden="true" />
@@ -52,11 +52,14 @@ const sections = [
 
 <script>
   const railSelector = '[data-rail]';
-  const sectionLine = 96;
   let cachedRailLinks: HTMLAnchorElement[] = [];
-  let onRailScroll: (() => void) | null = null;
+  let railObserver: IntersectionObserver | null = null;
+  let currentActiveId: string | null = null;
 
   function markRail(id: string | null): void {
+    if (!id || id === currentActiveId) return;
+    currentActiveId = id;
+
     cachedRailLinks.forEach((link) => {
       const active = link.dataset.rail === id;
       link.classList.toggle('text-accent', active);
@@ -74,38 +77,70 @@ const sections = [
     });
   }
 
-  function sectionInView(): string | null {
-    let active = cachedRailLinks[0]?.dataset.rail ?? null;
-    for (const link of cachedRailLinks) {
-      const id = link.dataset.rail;
-      if (!id) continue;
-      const section = document.getElementById(id);
-      if (section && section.getBoundingClientRect().top <= sectionLine) active = id;
-    }
-    return active;
-  }
-
   function setupRail(): void {
     teardownRail();
     cachedRailLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>(railSelector));
     if (!cachedRailLinks.length) return;
 
-    const sync = (): void => {
-      markRail(sectionInView());
-    };
-    onRailScroll = sync;
-    window.addEventListener('scroll', sync, { passive: true });
-    (window as unknown as LenisWindow).lenis?.on('scroll', sync);
-    sync();
+    // Set initial default active rail to the first section without triggering reflow
+    currentActiveId = null;
+    markRail(cachedRailLinks[0]?.dataset.rail ?? null);
+
+    if (!('IntersectionObserver' in window)) return;
+
+    // Track active intersecting sections without forced reflows or scroll handlers
+    const sectionTops = new Map<string, number>();
+
+    railObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            // entry.boundingClientRect is a read-only snapshot provided by browser compositor
+            sectionTops.set(entry.target.id, entry.boundingClientRect.top);
+          } else {
+            sectionTops.delete(entry.target.id);
+          }
+        }
+
+        if (sectionTops.size === 0) {
+          if (window.scrollY < 300) {
+            markRail(cachedRailLinks[0]?.dataset.rail ?? null);
+          }
+          return;
+        }
+
+        // Active section is the furthest intersecting section down the document
+        let activeId: string | null = null;
+        for (const link of cachedRailLinks) {
+          const id = link.dataset.rail;
+          if (id && sectionTops.has(id)) {
+            activeId = id;
+          }
+        }
+        if (activeId) markRail(activeId);
+      },
+      {
+        // Margin offsets for sticky navbar (96px) and active reading zone
+        rootMargin: '-96px 0px -40% 0px',
+        threshold: [0, 0.25, 0.5],
+      }
+    );
+
+    for (const link of cachedRailLinks) {
+      const id = link.dataset.rail;
+      if (!id) continue;
+      const section = document.getElementById(id);
+      if (section) railObserver.observe(section);
+    }
   }
 
   function teardownRail(): void {
-    if (onRailScroll) {
-      window.removeEventListener('scroll', onRailScroll);
-      (window as unknown as LenisWindow).lenis?.off('scroll', onRailScroll);
-      onRailScroll = null;
+    if (railObserver) {
+      railObserver.disconnect();
+      railObserver = null;
     }
     cachedRailLinks = [];
+    currentActiveId = null;
   }
 
   document.addEventListener('astro:page-load', setupRail);
