@@ -27,6 +27,8 @@
 /notes/*     /blog/      301
 /contact    /links/     301
 /contact/*  /links/     301
+/blog/why-go-is-the-definitive-language-for-the-ai-era    /blog/why-go-is-the-definitive-language-for-the-ai-agent-era/  301
+/blog/why-go-is-the-definitive-language-for-the-ai-era/   /blog/why-go-is-the-definitive-language-for-the-ai-agent-era/  301
 
 # External Verified Social Redirects
 /github     https://github.com/sahillangoo        302

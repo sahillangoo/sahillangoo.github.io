@@ -30,6 +30,8 @@ export default defineConfig({
   },
   redirects: {
     '/contact/': '/links/',
+    '/blog/why-go-is-the-definitive-language-for-the-ai-era/':
+      '/blog/why-go-is-the-definitive-language-for-the-ai-agent-era/',
   },
   prefetch: {
     prefetchAll: true,

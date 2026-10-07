@@ -33,10 +33,9 @@ export const nowCopy: NowPageCopy = {
       ],
     },
     {
-      category: 'Systems Tooling, Local AI & Consulting Packaging',
+      category: 'Systems Tooling & Local AI',
       icon: 'ph:sparkle-bold',
       items: [
-        'Packaging specialized systems architecture consulting services covering edge proxies, server-side CAPI, static migrations, and AEO/GEO discovery endpoints.',
         'Open-source systems tooling: Windows 11 & WSL2 Maintenance Suite (zero-dependency PowerShell engine for developer storage reclamation) and Bio Dissertation Generator.',
         'Maintaining Tech Resume Expert, encoding Harvard MCS and FAANG screening heuristics into an open-source career intelligence platform.',
       ],

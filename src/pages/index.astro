@@ -154,12 +154,13 @@ const socials = [
               <Picture
                 src={sahilHeroImage}
                 alt={homeCopy.hero.imageAlt}
-                width={640}
-                height={800}
+                width={352}
+                height={440}
+                widths={[256, 288, 352, 528, 704]}
+                sizes="(min-width: 64rem) 22rem, (min-width: 40rem) 18rem, 16rem"
                 formats={['avif', 'webp']}
                 fallbackFormat="webp"
-                densities={[1, 1.5, 2]}
-                quality={90}
+                quality={75}
                 loading="eager"
                 fetchpriority="high"
                 pictureAttributes={{ class: 'contents' }}

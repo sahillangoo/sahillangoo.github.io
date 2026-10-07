@@ -43,18 +43,31 @@ export async function onRequest(context) {
     return new Response('Invalid target URL.', { status: 400 });
   }
 
+  if (request.method !== 'GET' && request.method !== 'POST') {
+    return new Response('Method is not permitted.', { status: 405 });
+  }
+
   if (!ALLOWED_HOSTS.has(targetUrl.hostname)) {
     return new Response('Target host is not permitted.', { status: 403 });
   }
 
   try {
     const forwardHeaders = new Headers(request.headers);
-    forwardHeaders.delete('host');
+    for (const name of [
+      'host',
+      'cookie',
+      'authorization',
+      'connection',
+      'content-length',
+      'accept-encoding',
+    ]) {
+      forwardHeaders.delete(name);
+    }
 
     const response = await fetch(targetUrl.href, {
       method: request.method,
       headers: forwardHeaders,
-      body: request.method !== 'GET' && request.method !== 'HEAD' ? request.body : undefined,
+      body: request.method === 'POST' ? request.body : undefined,
       redirect: 'follow',
     });
 
@@ -71,7 +84,7 @@ export async function onRequest(context) {
       statusText: response.statusText,
       headers,
     });
-  } catch (error) {
-    return new Response(`Proxy dispatch error: ${error.message}`, { status: 502 });
+  } catch {
+    return new Response('Proxy dispatch failed.', { status: 502 });
   }
 }

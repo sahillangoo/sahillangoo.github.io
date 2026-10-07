@@ -177,6 +177,7 @@ export const SITE = {
     { label: 'Writing', href: '/blog/' },
     { label: 'About', href: '/about/' },
     { label: 'Resume', href: '/resume/' },
+    { label: 'Hire me', href: 'mailto:hello@sahillangoo.in' },
   ],
 } as const;
 

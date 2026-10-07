@@ -16,6 +16,7 @@ export const navigationCopy: NavigationCopy = {
     { label: 'Colophon', href: '/colophon/' },
     { label: 'Links', href: '/links/' },
     { label: 'Privacy', href: '/privacy/' },
+    { label: 'Hire me', href: 'mailto:hello@sahillangoo.in' },
   ],
   footerSections: {
     navigation: {
@@ -25,6 +26,7 @@ export const navigationCopy: NavigationCopy = {
         { label: 'Writing', href: '/blog/' },
         { label: 'Resume', href: '/resume/' },
         { label: 'About', href: '/about/' },
+        { label: 'Hire me', href: 'mailto:hello@sahillangoo.in' },
       ],
     },
     system: {

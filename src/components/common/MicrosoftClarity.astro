@@ -29,6 +29,10 @@ const isConfigured = Boolean(
       return;
     }
 
+    // Inline head scripts re-run on ClientRouter swaps. Bind once.
+    if (window.__clarity_bootstrapped) return;
+    window.__clarity_bootstrapped = true;
+
     function injectClarity(projectId) {
       if (window.__clarity_injected || document.getElementById('ms-clarity-script')) return;
       window.__clarity_injected = true;

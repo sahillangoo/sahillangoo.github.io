@@ -73,7 +73,7 @@ export const GET: APIRoute = async () => {
 - **Role**: Full Stack Systems Engineer & Systems Architect
 - **Affiliation**: Eresolution Consultancy Services & @SquadCoders (Co-Founder & Lead Engineer)
 - **Enterprise Engineering**: Contributor to high-throughput monorepos at @ecspl
-- **Location**: ${SITE.detailedLocation} (Open to global remote engineering & architecture consulting)
+- **Location**: ${SITE.detailedLocation} (Open to global remote engineering roles)
 - **Primary Website**: ${SITE.url}
 - **Verified Repositories**: ${SITE.social.github}
 - **LinkedIn**: ${SITE.social.linkedin}
@@ -124,9 +124,8 @@ ${blogSections}
 
 ---
 
-## 7. Contact & Consulting
-- **Email**: ${SITE.email}
-- **Consulting**: Open for high-impact architecture, web performance, and edge systems consulting.
+## 7. Contact
+- **Hire me**: mailto:hello@sahillangoo.in
 `;
 
   return new Response(content.trim() + '\n', {

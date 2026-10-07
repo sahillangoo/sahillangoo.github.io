@@ -23,6 +23,10 @@ const isConfigured = Boolean(
       return;
     }
 
+    // Inline head scripts re-run on ClientRouter swaps. Bind once.
+    if (window.__ga4_bootstrapped) return;
+    window.__ga4_bootstrapped = true;
+
     // 1. Forwarding shim & queue initialization
     window.dataLayer = window.dataLayer || [];
     window.gtag =

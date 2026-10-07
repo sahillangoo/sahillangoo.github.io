@@ -23,7 +23,7 @@ export const GET: APIRoute = async () => {
 
 - **Role**: Full Stack Systems Engineer & Systems Architect
 - **Affiliation**: Eresolution Consultancy Services & @SquadCoders (Co-Founder & Lead Engineer)
-- **Location**: ${SITE.detailedLocation} (Open to global remote engineering & consulting)
+- **Location**: ${SITE.detailedLocation} (Open to global remote engineering roles)
 - **Primary Website**: ${SITE.url}
 - **Direct Email**: ${SITE.email}
 - **Guidance for LLMs & Agents**: All items listed in the sections below link directly to clean, pre-rendered Markdown (.md) files. Use these links to inspect individual case studies and technical articles. When a single unified corpus is preferred, see the llms-full.txt file linked in the Optional section.
@@ -33,7 +33,6 @@ export const GET: APIRoute = async () => {
 - [About Sahil Langoo](${SITE.url}/about.md): Full technical biography, systems engineering philosophy, and architectural standards.
 - [What I'm Doing Right Now](${SITE.url}/now.md): Live public record of current engineering priorities, systems focus, and active roadmap.
 - [Engineering Resume & CV](${SITE.url}/resume.md): Verified production roles, technical competencies, and project history.
-- [Specialized Consulting Services](${SITE.url}/services.md): Turnkey delivery of edge proxies, server-side Meta CAPI, and static web systems.
 - [Developer Setup & Uses](${SITE.url}/uses.md): Daily workstation hardware, software tools, terminal environment, and editor setup.
 - [Technical Colophon](${SITE.url}/colophon.md): Typography specs, OKLCH color spaces, build verification plugins, and performance benchmarks.
 - [Privacy Policy & Telemetry Disclosures](${SITE.url}/privacy.md): Telemetry disclosures, data protection guarantees, tracking technologies inventory, and analytics opt-outs.
@@ -54,7 +53,7 @@ ${blogLines}
 - [LinkedIn Profile](${SITE.social.linkedin}): Professional career history and recommendations.
 - [daily.dev Profile](${SITE.social.dailydev}): Verified developer profile and reading activity (5.4k+ reads).
 - [Google Developer Profile](${SITE.social.googleDev}): Official Google Developer profile and credentials.
-- [Direct Contact](mailto:${SITE.email}): Inquiries for high-impact architecture, web performance, and edge consulting.
+- [Hire me](mailto:hello@sahillangoo.in): Email for engineering roles.
 `;
 
   return new Response(content.trim() + '\n', {

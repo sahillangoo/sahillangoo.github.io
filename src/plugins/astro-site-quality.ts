@@ -225,7 +225,16 @@ export default function astroSiteQualityEnforcer(): AstroIntegration {
             if (!baseLink) continue;
             let link = baseLink;
 
-            if (link === '/' || link.includes('.')) continue;
+            if (link === '/') continue;
+
+            if (link.includes('.')) {
+              const fileOnDisk = path.join(outDir, link.replace(/^\/+/, ''));
+              if (!fs.existsSync(fileOnDisk)) {
+                logger.error(`❌ 404 Broken Internal Link: "${link}" found in ${relative}`);
+                errors++;
+              }
+              continue;
+            }
 
             if (trailingSlashMode === 'always' && !link.endsWith('/')) {
               link += '/';

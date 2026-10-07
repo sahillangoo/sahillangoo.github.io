@@ -231,16 +231,21 @@ const searchIndex = [
     });
   }
 
+  function escapeText(value: string): string {
+    return value
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;');
+  }
+
   function renderResults(): void {
     const resultsContainer = getResultsContainer();
     if (!resultsContainer) return;
 
     if (filteredItems.length === 0) {
-      resultsContainer.innerHTML = `
-        <div class="py-8 text-center text-xs text-base-content/50 font-mono">
-          No matching documents or actions found.
-        </div>
-      `;
+      resultsContainer.innerHTML =
+        '<div class="py-8 text-center font-mono text-xs text-base-content/50">No matching documents or actions found.</div>';
       return;
     }
 
@@ -249,28 +254,15 @@ const searchIndex = [
     const categories = Array.from(new Set(filteredItems.map((i) => i.category)));
 
     categories.forEach((cat) => {
-      html += `<div class="px-3 pt-3 pb-1 text-xs font-mono uppercase tracking-wider text-accent font-semibold">${cat}</div>`;
+      html += `<div class="px-3 pt-3 pb-1 font-mono text-xs font-semibold tracking-wider text-accent uppercase">${escapeText(cat)}</div>`;
       const catItems = filteredItems.filter((i) => i.category === cat);
       catItems.forEach((item) => {
         const isSelected = currentIndex === selectedIndex;
-        html += `
-          <a
-            href="${item.url}"
-            data-index="${currentIndex}"
-            aria-selected="${isSelected ? 'true' : 'false'}"
-            class="palette-result-item flex items-center justify-between rounded-lg px-3 py-2.5 text-sm transition-colors ${
-              isSelected
-                ? 'bg-base-300 text-base-content font-medium'
-                : 'text-base-content/75 hover:bg-base-200 hover:text-base-content'
-            }"
-          >
-            <div class="min-w-0 pr-2">
-              <div class="font-medium text-base-content truncate text-sm">${item.title}</div>
-              <div class="text-xs text-base-content/65 truncate mt-0.5">${item.subtitle}</div>
-            </div>
-            <span class="font-mono text-xs text-base-content/50 shrink-0">Jump ↵</span>
-          </a>
-        `;
+        html += `<a href="${escapeText(item.url)}" data-index="${currentIndex}" aria-selected="${isSelected ? 'true' : 'false'}" class="palette-result-item flex items-center justify-between rounded-lg px-3 py-2.5 text-sm transition-colors ${
+          isSelected
+            ? 'bg-base-300 font-medium text-base-content'
+            : 'text-base-content/75 hover:bg-base-200 hover:text-base-content'
+        }"><div class="min-w-0 pr-2"><div class="truncate text-sm font-medium text-base-content">${escapeText(item.title)}</div><div class="mt-0.5 truncate text-xs text-base-content/65">${escapeText(item.subtitle)}</div></div><span class="shrink-0 font-mono text-xs text-base-content/50">Jump ↵</span></a>`;
         currentIndex++;
       });
     });

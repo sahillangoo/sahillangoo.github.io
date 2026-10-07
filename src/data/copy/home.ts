@@ -90,19 +90,14 @@ export const homeCopy: HomePageCopy = {
     contact: {
       title: 'Looking for the next engineering problem to solve.',
       description:
-        'Full-time roles and select consulting engagements, wherever the work is. A short note is the best way to start.',
+        'Full-time engineering roles, wherever the work is. A short note is the best way to start.',
       email: 'hello@sahillangoo.in',
       openToLabel: 'Open to',
-      openTo: [
-        'Software Engineering',
-        'Full Stack Engineering',
-        'Backend / Systems Engineering',
-        'Technical consulting',
-      ],
+      openTo: ['Software Engineering', 'Full Stack Engineering', 'Backend / Systems Engineering'],
       ctas: [
         {
-          label: 'Get in touch',
-          href: '/links/',
+          label: 'Hire me',
+          href: 'mailto:hello@sahillangoo.in',
           icon: 'ph:arrow-up-right-bold',
           variant: 'primary',
         },
