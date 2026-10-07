@@ -268,7 +268,7 @@ export interface NavigationCopy {
 export interface PrivacyCookieItem {
   name: string;
   provider: string;
-  category: 'Essential' | 'Analytics' | 'Behavioral';
+  category: 'Essential' | 'Analytics' | 'Behavioral' | 'Functional';
   lifespan: string;
   purpose: string;
 }
