@@ -42,11 +42,11 @@ const isConfigured = Boolean(
       const configScript = document.createElement('script');
       configScript.id = 'ga4-partytown-config';
       configScript.type = 'text/partytown';
-      configScript.text =
+      configScript.textContent =
         'window.dataLayer = window.dataLayer || [];\n' +
-        'function gtag(){window.dataLayer.push(arguments);}\n' +
-        'gtag("js", new Date());\n' +
-        'gtag("config", "' +
+        'window.gtag = function(){window.dataLayer.push(arguments);};\n' +
+        'window.gtag("js", new Date());\n' +
+        'window.gtag("config", "' +
         gaId +
         '", { send_page_view: false });';
       document.head.appendChild(configScript);

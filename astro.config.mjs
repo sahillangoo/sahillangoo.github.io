@@ -132,7 +132,7 @@ export default defineConfig({
     }),
     partytown({
       config: {
-        forward: ['dataLayer.push', 'gtag'],
+        forward: ['dataLayer.push'],
         resolveUrl: (url, location) => {
           if (
             location.hostname === 'sahillangoo.in' &&
