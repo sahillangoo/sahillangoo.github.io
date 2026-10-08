@@ -1,0 +1,467 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { SITE } from '@const/site.ts';
+import { servicesCopy } from '@copy/services.ts';
+import { Icon } from 'astro-icon/components';
+
+const servicesKeywords = [
+  'Engineering Services',
+  'Systems Architecture Consulting',
+  'Cloudflare Workers Consultant',
+  'Server Side Meta CAPI',
+  'Astro Static Site Architecture',
+  'Cloudflare Turnstile Bot Mitigation',
+  'Technical SEO Consultant',
+  'Generative Engine Optimization GEO',
+  'AEO Specialist Kashmir India',
+  'Fractional Systems Engineer',
+];
+
+const pageUrl = `${SITE.url}/services/`;
+
+const professionalServiceSchema = {
+  '@type': 'ProfessionalService',
+  '@id': `${pageUrl}#service`,
+  name: `${SITE.name} - Systems Engineering & Architecture Consulting`,
+  url: pageUrl,
+  description: servicesCopy.seo.description,
+  priceRange: '$$',
+  image: `${SITE.url}/og/default.png`,
+  telephone: SITE.phone,
+  email: SITE.email,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Srinagar',
+    addressRegion: 'Jammu & Kashmir',
+    postalCode: '190003',
+    addressCountry: 'IN',
+  },
+  provider: {
+    '@id': `${SITE.url}/#person`,
+  },
+  founder: {
+    '@id': `${SITE.url}/#person`,
+  },
+  parentOrganization: {
+    '@id': `${SITE.url}/#organization`,
+  },
+  areaServed: {
+    '@type': 'AdministrativeArea',
+    name: 'Worldwide',
+  },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Systems Engineering Offerings',
+    itemListElement: servicesCopy.offerings.map((offering) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: offering.title,
+        description: offering.summary,
+      },
+      priceSpecification: {
+        '@type': 'PriceSpecification',
+        priceCurrency: 'USD',
+        description: offering.pricing,
+      },
+    })),
+  },
+};
+
+const faqSchema = {
+  '@type': 'FAQPage',
+  '@id': `${pageUrl}#faq`,
+  name: 'Engineering Services & Systems Consulting FAQs',
+  url: `${pageUrl}#faq`,
+  inLanguage: 'en-US',
+  mainEntity: servicesCopy.faqs.map((faq, index) => ({
+    '@type': 'Question',
+    '@id': `${pageUrl}#faq-q${index + 1}`,
+    name: faq.question,
+    url: `${pageUrl}#faq-q${index + 1}`,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      '@id': `${pageUrl}#faq-a${index + 1}`,
+      text: faq.answer,
+      url: `${pageUrl}#faq-q${index + 1}`,
+    },
+  })),
+};
+
+const breadcrumbs = [
+  { name: 'Home', item: '/' },
+  { name: 'Services', item: '/services/' },
+];
+
+const structuredData = [professionalServiceSchema, faqSchema];
+---
+
+<BaseLayout
+  title={servicesCopy.seo.title}
+  description={servicesCopy.seo.description}
+  keywords={servicesKeywords}
+  image={servicesCopy.seo.image}
+  breadcrumbs={breadcrumbs}
+  structuredData={structuredData}
+>
+  <div class="page-sheet space-y-12 py-12 md:py-16">
+    <!-- Page Header -->
+    <header class="animate-rise border-base-300 space-y-4 border-b pb-8">
+      <span class="border-base-300 bg-base-200 text-secondary inline-flex items-center rounded-full border px-3 py-0.5 font-mono text-xs">
+        {servicesCopy.header.badge}
+      </span>
+      <h1 class="text-section">{servicesCopy.header.title}</h1>
+      <p class="text-secondary max-w-2xl text-base leading-relaxed sm:text-lg">
+        {servicesCopy.header.description}
+      </p>
+
+      <!-- Machine-Readable Quick Links for Agents -->
+      <div class="pt-2 flex flex-wrap items-center gap-3 text-xs font-mono">
+        <span class="text-secondary select-none">Agent endpoints:</span>
+        <a
+          href="/pricing.md"
+          class="border-base-300 bg-base-200 hover:border-neutral text-base-content/80 hover:text-base-content inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 transition-colors"
+        >
+          <Icon name="ph:file-text-bold" class="size-3.5 text-accent" />
+          pricing.md
+        </a>
+        <a
+          href="/services.md"
+          class="border-base-300 bg-base-200 hover:border-neutral text-base-content/80 hover:text-base-content inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 transition-colors"
+        >
+          <Icon name="ph:code-bold" class="size-3.5 text-accent" />
+          services.md
+        </a>
+        <a
+          href="/okf/index.md"
+          class="border-base-300 bg-base-200 hover:border-neutral text-base-content/80 hover:text-base-content inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 transition-colors"
+        >
+          <Icon name="ph:graph-bold" class="size-3.5 text-accent" />
+          okf/index.md
+        </a>
+      </div>
+    </header>
+
+    <!-- Core Service Offerings -->
+    <section class="space-y-8">
+      <div class="flex items-center justify-between">
+        <h2 class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase">
+          <Icon name="ph:stack-bold" class="size-4" />
+          Core Service Capabilities
+        </h2>
+        <span class="label-caps">{servicesCopy.offerings.length}Capabilities</span>
+      </div>
+
+      <div class="space-y-6">
+        {servicesCopy.offerings.map((offering, idx) => (
+          <article
+            id={offering.id}
+            data-reveal="hidden"
+            class="border-base-300 bg-base-200 hover:border-neutral flex flex-col justify-between space-y-6 rounded-md border p-6 transition-all duration-200 sm:p-8"
+          >
+            <!-- Card Header -->
+            <div class="space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <span class="text-accent font-mono text-xs font-semibold tracking-wider uppercase">
+                  0{idx + 1} -- Capability
+                </span>
+                <div class="flex items-center gap-2 font-mono text-xs">
+                  <span class="border-base-300/80 bg-base-100/70 text-base-content/90 rounded-md border px-2 py-0.5 font-medium">
+                    {offering.pricing}
+                  </span>
+                  <span class="text-secondary">|</span>
+                  <span class="text-secondary">{offering.turnaround}</span>
+                </div>
+              </div>
+
+              <h3 class="text-base-content text-xl font-bold tracking-tight">{offering.title}</h3>
+
+              <!-- Extractable 40-60 word Answer Block for AI / Voice -->
+              <p
+                data-speakable="true"
+                class="text-base-content/85 text-sm leading-relaxed sm:text-base"
+              >
+                {offering.summary}
+              </p>
+
+              <!-- Metrics pill -->
+              <span class="border-base-300/60 bg-base-100/50 inline-flex items-center gap-2 rounded-md border px-3 py-1 font-mono text-xs text-secondary">
+                <Icon name="ph:trend-up-bold" class="size-3.5 text-accent" />
+                {offering.metrics}
+              </span>
+            </div>
+
+            <!-- Scope & Deliverables Grid -->
+            <div class="grid grid-cols-1 gap-6 border-t border-base-300/60 pt-6 sm:grid-cols-2">
+              <div class="space-y-3">
+                <h4 class="text-secondary font-mono text-xs font-semibold tracking-wide uppercase">
+                  Scope of Work
+                </h4>
+                <ul class="space-y-2 text-xs text-base-content/80">
+                  {offering.scope.map((item) => (
+                    <li class="flex items-start gap-2">
+                      <span class="text-accent font-mono select-none">›</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="space-y-3">
+                <h4 class="text-secondary font-mono text-xs font-semibold tracking-wide uppercase">
+                  Production Deliverables
+                </h4>
+                <ul class="space-y-2 text-xs text-base-content/80">
+                  {offering.deliverables.map((item) => (
+                    <li class="flex items-start gap-2">
+                      <span class="text-accent font-mono select-none">✓</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- Frequently Asked Questions (FAQ Section) -->
+    <section class="border-base-300 border-t pt-8 space-y-6">
+      <div class="flex items-center justify-between">
+        <h2 class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase">
+          <Icon name="ph:question-bold" class="size-4" />
+          Frequently Asked Questions
+        </h2>
+        <span class="label-caps">AEO Structured Data</span>
+      </div>
+
+      <div class="divide-base-300/80 divide-y rounded-md border border-base-300 bg-base-200 p-6 sm:p-8">
+        {servicesCopy.faqs.map((faq) => (
+          <details class="group py-4 first:pt-0 last:pb-0" open={false}>
+            <summary class="flex cursor-pointer list-none items-center justify-between font-medium text-base-content transition-colors group-hover:text-accent">
+              <span class="text-sm font-semibold sm:text-base">{faq.question}</span>
+              <Icon
+                name="ph:caret-down-bold"
+                class="size-4 shrink-0 transition-transform duration-200 group-open:rotate-180 text-secondary group-hover:text-accent"
+              />
+            </summary>
+            <p class="text-base-content/80 mt-3 text-xs leading-relaxed sm:text-sm">{faq.answer}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Inbound Lead Inquiry & Booking Section -->
+    <section
+      id="inquiry-form"
+      data-reveal="hidden"
+      class="border-base-300/90 bg-base-200/60 rounded-md border p-6 sm:p-10 space-y-8"
+    >
+      <div class="space-y-3">
+        <span class="border-base-300 bg-base-200 text-secondary inline-flex items-center rounded-full border px-3 py-0.5 font-mono text-xs">
+          Inbound Inquiries
+        </span>
+        <h2 class="text-base-content text-2xl font-medium sm:text-3xl tracking-tight">
+          {servicesCopy.inquiry.title}
+        </h2>
+        <p class="text-secondary max-w-xl text-sm leading-relaxed">
+          {servicesCopy.inquiry.description}
+        </p>
+      </div>
+
+      <form id="project-inquiry-form" method="POST" action="/api/contact" class="space-y-5">
+        <!-- Honeypot anti-spam field -->
+        <input
+          type="text"
+          name="website"
+          id="inquiry-website"
+          style="display:none;"
+          tabindex="-1"
+          autocomplete="off"
+        />
+
+        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <div class="space-y-1.5">
+            <label for="inquiry-name" class="label-caps">
+              Your Name *
+            </label>
+            <input
+              type="text"
+              id="inquiry-name"
+              name="name"
+              required
+              minlength="2"
+              placeholder="e.g. Alex Miller"
+              class="border-base-300 bg-base-100 text-base-content placeholder:text-secondary/50 focus:border-accent w-full rounded-md border px-3.5 py-2.5 font-sans text-sm outline-none transition-colors"
+            />
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="inquiry-email" class="label-caps">
+              Email Address *
+            </label>
+            <input
+              type="email"
+              id="inquiry-email"
+              name="email"
+              required
+              placeholder="alex@company.com"
+              class="border-base-300 bg-base-100 text-base-content placeholder:text-secondary/50 focus:border-accent w-full rounded-md border px-3.5 py-2.5 font-sans text-sm outline-none transition-colors"
+            />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <div class="space-y-1.5">
+            <label for="inquiry-service" class="label-caps">
+              Service of Interest
+            </label>
+            <select
+              id="inquiry-service"
+              name="service"
+              class="border-base-300 bg-base-100 text-base-content focus:border-accent w-full rounded-md border px-3.5 py-2.5 font-sans text-sm outline-none transition-colors"
+            >
+              <option value="Server-Side Meta CAPI">
+                Server-Side Meta CAPI & Edge Proxies ($3,500)
+              </option>
+              <option value="Astro Static Architecture">
+                Astro Static Web Architecture & Migration ($4,500 - $7,500)
+              </option>
+              <option value="Edge Security & Turnstile">
+                Edge Security & Bot Mitigation ($2,000)
+              </option>
+              <option value="Technical SEO & AEO">
+                Technical SEO, GEO & Agent-Readiness ($2,500)
+              </option>
+              <option value="Fractional Systems Engineering">
+                Fractional Systems Engineering Retainer ($5,000/mo)
+              </option>
+              <option value="Architecture Advisory & Audit">
+                Architecture Advisory & Code Audit ($1,500)
+              </option>
+              <option value="Custom Systems Engineering">Other Custom Project</option>
+            </select>
+          </div>
+
+          <div class="space-y-1.5">
+            <label for="inquiry-budget" class="label-caps">
+              Project Budget / Timeline
+            </label>
+            <select
+              id="inquiry-budget"
+              name="budget"
+              class="border-base-300 bg-base-100 text-base-content focus:border-accent w-full rounded-md border px-3.5 py-2.5 font-sans text-sm outline-none transition-colors"
+            >
+              <option value="$1,500 - $3,500 (1 - 2 weeks)">$1,500 to $3,500 (1 to 2 weeks)</option>
+              <option value="$3,500 - $7,500 (2 - 4 weeks)">$3,500 to $7,500 (2 to 4 weeks)</option>
+              <option value="$5,000 / month retainer">$5,000 / month retainer (Ongoing)</option>
+              <option value="Flexible / To be discussed">Flexible / To be discussed</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <label for="inquiry-message" class="label-caps">
+            Project Brief & Details *
+          </label>
+          <textarea
+            id="inquiry-message"
+            name="message"
+            required
+            rows="4"
+            minlength="10"
+            placeholder="Describe your current tech stack, key problems to solve, and target deadlines..."
+            class="border-base-300 bg-base-100 text-base-content placeholder:text-secondary/50 focus:border-accent w-full rounded-md border px-3.5 py-2.5 font-sans text-sm outline-none transition-colors resize-y"
+          ></textarea>
+        </div>
+
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between pt-2">
+          <button
+            type="submit"
+            id="inquiry-submit-btn"
+            class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 w-full gap-2 rounded-md border-0 px-6 font-mono text-xs font-medium tracking-wider uppercase sm:w-auto"
+          >
+            <Icon name="ph:paper-plane-tilt-bold" class="size-3.5" />
+            Send Project Inquiry
+          </button>
+
+          <p class="text-secondary font-mono text-xs">
+            Direct email:
+            <a
+              href="mailto:hello@sahillangoo.in"
+              class="link-underline text-base-content hover:text-accent"
+            >
+              hello@sahillangoo.in
+            </a>
+          </p>
+        </div>
+
+        <div
+          id="inquiry-status"
+          class="hidden rounded-md border p-4 text-xs font-mono transition-all"
+        ></div>
+      </form>
+    </section>
+  </div>
+
+  <script>
+    const form = document.getElementById('project-inquiry-form') as HTMLFormElement | null;
+    const submitBtn = document.getElementById('inquiry-submit-btn') as HTMLButtonElement | null;
+    const statusBox = document.getElementById('inquiry-status') as HTMLDivElement | null;
+
+    if (form && submitBtn && statusBox) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        submitBtn.disabled = true;
+        submitBtn.classList.add('opacity-70');
+        statusBox.classList.add('hidden');
+        statusBox.className = 'rounded-md border p-4 text-xs font-mono transition-all';
+
+        const formData = new FormData(form);
+        const payload = {
+          name: formData.get('name'),
+          email: formData.get('email'),
+          service: formData.get('service'),
+          budget: formData.get('budget'),
+          message: formData.get('message'),
+          website: formData.get('website'),
+        };
+
+        try {
+          const res = await fetch('/api/contact', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload),
+          });
+
+          const data = await res.json();
+
+          if (res.ok && data.success) {
+            statusBox.textContent =
+              data.message || 'Inquiry received. Sahil will follow up within 24 hours.';
+            statusBox.classList.remove('hidden');
+            statusBox.classList.add('border-success/40', 'bg-success/10', 'text-success');
+            form.reset();
+          } else {
+            statusBox.textContent =
+              data.error || 'Failed to submit inquiry. Please email hello@sahillangoo.in directly.';
+            statusBox.classList.remove('hidden');
+            statusBox.classList.add('border-error/40', 'bg-error/10', 'text-error');
+          }
+        } catch {
+          statusBox.textContent =
+            'Network error sending inquiry. Please email hello@sahillangoo.in directly.';
+          statusBox.classList.remove('hidden');
+          statusBox.classList.add('border-error/40', 'bg-error/10', 'text-error');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('opacity-70');
+        }
+      });
+    }
+  </script>
+</BaseLayout>

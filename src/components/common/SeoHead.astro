@@ -86,13 +86,21 @@ const computedWidth = imageWidth ? String(imageWidth) : '1200';
 const computedHeight = imageHeight ? String(imageHeight) : '630';
 const computedAlt = imageAlt || formattedTitle;
 const ogLogoUrl = `${siteUrl}/icon-512.png`;
-
-// Clean Markdown alternate URL for individual content items per llmstxt.org v2
 const cleanPath = Astro.url.pathname.replace(/\/$/, '');
+const knownStaticMd = new Set([
+  '/services',
+  '/about',
+  '/resume',
+  '/now',
+  '/uses',
+  '/colophon',
+  '/privacy',
+]);
 const isContentItem =
-  /^\/(?:blog|projects)\/(?!\d+$)[^/]+$/.test(cleanPath) &&
-  !cleanPath.startsWith('/blog/category') &&
-  !cleanPath.startsWith('/blog/tag');
+  (/^\/(?:blog|projects)\/(?!\d+$)[^/]+$/.test(cleanPath) &&
+    !cleanPath.startsWith('/blog/category') &&
+    !cleanPath.startsWith('/blog/tag')) ||
+  knownStaticMd.has(cleanPath);
 const markdownUrl = isContentItem ? `${cleanPath}.md` : null;
 
 // Core Static Schemas
@@ -168,7 +176,17 @@ const personSchema = {
     'SQLite',
     'AI Coding Agents',
     'Zod Type Safety',
+    'Technical SEO & Schema.org',
+    'Generative Engine Optimization (GEO)',
+    'Answer Engine Optimization (AEO)',
+    'Cloudflare Pages & Edge Functions',
   ],
+  knowsLanguage: ['en', 'ks', 'ur', 'hi'],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    email: SITE.email,
+    contactType: 'technical consulting',
+  },
 };
 
 const webSiteSchema = {
@@ -258,8 +276,20 @@ const safeJsonLdString = JSON.stringify(schemaGraph).replace(/</g, '\\u003c');
   <!-- RSS Feed Autodiscovery -->
   <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
 
-  <!-- AI LLM Discovery per llmstxt.org v2 standard -->
+  <!-- AI LLM Discovery per llmstxt.org v2 standard & Google OKF v0.1 -->
   <link rel="describedby" href="/llms.txt" />
+  <link
+    rel="related"
+    type="text/markdown"
+    title="Open Knowledge Format Bundle"
+    href="/okf/index.md"
+  />
+  <link
+    rel="describedby"
+    type="application/json"
+    title="Agent Capabilities"
+    href="/.well-known/agent.json"
+  />
   {markdownUrl ? (
     <link rel="alternate" type="text/markdown" title={`${title} (Markdown)`} href={markdownUrl} />
   ) : (

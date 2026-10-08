@@ -56,15 +56,15 @@ const breadcrumbs = [
 >
   <div class="page-sheet space-y-12 py-12 md:py-16">
     <!-- Header -->
-    <div class="animate-rise border-base-300 border-b pb-8">
+    <header class="animate-rise border-base-300 border-b pb-8">
       <span class="label-caps">{aboutCopy.hero.eyebrow}</span>
       <h1 class="text-section mt-3">{aboutCopy.hero.headline}</h1>
-    </div>
+    </header>
 
     <!-- Bio Narrative -->
     <section
       data-reveal="hidden"
-      class="text-base-content/80 space-y-4 text-base leading-relaxed sm:text-lg"
+      class="text-secondary space-y-4 text-base leading-relaxed sm:text-lg"
     >
       {aboutCopy.hero.paragraphs.map((paragraph) => (
         <p>{paragraph}</p>
@@ -74,39 +74,38 @@ const breadcrumbs = [
     <!-- Principles Grid -->
     {profile?.principles && (
       <section data-reveal="hidden" class="border-base-300 space-y-4 border-t pt-8">
-        <h2 class="text-base-content text-xl font-bold tracking-tight">
+        <h2 class="text-base-content text-xl font-medium tracking-tight">
           {aboutCopy.principles.title}
         </h2>
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {profile.principles.map((principle) => (
-            <div class="border-base-300 bg-base-200 hover:border-neutral flex flex-col justify-between rounded-md border p-5 transition-all duration-200 sm:p-6">
-              <h3 class="text-accent font-mono text-xs font-bold tracking-wide uppercase sm:text-sm">
-                {principle.title}
-              </h3>
-              <p class="text-base-content/75 mt-2 text-xs leading-relaxed">
-                {principle.description}
-              </p>
-            </div>
+            <li class="border-base-300 bg-base-200 hover:border-neutral flex flex-col justify-between rounded-md border p-5 transition-all duration-200 sm:p-6">
+              <h3 class="label-caps text-accent text-xs sm:text-sm">{principle.title}</h3>
+              <p class="text-secondary mt-2 text-xs leading-relaxed">{principle.description}</p>
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
     )}
 
     <!-- Workspace & Setup -->
     <section data-reveal="hidden" class="border-base-300 space-y-4 border-t pt-8">
-      <h2 class="text-base-content text-xl font-bold tracking-tight">
+      <h2 class="text-base-content text-xl font-medium tracking-tight">
         {aboutCopy.dailyStack.title}
       </h2>
-      <div class="border-base-300 bg-base-200 text-base-content/80 space-y-3 rounded-md border p-6 text-sm sm:p-8">
+      <dl class="border-base-300 bg-base-200 text-secondary space-y-3 rounded-md border p-6 text-sm sm:p-8">
         {aboutCopy.dailyStack.groups.map((group) => (
           <div class="flex items-start gap-2">
-            <span class="text-accent font-mono select-none">›</span>
-            <span>
-              <strong>{group.label}:</strong> {group.value}
+            <span class="text-accent font-mono select-none" aria-hidden="true">
+              ›
             </span>
+            <div>
+              <dt class="inline font-medium text-base-content">{group.label}:</dt>
+              <dd class="inline ml-1 text-secondary">{group.value}</dd>
+            </div>
           </div>
         ))}
-      </div>
+      </dl>
     </section>
 
     <!-- Connect Box -->
@@ -115,8 +114,10 @@ const breadcrumbs = [
       class="border-base-300/80 bg-base-200/50 flex flex-col justify-between gap-4 rounded-md border p-6 sm:flex-row sm:items-center sm:p-8"
     >
       <div>
-        <h2 class="text-base-content font-bold tracking-tight">{aboutCopy.connectCta.title}</h2>
-        <p class="text-base-content/75 mt-0.5 text-xs leading-relaxed">
+        <h2 class="text-base-content text-lg font-medium tracking-tight">
+          {aboutCopy.connectCta.title}
+        </h2>
+        <p class="text-secondary mt-0.5 text-xs leading-relaxed">
           {aboutCopy.connectCta.description}
         </p>
       </div>
@@ -125,7 +126,7 @@ const breadcrumbs = [
         class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 w-full gap-2 rounded-md border-0 px-4 font-mono text-xs font-medium tracking-wider uppercase sm:w-auto"
       >
         {aboutCopy.connectCta.cta.icon && (
-          <Icon name={aboutCopy.connectCta.cta.icon} class="h-3.5 w-3.5" />
+          <Icon name={aboutCopy.connectCta.cta.icon} class="size-3.5" />
         )}
         {aboutCopy.connectCta.cta.label}
       </a>

@@ -17,10 +17,17 @@ const extraLinks = navigationCopy.footerNav.filter(
 );
 ---
 
-<div id="mobile-drawer" class="fixed inset-0 z-50 hidden lg:hidden">
+<div
+  id="mobile-drawer"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Mobile navigation"
+  class="fixed inset-0 z-50 hidden lg:hidden"
+>
   <!-- Backdrop -->
   <div
     id="mobile-drawer-backdrop"
+    aria-hidden="true"
     class="fixed inset-0 bg-base-content/60 backdrop-blur-xs transition-opacity"
   ></div>
 
@@ -31,7 +38,7 @@ const extraLinks = navigationCopy.footerNav.filter(
   >
     <div class="space-y-6">
       <div class="border-base-300 flex items-center justify-between border-b pb-4">
-        <span class="font-display text-2xl font-medium italic leading-none tracking-tight text-base-content">
+        <span class="font-display text-2xl italic leading-none tracking-tight text-base-content">
           {SITE.name}
         </span>
         <button
@@ -40,12 +47,12 @@ const extraLinks = navigationCopy.footerNav.filter(
           aria-label="Close mobile menu"
           class="btn btn-ghost btn-square size-11 rounded-md transition-transform"
         >
-          <Icon name="ph:x-bold" class="h-5 w-5" />
+          <Icon name="ph:x-bold" class="size-5" />
         </button>
       </div>
 
       <!-- Primary Nav -->
-      <nav class="flex flex-col gap-1">
+      <nav aria-label="Mobile navigation" class="flex flex-col gap-1">
         {SITE.nav.map((item) => {
           const active = isActive(item.href);
           return (
@@ -58,7 +65,7 @@ const extraLinks = navigationCopy.footerNav.filter(
                   : 'text-secondary hover:bg-base-200 hover:text-base-content'
               )}
             >
-              <span>{item.label}</span>
+              {item.label}
               {active && <span class="text-accent text-xs">●</span>}
             </a>
           );
@@ -67,9 +74,7 @@ const extraLinks = navigationCopy.footerNav.filter(
 
       <!-- Secondary Links -->
       <div class="border-base-300 space-y-1 border-t pt-4">
-        <span class="text-base-content/50 block px-4 font-mono text-xs font-medium tracking-wider uppercase">
-          Extended
-        </span>
+        <span class="label-caps block px-4">Extended</span>
         {extraLinks.map((item) => {
           const active = isActive(item.href);
           return (
@@ -82,7 +87,7 @@ const extraLinks = navigationCopy.footerNav.filter(
                   : 'text-base-content/60 hover:text-base-content'
               )}
             >
-              <span>{item.label}</span>
+              {item.label}
               {active && <span class="text-accent text-xs">●</span>}
             </a>
           );
@@ -91,80 +96,78 @@ const extraLinks = navigationCopy.footerNav.filter(
     </div>
 
     <!-- Mobile Drawer Footer with Socials -->
-    <div class="border-base-300 mt-6 border-t pt-6">
-      <div class="text-base-content/60 flex flex-wrap items-center justify-center gap-2">
-        <a
-          href={SITE.social.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="GitHub"
-          class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
-        >
-          <Icon name="ph:github-logo-bold" class="h-5 w-5" />
-        </a>
-        <a
-          href={SITE.social.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="LinkedIn"
-          class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
-        >
-          <Icon name="ph:linkedin-logo-bold" class="h-5 w-5" />
-        </a>
-        <a
-          href={SITE.social.twitter}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="X (Twitter)"
-          class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
-        >
-          <Icon name="ph:x-logo-bold" class="h-5 w-5" />
-        </a>
-        <a
-          href={SITE.social.facebook}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Facebook"
-          class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
-        >
-          <Icon name="ph:facebook-logo-bold" class="h-5 w-5" />
-        </a>
-        <a
-          href={SITE.social.instagram}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Instagram"
-          class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
-        >
-          <Icon name="ph:instagram-logo-bold" class="h-5 w-5" />
-        </a>
-        <a
-          href={SITE.social.dailydev}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="daily.dev (5.4k+ reads)"
-          class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
-        >
-          <Icon name="ph:newspaper-clipping-bold" class="h-5 w-5" />
-        </a>
-        <a
-          href={SITE.social.googleDev}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Google Developer Profile"
-          class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
-        >
-          <Icon name="ph:google-logo-bold" class="h-5 w-5" />
-        </a>
-        <a
-          href={SITE.social.email}
-          aria-label="Email"
-          class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
-        >
-          <Icon name="ph:envelope-simple-bold" class="h-5 w-5" />
-        </a>
-      </div>
-    </div>
+    <footer class="border-base-300 text-base-content/60 mt-6 flex flex-wrap items-center justify-center gap-2 border-t pt-6">
+      <a
+        href={SITE.social.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="GitHub"
+        class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
+      >
+        <Icon name="ph:github-logo-bold" class="size-5" />
+      </a>
+      <a
+        href={SITE.social.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="LinkedIn"
+        class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
+      >
+        <Icon name="ph:linkedin-logo-bold" class="size-5" />
+      </a>
+      <a
+        href={SITE.social.twitter}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="X (Twitter)"
+        class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
+      >
+        <Icon name="ph:x-logo-bold" class="size-5" />
+      </a>
+      <a
+        href={SITE.social.facebook}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Facebook"
+        class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
+      >
+        <Icon name="ph:facebook-logo-bold" class="size-5" />
+      </a>
+      <a
+        href={SITE.social.instagram}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Instagram"
+        class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
+      >
+        <Icon name="ph:instagram-logo-bold" class="size-5" />
+      </a>
+      <a
+        href={SITE.social.dailydev}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="daily.dev (5.4k+ reads)"
+        class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
+      >
+        <Icon name="ph:newspaper-clipping-bold" class="size-5" />
+      </a>
+      <a
+        href={SITE.social.googleDev}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Google Developer Profile"
+        class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
+      >
+        <Icon name="ph:google-logo-bold" class="size-5" />
+      </a>
+      <a
+        href={SITE.social.email}
+        aria-label="Email"
+        class="hover:text-base-content hover:bg-base-200 rounded-md p-2.5 transition-colors"
+      >
+        <Icon name="ph:envelope-simple-bold" class="size-5" />
+      </a>
+    </footer>
   </div>
 </div>
 

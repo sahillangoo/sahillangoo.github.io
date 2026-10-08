@@ -10,6 +10,11 @@
 /security.txt       /.well-known/security.txt  301
 /humans             /humans.txt                301
 /llms               /llms.txt                  301
+/okf                /okf/index.md              301
+/pricing            /pricing.md                302
+/rates              /pricing.md                302
+/agent              /.well-known/agent.json    302
+/ai                 /llms.txt                  302
 
 # Developer CLI & Terminal Aliases
 /cli                /cli.txt                   302

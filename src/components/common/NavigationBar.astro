@@ -17,22 +17,19 @@ const links = SITE.nav;
 
 <header
   id="site-header"
-  class="navbar animate-fade fixed top-0 right-0 left-0 z-40 min-h-14 border-b border-base-300/80 bg-base-100/85 p-0 backdrop-blur-md"
+  class="navbar animate-fade fixed inset-x-0 top-0 z-40 min-h-14 border-b border-base-300/80 bg-base-100/85 p-0 backdrop-blur-md"
   style="contain: paint;"
   transition:persist="main-header"
 >
   <div class="page-container flex h-14 items-center justify-between gap-4">
     <a
       href="/"
-      class="shrink-0 whitespace-nowrap font-display text-2xl font-medium italic leading-none tracking-tight text-base-content"
+      class="shrink-0 whitespace-nowrap font-display text-2xl italic leading-none tracking-tight text-base-content"
     >
       {SITE.name}
     </a>
 
-    <nav
-      id="desktop-nav"
-      class="menu menu-horizontal hidden flex-nowrap items-center gap-0.5 p-0 lg:flex"
-    >
+    <nav id="desktop-nav" aria-label="Primary" class="hidden items-center gap-0.5 lg:flex">
       {links.map((item) => {
         const active = isActive(item.href);
         return (

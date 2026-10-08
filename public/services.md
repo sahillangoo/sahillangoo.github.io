@@ -61,15 +61,19 @@ Sahil Langoo provides specialized technical consulting, systems architecture des
   - **HackerForce**: Technical e-commerce SEO, dynamic metadata pipelines, and automated sitemap generators.
   - **SoulMedia**: Headless Strapi CMS integration, OpenGraph social engines, and GA4 telemetry.
 
-## Engagement Models
+## Engagement Models & Pricing
 
-1. **Architecture Advisory & Code Audits**: Comprehensive architectural review of existing codebases, performance bottlenecks, and edge infrastructure with actionable remediation roadmaps.
-2. **Fixed-Scope System Implementations**: Turnkey delivery of edge proxies, CAPI integrations, or static platform migrations.
-3. **Fractional Systems Engineering**: Dedicated weekly bandwidth to architect, review, and ship resilient infrastructure alongside internal teams.
+1. **Architecture Advisory & Code Audits**: Comprehensive architectural review of existing codebases, performance bottlenecks, and edge infrastructure with actionable remediation roadmaps ($1,500 flat fee).
+2. **Fixed-Scope System Implementations**: Turnkey delivery of edge proxies, Meta CAPI integrations, or static platform migrations ($3,500 to $7,500).
+3. **Fractional Systems Engineering**: Dedicated weekly bandwidth (15 hrs/week) to architect, review, and ship resilient infrastructure alongside internal teams ($5,000 / month).
+
+For detailed engagement tiers, scope limits, and SLAs, see the [Pricing Specification](https://sahillangoo.in/pricing.md).
+For the machine-readable concept graph, see the [Open Knowledge Format Bundle](https://sahillangoo.in/okf/index.md).
 
 ## Inquiries & Direct Booking
 
-- **Email**: [hello@sahillangoo.in](mailto:hello@sahillangoo.in)
+- **Web Inquiries**: [https://sahillangoo.in/services/#inquiry-form](https://sahillangoo.in/services/#inquiry-form)
+- **Direct Email**: [hello@sahillangoo.in](mailto:hello@sahillangoo.in)
 - **Portfolio & Case Studies**: [https://sahillangoo.in/projects/](https://sahillangoo.in/projects/)
 - **GitHub**: [https://github.com/sahillangoo](https://github.com/sahillangoo)
 - **LinkedIn**: [https://linkedin.com/in/sahillangoo](https://linkedin.com/in/sahillangoo)

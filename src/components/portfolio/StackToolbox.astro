@@ -24,11 +24,13 @@ const visible = stackGroups.slice(0, VISIBLE_GROUPS);
 const extra = stackGroups.slice(VISIBLE_GROUPS);
 ---
 
-<div class="mt-16 border-t border-base-300 pt-8">
-  <div class="flex flex-wrap items-baseline justify-between gap-2 sm:gap-4">
-    <h3 class="text-xl font-medium tracking-tight text-base-content">Toolbox</h3>
+<section class="mt-16 border-t border-base-300 pt-8" aria-labelledby="toolbox-heading">
+  <header class="flex flex-wrap items-baseline justify-between gap-2 sm:gap-4">
+    <h3 id="toolbox-heading" class="text-xl font-medium tracking-tight text-base-content">
+      Toolbox
+    </h3>
     <p class="meta">daily tools, grouped by layer</p>
-  </div>
+  </header>
 
   <dl class="mt-5 divide-y divide-base-300 border-t border-base-300">
     {visible.map((group) => (
@@ -38,7 +40,7 @@ const extra = stackGroups.slice(VISIBLE_GROUPS);
           {group.items.map((item, i) => (
             <>
               {i > 0 && (
-                <span aria-hidden="true" class="mx-2 text-neutral">
+                <span aria-hidden="true" class="mx-2 text-base-300">
                   ·
                 </span>
               )}
@@ -52,7 +54,7 @@ const extra = stackGroups.slice(VISIBLE_GROUPS);
 
   {extra.length > 0 && (
     <details class="group border-t border-base-300">
-      <summary class="flex min-h-11 cursor-pointer list-none items-center gap-2.5 py-3 font-mono text-xs text-secondary transition-colors hover:text-base-content [&::-webkit-details-marker]:hidden">
+      <summary class="flex min-h-11 cursor-pointer items-center gap-2.5 py-3 font-mono text-xs text-secondary transition-colors hover:text-base-content">
         <span
           aria-hidden="true"
           class="grid size-5 place-items-center rounded border border-base-300 text-xs transition-transform duration-200 group-open:rotate-45 group-open:border-accent group-open:text-accent"
@@ -72,7 +74,7 @@ const extra = stackGroups.slice(VISIBLE_GROUPS);
               {group.items.map((item, i) => (
                 <>
                   {i > 0 && (
-                    <span aria-hidden="true" class="mx-2 text-neutral">
+                    <span aria-hidden="true" class="mx-2 text-base-300">
                       ·
                     </span>
                   )}
@@ -85,4 +87,4 @@ const extra = stackGroups.slice(VISIBLE_GROUPS);
       </dl>
     </details>
   )}
-</div>
+</section>

@@ -88,23 +88,21 @@
   --font-mono: var(--ff-mono), 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-display: var(--ff-display), 'Instrument Serif', ui-serif, Georgia, serif;
 
-  --color-elevated: light-dark(oklch(0.985 0.008 88), oklch(0.24 0.009 65));
+  --color-elevated: var(--color-elevated);
 
   --text-2xs: 0.6875rem;
   --text-2xs--line-height: 1rem;
-  --text-3xs: 0.65625rem;
-  --text-3xs--line-height: 0.875rem;
 
   --breakpoint-wide: 85rem;
   --breakpoint-xwide: 98rem;
 
   --scale-98: 0.98;
   --max-height-modal: 80vh;
+  --ease-editorial: cubic-bezier(0.23, 1, 0.32, 1);
   --animate-equalizer: equalizer 1.2s ease-in-out infinite;
   --animate-rise: rise 420ms var(--ease-editorial) both;
   --animate-fade: fade 320ms var(--ease-editorial) both;
   --animate-reveal: reveal 450ms var(--ease-editorial) both;
-  --ease-editorial: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 /* Zero layout recalculation: GPU compositor transform instead of height reflow */
@@ -294,7 +292,7 @@
 }
 
 @utility text-snapshot {
-  font-weight: 700;
+  font-weight: 400;
   font-size: clamp(3.25rem, 10vw, 6rem);
   line-height: 0.78;
   font-family: var(--font-display);
@@ -393,10 +391,6 @@ summary::-webkit-details-marker {
 p,
 li {
   text-wrap: pretty;
-}
-
-.text-numeral {
-  text-wrap: nowrap;
 }
 
 ::selection {
@@ -506,16 +500,6 @@ pre.astro-code span[style*='color: #6a737d'] {
   [data-reveal='visible'] {
     transform: none;
     opacity: 1;
-  }
-
-  .gh-mask-fade {
-    mask-image: linear-gradient(to right, black calc(100% - 2.5rem), transparent);
-  }
-
-  @media (width >= 40rem) {
-    .gh-mask-fade {
-      mask-image: none;
-    }
   }
 }
 
@@ -664,6 +648,7 @@ html.client-nav :is(.animate-rise, .animate-fade, .animate-reveal) {
     animation-duration: 0.01ms !important;
     animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
+    transition-delay: 0s !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }

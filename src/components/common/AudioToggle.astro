@@ -4,9 +4,10 @@ import { Icon } from 'astro-icon/components';
 
 <button
   type="button"
-  class="audio-toggle-btn grid size-8 place-items-center rounded-md text-secondary transition-colors duration-150 hover:bg-base-200 hover:text-base-content"
+  class="audio-toggle-btn btn btn-ghost btn-square size-8 text-secondary hover:text-base-content"
   title="Toggle UI Sound Effects (Procedural Web Audio)"
   aria-label="Toggle UI Sound Effects"
+  aria-pressed="false"
 >
   <Icon name="ph:speaker-high" class="audio-icon-unmuted hidden size-3.5" aria-hidden="true" />
   <Icon name="ph:speaker-slash" class="audio-icon-muted size-3.5" aria-hidden="true" />
@@ -47,11 +48,13 @@ import { Icon } from 'astro-icon/components';
         mutedIcon.classList.remove('hidden');
         btn.setAttribute('title', 'Sound Effects: Off (Click to enable)');
         btn.setAttribute('aria-label', 'Sound Effects: Off (Click to enable)');
+        btn.setAttribute('aria-pressed', 'false');
       } else {
         unmutedIcon.classList.remove('hidden');
         mutedIcon.classList.add('hidden');
         btn.setAttribute('title', 'Sound Effects: On (Click to mute)');
         btn.setAttribute('aria-label', 'Sound Effects: On (Click to mute)');
+        btn.setAttribute('aria-pressed', 'true');
       }
     });
   }

@@ -44,10 +44,7 @@ const number = typeof index === 'number' ? String(index + 1).padStart(2, '0') : 
         transition:name={`project-title-${id}`}
         class="text-project mt-2 text-base-content transition-transform duration-200 ease-editorial group-hover:translate-x-1"
       >
-        <a
-          href={`/projects/${id}/`}
-          class="after:absolute after:inset-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
-        >
+        <a href={`/projects/${id}/`} class="after:absolute after:inset-0">
           {data.title}
         </a>
       </HeadingTag>
@@ -59,7 +56,7 @@ const number = typeof index === 'number' ? String(index + 1).padStart(2, '0') : 
         {data.tags.slice(0, 4).map((tag, tagIndex) => (
           <li class="flex items-center">
             {tagIndex > 0 && (
-              <span aria-hidden="true" class="mx-2 text-neutral">
+              <span aria-hidden="true" class="mx-2 text-base-300">
                 ·
               </span>
             )}
@@ -79,24 +76,21 @@ const number = typeof index === 'number' ? String(index + 1).padStart(2, '0') : 
 ) : (
   <article
     class:list={cn(
-      'group relative grid gap-x-6 border-b border-base-300 py-8 transition-colors duration-200 hover:bg-base-200 md:grid-cols-12 md:py-10',
+      'group relative -mx-3 grid gap-x-6 rounded-md border-b border-base-300 px-3 py-8 transition-colors duration-200 hover:bg-base-200 md:-mx-5 md:grid-cols-12 md:px-5 md:py-10',
       className
     )}
   >
     <div class="md:col-span-8">
       <p class="meta">
         {number && <span class="text-accent">[{number}] </span>}
-        {data.category.replace('-', ' ')}
-        {featured && <span> · Featured</span>}
+        {data.category.replaceAll('-', ' ')}
+        {featured && ' · Featured'}
       </p>
       <HeadingTag
         transition:name={`project-title-${id}`}
         class="text-project mt-2 text-base-content transition-transform duration-200 ease-editorial group-hover:translate-x-1"
       >
-        <a
-          href={`/projects/${id}/`}
-          class="after:absolute after:inset-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
-        >
+        <a href={`/projects/${id}/`} class="after:absolute after:inset-0">
           {data.title}
         </a>
       </HeadingTag>
@@ -108,7 +102,7 @@ const number = typeof index === 'number' ? String(index + 1).padStart(2, '0') : 
         {data.tags.slice(0, 4).map((tag, tagIndex) => (
           <li class="flex items-center">
             {tagIndex > 0 && (
-              <span aria-hidden="true" class="mx-2 text-neutral">
+              <span aria-hidden="true" class="mx-2 text-base-300">
                 ·
               </span>
             )}
@@ -119,7 +113,7 @@ const number = typeof index === 'number' ? String(index + 1).padStart(2, '0') : 
     </div>
 
     <div class="mt-5 flex items-center justify-between md:col-span-4 md:mt-0 md:flex-col md:items-end md:pt-2">
-      <span class="meta text-base-content">{data.year}</span>
+      <span class="meta text-base-content tabular-nums">{data.year}</span>
       <span class="link-arrow text-sm text-secondary group-hover:text-accent">
         Case study
         <Icon name="ph:arrow-up-right-bold" class="size-4" />

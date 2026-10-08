@@ -100,6 +100,8 @@ export function createSitemapSerializer(buildDate: string = DEFAULT_BUILD_DATE) 
     }
 
     if (
+      pathname === '/services/' ||
+      pathname === '/services' ||
       pathname === '/about/' ||
       pathname === '/about' ||
       pathname === '/resume/' ||

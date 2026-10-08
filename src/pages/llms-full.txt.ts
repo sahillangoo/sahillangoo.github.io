@@ -112,19 +112,34 @@ export const GET: APIRoute = async () => {
 
 ---
 
-## 5. Production Case Studies & Deployed Systems
+## 5. Engineering Services & Engagement Pricing
+- **Architecture Advisory & Codebase Audit**: $1,500 flat fee (5-7 business days). Deep-dive review of web systems, Core Web Vitals performance profiling, edge security hardening, and written remediation roadmap.
+- **Server-Side Meta CAPI & Edge Proxy Turnkey**: $3,500 flat fee (10-14 business days). Custom Cloudflare Workers + Hono gateway, SHA-256 PII hashing, deterministic deduplication (event_id), 8.5+ EMQ score, Turnstile mitigation.
+- **High-Performance Static Web Architecture & Migration**: $4,500 to $7,500 (3-4 weeks). Turnkey migration to Astro 7.3 SSG, zero client JS by default, 100/100 Lighthouse score, Zod collections, JSON-LD rich schema.
+- **Technical SEO, GEO & Agent-Readiness Hardening**: $2,500 flat fee (7-10 business days). Schema.org overhaul, llms.txt & OKF bundle implementation, AI bot crawler policy, edge content negotiation.
+- **Fractional Systems Engineering & Advisory**: $5,000 / month ($1,500 / week). 15 hours / week dedicated bandwidth for internal teams, architecture reviews, and hands-on edge/TypeScript implementation.
+- **Machine-Readable Endpoints**:
+  - Services Overview: ${SITE.url}/services.md
+  - Pricing Details: ${SITE.url}/pricing.md
+  - Open Knowledge Format Bundle: ${SITE.url}/okf/index.md
+
+---
+
+## 6. Production Case Studies & Deployed Systems
 
 ${projectSections}
 
 ---
 
-## 6. Technical Writing & Systems Architecture Essays
+## 7. Technical Writing & Systems Architecture Essays
 
 ${blogSections}
 
 ---
 
-## 7. Contact
+## 8. Inquiries & Booking
+- **Direct Email**: ${SITE.email}
+- **Personal Email**: ${SITE.personalEmail}
 - **Hire me**: mailto:hello@sahillangoo.in
 `;
 

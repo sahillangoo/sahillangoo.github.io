@@ -29,23 +29,20 @@ const formattedDate = new Date(data.publishDate).toLocaleDateString('en-US', {
   <div class="md:col-span-9">
     <p class="meta">
       {data.category}
-      {data.readingTime && <span> · {data.readingTime}</span>}
+      {data.readingTime && ` · ${data.readingTime}`}
     </p>
     <HeadingTag
       transition:name={`blog-title-${id}`}
       class="text-writing mt-2 text-base-content transition-transform duration-200 ease-editorial group-hover:translate-x-1"
     >
-      <a
-        href={`/blog/${id}/`}
-        class="after:absolute after:inset-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-accent"
-      >
+      <a href={`/blog/${id}/`} class="after:absolute after:inset-0">
         {data.title}
       </a>
     </HeadingTag>
     <p class="measure-wide mt-3 text-base leading-relaxed text-secondary">{data.description}</p>
   </div>
   <div class="mt-4 flex items-center justify-between md:col-span-3 md:mt-0 md:flex-col md:items-end md:pt-2">
-    <time class="meta text-base-content" datetime={data.publishDate}>
+    <time class="meta text-base-content tabular-nums" datetime={data.publishDate}>
       {formattedDate}
     </time>
     <span class="link-arrow text-sm text-secondary group-hover:text-accent">

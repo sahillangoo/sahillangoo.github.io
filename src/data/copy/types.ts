@@ -316,3 +316,35 @@ export interface PrivacyPageCopy {
     email: string;
   };
 }
+
+export interface ServiceOfferingItem {
+  id: string;
+  title: string;
+  summary: string;
+  turnaround: string;
+  pricing: string;
+  scope: string[];
+  deliverables: string[];
+  metrics: string;
+}
+
+export interface ServiceFaqItem {
+  question: string;
+  answer: string;
+}
+
+export interface ServicesPageCopy {
+  seo: PageSeoMetadata;
+  header: {
+    badge: string;
+    title: string;
+    description: string;
+  };
+  offerings: ServiceOfferingItem[];
+  faqs: ServiceFaqItem[];
+  inquiry: {
+    title: string;
+    description: string;
+    cta: CtaButton;
+  };
+}

@@ -16,6 +16,8 @@
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data: https://static.cloudflareinsights.com https://challenges.cloudflare.com https://www.googletagmanager.com https://www.clarity.ms https://scripts.clarity.ms; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: data:; frame-src 'self' https://challenges.cloudflare.com https://open.spotify.com; worker-src 'self' blob: data:; connect-src 'self' blob: data: https://api.open-meteo.com https://cloudflareinsights.com https://static.cloudflareinsights.com https://challenges.cloudflare.com https://api.github.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.clarity.ms https://c.bing.com; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; upgrade-insecure-requests;
   Cache-Control: public, max-age=0, must-revalidate
+  Link: </llms.txt>; rel="describedby"; type="text/markdown"
+  Content-Signal: ai-train=yes, ai-input=yes, search=yes
 
 # 2. Block Search Engine Crawling on Cloudflare Pages Preview Subdomains & GitHub Pages
 https://*.pages.dev/*
@@ -117,4 +119,24 @@ https://sahillangoo.github.io/*
 /cli.txt
   Cache-Control: public, max-age=86400, stale-while-revalidate=43200
   Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/pricing.md
+  Cache-Control: public, max-age=86400, stale-while-revalidate=43200
+  Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/services.md
+  Cache-Control: public, max-age=86400, stale-while-revalidate=43200
+  Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/okf/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=43200
+  Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *
+
+/.well-known/agent.json
+  Cache-Control: public, max-age=86400, stale-while-revalidate=43200
+  Content-Type: application/json; charset=utf-8
   Access-Control-Allow-Origin: *

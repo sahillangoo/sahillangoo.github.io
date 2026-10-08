@@ -81,33 +81,33 @@ const breadcrumbs = [
     <!-- Back Link -->
     <a
       href="/blog/"
-      class="text-base-content/60 hover:text-accent inline-flex items-center gap-1.5 font-mono text-xs transition-colors"
+      class="text-secondary hover:text-accent inline-flex items-center gap-1.5 font-mono text-xs transition-colors"
     >
-      <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" />
+      <Icon name="ph:arrow-left-bold" class="size-3.5" />
       Back to all writing
     </a>
 
     <!-- Header -->
-    <div class="animate-rise border-base-300 border-b pb-6">
-      <div class="text-accent flex items-center gap-2 font-mono text-xs">
-        <span class="tracking-widest uppercase">Tag</span>
+    <header class="animate-rise border-base-300 border-b pb-6">
+      <p class="label-caps text-accent flex items-center gap-2">
+        <span>Tag</span>
         <span>•</span>
         <span>
           {posts.length}
           {posts.length === 1 ? 'Article' : 'Articles'}
         </span>
-      </div>
+      </p>
       <h1 class="text-section mt-3">#{tagName}</h1>
-      <p class="text-base-content/75 mt-3 text-sm leading-relaxed sm:text-base">
+      <p class="text-secondary mt-3 text-sm leading-relaxed sm:text-base">
         All technical essays, architecture guides, and benchmarks discussing #{tagName}.
       </p>
-    </div>
+    </header>
 
     <!-- Posts Grid -->
-    <div>
+    <section aria-label={`#${tagName} articles`}>
       {posts.map((post) => (
         <ArticleCard post={post} />
       ))}
-    </div>
+    </section>
   </div>
 </BaseLayout>

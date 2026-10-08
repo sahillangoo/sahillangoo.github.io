@@ -40,53 +40,49 @@ const breadcrumbs = [
 >
   <div class="page-sheet space-y-12 py-12 md:py-16">
     <!-- Header -->
-    <div class="animate-rise border-base-300 space-y-4 border-b pb-8">
-      <div class="border-base-300 bg-base-200 text-base-content/80 inline-flex items-center gap-2 rounded-full border px-3 py-0.5 font-mono text-xs">
-        <span>{colophonCopy.header.badge}</span>
-      </div>
+    <header class="animate-rise border-base-300 space-y-4 border-b pb-8">
+      <span class="border-base-300 bg-base-200 text-secondary inline-flex items-center rounded-full border px-3 py-0.5 font-mono text-xs">
+        {colophonCopy.header.badge}
+      </span>
       <h1 class="text-section">{colophonCopy.header.title}</h1>
-      <p class="text-base-content/75 text-base leading-relaxed">
-        {colophonCopy.header.description}
-      </p>
-    </div>
+      <p class="text-secondary text-base leading-relaxed">{colophonCopy.header.description}</p>
+    </header>
 
     <!-- Specifications Table / Matrix -->
-    <div
+    <section
       data-reveal="hidden"
       class="border-base-300 bg-base-200 space-y-6 rounded-md border p-6 sm:p-8"
     >
       <h2 class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase">
-        <Icon name="ph:cpu-bold" class="h-4 w-4" />
+        <Icon name="ph:cpu-bold" class="size-4" />
         {colophonCopy.sections.specificationsTitle}
       </h2>
 
-      <div class="divide-base-300/80 divide-y">
+      <dl class="divide-base-300 divide-y">
         {colophonCopy.sections.specifications.map((item) => (
           <div class="flex flex-col gap-1 py-3 text-xs sm:flex-row sm:items-center sm:justify-between">
-            <span class="text-base-content/60 font-mono font-medium">{item.label}</span>
-            <span class="text-base-content font-mono font-semibold">{item.value}</span>
+            <dt class="meta text-secondary">{item.label}</dt>
+            <dd class="text-base-content font-mono font-medium">{item.value}</dd>
           </div>
         ))}
-      </div>
-    </div>
+      </dl>
+    </section>
 
     <!-- Design & Performance Principles -->
-    <div data-reveal="hidden" class="space-y-4">
+    <section data-reveal="hidden" class="space-y-4">
       <h2 class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase">
-        <Icon name="ph:paint-brush-broad-bold" class="h-4 w-4" />
+        <Icon name="ph:paint-brush-broad-bold" class="size-4" />
         {colophonCopy.sections.principlesTitle}
       </h2>
 
-      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {colophonCopy.sections.principles.map((principle) => (
-          <div class="border-base-300 bg-base-200 hover:border-neutral flex flex-col justify-between space-y-3 rounded-md border p-6 transition-all duration-200">
-            <h3 class="text-accent font-mono text-xs font-bold tracking-wider uppercase">
-              {principle.title}
-            </h3>
-            <p class="text-base-content/75 text-xs leading-relaxed">{principle.description}</p>
-          </div>
+          <li class="border-base-300 bg-base-200 hover:border-neutral flex flex-col justify-between space-y-3 rounded-md border p-6 transition-all duration-200">
+            <h3 class="label-caps text-accent">{principle.title}</h3>
+            <p class="text-secondary text-xs leading-relaxed">{principle.description}</p>
+          </li>
         ))}
-      </div>
-    </div>
+      </ul>
+    </section>
   </div>
 </BaseLayout>

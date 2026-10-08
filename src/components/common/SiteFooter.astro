@@ -32,7 +32,7 @@ const linkClass =
     <div>
       <a
         href="/"
-        class="font-display w-fit text-3xl font-medium italic leading-none tracking-tight text-base-content transition-colors duration-150 ease-out hover:text-accent sm:text-4xl"
+        class="font-display inline-block text-3xl italic leading-none tracking-tight text-base-content transition-colors duration-150 ease-out hover:text-accent sm:text-4xl"
       >
         {navigationCopy.brand.name}
       </a>
@@ -81,7 +81,7 @@ const linkClass =
         {pipeLinks.map((item, index) => (
           <li class="flex items-center gap-3">
             {index > 0 && (
-              <span aria-hidden="true" class="text-neutral">
+              <span aria-hidden="true" class="text-base-300">
                 |
               </span>
             )}
@@ -93,8 +93,8 @@ const linkClass =
       </ul>
     </nav>
 
-    <div class="border-t border-base-300 pt-6">
-      <span class="meta">{navigationCopy.footerTelemetry.copyright(currentYear)}</span>
-    </div>
+    <p class="meta border-t border-base-300 pt-6">
+      {navigationCopy.footerTelemetry.copyright(currentYear)}
+    </p>
   </div>
 </footer>

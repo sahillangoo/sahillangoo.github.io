@@ -9,20 +9,17 @@ import { Icon } from 'astro-icon/components';
   description={notFoundCopy.seo.description}
   noindex={notFoundCopy.seo.noindex}
 >
-  <div class="animate-rise mx-auto max-w-md space-y-6 px-5 py-24 text-center">
-    <div class="text-accent font-mono text-5xl font-bold">{notFoundCopy.code}</div>
+  <section class="animate-rise page-read space-y-6 py-24 text-center">
+    <div class="text-numeral text-accent">{notFoundCopy.code}</div>
     <h1 class="text-section">{notFoundCopy.title}</h1>
-    <p class="text-base-content/70 text-sm">{notFoundCopy.description}</p>
-    <div class="pt-2">
-      <a
-        href={notFoundCopy.homeButton.href}
-        class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 gap-2 rounded-md border-0 font-mono text-xs tracking-wider uppercase"
-      >
-        {notFoundCopy.homeButton.icon && (
-          <Icon name={notFoundCopy.homeButton.icon} class="h-3.5 w-3.5" />
-        )}
-        {notFoundCopy.homeButton.label}
-      </a>
-    </div>
-  </div>
+    <a
+      href={notFoundCopy.homeButton.href}
+      class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 inline-flex mt-2 gap-2 rounded-md border-0 font-mono text-xs tracking-wider uppercase"
+    >
+      {notFoundCopy.homeButton.icon && (
+        <Icon name={notFoundCopy.homeButton.icon} class="size-3.5" />
+      )}
+      {notFoundCopy.homeButton.label}
+    </a>
+  </section>
 </BaseLayout>

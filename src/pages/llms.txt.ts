@@ -37,6 +37,12 @@ export const GET: APIRoute = async () => {
 - [Technical Colophon](${SITE.url}/colophon.md): Typography specs, OKLCH color spaces, build verification plugins, and performance benchmarks.
 - [Privacy Policy & Telemetry Disclosures](${SITE.url}/privacy.md): Telemetry disclosures, data protection guarantees, tracking technologies inventory, and analytics opt-outs.
 
+## Services, Pricing & Machine-Readable Knowledge
+
+- [Engineering Services & Consulting](${SITE.url}/services.md): Specialized capabilities in Cloudflare edge proxies, server-side Meta CAPI, Astro static architectures, and bot mitigation.
+- [Pricing & Engagement Models](${SITE.url}/pricing.md): Transparent fee structures, scope boundaries, turnaround times, and SLAs for engineering engagements.
+- [Open Knowledge Format Bundle](${SITE.url}/okf/index.md): Google OKF v0.1 concept graph covering edge architectures, CAPI gateways, and AEO engineering patterns.
+
 ## Production Case Studies
 
 ${projectLines}

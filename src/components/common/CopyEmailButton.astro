@@ -11,12 +11,11 @@ const { email } = Astro.props;
 <button
   type="button"
   data-copy-email={email}
-  class="group inline-flex h-8 items-center gap-1.5 rounded-md border border-base-300 px-2.5 font-mono text-xs text-secondary transition-all hover:border-neutral hover:text-base-content active:scale-98"
+  aria-label="Copy email address to clipboard"
+  class="btn btn-ghost btn-sm group border border-base-300 font-mono text-xs text-secondary hover:border-base-content hover:text-base-content"
 >
-  <span class="copy-icon flex items-center">
-    <Icon name="ph:copy-bold" class="icon-copy size-3.5" aria-hidden="true" />
-    <Icon name="ph:check-bold" class="icon-check hidden size-3.5 text-accent" aria-hidden="true" />
-  </span>
+  <Icon name="ph:copy-bold" class="icon-copy size-3.5" aria-hidden="true" />
+  <Icon name="ph:check-bold" class="icon-check hidden size-3.5 text-accent" aria-hidden="true" />
   <span data-copy-label aria-live="polite">
     Copy
   </span>

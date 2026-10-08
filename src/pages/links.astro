@@ -42,65 +42,71 @@ const breadcrumbs = [
   breadcrumbs={breadcrumbs}
   structuredData={linksSchema}
 >
-  <div class="mx-auto max-w-lg space-y-8 px-5 py-12 text-center md:py-16">
+  <div class="page-read space-y-8 py-12 text-center md:py-16">
     <!-- Header -->
-    <div class="animate-rise space-y-3">
-      <div class="bg-base-200 border-base-300 text-accent mx-auto flex h-16 w-16 items-center justify-center rounded-full border font-mono text-xl font-bold shadow-md">
+    <header class="animate-rise space-y-3">
+      <div class="bg-base-200 border-base-300 text-accent mx-auto flex size-16 items-center justify-center rounded-full border font-mono text-xl font-medium">
         {linksCopy.header.initials}
       </div>
       <h1 class="text-section">{SITE.name}</h1>
-      <p class="text-base-content/70 mx-auto max-w-sm text-xs sm:text-sm">{SITE.tagline}</p>
-    </div>
+      <p class="text-secondary mx-auto max-w-sm text-xs sm:text-sm">{SITE.tagline}</p>
+    </header>
 
     <!-- Link List -->
     <Fragment set:html="<!--email_off-->" />
-    <div class="space-y-3 text-left">
-      {sortedLinks.map((item) => (
-        <a
-          href={item.data.url}
-          target={item.data.url.startsWith('http') ? '_blank' : '_self'}
-          rel={item.data.url.startsWith('http') ? 'noopener noreferrer' : ''}
-          class:list={cn(
-            'group border-base-300 bg-base-200 hover:border-neutral flex items-center justify-between rounded-md border p-4 transition-all duration-200',
-            item.data.highlight && 'border-accent/40 bg-base-200/80 shadow-xs'
-          )}
-        >
-          <div>
-            <div class="text-base-content group-hover:text-accent flex items-center gap-2 text-sm font-bold transition-colors">
-              {item.data.title}
-              {item.data.highlight && (
-                <span class="badge badge-sm bg-accent/15 text-accent border-0 font-mono text-xs font-semibold">
-                  Featured
-                </span>
+    <nav aria-label="Quick links">
+      <ul class="space-y-3 text-left">
+        {sortedLinks.map((item) => (
+          <li>
+            <a
+              href={item.data.url}
+              target={item.data.url.startsWith('http') ? '_blank' : '_self'}
+              rel={item.data.url.startsWith('http') ? 'noopener noreferrer' : ''}
+              class:list={cn(
+                'group border-base-300 bg-base-200 hover:border-base-content/30 flex items-center justify-between rounded-md border p-4 transition-all duration-200',
+                item.data.highlight && 'border-accent/40 bg-base-200/80'
               )}
-            </div>
-            {item.data.description && (
-              <p class="text-base-content/60 mt-0.5 text-xs">{item.data.description}</p>
-            )}
-          </div>
-          <Icon
-            name="ph:arrow-up-right-bold"
-            class="text-base-content/60 group-hover:text-accent ml-2 h-4 w-4 shrink-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-          />
-        </a>
-      ))}
+            >
+              <div>
+                <span class="text-base-content group-hover:text-accent flex items-center gap-2 text-sm font-medium transition-colors">
+                  {item.data.title}
+                  {item.data.highlight && (
+                    <span class="badge badge-sm bg-accent/15 text-accent border-0 font-mono text-xs font-semibold">
+                      Featured
+                    </span>
+                  )}
+                </span>
+                {item.data.description && (
+                  <p class="text-secondary mt-0.5 text-xs">{item.data.description}</p>
+                )}
+              </div>
+              <Icon
+                name="ph:arrow-up-right-bold"
+                class="text-base-content/60 group-hover:text-accent ml-2 size-4 shrink-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
+            </a>
+          </li>
+        ))}
 
-      <a
-        href={linksCopy.mainSiteCard.href}
-        class="group border-base-300/80 bg-base-200 hover:border-base-300 flex items-center justify-between rounded-md border border-dashed p-4 transition-all duration-200"
-      >
-        <div>
-          <div class="text-base-content group-hover:text-accent text-sm font-semibold transition-colors">
-            {linksCopy.mainSiteCard.title}
-          </div>
-          <p class="text-base-content/60 mt-0.5 text-xs">{linksCopy.mainSiteCard.description}</p>
-        </div>
-        <Icon
-          name="ph:arrow-right-bold"
-          class="text-base-content/60 group-hover:text-accent ml-2 h-4 w-4 shrink-0"
-        />
-      </a>
-    </div>
+        <li>
+          <a
+            href={linksCopy.mainSiteCard.href}
+            class="group border-base-300/80 bg-base-200 hover:border-base-300 flex items-center justify-between rounded-md border border-dashed p-4 transition-all duration-200"
+          >
+            <div>
+              <span class="text-base-content group-hover:text-accent text-sm font-medium transition-colors">
+                {linksCopy.mainSiteCard.title}
+              </span>
+              <p class="text-secondary mt-0.5 text-xs">{linksCopy.mainSiteCard.description}</p>
+            </div>
+            <Icon
+              name="ph:arrow-right-bold"
+              class="text-base-content/60 group-hover:text-accent ml-2 size-4 shrink-0"
+            />
+          </a>
+        </li>
+      </ul>
+    </nav>
     <Fragment set:html="<!--/email_off-->" />
   </div>
 </BaseLayout>

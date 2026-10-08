@@ -237,6 +237,10 @@ const wellKnownSecurityPath = path.join(distDir, '.well-known', 'security.txt');
 const wellKnownDiscordPath = path.join(distDir, '.well-known', 'discord');
 const cliPath = path.join(distDir, 'cli.txt');
 const cnamePath = path.join(distDir, 'CNAME');
+const pricingPath = path.join(distDir, 'pricing.md');
+const servicesMdPath = path.join(distDir, 'services.md');
+const okfIndexPath = path.join(distDir, 'okf', 'index.md');
+const wellKnownAgentPath = path.join(distDir, '.well-known', 'agent.json');
 
 assert(fs.existsSync(humansPath), 'humans.txt exists in dist/');
 assert(fs.existsSync(securityPath), 'security.txt exists in dist/');
@@ -244,6 +248,10 @@ assert(fs.existsSync(wellKnownSecurityPath), '.well-known/security.txt exists in
 assert(fs.existsSync(wellKnownDiscordPath), '.well-known/discord exists in dist/');
 assert(fs.existsSync(cliPath), 'cli.txt exists in dist/');
 assert(fs.existsSync(cnamePath), 'CNAME exists in dist/');
+assert(fs.existsSync(pricingPath), 'pricing.md exists in dist/');
+assert(fs.existsSync(servicesMdPath), 'services.md exists in dist/');
+assert(fs.existsSync(okfIndexPath), 'okf/index.md exists in dist/');
+assert(fs.existsSync(wellKnownAgentPath), '.well-known/agent.json exists in dist/');
 if (fs.existsSync(cnamePath)) {
   const cnameContent = fs.readFileSync(cnamePath, 'utf-8').trim();
   assert(cnameContent === 'sahillangoo.in', 'CNAME contains sahillangoo.in');
@@ -426,6 +434,22 @@ for (const htmlFile of htmlFiles) {
       } catch (err) {
         assert(false, `Invalid JSON-LD schema parsing in ${relativePath}: ${err.message}`);
       }
+    }
+
+    // Check Semantic Landmarks & Tag Nesting Optimization
+    if (!relativePath.endsWith('.md')) {
+      assert(
+        content.includes('<main id="main-content"'),
+        `Page ${relativePath} must contain semantic <main id="main-content"> landmark`
+      );
+      assert(
+        content.includes('<header') && content.includes('</header>'),
+        `Page ${relativePath} must contain semantic <header> landmark`
+      );
+      assert(
+        !content.includes('role="list"'),
+        `Page ${relativePath} must not contain redundant role="list"`
+      );
     }
   }
 

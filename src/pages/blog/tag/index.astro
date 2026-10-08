@@ -62,39 +62,41 @@ const breadcrumbs = [
     <!-- Back Link -->
     <a
       href="/blog/"
-      class="text-base-content/60 hover:text-accent inline-flex items-center gap-1.5 font-mono text-xs transition-colors"
+      class="text-secondary hover:text-accent inline-flex items-center gap-1.5 font-mono text-xs transition-colors"
     >
-      <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" />
+      <Icon name="ph:arrow-left-bold" class="size-3.5" />
       Back to all writing
     </a>
 
     <!-- Header -->
-    <div class="animate-rise border-base-300 border-b pb-6">
-      <div class="text-accent flex items-center gap-2 font-mono text-xs">
-        <span class="tracking-widest uppercase">Taxonomy</span>
+    <header class="animate-rise border-base-300 border-b pb-6">
+      <p class="label-caps text-accent flex items-center gap-2">
+        <span>Taxonomy</span>
         <span>•</span>
         <span>{`${tags.length} Tags`}</span>
-      </div>
+      </p>
       <h1 class="text-section mt-3">Article Tags</h1>
-      <p class="text-base-content/75 mt-3 text-sm leading-relaxed sm:text-base">
+      <p class="text-secondary mt-3 text-sm leading-relaxed sm:text-base">
         Alphabetical index of engineering topics, patterns, and technologies covered in technical
         essays.
       </p>
-    </div>
+    </header>
 
     <!-- Tags Cloud / Grid -->
-    <div class="flex flex-wrap gap-2.5">
+    <ul class="flex flex-wrap gap-2.5">
       {tags.map((tag) => (
-        <a
-          href={`/blog/tag/${tag.slug}/`}
-          class="border-base-300 bg-base-200/40 hover:border-accent hover:bg-base-200/80 group inline-flex items-center gap-2 rounded-md border px-3 py-1.5 font-mono text-xs transition-all"
-        >
-          <span class="text-base-content group-hover:text-accent font-medium transition-colors">
-            #{tag.name}
-          </span>
-          <span class="text-base-content/40 text-2xs">{tag.count}</span>
-        </a>
+        <li>
+          <a
+            href={`/blog/tag/${tag.slug}/`}
+            class="border-base-300 bg-base-200/40 hover:border-accent hover:bg-base-200/80 group inline-flex items-center gap-2 rounded-md border px-3 py-1.5 font-mono text-xs transition-all"
+          >
+            <span class="text-base-content group-hover:text-accent font-medium transition-colors">
+              #{tag.name}
+            </span>
+            <span class="text-secondary text-2xs">{tag.count}</span>
+          </a>
+        </li>
       ))}
-    </div>
+    </ul>
   </div>
 </BaseLayout>

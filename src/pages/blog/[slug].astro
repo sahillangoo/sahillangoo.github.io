@@ -238,19 +238,21 @@ const breadcrumbs = [
         {data.title}
       </h1>
 
-      <p class="text-base-content/80 text-base leading-relaxed sm:text-lg">{data.description}</p>
+      <p class="text-secondary text-base leading-relaxed sm:text-lg">{data.description}</p>
 
       <!-- Tags with linked routes -->
-      <div class="flex flex-wrap gap-2 pt-2">
+      <ul aria-label="Article tags" class="flex flex-wrap gap-2 pt-2">
         {data.tags.map((tag) => (
-          <a
-            href={`/blog/tag/${slugify(tag)}/`}
-            class="bg-base-200 border-base-300 text-base-content/70 hover:border-neutral hover:text-accent rounded border px-2.5 py-0.5 font-mono text-xs transition-colors"
-          >
-            #{tag}
-          </a>
+          <li>
+            <a
+              href={`/blog/tag/${slugify(tag)}/`}
+              class="bg-base-200 border-base-300 text-secondary hover:border-base-content/30 hover:text-accent rounded border px-2.5 py-0.5 font-mono text-xs transition-colors"
+            >
+              #{tag}
+            </a>
+          </li>
         ))}
-      </div>
+      </ul>
     </header>
 
     <!-- Featured Cover Image -->
@@ -286,11 +288,11 @@ const breadcrumbs = [
         <div class="space-y-2">
           <h2
             id="faq-heading"
-            class="text-base-content text-xl font-bold tracking-tight sm:text-2xl"
+            class="text-base-content text-xl font-medium tracking-tight sm:text-2xl"
           >
             Frequently Asked Questions
           </h2>
-          <p class="text-base-content/70 text-sm">
+          <p class="text-secondary text-sm">
             Key insights, architecture decisions, and technical trade-offs.
           </p>
         </div>
@@ -307,10 +309,10 @@ const breadcrumbs = [
                 checked={index === 0 ? 'checked' : undefined}
                 aria-label={faq.question}
               />
-              <div class="collapse-title text-base-content text-base font-semibold">
+              <div class="collapse-title text-base-content text-base font-medium">
                 {faq.question}
               </div>
-              <div class="collapse-content text-base-content/80 text-sm leading-relaxed">
+              <div class="collapse-content text-secondary text-sm leading-relaxed">
                 <p>{faq.answer}</p>
               </div>
             </div>
@@ -328,13 +330,13 @@ const breadcrumbs = [
         {prevPost ? (
           <a
             href={`/blog/${prevPost.id}/`}
-            class="group border-base-300 bg-base-200 hover:border-neutral flex flex-col justify-between rounded-md border p-5 text-left transition-all duration-200"
+            class="group border-base-300 bg-base-200 hover:border-base-content/30 flex flex-col justify-between rounded-md border p-5 text-left transition-all duration-200"
             rel="prev"
           >
-            <span class="text-base-content/60 flex items-center gap-1 font-mono text-xs font-medium tracking-wider uppercase">
-              <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Previous Article
+            <span class="text-secondary flex items-center gap-1 font-mono text-xs font-medium tracking-wider uppercase">
+              <Icon name="ph:arrow-left-bold" class="size-3.5" /> Previous Article
             </span>
-            <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
+            <span class="text-base-content group-hover:text-accent mt-2 text-sm font-medium transition-colors">
               {prevPost.data.title}
             </span>
           </a>
@@ -345,13 +347,13 @@ const breadcrumbs = [
         {nextPost && (
           <a
             href={`/blog/${nextPost.id}/`}
-            class="group border-base-300 bg-base-200 hover:border-neutral flex flex-col justify-between rounded-md border p-5 text-right transition-all duration-200 sm:col-start-2"
+            class="group border-base-300 bg-base-200 hover:border-base-content/30 flex flex-col justify-between rounded-md border p-5 text-right transition-all duration-200 sm:col-start-2"
             rel="next"
           >
-            <span class="text-base-content/60 flex items-center justify-end gap-1 font-mono text-xs font-medium tracking-wider uppercase">
-              Next Article <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
+            <span class="text-secondary flex items-center justify-end gap-1 font-mono text-xs font-medium tracking-wider uppercase">
+              Next Article <Icon name="ph:arrow-right-bold" class="size-3.5" />
             </span>
-            <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
+            <span class="text-base-content group-hover:text-accent mt-2 text-sm font-medium transition-colors">
               {nextPost.data.title}
             </span>
           </a>
@@ -364,59 +366,65 @@ const breadcrumbs = [
       <div class="border-base-300 bg-base-200 flex flex-col justify-between gap-6 rounded-md border p-6 sm:flex-row sm:items-center sm:p-7">
         <div class="flex items-start gap-4">
           <!-- Author Avatar / Badge -->
-          <div class="bg-base-300 border-base-300/80 text-accent flex h-12 w-12 shrink-0 items-center justify-center rounded-full border font-mono text-base font-bold shadow-xs">
+          <div class="bg-base-300 border-base-300/80 text-accent flex size-12 shrink-0 items-center justify-center rounded-full border font-mono text-base font-medium">
             SL
           </div>
           <div class="space-y-1">
             <div class="flex items-center gap-2">
-              <span class="text-base-content font-bold">
-                <a href="/about/" class="hover:text-accent transition-colors">
-                  {SITE.name}
-                </a>
-              </span>
-              <span class="badge badge-sm bg-accent/15 text-accent border-0 font-mono text-xs font-semibold">
+              <a
+                href="/about/"
+                class="text-base-content font-medium hover:text-accent transition-colors"
+              >
+                {SITE.name}
+              </a>
+              <span class="badge badge-sm bg-accent/15 text-accent border-0 font-mono text-xs font-medium">
                 Author
               </span>
             </div>
-            <p class="text-base-content/70 max-w-md text-xs leading-relaxed">{SITE.bio}</p>
-            <div class="flex items-center gap-3 pt-1 text-xs">
-              <a
-                href={SITE.social.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-base-content/60 hover:text-accent flex items-center gap-1 transition-colors"
-              >
-                <Icon name="ph:github-logo-bold" class="h-3.5 w-3.5" />
-                GitHub
-              </a>
-              <a
-                href={SITE.social.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-base-content/60 hover:text-accent flex items-center gap-1 transition-colors"
-              >
-                <Icon name="ph:linkedin-logo-bold" class="h-3.5 w-3.5" />
-                LinkedIn
-              </a>
-              <a
-                href={SITE.social.twitter}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="text-base-content/60 hover:text-accent flex items-center gap-1 transition-colors"
-              >
-                <Icon name="ph:x-logo-bold" class="h-3.5 w-3.5" />
-                <span>X</span>
-              </a>
-            </div>
+            <p class="text-secondary max-w-md text-xs leading-relaxed">{SITE.bio}</p>
+            <ul class="flex items-center gap-3 pt-1 text-xs">
+              <li>
+                <a
+                  href={SITE.social.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-secondary hover:text-accent flex items-center gap-1 transition-colors"
+                >
+                  <Icon name="ph:github-logo-bold" class="size-3.5" />
+                  GitHub
+                </a>
+              </li>
+              <li>
+                <a
+                  href={SITE.social.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-secondary hover:text-accent flex items-center gap-1 transition-colors"
+                >
+                  <Icon name="ph:linkedin-logo-bold" class="size-3.5" />
+                  LinkedIn
+                </a>
+              </li>
+              <li>
+                <a
+                  href={SITE.social.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-secondary hover:text-accent flex items-center gap-1 transition-colors"
+                >
+                  <Icon name="ph:x-logo-bold" class="size-3.5" />X
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
         <Fragment set:html="<!--email_off-->" />
         <a
           href={SITE.social.email}
-          class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 gap-1.5 self-start rounded-md font-mono text-xs sm:self-auto"
+          class="btn btn-sm btn-ghost border border-base-300 hover:bg-base-300/50 gap-1.5 self-start rounded-md font-mono text-xs sm:self-auto"
         >
-          <Icon name="ph:paper-plane-tilt-bold" class="h-3.5 w-3.5" />
+          <Icon name="ph:paper-plane-tilt-bold" class="size-3.5" />
           Say Hello
         </a>
         <Fragment set:html="<!--/email_off-->" />

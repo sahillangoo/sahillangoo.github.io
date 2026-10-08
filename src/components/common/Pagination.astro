@@ -40,27 +40,25 @@ function getPageUrl(pageNum: number): string {
   class="border-base-300 flex flex-wrap items-center justify-between gap-3 border-t pt-8 font-mono text-xs"
 >
   <!-- Previous Button -->
-  <div class="order-1">
-    {page.url.prev ? (
-      <a
-        href={page.url.prev.endsWith('/') ? page.url.prev : `${page.url.prev}/`}
-        class="btn btn-outline btn-sm gap-1.5 rounded-md border-base-300 px-3.5 text-base-content hover:bg-base-200"
-        rel="prev"
-      >
-        <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" />
-        <span>Previous</span>
-      </a>
-    ) : (
-      <button
-        disabled
-        class="btn btn-sm btn-outline border-base-300/40 text-base-content/30 cursor-not-allowed rounded-md px-3.5 opacity-40"
-        aria-disabled="true"
-      >
-        <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" />
-        <span>Previous</span>
-      </button>
-    )}
-  </div>
+  {page.url.prev ? (
+    <a
+      href={page.url.prev.endsWith('/') ? page.url.prev : `${page.url.prev}/`}
+      class="order-1 btn btn-ghost btn-sm gap-1.5 border border-base-300 px-3.5 text-base-content hover:bg-base-200"
+      rel="prev"
+    >
+      <Icon name="ph:arrow-left-bold" class="size-3.5" />
+      Previous
+    </a>
+  ) : (
+    <button
+      type="button"
+      disabled
+      class="order-1 btn btn-ghost btn-sm gap-1.5 border border-base-300/40 px-3.5 text-base-content/30"
+    >
+      <Icon name="ph:arrow-left-bold" class="size-3.5" />
+      Previous
+    </button>
+  )}
 
   <!-- Page Numbers -->
   <div class="order-3 flex w-full justify-center items-center gap-1 sm:order-2 sm:w-auto">
@@ -73,7 +71,7 @@ function getPageUrl(pageNum: number): string {
           class:list={cn(
             'btn btn-sm btn-square text-xs font-medium transition-colors',
             isCurrent
-              ? 'btn-active bg-base-content text-base-100 hover:text-base-100 hover:bg-base-content/90 border-0 font-bold'
+              ? 'btn-active bg-base-content text-base-100 hover:text-base-100 hover:bg-base-content/90 border-0'
               : 'btn-ghost text-base-content/70 hover:bg-base-200 hover:text-base-content'
           )}
           aria-current={isCurrent ? 'page' : undefined}
@@ -86,25 +84,23 @@ function getPageUrl(pageNum: number): string {
   </div>
 
   <!-- Next Button -->
-  <div class="order-2 sm:order-3">
-    {page.url.next ? (
-      <a
-        href={page.url.next.endsWith('/') ? page.url.next : `${page.url.next}/`}
-        class="btn btn-outline btn-sm gap-1.5 rounded-md border-base-300 px-3.5 text-base-content hover:bg-base-200"
-        rel="next"
-      >
-        <span>Next</span>
-        <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
-      </a>
-    ) : (
-      <button
-        disabled
-        class="btn btn-sm btn-outline border-base-300/40 text-base-content/30 cursor-not-allowed rounded-md px-3.5 opacity-40"
-        aria-disabled="true"
-      >
-        <span>Next</span>
-        <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
-      </button>
-    )}
-  </div>
+  {page.url.next ? (
+    <a
+      href={page.url.next.endsWith('/') ? page.url.next : `${page.url.next}/`}
+      class="order-2 sm:order-3 btn btn-ghost btn-sm gap-1.5 border border-base-300 px-3.5 text-base-content hover:bg-base-200"
+      rel="next"
+    >
+      Next
+      <Icon name="ph:arrow-right-bold" class="size-3.5" />
+    </a>
+  ) : (
+    <button
+      type="button"
+      disabled
+      class="order-2 sm:order-3 btn btn-ghost btn-sm gap-1.5 border border-base-300/40 px-3.5 text-base-content/30"
+    >
+      Next
+      <Icon name="ph:arrow-right-bold" class="size-3.5" />
+    </button>
+  )}
 </nav>

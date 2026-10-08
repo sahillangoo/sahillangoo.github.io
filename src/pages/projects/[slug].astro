@@ -90,12 +90,14 @@ const breadcrumbs = [
 
     <!-- Project Header -->
     <header class="border-base-300 space-y-4 border-b pb-8">
-      <div class="text-base-content/60 flex flex-wrap items-center gap-3 font-mono text-xs">
+      <div class="text-secondary flex flex-wrap items-center gap-3 font-mono text-xs">
         <span class="badge badge-sm bg-accent/10 text-accent border-0 font-mono text-xs font-semibold tracking-wider uppercase">
-          {data.category.replace('-', ' ')}
+          {data.category.replaceAll('-', ' ')}
         </span>
         <span>•</span>
-        <span>{data.year}</span>
+        <time datetime={String(data.year)} class="tabular-nums">
+          {data.year}
+        </time>
         <span>•</span>
         <span>{data.role}</span>
       </div>
@@ -104,15 +106,15 @@ const breadcrumbs = [
         {data.title}
       </h1>
 
-      <p class="text-base-content/80 max-w-2xl text-base leading-relaxed sm:text-lg">
+      <p class="text-secondary max-w-2xl text-base leading-relaxed sm:text-lg">
         {data.description}
       </p>
 
       <!-- Action buttons -->
       <div class="flex flex-wrap items-center gap-3 pt-2">
         {!data.githubUrl && !data.liveUrl && (
-          <span class="badge badge-sm border-base-300 bg-base-200 text-base-content/75 gap-1.5 px-3 py-1 font-mono text-xs">
-            <Icon name="ph:clock-countdown-bold" class="text-accent h-3.5 w-3.5" />
+          <span class="badge badge-sm border-base-300 bg-base-200 text-secondary gap-1.5 px-3 py-1 font-mono text-xs">
+            <Icon name="ph:clock-countdown-bold" class="text-accent size-3.5" />
             In Active Development / Staging
           </span>
         )}
@@ -123,7 +125,7 @@ const breadcrumbs = [
             rel="noopener noreferrer"
             class="btn btn-sm bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 gap-2 rounded-md border-0 font-mono text-xs tracking-wider uppercase"
           >
-            <Icon name="ph:github-logo-bold" class="h-4 w-4" /> Source Code
+            <Icon name="ph:github-logo-bold" class="size-4" /> Source Code
           </a>
         )}
         {data.liveUrl && (
@@ -131,9 +133,9 @@ const breadcrumbs = [
             href={data.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="btn btn-sm btn-outline border-base-300 hover:bg-base-200 hover:text-base-content gap-2 rounded-md font-mono text-xs tracking-wider uppercase"
+            class="btn btn-sm btn-ghost border border-base-300 hover:bg-base-200 hover:text-base-content gap-2 rounded-md font-mono text-xs tracking-wider uppercase"
           >
-            <Icon name="ph:arrow-square-out-bold" class="h-4 w-4" /> Live Link
+            <Icon name="ph:arrow-square-out-bold" class="size-4" /> Live Link
           </a>
         )}
       </div>
@@ -141,16 +143,14 @@ const breadcrumbs = [
 
     <!-- Technologies Grid -->
     <div class="border-base-300 bg-base-200 rounded-md border p-5 sm:p-6">
-      <h2 class="text-accent mb-3 font-mono text-xs font-semibold tracking-widest uppercase">
-        Technologies & Tools
-      </h2>
-      <div class="flex flex-wrap gap-2">
+      <h2 class="label-caps text-accent mb-3">Technologies & Tools</h2>
+      <ul class="flex flex-wrap gap-2" aria-label="Technologies">
         {data.tags.map((tag) => (
-          <span class="badge badge-sm bg-base-300/50 text-base-content/80 border-0 font-mono text-xs">
+          <li class="badge badge-sm bg-base-300/50 text-secondary border-0 font-mono text-xs">
             {tag}
-          </span>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
 
     <!-- Case Study Body Content -->

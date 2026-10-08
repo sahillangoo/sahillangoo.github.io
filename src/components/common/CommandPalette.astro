@@ -118,6 +118,7 @@ const searchIndex = [
   <!-- Backdrop -->
   <div
     id="command-palette-backdrop"
+    aria-hidden="true"
     class="fixed inset-0 bg-base-content/70 backdrop-blur-xs transition-opacity"
   ></div>
 
@@ -126,16 +127,20 @@ const searchIndex = [
     <div class="max-h-screen-safe sm:max-h-modal flex w-full max-w-xl flex-col overflow-hidden rounded-md border border-base-300 bg-base-100/95 backdrop-blur-md">
       <!-- Search Input Header -->
       <div class="border-base-300 flex items-center gap-3 border-b px-4 py-3.5">
-        <Icon name="ph:magnifying-glass-bold" class="text-base-content/50 h-4 w-4 shrink-0" />
+        <Icon name="ph:magnifying-glass-bold" class="text-base-content/50 size-4 shrink-0" />
         <input
           id="command-palette-input"
           type="text"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-controls="command-palette-results"
+          aria-expanded="true"
           placeholder="Search pages, projects, articles..."
           class="text-base-content placeholder:text-base-content/60 w-full bg-transparent text-sm focus:outline-none sm:text-base"
           autocomplete="off"
           spellcheck="false"
         />
-        <kbd class="kbd kbd-sm border-base-300 bg-base-200 text-base-content/60 hidden items-center gap-0.5 font-mono text-xs sm:inline-flex">
+        <kbd class="kbd kbd-sm text-base-content/60 hidden items-center gap-0.5 sm:inline-flex">
           ESC
         </kbd>
       </div>
@@ -143,26 +148,27 @@ const searchIndex = [
       <!-- Results Container -->
       <div
         id="command-palette-results"
+        role="listbox"
         class="grow space-y-1 overflow-y-auto overscroll-contain p-2"
       >
         <!-- Results will be dynamically filtered and rendered via client script -->
       </div>
 
       <!-- Palette Footer -->
-      <div class="border-base-300/80 bg-base-200/50 text-base-content/60 hidden sm:flex items-center justify-between border-t px-4 py-2.5 font-mono text-xs">
+      <footer class="border-base-300/80 bg-base-200/50 text-base-content/60 hidden sm:flex items-center justify-between border-t px-4 py-2.5 font-mono text-xs">
         <div class="flex items-center gap-3">
           <span class="flex items-center gap-1">
-            <kbd class="kbd kbd-xs border-base-300 bg-base-100 font-mono">↑</kbd>
-            <kbd class="kbd kbd-xs border-base-300 bg-base-100 font-mono">↓</kbd>
-            <span>Navigate</span>
+            <kbd class="kbd kbd-xs">↑</kbd>
+            <kbd class="kbd kbd-xs">↓</kbd>
+            Navigate
           </span>
           <span class="flex items-center gap-1">
-            <kbd class="kbd kbd-xs border-base-300 bg-base-100 font-mono">↵</kbd>
-            <span>Select</span>
+            <kbd class="kbd kbd-xs">↵</kbd>
+            Select
           </span>
         </div>
         <span>{SITE.name}</span>
-      </div>
+      </footer>
     </div>
   </div>
 </div>
@@ -254,15 +260,15 @@ const searchIndex = [
     const categories = Array.from(new Set(filteredItems.map((i) => i.category)));
 
     categories.forEach((cat) => {
-      html += `<div class="px-3 pt-3 pb-1 font-mono text-xs font-semibold tracking-wider text-accent uppercase">${escapeText(cat)}</div>`;
+      html += `<div class="label-caps px-3 pt-3 pb-1 text-accent">${escapeText(cat)}</div>`;
       const catItems = filteredItems.filter((i) => i.category === cat);
       catItems.forEach((item) => {
         const isSelected = currentIndex === selectedIndex;
         html += `<a href="${escapeText(item.url)}" data-index="${currentIndex}" aria-selected="${isSelected ? 'true' : 'false'}" class="palette-result-item flex items-center justify-between rounded-lg px-3 py-2.5 text-sm transition-colors ${
           isSelected
             ? 'bg-base-300 font-medium text-base-content'
-            : 'text-base-content/75 hover:bg-base-200 hover:text-base-content'
-        }"><div class="min-w-0 pr-2"><div class="truncate text-sm font-medium text-base-content">${escapeText(item.title)}</div><div class="mt-0.5 truncate text-xs text-base-content/65">${escapeText(item.subtitle)}</div></div><span class="shrink-0 font-mono text-xs text-base-content/50">Jump ↵</span></a>`;
+            : 'text-secondary hover:bg-base-200 hover:text-base-content'
+        }"><div class="min-w-0 pr-2"><div class="truncate text-sm font-medium text-base-content">${escapeText(item.title)}</div><div class="mt-0.5 truncate text-xs text-secondary">${escapeText(item.subtitle)}</div></div><span class="shrink-0 font-mono text-xs text-secondary">Jump ↵</span></a>`;
         currentIndex++;
       });
     });

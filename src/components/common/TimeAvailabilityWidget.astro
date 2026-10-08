@@ -27,35 +27,33 @@ const initialTime = new Intl.DateTimeFormat('en-US', {
     className
   )}
 >
-  <div class="flex items-center gap-1.5">
-    <Icon name="ph:map-pin-bold" class="text-accent h-3.5 w-3.5 shrink-0" />
-    <span class="text-base-content/80 font-medium">Kashmir, India</span>
-  </div>
+  <span class="text-secondary flex items-center gap-1.5 font-medium">
+    <Icon name="ph:map-pin-bold" class="text-accent size-3.5 shrink-0" />
+    Kashmir, India
+  </span>
 
   {showWeather && (
     <>
       <span class="text-base-content/30">•</span>
-      <div class="live-weather-badge text-base-content/70 flex items-center gap-1.5 transition-opacity duration-300">
-        <Icon name="ph:sun-bold" class="text-warning h-3.5 w-3.5" />
+      <div class="live-weather-badge text-secondary flex items-center gap-1.5 transition-opacity duration-300">
+        <Icon name="ph:sun-bold" class="text-warning size-3.5" />
         <span class="weather-temp-text font-medium tabular-nums">18°C</span>
-        <span class="weather-desc-text text-base-content/50 hidden text-xs sm:inline">Clear</span>
+        <span class="weather-desc-text text-secondary hidden sm:inline">Clear</span>
       </div>
     </>
   )}
 
   <span class="text-base-content/30">•</span>
 
-  <div class="text-base-content/70 flex items-center gap-1.5">
-    <Icon name="ph:clock-bold" class="text-accent h-3.5 w-3.5" />
-    <span class="kashmir-live-clock font-mono font-medium tabular-nums">
-      {`${initialTime} IST`}
-    </span>
+  <div class="text-secondary flex items-center gap-1.5">
+    <Icon name="ph:clock-bold" class="text-accent size-3.5" />
+    <span class="kashmir-live-clock font-medium tabular-nums">{`${initialTime} IST`}</span>
   </div>
 
   {variant === 'full' && (
-    <div class="badge badge-sm badge-soft badge-success ml-auto hidden font-mono font-medium sm:inline-flex">
+    <span class="badge badge-sm badge-soft badge-success ml-auto hidden font-mono font-medium sm:inline-flex">
       Open to Select Projects
-    </div>
+    </span>
   )}
 </div>
 

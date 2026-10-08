@@ -29,25 +29,25 @@ const {
       <button
         id="audio-play-btn"
         type="button"
-        class="btn btn-circle bg-accent text-accent-content hover:bg-accent/90 border-0 shadow-md"
+        class="btn btn-circle btn-accent shadow-none"
         aria-label="Play article audio narration"
         title="Listen to this article"
       >
         <Icon
           id="audio-play-icon"
           name="line-md:pause-to-play-filled-transition"
-          class="ml-0.5 h-5 w-5"
+          class="ml-0.5 size-5"
         />
         <Icon
           id="audio-pause-icon"
           name="line-md:play-filled-to-pause-transition"
-          class="hidden h-5 w-5"
+          class="hidden size-5"
         />
       </button>
 
       <div class="flex flex-col">
         <div class="flex items-center gap-2">
-          <span class="text-base-content text-xs font-bold tracking-tight">Audio Narration</span>
+          <span class="text-base-content text-xs font-medium tracking-tight">Audio Narration</span>
           <span
             id="audio-voice-badge"
             class="badge badge-sm badge-soft badge-accent font-mono font-medium"
@@ -80,10 +80,10 @@ const {
     <!-- Right Section: Speed, Voice & Controls -->
     <div class="flex flex-wrap items-center gap-2">
       <!-- Playback Speed -->
-      <div class="join border-base-300 bg-base-100/70 rounded-lg border shadow-xs">
+      <div class="join border-base-300 bg-base-100/70 rounded-lg border">
         <button
           type="button"
-          class="audio-rate-btn join-item btn btn-xs btn-ghost active-rate bg-base-content text-base-100 font-mono text-xs font-bold"
+          class="audio-rate-btn join-item btn btn-xs btn-ghost active-rate bg-base-content text-base-100 font-mono text-xs font-medium"
           data-rate="1"
         >
           1x
@@ -169,7 +169,7 @@ const {
 <!-- Floating PiP Mini Player Dock (Appears bottom-right when playing) -->
 <div
   id="audio-pip-dock"
-  class="border-base-300 bg-base-100/95 safe-bottom shadow-lg fixed inset-x-4 z-40 hidden rounded-md border p-3.5 backdrop-blur-md sm:inset-x-auto sm:right-6 sm:bottom-6 sm:w-80"
+  class="border-base-300 bg-base-100/95 safe-bottom fixed inset-x-4 z-40 hidden rounded-md border p-3.5 backdrop-blur-md sm:inset-x-auto sm:right-6 sm:bottom-6 sm:w-80"
   role="region"
   aria-label="Floating Audio Player"
 >
@@ -177,18 +177,18 @@ const {
     <button
       id="pip-play-btn"
       type="button"
-      class="btn btn-xs btn-circle bg-accent text-accent-content border-0 shadow-xs"
+      class="btn btn-xs btn-circle btn-accent shadow-none"
       aria-label="Play/Pause narration"
     >
       <Icon
         id="pip-play-icon"
         name="line-md:pause-to-play-filled-transition"
-        class="ml-0.5 h-3 w-3"
+        class="ml-0.5 size-3"
       />
       <Icon
         id="pip-pause-icon"
         name="line-md:play-filled-to-pause-transition"
-        class="hidden h-3 w-3"
+        class="hidden size-3"
       />
     </button>
 
@@ -217,7 +217,7 @@ const {
       title="Stop and close player"
       aria-label="Close audio player"
     >
-      <Icon name="ph:x-bold" class="h-3 w-3" />
+      <Icon name="ph:x-bold" class="size-3" />
     </button>
   </div>
 </div>

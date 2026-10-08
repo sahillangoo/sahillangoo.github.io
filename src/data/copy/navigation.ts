@@ -8,6 +8,7 @@ export const navigationCopy: NavigationCopy = {
   },
   footerNav: [
     { label: 'Work', href: '/projects/' },
+    { label: 'Services', href: '/services/' },
     { label: 'Writing', href: '/blog/' },
     { label: 'Resume', href: '/resume/' },
     { label: 'About', href: '/about/' },
@@ -23,6 +24,7 @@ export const navigationCopy: NavigationCopy = {
       title: 'Navigation',
       links: [
         { label: 'Work', href: '/projects/' },
+        { label: 'Services', href: '/services/' },
         { label: 'Writing', href: '/blog/' },
         { label: 'Resume', href: '/resume/' },
         { label: 'About', href: '/about/' },

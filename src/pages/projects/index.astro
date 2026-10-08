@@ -43,15 +43,13 @@ const breadcrumbs = [
 >
   <div class="page-container space-y-12 py-12 md:py-16">
     <!-- Header -->
-    <div class="animate-rise border-base-300 max-w-3xl space-y-4 border-b pb-8">
-      <div class="badge badge-sm border-base-300 bg-base-200 text-base-content/80 font-mono text-xs">
-        <span>{projectsCopy.header.badge}</span>
-      </div>
+    <header class="animate-rise border-base-300 max-w-3xl space-y-4 border-b pb-8">
+      <span class="badge badge-sm border-base-300 bg-base-200 text-secondary font-mono text-xs">
+        {projectsCopy.header.badge}
+      </span>
       <h1 class="text-section">{projectsCopy.header.title}</h1>
-      <p class="text-base-content/75 text-base leading-relaxed">
-        {projectsCopy.header.description}
-      </p>
-    </div>
+      <p class="text-secondary text-base leading-relaxed">{projectsCopy.header.description}</p>
+    </header>
 
     <!-- Filter & Grid -->
     <ProjectFilter />

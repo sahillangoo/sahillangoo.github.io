@@ -46,13 +46,13 @@ function detailsLabel(count: number): string {
             ) : (
               <span class="text-base-content">{data.company}</span>
             )}
-            <span aria-hidden="true" class="mx-2 text-neutral">
+            <span aria-hidden="true" class="mx-2 text-base-300">
               ·
             </span>
             <span class="font-mono text-xs">{data.location}</span>
           </p>
           {lead && (
-            <p class="measure-wide mt-4 text-base leading-relaxed text-base-content/80">
+            <p class="measure-wide mt-4 text-base leading-relaxed text-secondary">
               {parseEmphasis(lead).map((segment) =>
                 segment.strong ? (
                   <strong class="font-medium text-base-content">{segment.text}</strong>
@@ -74,37 +74,35 @@ function detailsLabel(count: number): string {
                 </span>
               </summary>
               <div class="role-panel" id={panelId}>
-                <div class="overflow-hidden">
-                  <div class="pt-2 pb-1">
-                    {rest.length > 0 && (
-                      <ul class="space-y-3">
-                        {rest.map((item) => (
-                          <li class="measure-wide grid grid-cols-[1rem_minmax(0,1fr)] text-ui leading-relaxed text-base-content/80">
-                            <span aria-hidden="true" class="font-mono text-accent">
-                              ›
-                            </span>
-                            <span class="min-w-0">
-                              {parseEmphasis(item).map((segment) =>
-                                segment.strong ? (
-                                  <strong class="font-medium text-base-content">
-                                    {segment.text}
-                                  </strong>
-                                ) : (
-                                  segment.text
-                                )
-                              )}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                    {data.skills.length > 0 && (
-                      <p class="meta mt-4 text-pretty break-words">
-                        <span class="label-caps mr-2">Stack</span>
-                        {data.skills.join(' · ')}
-                      </p>
-                    )}
-                  </div>
+                <div class="overflow-hidden pt-2 pb-1">
+                  {rest.length > 0 && (
+                    <ul class="space-y-3">
+                      {rest.map((item) => (
+                        <li class="measure-wide grid grid-cols-[1rem_minmax(0,1fr)] text-ui leading-relaxed text-base-content/80">
+                          <span aria-hidden="true" class="font-mono text-accent">
+                            ›
+                          </span>
+                          <span class="min-w-0">
+                            {parseEmphasis(item).map((segment) =>
+                              segment.strong ? (
+                                <strong class="font-medium text-base-content">
+                                  {segment.text}
+                                </strong>
+                              ) : (
+                                segment.text
+                              )
+                            )}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {data.skills.length > 0 && (
+                    <p class="meta mt-4 text-pretty break-words">
+                      <span class="label-caps mr-2">Stack</span>
+                      {data.skills.join(' · ')}
+                    </p>
+                  )}
                 </div>
               </div>
             </details>
@@ -143,7 +141,7 @@ function detailsLabel(count: number): string {
     align-items: center;
     gap: 0.625rem;
     cursor: pointer;
-    border: 1px solid var(--color-neutral);
+    border: 1px solid var(--color-base-300);
     border-radius: 0.375rem;
     padding: 0.5rem 0.875rem;
     max-width: 100%;

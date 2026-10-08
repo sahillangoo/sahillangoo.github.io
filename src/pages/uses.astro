@@ -40,32 +40,39 @@ const breadcrumbs = [
 >
   <div class="page-sheet space-y-12 py-12 md:py-16">
     <!-- Header -->
-    <div class="animate-rise border-base-300 space-y-4 border-b pb-8">
-      <div class="badge badge-sm border-base-300 bg-base-200 text-base-content/80 font-mono text-xs">
-        <span>{usesCopy.header.badge}</span>
-      </div>
+    <header class="animate-rise border-base-300 space-y-4 border-b pb-8">
+      <span class="badge badge-sm border-base-300 bg-base-200 text-secondary font-mono text-xs">
+        {usesCopy.header.badge}
+      </span>
       <h1 class="text-section">{usesCopy.header.title}</h1>
-      <p class="text-base-content/75 text-base leading-relaxed">{usesCopy.header.description}</p>
-    </div>
+      <p class="text-secondary text-base leading-relaxed">{usesCopy.header.description}</p>
+    </header>
 
     <!-- Sections -->
     <div class="space-y-10">
       {usesCopy.sections.map((section) => (
-        <div data-reveal="hidden" class="space-y-4">
-          <h2 class="text-accent border-base-300/80 flex items-center gap-2 border-b pb-2 font-mono text-sm font-semibold tracking-wider uppercase">
-            <Icon name={section.icon} class="h-4 w-4" />
+        <section
+          data-reveal="hidden"
+          class="space-y-4"
+          aria-labelledby={`uses-${section.title.toLowerCase().replace(/\s+/g, '-')}`}
+        >
+          <h2
+            id={`uses-${section.title.toLowerCase().replace(/\s+/g, '-')}`}
+            class="text-accent border-base-300 flex items-center gap-2 border-b pb-2 font-mono text-sm font-medium tracking-wider uppercase"
+          >
+            <Icon name={section.icon} class="size-4" />
             {section.title}
           </h2>
 
-          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {section.items.map((item) => (
-              <div class="border-base-300 bg-base-200 hover:border-neutral flex flex-col justify-between space-y-1.5 rounded-md border p-5 transition-all duration-200">
-                <h3 class="text-base-content font-mono text-xs font-bold">{item.name}</h3>
-                <p class="text-base-content/75 text-xs leading-relaxed">{item.description}</p>
-              </div>
+              <li class="border-base-300 bg-base-200 hover:border-base-content/30 flex flex-col justify-between space-y-1.5 rounded-md border p-5 transition-all duration-200">
+                <h3 class="text-base-content font-mono text-xs font-medium">{item.name}</h3>
+                <p class="text-secondary text-xs leading-relaxed">{item.description}</p>
+              </li>
             ))}
-          </div>
-        </div>
+          </ul>
+        </section>
       ))}
     </div>
   </div>

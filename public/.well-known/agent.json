@@ -1,0 +1,21 @@
+{
+  "schema_version": "v1",
+  "name_for_model": "sahil_langoo_systems",
+  "name_for_human": "Sahil Langoo Systems Engineering & Architecture",
+  "description_for_model": "Full stack systems engineering, distributed edge proxies, server-side Meta CAPI gateways, Astro static architectures, and technical SEO/AEO consulting.",
+  "description_for_human": "Personal portfolio and systems engineering catalog of Sahil Langoo.",
+  "canonical_url": "https://sahillangoo.in/",
+  "contact_email": "hello@sahillangoo.in",
+  "author": "Sahil Langoo",
+  "location": "Srinagar, Jammu & Kashmir, India",
+  "endpoints": {
+    "llms_txt": "https://sahillangoo.in/llms.txt",
+    "llms_full_txt": "https://sahillangoo.in/llms-full.txt",
+    "services": "https://sahillangoo.in/services/",
+    "services_md": "https://sahillangoo.in/services.md",
+    "pricing_md": "https://sahillangoo.in/pricing.md",
+    "okf_index": "https://sahillangoo.in/okf/index.md",
+    "inquiry_api": "https://sahillangoo.in/api/contact",
+    "rss_feed": "https://sahillangoo.in/rss.xml"
+  }
+}

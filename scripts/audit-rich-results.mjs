@@ -64,6 +64,7 @@ const entityCounts = {
   SoftwareApplication: 0,
   SpeakableSpecification: 0,
   FAQPage: 0,
+  ProfessionalService: 0,
   Other: 0,
 };
 
@@ -288,6 +289,21 @@ for (const htmlFile of htmlFiles) {
           });
         }
       }
+
+      // 7. ProfessionalService Schema Validation
+      if (type === 'ProfessionalService') {
+        assert(
+          Boolean(entity.name) && typeof entity.name === 'string',
+          'ProfessionalService missing name',
+          relative
+        );
+        assert(
+          typeof entity.url === 'string' && entity.url.startsWith(TARGET_DOMAIN),
+          `ProfessionalService url must start with ${TARGET_DOMAIN}`,
+          relative
+        );
+        assert(Boolean(entity.provider), 'ProfessionalService missing provider', relative);
+      }
     }
   }
 }
@@ -310,6 +326,7 @@ console.log(
 );
 console.log('  * SpeakableSpecification Nodes:', entityCounts.SpeakableSpecification);
 console.log('  * FAQPage Nodes:', entityCounts.FAQPage);
+console.log('  * ProfessionalService Nodes:', entityCounts.ProfessionalService);
 console.log('  * Other Nodes:', entityCounts.Other);
 console.log(`- Violations / Errors: ${errors.length}`);
 console.log('==================================================\n');

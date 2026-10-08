@@ -174,6 +174,7 @@ export const SITE = {
   },
   nav: [
     { label: 'Work', href: '/projects/' },
+    { label: 'Services', href: '/services/' },
     { label: 'Writing', href: '/blog/' },
     { label: 'About', href: '/about/' },
     { label: 'Resume', href: '/resume/' },

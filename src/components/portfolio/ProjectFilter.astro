@@ -18,9 +18,12 @@ const categories = [
 
 <div class="space-y-8" id="project-filter-root">
   <!-- Filter Controls -->
-  <div class="border-base-300 flex flex-col gap-2.5 border-b pb-4 sm:flex-row sm:items-center">
-    <span class="text-base-content/65 shrink-0 flex items-center gap-1.5 font-mono text-xs">
-      <Icon name="ph:funnel-bold" class="h-3.5 w-3.5" />
+  <nav
+    aria-label="Filter projects"
+    class="border-base-300 flex flex-col gap-2.5 border-b pb-4 sm:flex-row sm:items-center"
+  >
+    <span class="text-secondary shrink-0 flex items-center gap-1.5 font-mono text-xs">
+      <Icon name="ph:funnel-bold" class="size-3.5" />
       Filter:
     </span>
     <div class="flex items-center gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible">
@@ -28,31 +31,32 @@ const categories = [
         <button
           type="button"
           data-filter={cat.id}
+          aria-pressed={idx === 0 ? 'true' : 'false'}
           class:list={cn(
             'filter-btn rounded-md px-3 py-2 sm:py-1.5 min-h-10 shrink-0 font-mono text-xs transition-colors',
             idx === 0
-              ? 'bg-base-content text-base-100 active-filter hover:text-base-100 hover:bg-base-content/90 font-semibold'
-              : 'bg-base-200 text-base-content/75 hover:bg-base-300 hover:text-base-content'
+              ? 'bg-base-content text-base-100 active-filter hover:text-base-100 hover:bg-base-content/90 font-medium'
+              : 'bg-base-200 text-secondary hover:bg-base-300 hover:text-base-content'
           )}
         >
           {cat.label}
         </button>
       ))}
     </div>
-  </div>
+  </nav>
 
   <!-- Projects Grid -->
-  <div id="projects-grid">
+  <ul id="projects-grid">
     {sortedProjects.map((project) => (
-      <div class="project-item" data-category={project.data.category}>
+      <li class="project-item" data-category={project.data.category}>
         <ProjectCard project={project} />
-      </div>
+      </li>
     ))}
-  </div>
+  </ul>
 
-  <div id="no-projects-msg" class="text-base-content/50 hidden py-12 text-center font-mono text-sm">
+  <p id="no-projects-msg" class="text-secondary hidden py-12 text-center font-mono text-sm">
     No projects found matching the selected filter.
-  </div>
+  </p>
 </div>
 
 <script>
@@ -78,15 +82,16 @@ const categories = [
         // Update button active state
         filterBtns.forEach((b) => {
           const isActive = b === btn;
+          b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
           b.classList.toggle('bg-base-content', isActive);
           b.classList.toggle('text-base-100', isActive);
-          b.classList.toggle('font-semibold', isActive);
+          b.classList.toggle('font-medium', isActive);
           b.classList.toggle('active-filter', isActive);
           b.classList.toggle('hover:text-base-100', isActive);
           b.classList.toggle('hover:bg-base-content/90', isActive);
 
           b.classList.toggle('bg-base-200', !isActive);
-          b.classList.toggle('text-base-content/75', !isActive);
+          b.classList.toggle('text-secondary', !isActive);
           b.classList.toggle('hover:bg-base-300', !isActive);
           b.classList.toggle('hover:text-base-content', !isActive);
         });

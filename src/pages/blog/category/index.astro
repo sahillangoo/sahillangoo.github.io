@@ -66,48 +66,48 @@ const breadcrumbs = [
     <!-- Back Link -->
     <a
       href="/blog/"
-      class="text-base-content/60 hover:text-accent inline-flex items-center gap-1.5 font-mono text-xs transition-colors"
+      class="text-secondary hover:text-accent inline-flex items-center gap-1.5 font-mono text-xs transition-colors"
     >
-      <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" />
+      <Icon name="ph:arrow-left-bold" class="size-3.5" />
       Back to all writing
     </a>
 
     <!-- Header -->
-    <div class="animate-rise border-base-300 border-b pb-6">
-      <div class="text-accent flex items-center gap-2 font-mono text-xs">
-        <span class="tracking-widest uppercase">Taxonomy</span>
+    <header class="animate-rise border-base-300 border-b pb-6">
+      <p class="label-caps text-accent flex items-center gap-2">
+        <span>Taxonomy</span>
         <span>•</span>
         <span>{`${categories.length} Categories`}</span>
-      </div>
+      </p>
       <h1 class="text-section mt-3">Article Categories</h1>
-      <p class="text-base-content/75 mt-3 text-sm leading-relaxed sm:text-base">
+      <p class="text-secondary mt-3 text-sm leading-relaxed sm:text-base">
         Browse systems engineering essays, edge architecture breakdowns, and performance benchmarks
         organized by topic area.
       </p>
-    </div>
+    </header>
 
     <!-- Category Grid -->
-    <div class="grid gap-4 sm:grid-cols-2">
+    <ul class="grid gap-4 sm:grid-cols-2">
       {categories.map((cat) => (
-        <a
-          href={`/blog/category/${cat.slug}/`}
-          class="border-base-300 bg-base-200/30 hover:border-accent hover:bg-base-200/60 group block rounded-lg border p-5 transition-all"
-        >
-          <div class="flex items-center justify-between">
-            <h2 class="text-base-content group-hover:text-accent text-lg font-bold tracking-tight transition-colors">
-              {cat.name}
-            </h2>
-            <span class="badge badge-neutral font-mono text-xs">
-              {cat.count} {cat.count === 1 ? 'post' : 'posts'}
-            </span>
-          </div>
-          {cat.recentPostTitle && (
-            <p class="text-base-content/65 mt-2 line-clamp-1 text-xs">
-              Latest: {cat.recentPostTitle}
-            </p>
-          )}
-        </a>
+        <li>
+          <a
+            href={`/blog/category/${cat.slug}/`}
+            class="border-base-300 bg-base-200/30 hover:border-accent hover:bg-base-200/60 group block rounded-lg border p-5 transition-all"
+          >
+            <div class="flex items-center justify-between">
+              <h2 class="text-base-content group-hover:text-accent text-lg font-medium tracking-tight transition-colors">
+                {cat.name}
+              </h2>
+              <span class="badge badge-neutral font-mono text-xs">
+                {cat.count} {cat.count === 1 ? 'post' : 'posts'}
+              </span>
+            </div>
+            {cat.recentPostTitle && (
+              <p class="text-secondary mt-2 line-clamp-1 text-xs">Latest: {cat.recentPostTitle}</p>
+            )}
+          </a>
+        </li>
       ))}
-    </div>
+    </ul>
   </div>
 </BaseLayout>
