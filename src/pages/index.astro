@@ -199,19 +199,19 @@ const socials = [
               {fact.href ? (
                 <a
                   href={fact.href}
-                  class="link-underline block font-display text-lg leading-tight tracking-tight hover:text-accent"
+                  class="link-underline block font-display font-normal text-2xl sm:text-3xl xl:text-4xl leading-none tracking-tight text-base-content hover:text-accent"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   {fact.value}
                 </a>
               ) : (
-                <span class="block font-display text-lg leading-tight tracking-tight">
+                <span class="block font-display font-normal text-2xl sm:text-3xl xl:text-4xl leading-none tracking-tight text-base-content">
                   {fact.value}
                 </span>
               )}
               {fact.note && (
-                <span class="mt-1 block text-sm leading-snug text-secondary">{fact.note}</span>
+                <span class="mt-1.5 block text-sm leading-snug text-secondary">{fact.note}</span>
               )}
             </dd>
           </div>

@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
-  <rect width="100" height="100" rx="24" fill="#0C0D0F"/>
-  <rect x="4" y="4" width="92" height="92" rx="20" stroke="#24272C" stroke-width="4"/>
-  <text x="50" y="62" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="44" fill="#38BDF8" text-anchor="middle" letter-spacing="-2">SL</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <rect width="100" height="100" rx="22" fill="#161310"/>
+  <rect x="2" y="2" width="96" height="96" rx="20" fill="none" stroke="#322e2a" stroke-width="2"/>
+  <text x="50" y="66" font-family="'Instrument Serif', Georgia, 'Times New Roman', serif" font-size="52" font-style="normal" font-weight="400" fill="#ebe7df" text-anchor="middle" letter-spacing="-1">SL</text>
+  <circle cx="78" cy="34" r="4" fill="#aaa7f4"/>
 </svg>

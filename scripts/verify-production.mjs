@@ -472,11 +472,16 @@ if (errors > 0) {
   );
   try {
     const { execFileSync } = await import('node:child_process');
+    console.log(`✨ Validating Favicons & OpenGraph Image Assets...`);
+    execFileSync(process.execPath, [path.join(__dirname, 'audit-og-and-favicons.mjs')], {
+      stdio: 'inherit',
+    });
+    console.log(`✨ Validating Schema.org & Google Rich Results...`);
     execFileSync(process.execPath, [path.join(__dirname, 'audit-rich-results.mjs')], {
       stdio: 'inherit',
     });
   } catch {
-    console.error('🚨 Schema.org & Rich Results verification failed.');
+    console.error('🚨 Production audit subroutine failed.');
     process.exit(1);
   }
 

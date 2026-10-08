@@ -4,8 +4,8 @@
   "description": "Systems engineer specializing in Astro, TypeScript, distributed edge architectures, and minimalist UI craft.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0c0d0f",
-  "theme_color": "#0c0d0f",
+  "background_color": "#161310",
+  "theme_color": "#161310",
   "icons": [
     {
       "src": "/favicon.svg",

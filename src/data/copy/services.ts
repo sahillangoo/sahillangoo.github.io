@@ -5,7 +5,7 @@ export const servicesCopy: ServicesPageCopy = {
     title: 'Engineering Services & Systems Architecture Consulting | Sahil Langoo',
     description:
       'Specialized engineering consulting for engineering teams and digital agencies: Cloudflare edge proxies, server-side Meta CAPI, Astro static architectures, and technical SEO/AEO.',
-    image: '/og/default.png',
+    image: '/og/services.png',
   },
   header: {
     badge: 'Capabilities & Consulting',

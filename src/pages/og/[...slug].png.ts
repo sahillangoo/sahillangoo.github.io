@@ -21,6 +21,16 @@ export async function getStaticPaths() {
       },
     },
     {
+      params: { slug: 'services' },
+      props: {
+        title: 'Engineering Services & Systems Architecture Consulting',
+        category: 'CAPABILITIES & CONSULTING',
+        description:
+          'Specialized engineering consulting: Cloudflare edge proxies, server-side Meta CAPI, Astro static architectures, and technical SEO/AEO.',
+        readingTime: 'Consulting Offerings',
+      },
+    },
+    {
       params: { slug: 'projects' },
       props: {
         title: 'Engineered Systems & Production Projects',
@@ -185,80 +195,88 @@ export const GET: APIRoute = async ({ props }) => {
     readingTime: string;
   };
 
-  const titleLines = wrapText(title, 34, 3);
-  const descLines = wrapText(description || '', 55, 2);
+  const titleLines = wrapText(title, 38, 3);
+  const descLines = wrapText(description || '', 66, 2);
+
+  // Dynamic vertical balancing based on title length
+  let titleStartY = 215;
+  if (titleLines.length === 1) titleStartY = 235;
+  else if (titleLines.length === 3) titleStartY = 190;
+
+  const titleLineHeight = 62;
 
   const titleTspans = titleLines
     .map(
       (line, i) =>
-        `<tspan x="80" y="${240 + i * 56}" font-size="44" font-weight="700" fill="#f8fafc">${escapeXml(line)}</tspan>`
+        `<tspan x="80" y="${titleStartY + i * titleLineHeight}" font-size="52" font-family="'Instrument Serif', Georgia, 'Times New Roman', serif" font-weight="400" fill="#ebe7df">${escapeXml(line)}</tspan>`
     )
     .join('');
+
+  const descStartY = titleStartY + titleLines.length * titleLineHeight + 24;
+  const descLineHeight = 36;
 
   const descTspans = descLines
     .map(
       (line, i) =>
-        `<tspan x="80" y="${270 + titleLines.length * 56 + i * 32}" font-size="22" fill="#94a3b8">${escapeXml(line)}</tspan>`
+        `<tspan x="80" y="${descStartY + i * descLineHeight}" font-size="24" font-family="'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-weight="400" fill="#ebe7df" opacity="0.9">${escapeXml(line)}</tspan>`
     )
     .join('');
 
   const svg = `
 <svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0d151c" />
-      <stop offset="100%" stop-color="#080e14" />
-    </linearGradient>
-    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.75" opacity="0.4" />
-    </pattern>
-  </defs>
+  <!-- Solid Warm Ink Canvas (#161310 - Base Dark) -->
+  <rect width="1200" height="630" fill="#161310" />
 
-  <!-- Background -->
-  <rect width="1200" height="630" fill="url(#bgGrad)" />
-  <rect width="1200" height="630" fill="url(#grid)" />
+  <!-- Outer Hairline Framing (#322e2a - Base Border) -->
+  <rect x="36" y="36" width="1128" height="558" rx="12" fill="none" stroke="#322e2a" stroke-width="1.5" />
 
-  <!-- Outer Border Frame -->
-  <rect x="30" y="30" width="1140" height="570" rx="16" fill="none" stroke="#1e293b" stroke-width="2" />
-
-  <!-- Header Category & Domain with Logo -->
-  <text x="80" y="100" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="14" font-weight="600" fill="#38bdf8" letter-spacing="2">
-    ${escapeXml(category)}
-  </text>
-  <g transform="translate(1090, 76)">
-    <rect width="30" height="30" rx="8" fill="#0c0d0f" stroke="#24272c" stroke-width="1.5" />
-    <text x="15" y="21" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-weight="900" font-size="14" fill="#38bdf8" letter-spacing="-0.5">SL</text>
+  <!-- Header: Category in Main Ink (#ebe7df) with Violet Accent Dot Indicator (#aaa7f4) -->
+  <g transform="translate(80, 88)">
+    <circle cx="4" cy="-3" r="3.5" fill="#aaa7f4" />
+    <text x="18" y="1" font-family="'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="600" fill="#ebe7df" letter-spacing="2.5">
+      ${escapeXml(category)}
+    </text>
   </g>
-  <text x="1076" y="97" text-anchor="end" font-family="monospace, monospace" font-size="16" font-weight="500" fill="#64748b">
+
+  <!-- Header: Domain & Brand Monogram in Main Ink (#ebe7df) -->
+  <text x="1064" y="92" text-anchor="end" font-family="'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="500" fill="#ebe7df" opacity="0.85">
     sahillangoo.in
   </text>
+  <g transform="translate(1080, 72)">
+    <rect width="32" height="32" rx="8" fill="#1d1916" stroke="#322e2a" stroke-width="1.2" />
+    <text x="16" y="22" text-anchor="middle" font-family="'Instrument Serif', Georgia, 'Times New Roman', serif" font-size="17" fill="#ebe7df">SL</text>
+    <circle cx="26" cy="10" r="1.8" fill="#aaa7f4" />
+  </g>
 
-  <!-- Title & Description -->
-  <text font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <!-- Typography Content Block in Main Ink (#ebe7df) -->
+  <text>
     ${titleTspans}
     ${descTspans}
   </text>
 
-  <!-- Divider Line -->
-  <line x1="80" y1="510" x2="1120" y2="510" stroke="#1e293b" stroke-width="1.5" />
+  <!-- Hairline Section Divider (#322e2a) -->
+  <line x1="80" y1="504" x2="1120" y2="504" stroke="#322e2a" stroke-width="1" />
 
-  <!-- Footer Author Badge with Official SL Brand Logo -->
-  <g transform="translate(80, 528)">
-    <rect width="46" height="46" rx="12" fill="#0c0d0f" stroke="#24272c" stroke-width="2" />
-    <text x="23" y="32" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-weight="900" font-size="20" fill="#38bdf8" letter-spacing="-1">SL</text>
+  <!-- Footer: SL Monogram Badge & Author Identity in Main Ink (#ebe7df) -->
+  <g transform="translate(80, 524)">
+    <rect width="48" height="48" rx="10" fill="#1d1916" stroke="#322e2a" stroke-width="1.5" />
+    <text x="24" y="34" text-anchor="middle" font-family="'Instrument Serif', Georgia, 'Times New Roman', serif" font-size="26" fill="#ebe7df">SL</text>
+    <circle cx="39" cy="16" r="2.5" fill="#aaa7f4" />
   </g>
-  
-  <text x="142" y="548" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="18" font-weight="600" fill="#f1f5f9">
+
+  <text x="144" y="546" font-family="'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif" font-size="19" font-weight="500" fill="#ebe7df">
     Sahil Langoo
   </text>
-  <text x="142" y="568" font-family="monospace, monospace" font-size="12" fill="#64748b">
-    Full Stack Systems Engineer • @SquadCoders
+  <text x="144" y="566" font-family="'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#ebe7df" opacity="0.85">
+    Systems Architect &amp; Full Stack Engineer • @SquadCoders
   </text>
 
-  <!-- Meta Badge -->
-  <text x="1120" y="558" text-anchor="end" font-family="monospace, monospace" font-size="15" font-weight="500" fill="#38bdf8">
-    ${escapeXml(readingTime)}
-  </text>
+  <!-- Footer: Meta / Reading Time Badge in Main Ink (#ebe7df) -->
+  <g transform="translate(1120, 555)">
+    <text x="0" y="0" text-anchor="end" font-family="'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="500" fill="#ebe7df">
+      ${escapeXml(readingTime)}
+    </text>
+  </g>
 </svg>
 `;
 
