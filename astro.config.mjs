@@ -41,6 +41,8 @@ export default defineConfig({
     enabled: false,
   },
   image: {
+    // Rasterize trusted, repository-owned SVG covers for article and social images.
+    dangerouslyProcessSVG: true,
     service: {
       entrypoint: 'astro/assets/services/sharp',
       config: {

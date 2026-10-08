@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="920" viewBox="0 0 1600 920" role="img"><title>Parsing is not permission to act</title><desc>Illustrative application policy: these checks are not built-in OKF enforcement.</desc><rect width="1600" height="920" fill="#F9F8F7"/><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#2467B0"/></marker></defs>
+<text x="76" y="100" font-family="Arial, sans-serif" font-size="44" font-weight="700" fill="#243447">Parsing is not permission to act</text>
+<text x="76" y="147" font-family="Arial, sans-serif" font-size="25" font-weight="400" fill="#526171">Illustrative application policy: these checks are not built-in OKF enforcement.</text>
+<rect x="76" y="232" width="390" height="228" rx="12" fill="#E8F1FB" stroke="#CFD9E2" stroke-width="2"/>
+<text x="100" y="286" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#243447">1  Read the bundle</text>
+<text x="100" y="332" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Parse frontmatter and links</text>
+<text x="100" y="367" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Preserve unknown fields</text>
+<text x="100" y="402" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Accept optional metadata</text>
+<rect x="605" y="232" width="390" height="228" rx="12" fill="white" stroke="#CFD9E2" stroke-width="2"/>
+<text x="629" y="286" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#243447">2  Apply local policy</text>
+<text x="629" y="332" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Check sources and freshness</text>
+<text x="629" y="367" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Check review evidence</text>
+<text x="629" y="402" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Check user permissions</text>
+<rect x="1134" y="232" width="390" height="228" rx="12" fill="white" stroke="#CFD9E2" stroke-width="2"/>
+<text x="1158" y="286" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#243447">3  Choose an action</text>
+<text x="1158" y="332" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Answer with supporting sources</text>
+<text x="1158" y="367" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Warn or request review</text>
+<text x="1158" y="402" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Refuse unauthorized action</text>
+<path d="M466 348 L595 348" stroke="#2467B0" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+<path d="M995 348 L1124 348" stroke="#2467B0" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+<rect x="76" y="549" width="1448" height="195" rx="12" fill="white" stroke="#CFD9E2" stroke-width="2"/>
+<text x="100" y="603" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#243447">Format-level acceptance</text>
+<text x="100" y="649" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">A concept can be readable and conformant without being reviewed or suitable for a high-risk action.</text>
+<text x="100" y="684" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">A recorded human reviewer is metadata; authenticate review evidence outside the bundle.</text>
+<text x="76" y="830" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#8F4D16">Policy checks belong to your application. A format cannot authenticate a reviewer or authorize a tool call.</text>
+<text x="76" y="883" font-family="Arial, sans-serif" font-size="23" font-weight="400" fill="#526171">Keep parsing, trust assessment and action authorization separate.</text>
+</svg>
