@@ -1,6 +1,6 @@
 ---
-title: 'Architecting Server-Side Meta CAPI with Cloudflare Workers and Hono'
-description: 'How we engineered a resilient, edge-proxied Meta Conversions API gateway with cryptographic event deduplication, SHA-256 PII normalization, and sub-15ms edge latency.'
+title: 'Server-Side Meta CAPI on Cloudflare'
+description: 'An edge Meta Conversions API gateway on Cloudflare Workers and Hono, with event deduplication and SHA-256 PII normalization.'
 publishDate: '2026-08-18'
 category: 'Backend & Edge'
 tags:

@@ -1,6 +1,6 @@
 ---
 title: 'Windows 11 & WSL2 Maintenance Suite'
-description: 'Production-grade Windows 11 and WSL2 maintenance, storage reclamation, developer cache pruning (pnpm, docker, bun, venv), and ReFS Dev Drive optimization engine with zero external dependencies.'
+description: 'A Windows 11 and WSL2 maintenance tool for storage cleanup, developer cache pruning, and ReFS Dev Drive tuning, with no external dependencies.'
 summary: 'Zero-dependency PowerShell maintenance engine for Windows 11 & WSL2, reclaiming 50GB+ developer storage with Pester verification.'
 category: 'open-source'
 tags:

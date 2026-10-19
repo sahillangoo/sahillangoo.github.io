@@ -41,6 +41,7 @@ export default defineConfig({
     enabled: false,
   },
   image: {
+    dangerouslyProcessSVG: true,
     service: {
       entrypoint: 'astro/assets/services/sharp',
       config: {

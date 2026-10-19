@@ -84,7 +84,6 @@ ${disallowDirectives}
 # Sitemaps
 # ------------------------------------------------------------------------------
 Sitemap: ${SITE.url}/sitemap-index.xml
-Sitemap: ${SITE.url}/sitemap.xml
 `;
 
   return new Response(content.trim() + '\n', {

@@ -2,7 +2,7 @@ import type { BlogPageCopy } from './types';
 
 export const blogCopy: BlogPageCopy = {
   seo: {
-    title: 'Engineering Journal & Technical Essays | Sahil Langoo',
+    title: 'Engineering Journal | Sahil Langoo',
     pageTitleSuffix: (page: number) => ` | Page ${page}`,
     description:
       'Technical writings, edge systems architecture, performance benchmarks, and minimalist software engineering principles by Sahil Langoo.',

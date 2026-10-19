@@ -1,7 +1,7 @@
 ---
-title: 'TAFFin.Tech | Responsive Multilingual Job Portal & Recruiter Marketplace'
+title: 'TAFFin.Tech Multilingual Job Portal'
 resumeTitle: 'Responsive Job Portal'
-description: 'Responsive, mobile-first job portal engineered with React, Redux, DaisyUI, TanStack Table, Schema.org JSON-LD, and Lingui i18n, rendering 10,000+ listings with zero latency.'
+description: 'A React and Redux job portal with DaisyUI, TanStack Table, Schema.org markup, and Lingui translations for large listing grids.'
 summary: 'Responsive job portal engineered with React, Redux, DaisyUI, and TanStack Table, featuring 10,000+ job data grids, Schema.org Google Rich Results, and multilingual i18n.'
 category: 'web-app'
 tags:

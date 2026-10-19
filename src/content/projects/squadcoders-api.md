@@ -1,6 +1,6 @@
 ---
-title: 'SquadCoders API & Studio Operations Engine'
-description: 'High-performance Go REST API built with Chi and Huma v2, featuring pure-Go SQLite persistence, RFC 9457 Problem Details error handling, constant-time authentication, and automated pure-Go PDF document generation.'
+title: 'SquadCoders API & Studio Engine'
+description: 'A Go REST API on Chi and Huma v2 with pure-Go SQLite, RFC 9457 errors, constant-time auth, and in-memory PDF generation.'
 summary: 'High-performance Go REST API with Huma v2, Chi, pure-Go SQLite, RFC 9457 error contracts, and PDF invoice generation.'
 category: 'systems'
 tags:

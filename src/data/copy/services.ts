@@ -2,9 +2,9 @@ import type { ServicesPageCopy } from './types';
 
 export const servicesCopy: ServicesPageCopy = {
   seo: {
-    title: 'Engineering Services & Systems Architecture Consulting | Sahil Langoo',
+    title: 'Systems Engineering Services | Sahil Langoo',
     description:
-      'Specialized engineering consulting for engineering teams and digital agencies: Cloudflare edge proxies, server-side Meta CAPI, Astro static architectures, and technical SEO/AEO.',
+      'Engineering help for teams that need Cloudflare edge proxies, server-side Meta CAPI, Astro static sites, and technical SEO.',
     image: '/og/services.png',
   },
   header: {

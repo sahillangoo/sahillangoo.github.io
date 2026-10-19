@@ -2,9 +2,9 @@ import type { AboutPageCopy } from './types';
 
 export const aboutCopy: AboutPageCopy = {
   seo: {
-    title: 'About Me | Engineering with Intent & Craft',
+    title: 'About | Engineering with Intent & Craft',
     description:
-      'Full Stack Systems Engineer at Eresolution Consultancy Services & SquadCoders. Background, core engineering philosophy, and architecture standards of Sahil Langoo.',
+      'Full Stack Systems Engineer at Eresolution and SquadCoders. Background, philosophy, and architecture standards of Sahil Langoo.',
     image: '/og/about.png',
   },
   hero: {

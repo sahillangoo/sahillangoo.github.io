@@ -1,7 +1,7 @@
 ---
-title: 'EduCore | Full-Stack School Management SaaS & Automated Fee Platform'
+title: 'EduCore School Management Platform'
 resumeTitle: 'Full-Stack School Management Application'
-description: 'Enterprise school management platform engineered with Next.js 16 standalone build, Shadcn UI, TanStack ecosystem, Drizzle ORM, MySQL, Better Auth RBAC, and Cloudflare edge services.'
+description: 'A school management platform on Next.js with Shadcn, TanStack, Drizzle, MySQL, Better Auth, and Cloudflare edge services.'
 summary: 'Full-stack school management SaaS with Next.js 16 standalone build on Hostinger VPS, TanStack grids, Drizzle ORM, Better Auth RBAC, and automated Telegram/email fee alerts.'
 category: 'web-app'
 tags:

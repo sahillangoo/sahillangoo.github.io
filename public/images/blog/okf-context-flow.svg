@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="920" viewBox="0 0 1600 920" role="img"><title>From scattered sources to reusable context</title><desc>Illustrative architecture: OKF defines the bundle, not the whole pipeline.</desc><rect width="1600" height="920" fill="#F9F8F7"/><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#2467B0"/></marker></defs>
+<text x="76" y="100" font-family="Arial, sans-serif" font-size="44" font-weight="700" fill="#243447">From scattered sources to reusable context</text>
+<text x="76" y="147" font-family="Arial, sans-serif" font-size="25" font-weight="400" fill="#526171">Illustrative architecture: OKF defines the bundle, not the whole pipeline.</text>
+<rect x="76" y="238" width="322" height="295" rx="12" fill="white" stroke="#CFD9E2" stroke-width="2"/>
+<text x="100" y="292" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#243447">Source systems</text>
+<text x="100" y="338" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Wikis and runbooks</text>
+<text x="100" y="373" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Schemas and API docs</text>
+<text x="100" y="408" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Policies and metric rules</text>
+<rect x="490" y="238" width="342" height="295" rx="12" fill="white" stroke="#CFD9E2" stroke-width="2"/>
+<text x="514" y="292" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#243447">Curate and review</text>
+<text x="514" y="338" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Select authoritative sources</text>
+<text x="514" y="373" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Extract concepts and links</text>
+<text x="514" y="408" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Check meaning with owners</text>
+<rect x="925" y="238" width="330" height="295" rx="12" fill="#E8F1FB" stroke="#CFD9E2" stroke-width="2"/>
+<text x="949" y="292" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#243447">OKF bundle</text>
+<text x="949" y="338" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Markdown + YAML</text>
+<text x="949" y="373" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Sources and lifecycle</text>
+<text x="949" y="408" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Versioned files and links</text>
+<path d="M398 386 L480 386" stroke="#2467B0" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+<path d="M832 386 L915 386" stroke="#2467B0" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+<text x="1268" y="386" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#243447">To tools</text>
+<path d="M1255 408 L1460 408" stroke="#2467B0" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+<rect x="76" y="648" width="700" height="155" rx="12" fill="white" stroke="#CFD9E2" stroke-width="2"/>
+<text x="100" y="702" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#243447">Consumption is a separate layer</text>
+<text x="100" y="748" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Search, retrieval or direct file reading</text>
+<text x="100" y="783" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Agents and people use the same reviewed concepts</text>
+<rect x="822" y="648" width="702" height="155" rx="12" fill="white" stroke="#CFD9E2" stroke-width="2"/>
+<text x="846" y="702" font-family="Arial, sans-serif" font-size="29" font-weight="700" fill="#243447">Permissions remain external</text>
+<text x="846" y="748" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Protect exports and authorize access</text>
+<text x="846" y="783" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#526171">Measure answer quality and maintenance effort</text>
+<text x="76" y="883" font-family="Arial, sans-serif" font-size="23" font-weight="400" fill="#526171">A shared format can reduce custom translation. Correctness still depends on sources, review and consumers.</text>
+</svg>

@@ -113,6 +113,12 @@ const breadcrumbs = [
         class="flex flex-col gap-2.5 pt-6 sm:flex-row sm:items-center"
       >
         <span class="label-caps shrink-0">{blogCopy.header.topicsLabel}</span>
+        <a
+          href="/blog/category/"
+          class="link-underline text-sm text-base-content hover:text-accent"
+        >
+          All categories
+        </a>
         <ul class="flex flex-wrap items-center gap-2">
           {categories.map((category) => (
             <li>

@@ -1,9 +1,10 @@
 # Cloudflare Pages Redirects
 
-# Sitemap Redirections (Alias all alternate sitemap paths to /sitemap.xml)
-/sitemap_index.xml  /sitemap.xml  301
-/sitemaps.xml       /sitemap.xml  301
-/sitemap/           /sitemap.xml  301
+# Sitemap Redirections (retired urlset copy points at the index)
+/sitemap.xml        /sitemap-index.xml  301
+/sitemap_index.xml  /sitemap-index.xml  301
+/sitemaps.xml       /sitemap-index.xml  301
+/sitemap/           /sitemap-index.xml  301
 
 # Developer & Security Standards Redirections
 /security           /.well-known/security.txt  301
@@ -26,10 +27,17 @@
 /work       /projects/  301
 /articles   /blog/      301
 /cv         /resume/    301
-/notes/all  /blog/      301
-/notes       /blog/      301
-/notes/      /blog/      301
-/notes/*     /blog/      301
+# Old /notes/* paths: mapped posts receive 301; unmapped notes return 410 Gone via functions/_middleware.ts
+/notes/all  /blog/  301
+/notes       /blog/  301
+/notes/      /blog/  301
+/notes/astro-view-transitions-layout-shift    /blog/hosting-astro-view-transitions-cloudflare-playbook/  301
+/notes/astro-view-transitions-layout-shift/   /blog/hosting-astro-view-transitions-cloudflare-playbook/  301
+/notes/daisyui-5-oklch-theming-tailwind-v4    /blog/daisyui-5-oklch-theming-tailwind-v4/  301
+/notes/daisyui-5-oklch-theming-tailwind-v4/   /blog/daisyui-5-oklch-theming-tailwind-v4/  301
+/notes/oklch-color-spaces                     /blog/daisyui-5-oklch-theming-tailwind-v4/  301
+/notes/oklch-color-spaces/                    /blog/daisyui-5-oklch-theming-tailwind-v4/  301
+
 /contact    /links/     301
 /contact/*  /links/     301
 /blog/why-go-is-the-definitive-language-for-the-ai-era    /blog/why-go-is-the-definitive-language-for-the-ai-agent-era/  301

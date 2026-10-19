@@ -1,6 +1,6 @@
 ---
-title: 'Bio Dissertation Generator | Academic Typesetting & Verification Suite'
-description: 'Specialized biology and zoology dissertation skill suite and automated LaTeX compiler with ICZN compliance enforcement, AST table parsing, Pandoc docx export, and 4-tier pytest verification.'
+title: 'Bio Dissertation Generator'
+description: 'A biology dissertation toolchain with ICZN checks, LaTeX compilation, AST table parsing, Pandoc export, and pytest verification.'
 summary: 'Automated biology dissertation typesetting pipeline with LaTeX/Tectonic compilation, ICZN validation, Pandoc export, and 84 pytest checks.'
 category: 'systems'
 tags:

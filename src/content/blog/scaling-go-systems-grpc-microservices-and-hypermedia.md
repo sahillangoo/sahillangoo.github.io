@@ -1,5 +1,5 @@
 ---
-title: 'Scaling Go in the AI Era: gRPC Microservices, Scratch Containers, and the Hypermedia Stack'
+title: 'Scaling Go with gRPC and Hypermedia'
 description: 'How to scale Go beyond single binaries: polyglot gRPC contracts, zero-CVE scratch containers, and pairing Go with HTMX, Alpine, and Astro.'
 publishDate: '2026-10-03'
 updatedDate: '2026-10-03'

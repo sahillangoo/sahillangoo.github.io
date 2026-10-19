@@ -51,7 +51,7 @@ ${body?.trim() ?? ''}${faqContent}
   return new Response(content.trim() + '\n', {
     headers: {
       'Content-Type': 'text/markdown; charset=utf-8',
-      'X-Robots-Tag': 'all',
+      'X-Robots-Tag': 'noindex',
     },
   });
 };

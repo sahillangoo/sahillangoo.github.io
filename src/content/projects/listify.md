@@ -1,7 +1,7 @@
 ---
-title: 'Listify: Business Discovery & Ratings Platform'
+title: 'Listify Business Discovery Platform'
 resumeTitle: 'Listify Business Discovery Platform'
-description: 'A server-rendered business directory and rating platform built in core PHP and Bootstrap with Argon2id authentication, MySQL relational schema, and Playwright test coverage.'
+description: 'A PHP and Bootstrap business directory with ratings, Argon2id authentication, a MySQL schema, and Playwright coverage.'
 summary: 'Server-rendered local business discovery, rating, and directory management platform built in core PHP and MariaDB.'
 category: 'web-app'
 tags:

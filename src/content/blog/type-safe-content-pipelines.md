@@ -1,5 +1,5 @@
 ---
-title: 'Type-Safe Content Pipelines with Zod & Astro'
+title: 'Type-Safe Content with Zod & Astro'
 description: 'How to construct schema-validated Markdown and JSON pipelines that catch data anomalies, invalid links, and frontmatter drift at compile-time.'
 publishDate: '2026-05-12'
 updatedDate: '2026-08-10'

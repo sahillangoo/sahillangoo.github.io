@@ -1,6 +1,6 @@
 ---
-title: 'The Complete Playbook: Hosting Astro with View Transitions on Cloudflare Pages'
-description: 'A step-by-step engineering guide to deploying Astro with View Transitions and hover prefetching on Cloudflare Pages without broken scripts, duplicate requests, or stale chunk errors.'
+title: 'Astro View Transitions on Cloudflare'
+description: 'Deploy Astro with View Transitions and hover prefetch on Cloudflare Pages without broken scripts, duplicate requests, or stale chunks.'
 publishDate: '2026-09-19'
 category: 'Engineering'
 tags:

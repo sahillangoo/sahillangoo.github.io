@@ -66,6 +66,10 @@ if (fs.existsSync(robotsPath)) {
     `robots.txt contains correct sitemap directive (${TARGET_DOMAIN}/sitemap-index.xml)`
   );
   assert(
+    !robotsContent.includes(`Sitemap: ${TARGET_DOMAIN}/sitemap.xml`),
+    'robots.txt does not list sitemap.xml'
+  );
+  assert(
     !robotsContent.includes('sahillangoo.com'),
     'robots.txt does not contain legacy sahillangoo.com'
   );
@@ -78,17 +82,13 @@ const sitemapPath = path.join(distDir, 'sitemap.xml');
 
 assert(fs.existsSync(sitemapIndexPath), 'sitemap-index.xml exists in dist/');
 assert(fs.existsSync(sitemap0Path), 'sitemap-0.xml exists in dist/');
-assert(fs.existsSync(sitemapPath), 'sitemap.xml exists in dist/');
+assert(
+  !fs.existsSync(sitemapPath),
+  'sitemap.xml is not generated; it redirects to sitemap-index.xml'
+);
 
-if (fs.existsSync(sitemap0Path) && fs.existsSync(sitemapPath)) {
+if (fs.existsSync(sitemap0Path)) {
   const sitemap0Content = fs.readFileSync(sitemap0Path, 'utf-8');
-  const sitemapContent = fs.readFileSync(sitemapPath, 'utf-8');
-
-  assert(
-    sitemap0Content === sitemapContent,
-    'sitemap.xml and sitemap-0.xml are synchronized identically'
-  );
-
   const todayIso = new Date().toISOString().split('T')[0];
   const urlBlocks = sitemap0Content.match(/<url>[\s\S]*?<\/url>/g) || [];
   assert(urlBlocks.length > 0, `sitemap-0.xml contains active URLs (found ${urlBlocks.length})`);
@@ -296,8 +296,8 @@ if (fs.existsSync(headersPath)) {
 if (fs.existsSync(redirectsPath)) {
   const redirectsContent = fs.readFileSync(redirectsPath, 'utf-8');
   assert(
-    redirectsContent.includes('/sitemap_index.xml  /sitemap.xml  301'),
-    '_redirects contains /sitemap_index.xml to /sitemap.xml 301 redirection'
+    redirectsContent.includes('/sitemap.xml        /sitemap-index.xml  301'),
+    '_redirects sends /sitemap.xml to /sitemap-index.xml'
   );
 }
 
@@ -449,6 +449,32 @@ for (const htmlFile of htmlFiles) {
       assert(
         !content.includes('role="list"'),
         `Page ${relativePath} must not contain redundant role="list"`
+      );
+    }
+
+    // Check Title Length and Word Count for indexed pages
+    const isNoindex = /<meta\s+name=["']robots["']\s+content=["'][^"']*noindex/i.test(content);
+    const titleMatch = content.match(/<title>([^<]+)<\/title>/i);
+    if (titleMatch && !isNoindex) {
+      const titleText = titleMatch[1];
+      assert(
+        titleText.length <= 60,
+        `Title in ${relativePath} must not exceed 60 characters (found: ${titleText.length} chars - "${titleText}")`
+      );
+    }
+
+    if (!isNoindex && !relativePath.endsWith('.md')) {
+      const cleanText = content
+        .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, ' ')
+        .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, ' ')
+        .replace(/<svg\b[^<]*(?:(?!<\/svg>)<[^<]*)*<\/svg>/gi, ' ')
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      const wordCount = cleanText ? cleanText.split(/\s+/).length : 0;
+      assert(
+        wordCount >= 250,
+        `Indexable page ${relativePath} must contain at least 250 words (found: ${wordCount} words)`
       );
     }
   }

@@ -1,6 +1,6 @@
 ---
-title: 'Zero Main-Thread Blocking: Offloading Analytics and Marketing Scripts with Partytown in Astro'
-description: 'How to maintain a 100 Lighthouse Performance score and 0ms Total Blocking Time while running enterprise analytics and marketing tags inside background Web Workers.'
+title: 'Offload Scripts with Partytown in Astro'
+description: 'Keep a 100 Lighthouse score and 0ms blocking time by running analytics and marketing tags in Partytown web workers.'
 publishDate: '2026-08-14'
 category: 'Performance'
 tags:

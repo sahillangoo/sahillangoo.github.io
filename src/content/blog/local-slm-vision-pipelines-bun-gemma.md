@@ -1,6 +1,6 @@
 ---
-title: 'Engineering Local AI Workflows: Running Gemma Vision Pipelines with Bun and LM Studio'
-description: 'How to build high-throughput, private CLI tools that use local Small Language Models (SLMs) and vision architectures for automated SEO image optimization and metadata extraction.'
+title: 'Local Gemma Vision Pipelines with Bun'
+description: 'Build private CLI tools that run local Gemma vision models on Bun and LM Studio to rename and optimize images for SEO.'
 publishDate: '2026-08-10'
 category: 'AI & Tooling'
 tags:

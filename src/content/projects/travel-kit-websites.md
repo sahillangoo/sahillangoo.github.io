@@ -1,5 +1,5 @@
 ---
-title: 'TravelKit Modular Platform & Lead Scoring Engine'
+title: 'TravelKit Platform and Lead Scoring'
 description: 'A modular travel agency architecture pairing static Astro frontend portals with a high-throughput Flight PHP lead scoring and queue dispatching backend.'
 summary: 'Multi-tenant travel platform generator with dynamic itineraries and high-performance Flight PHP REST API backend.'
 category: 'web-app'

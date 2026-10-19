@@ -90,11 +90,13 @@ https://sahillangoo.github.io/*
   Cache-Control: public, max-age=86400, stale-while-revalidate=43200
   Content-Type: text/plain; charset=utf-8
   Access-Control-Allow-Origin: *
+  X-Robots-Tag: noindex
 
 /llms-full.txt
   Cache-Control: public, max-age=86400, stale-while-revalidate=43200
   Content-Type: text/plain; charset=utf-8
   Access-Control-Allow-Origin: *
+  X-Robots-Tag: noindex
 
 /humans.txt
   Cache-Control: public, max-age=86400, stale-while-revalidate=43200
@@ -125,16 +127,28 @@ https://sahillangoo.github.io/*
   Cache-Control: public, max-age=86400, stale-while-revalidate=43200
   Content-Type: text/plain; charset=utf-8
   Access-Control-Allow-Origin: *
+  X-Robots-Tag: noindex
 
 /services.md
   Cache-Control: public, max-age=86400, stale-while-revalidate=43200
   Content-Type: text/plain; charset=utf-8
   Access-Control-Allow-Origin: *
+  X-Robots-Tag: noindex
+
+/*.md
+  X-Robots-Tag: noindex
+
+/blog/*.md
+  X-Robots-Tag: noindex
+
+/projects/*.md
+  X-Robots-Tag: noindex
 
 /okf/*
   Cache-Control: public, max-age=86400, stale-while-revalidate=43200
   Content-Type: text/plain; charset=utf-8
   Access-Control-Allow-Origin: *
+  X-Robots-Tag: noindex
 
 /.well-known/agent.json
   Cache-Control: public, max-age=86400, stale-while-revalidate=43200

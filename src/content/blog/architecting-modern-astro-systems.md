@@ -1,5 +1,5 @@
 ---
-title: 'Architecting Ultra-Fast Static Systems with Astro & Modern Tooling'
+title: 'Fast Static Systems with Astro'
 description: 'How we build high-throughput, zero-JavaScript web architectures using Astro static site generation, content collections, and islands architecture.'
 publishDate: '2026-07-18'
 updatedDate: '2026-08-15'

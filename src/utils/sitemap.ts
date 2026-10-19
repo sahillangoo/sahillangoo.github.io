@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { slugify } from './slugify.ts';
 import { ChangeFreqEnum, type SitemapItem } from '@astrojs/sitemap';
 
 const DEFAULT_BUILD_DATE = new Date().toISOString().split('T')[0] ?? '2026-10-01';
@@ -39,7 +40,32 @@ function extractContentDates(contentDir: string, buildDate: string): Map<string,
   return map;
 }
 
+const CATEGORY_REGEX = /category:\s*['"]([^'"]+)['"]/;
+
+function singlePostCategorySlugs(): Set<string> {
+  const counts = new Map<string, number>();
+  const dirPath = path.resolve(process.cwd(), 'src/content/blog');
+  if (!fs.existsSync(dirPath)) return new Set();
+
+  for (const file of fs.readdirSync(dirPath)) {
+    if (!file.endsWith('.md')) continue;
+    const content = fs.readFileSync(path.join(dirPath, file), 'utf-8');
+    if (DRAFT_REGEX.test(content)) continue;
+    const match = content.match(CATEGORY_REGEX);
+    const category = match?.[1];
+    if (!category) continue;
+    counts.set(category, (counts.get(category) ?? 0) + 1);
+  }
+
+  const slugs = new Set<string>();
+  for (const [category, count] of counts) {
+    if (count < 2) slugs.add(slugify(category));
+  }
+  return slugs;
+}
+
 export function createSitemapSerializer(buildDate: string = DEFAULT_BUILD_DATE) {
+  const thinCategorySlugs = singlePostCategorySlugs();
   const blogDates = extractContentDates('blog', buildDate);
   const projectDates = extractContentDates('projects', buildDate);
 
@@ -140,6 +166,13 @@ export function createSitemapSerializer(buildDate: string = DEFAULT_BUILD_DATE) 
         priority: 0.8,
         lastmod: date,
       };
+    }
+
+    if (
+      pathname.startsWith('/blog/category/') &&
+      thinCategorySlugs.has(pathname.replace(/^\/blog\/category\//, '').replace(/\/$/, ''))
+    ) {
+      return undefined;
     }
 
     // 6. Categories & Secondary Pages (Priority 0.60)

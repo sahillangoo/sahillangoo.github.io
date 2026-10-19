@@ -68,6 +68,7 @@ const breadcrumbs = [
 <BaseLayout
   title={`${categoryName} Articles`}
   description={`Browse technical articles, benchmarks, and engineering analyses in ${categoryName} by Sahil Langoo.`}
+  noindex={posts.length < 2}
   image="/og/blog.png"
   keywords={[
     categoryName,
@@ -104,6 +105,14 @@ const breadcrumbs = [
       <p class="text-secondary mt-3 text-sm leading-relaxed sm:text-base">
         Curated engineering essays and architecture breakdowns focusing on
         {categoryName.toLowerCase()}.
+      </p>
+      <p class="text-secondary mt-2 text-xs leading-relaxed">
+        Technical essays in this collection examine practical implementation patterns, performance
+        trade-offs, and architectural guardrails within{categoryName.toLowerCase()}. Each
+        publication focuses on verified production techniques, reproducible benchmarks, and minimal
+        engineering overhead. All architectural code patterns and configuration samples are tested
+        against production workloads to ensure predictable latency, strict type safety, and
+        maintainable operational surface area.
       </p>
     </header>
 

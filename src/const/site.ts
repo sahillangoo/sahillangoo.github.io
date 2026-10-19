@@ -1,6 +1,6 @@
 export const SITE = {
   name: 'Sahil Langoo',
-  title: 'Sahil Langoo | Full Stack Systems Engineer & Systems Architect',
+  title: 'Sahil Langoo | Full Stack Systems Engineer',
   tagline:
     'Engineering resilient edge systems, high-throughput web architectures & minimalist interfaces.',
   bio: 'Full Stack Systems Engineer at Eresolution Consultancy Services & Co-Founder at SquadCoders. Specializing in TypeScript, Astro 7.3 static architectures, distributed edge proxies, and minimalist UI craft.',

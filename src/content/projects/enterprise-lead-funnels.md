@@ -1,7 +1,7 @@
 ---
-title: 'Multi-Tenant Ad-Driven Platform & Enterprise Edge API Infrastructure'
+title: 'Multi-Tenant Ads and Edge APIs'
 resumeTitle: 'Multi-Tenant Ad-Driven Platform'
-description: 'Multi-tenant ad-driven platform with isolated client branding, Git branch Vercel CI/CD, Meta Pixel and server-side CAPI tracking, SHA-256 PII protection, and Razorpay subscription workflows.'
+description: 'A multi-tenant ad platform with isolated branding, Vercel branch deploys, Meta Pixel and server-side CAPI, and Razorpay subscriptions.'
 summary: 'Multi-tenant ad platform featuring Git branch Vercel CI/CD, hybrid Meta CAPI attribution, SHA-256 PII protection, and Razorpay webhook reconciliation.'
 category: 'systems'
 tags:

@@ -42,6 +42,11 @@ export const colophonCopy: ColophonPageCopy = {
         description:
           'Integrated with a custom build-time verification plugin (astroSiteQualityEnforcer) that crawls all rendered HTML in dist/ to prevent broken links, missing assets, and trailing slash discrepancies before deployment.',
       },
+      {
+        title: 'Editorial Minimalism & Accessibility',
+        description:
+          'Structured with semantic HTML5 landmarks, WCAG 2.2 AAA color contrast compliance across light and dark modes, responsive typography scalers, and hardware-accelerated motion tokens.',
+      },
     ],
   },
 };

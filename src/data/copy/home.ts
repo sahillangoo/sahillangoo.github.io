@@ -2,7 +2,7 @@ import type { HomePageCopy } from './types';
 
 export const homeCopy: HomePageCopy = {
   seo: {
-    title: 'Sahil Langoo | Full Stack Systems Engineer & Systems Architect',
+    title: 'Sahil Langoo | Full Stack Systems Engineer',
     description:
       'Engineering portfolio and systems catalog of Sahil Langoo. Specializing in Astro architectures, TypeScript, distributed edge proxies, and minimalist UI craft.',
     image: '/og/default.png',

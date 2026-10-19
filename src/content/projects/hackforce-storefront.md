@@ -1,5 +1,5 @@
 ---
-title: 'HackerForce | Red Team Operations & Tactical Intelligence Platform'
+title: 'HackerForce Training Platform'
 resumeTitle: 'HackerForce Storefront'
 description: 'High-performance static offensive security training ecosystem, Armory operation sandboxes, and structured course platform built with Astro and Tailwind CSS.'
 summary: 'Offensive security training ecosystem, scenario-driven Armory sandboxes, and zero-server Pagefind search architecture.'

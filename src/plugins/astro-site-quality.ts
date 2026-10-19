@@ -277,7 +277,10 @@ export default function astroSiteQualityEnforcer(): AstroIntegration {
           const { formattedSitemap, latestLastmod } = sortAndFormatSitemap(rawSitemap);
 
           fs.writeFileSync(sitemap0Path, formattedSitemap, 'utf-8');
-          fs.writeFileSync(sitemapPath, formattedSitemap, 'utf-8');
+
+          if (fs.existsSync(sitemapPath)) {
+            fs.unlinkSync(sitemapPath);
+          }
 
           if (fs.existsSync(sitemapIndexPath)) {
             const rawIndex = fs.readFileSync(sitemapIndexPath, 'utf-8');

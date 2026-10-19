@@ -52,6 +52,23 @@ export async function onRequest(context: PagesContext): Promise<Response> {
   const url = new URL(request.url);
   const pathname = url.pathname;
 
+  // Old /notes/* paths that were not 301-redirected via _redirects return 410 Gone
+  const cleanPath = pathname.replace(/\/$/, '');
+  if (cleanPath === '/notes' || cleanPath.startsWith('/notes/')) {
+    return new Response(
+      '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>410 Gone</title><meta name="robots" content="noindex, follow"></head><body style="font-family:sans-serif;padding:2rem;"><h1>410 Gone</h1><p>This note has been permanently removed or consolidated into the engineering journal.</p><p><a href="/blog/">Explore the engineering journal &rarr;</a></p></body></html>',
+      {
+        status: 410,
+        statusText: 'Gone',
+        headers: {
+          'Content-Type': 'text/html; charset=utf-8',
+          'X-Robots-Tag': 'noindex',
+          'Cache-Control': 'public, max-age=604800',
+        },
+      }
+    );
+  }
+
   // Skip static assets and internal paths
   if (
     pathname.startsWith('/_astro/') ||
@@ -79,6 +96,7 @@ export async function onRequest(context: PagesContext): Promise<Response> {
           newHeaders.set('Vary', 'Accept');
           newHeaders.set('Content-Signal', 'ai-train=yes, ai-input=yes, search=yes');
           newHeaders.set('Link', '</llms.txt>; rel="describedby"; type="text/markdown"');
+          newHeaders.set('X-Robots-Tag', 'noindex');
           return new Response(assetRes.body, {
             status: 200,
             headers: newHeaders,

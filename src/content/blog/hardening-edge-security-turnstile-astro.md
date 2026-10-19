@@ -1,5 +1,5 @@
 ---
-title: 'Eliminating Bot Spam at the Edge: Integrating Cloudflare Turnstile with Static Astro Forms'
+title: 'Turnstile Bot Checks for Astro Forms'
 description: 'How to implement invisible, privacy-preserving bot detection on static Astro forms using Cloudflare Turnstile and serverless edge verification.'
 publishDate: '2026-08-05'
 category: 'Security'

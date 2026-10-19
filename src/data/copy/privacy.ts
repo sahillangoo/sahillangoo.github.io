@@ -4,7 +4,7 @@ export const privacyCopy: PrivacyPageCopy = {
   seo: {
     title: 'Privacy Policy & Telemetry Disclosures | Sahil Langoo',
     description:
-      'Statutory privacy policy, data fiduciary disclosures, and telemetry inventory for sahillangoo.in under the Digital Personal Data Protection Act, 2023 (DPDPA), GDPR, and CCPA.',
+      'Privacy policy, data fiduciary disclosures, and telemetry inventory for sahillangoo.in under the DPDPA 2023, GDPR, and CCPA.',
     image: '/og/privacy.png',
   },
   header: {

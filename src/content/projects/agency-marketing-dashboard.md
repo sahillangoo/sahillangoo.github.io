@@ -1,7 +1,7 @@
 ---
-title: 'AgencyPulse | Marketing Operations Dashboard & Go Event Gateway'
+title: 'AgencyPulse Marketing Dashboard'
 resumeTitle: 'Agency Marketing Dashboard & Go CAPI Engine'
-description: 'High-throughput marketing operations dashboard and event dispatch engine engineered in Go, optimizing multi-client lead intake, form validation, and server-side Meta CAPI streaming.'
+description: 'A Go marketing dashboard and event gateway for multi-client lead intake, form validation, and server-side Meta CAPI streaming.'
 summary: 'Marketing operations dashboard and server-side event gateway built in Go, handling agency client form submissions, SHA-256 PII hashing, and low-latency Meta CAPI event delivery.'
 category: 'systems'
 tags:
