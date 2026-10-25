@@ -96,10 +96,10 @@ const breadcrumbs = [
     <!-- Category Grid -->
     <ul class="grid gap-4 sm:grid-cols-2">
       {categories.map((cat) => (
-        <li>
+        <li data-reveal="hidden">
           <a
             href={`/blog/category/${cat.slug}/`}
-            class="border-base-300 bg-base-200/30 hover:border-accent hover:bg-base-200/60 group block rounded-lg border p-5 transition-all"
+            class="border-base-300 bg-base-200/30 hover:border-accent hover:bg-base-200/60 group block rounded-lg border p-5 transition-colors"
           >
             <div class="flex items-center justify-between">
               <h2 class="text-base-content group-hover:text-accent text-lg font-medium tracking-tight transition-colors">

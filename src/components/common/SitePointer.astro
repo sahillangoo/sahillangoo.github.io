@@ -1,0 +1,217 @@
+<span class="site-pointer" data-site-pointer aria-hidden="true">
+  <span class="site-pointer__ring"></span>
+  <span class="site-pointer__dot"></span>
+</span>
+
+<script>
+  const activePointers = new Map<HTMLElement, () => void>();
+
+  function mountPointer(root: HTMLElement): void {
+    if (activePointers.has(root)) return;
+
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (!finePointer.matches || reducedMotion.matches) return;
+
+    const controller = new AbortController();
+    let x = 0;
+    let y = 0;
+    let targetX = 0;
+    let targetY = 0;
+    let velocityX = 0;
+    let velocityY = 0;
+    let lastFrame = 0;
+    let frame = 0;
+    let hasPointer = false;
+
+    const hide = (): void => {
+      hasPointer = false;
+      root.dataset.visible = 'false';
+      root.dataset.interactive = 'false';
+      delete root.dataset.pressed;
+      if (frame) cancelAnimationFrame(frame);
+      frame = 0;
+      lastFrame = 0;
+    };
+
+    const animate = (timestamp: number): void => {
+      if (!hasPointer || reducedMotion.matches) {
+        hide();
+        return;
+      }
+
+      const delta = lastFrame ? Math.min((timestamp - lastFrame) / 1000, 0.032) : 0;
+      lastFrame = timestamp;
+      const damping = Math.exp(-28 * delta);
+      velocityX = (velocityX + (targetX - x) * 300 * delta) * damping;
+      velocityY = (velocityY + (targetY - y) * 300 * delta) * damping;
+      x += velocityX * delta;
+      y += velocityY * delta;
+
+      root.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+
+      const settled =
+        Math.abs(targetX - x) < 0.12 &&
+        Math.abs(targetY - y) < 0.12 &&
+        Math.abs(velocityX) < 1.5 &&
+        Math.abs(velocityY) < 1.5;
+      if (settled) {
+        x = targetX;
+        y = targetY;
+        velocityX = 0;
+        velocityY = 0;
+        root.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+        frame = 0;
+        lastFrame = 0;
+        return;
+      }
+
+      frame = requestAnimationFrame(animate);
+    };
+
+    const schedule = (): void => {
+      if (frame) return;
+      lastFrame = 0;
+      frame = requestAnimationFrame(animate);
+    };
+
+    const onPointerMove = (event: PointerEvent): void => {
+      if (event.pointerType === 'touch') return;
+      targetX = event.clientX;
+      targetY = event.clientY;
+
+      const target = event.target instanceof Element ? event.target : null;
+      root.dataset.interactive = String(
+        Boolean(
+          target?.closest('a[href], button, input, select, textarea, summary, [role="button"]')
+        )
+      );
+
+      if (!hasPointer) {
+        x = targetX;
+        y = targetY;
+        root.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+        hasPointer = true;
+        root.dataset.visible = 'true';
+      }
+      schedule();
+    };
+
+    const onPointerOut = (event: PointerEvent): void => {
+      if (event.relatedTarget === null) hide();
+    };
+    const onMotionPreferenceChange = (): void => {
+      if (reducedMotion.matches) hide();
+    };
+
+    window.addEventListener('pointermove', onPointerMove, {
+      passive: true,
+      signal: controller.signal,
+    });
+    window.addEventListener('pointerout', onPointerOut, {
+      passive: true,
+      signal: controller.signal,
+    });
+    window.addEventListener(
+      'pointerdown',
+      () => {
+        root.dataset.pressed = 'true';
+      },
+      { passive: true, signal: controller.signal }
+    );
+    window.addEventListener(
+      'pointerup',
+      () => {
+        delete root.dataset.pressed;
+      },
+      { passive: true, signal: controller.signal }
+    );
+    reducedMotion.addEventListener('change', onMotionPreferenceChange, {
+      signal: controller.signal,
+    });
+
+    const cleanup = (): void => {
+      if (!activePointers.delete(root)) return;
+      controller.abort();
+      hide();
+      root.removeAttribute('style');
+      delete root.dataset.enabled;
+    };
+
+    root.dataset.enabled = 'true';
+    activePointers.set(root, cleanup);
+  }
+
+  function setupPointers(): void {
+    document.querySelectorAll<HTMLElement>('[data-site-pointer]').forEach(mountPointer);
+  }
+
+  function teardownPointers(): void {
+    activePointers.forEach((cleanup) => cleanup());
+  }
+
+  setupPointers();
+  document.addEventListener('astro:page-load', setupPointers);
+  document.addEventListener('astro:before-swap', teardownPointers);
+</script>
+
+<style>
+  .site-pointer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 100;
+    transition: opacity 140ms var(--ease-editorial);
+    will-change: transform;
+    width: 1.5rem;
+    height: 1.5rem;
+    pointer-events: none;
+  }
+
+  .site-pointer[data-enabled='true'] {
+    display: block;
+  }
+
+  .site-pointer[data-visible='true'] {
+    opacity: 1;
+  }
+
+  .site-pointer__ring {
+    position: absolute;
+    transition:
+      transform 180ms var(--ease-editorial),
+      background-color 180ms var(--ease-editorial);
+    inset: 0;
+    border: 1px solid var(--color-accent);
+    border-radius: 50%;
+    background: color-mix(in oklab, var(--color-accent) 7%, transparent);
+  }
+
+  .site-pointer__dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: var(--color-accent);
+    width: 0.25rem;
+    height: 0.25rem;
+  }
+
+  .site-pointer[data-interactive='true'] .site-pointer__ring {
+    transform: scale(1.45);
+    background: color-mix(in oklab, var(--color-accent) 14%, transparent);
+  }
+
+  .site-pointer[data-pressed='true'] .site-pointer__ring {
+    transform: scale(0.84);
+  }
+
+  @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+    .site-pointer {
+      display: none;
+    }
+  }
+</style>

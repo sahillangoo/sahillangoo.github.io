@@ -43,7 +43,7 @@ function getPageUrl(pageNum: number): string {
   {page.url.prev ? (
     <a
       href={page.url.prev.endsWith('/') ? page.url.prev : `${page.url.prev}/`}
-      class="order-1 btn btn-ghost btn-sm gap-1.5 border border-base-300 px-3.5 text-base-content hover:bg-base-200"
+      class="order-1 btn btn-ghost btn-sm border border-base-300 px-3.5 text-base-content hover:bg-base-200"
       rel="prev"
     >
       <Icon name="ph:arrow-left-bold" class="size-3.5" />
@@ -53,7 +53,7 @@ function getPageUrl(pageNum: number): string {
     <button
       type="button"
       disabled
-      class="order-1 btn btn-ghost btn-sm gap-1.5 border border-base-300/40 px-3.5 text-base-content/30"
+      class="order-1 btn btn-ghost btn-sm border border-base-300/40 px-3.5 text-base-content/30"
     >
       <Icon name="ph:arrow-left-bold" class="size-3.5" />
       Previous
@@ -69,9 +69,9 @@ function getPageUrl(pageNum: number): string {
         <a
           href={url}
           class:list={cn(
-            'btn btn-sm btn-square text-xs font-medium transition-colors',
+            'btn btn-sm btn-square text-xs',
             isCurrent
-              ? 'btn-active bg-base-content text-base-100 hover:text-base-100 hover:bg-base-content/90 border-0'
+              ? 'btn-primary'
               : 'btn-ghost text-base-content/70 hover:bg-base-200 hover:text-base-content'
           )}
           aria-current={isCurrent ? 'page' : undefined}
@@ -87,7 +87,7 @@ function getPageUrl(pageNum: number): string {
   {page.url.next ? (
     <a
       href={page.url.next.endsWith('/') ? page.url.next : `${page.url.next}/`}
-      class="order-2 sm:order-3 btn btn-ghost btn-sm gap-1.5 border border-base-300 px-3.5 text-base-content hover:bg-base-200"
+      class="order-2 sm:order-3 btn btn-ghost btn-sm border border-base-300 px-3.5 text-base-content hover:bg-base-200"
       rel="next"
     >
       Next
@@ -97,7 +97,7 @@ function getPageUrl(pageNum: number): string {
     <button
       type="button"
       disabled
-      class="order-2 sm:order-3 btn btn-ghost btn-sm gap-1.5 border border-base-300/40 px-3.5 text-base-content/30"
+      class="order-2 sm:order-3 btn btn-ghost btn-sm border border-base-300/40 px-3.5 text-base-content/30"
     >
       Next
       <Icon name="ph:arrow-right-bold" class="size-3.5" />

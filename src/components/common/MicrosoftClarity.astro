@@ -4,7 +4,7 @@
  *
  * Runs on the main thread (Clarity cannot execute in Web Workers due to MutationObserver
  * and CSSMediaRule dependencies), but completely decoupled from the critical path:
- * - Zero impact on LCP and TBT (loaded exclusively after first user interaction or idle callback).
+ * - Defers loading until after first user interaction or an idle callback.
  * - Yields via setTimeout to avoid degrading INP on the initial interaction.
  * - Synchronizes route state and takes fresh DOM snapshots on Astro ClientRouter navigations.
  *
@@ -25,7 +25,12 @@ const isConfigured = Boolean(
 
 {isConfigured && <script is:inline define:vars={{ clarityId }}>
   (function () {
-    if (window.location.hostname !== 'sahillangoo.in' || navigator.webdriver) {
+    if (
+      window.location.hostname !== 'sahillangoo.in' ||
+      navigator.webdriver ||
+      navigator.globalPrivacyControl === true ||
+      navigator.doNotTrack === '1'
+    ) {
       return;
     }
 

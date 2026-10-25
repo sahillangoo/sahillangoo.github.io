@@ -15,13 +15,10 @@ import { Icon } from 'astro-icon/components';
   let btnElement: HTMLElement | null = null;
   let isVisible = false;
   let scrollTicking = false;
-  let lenisListenerAttached = false;
 
   function updateButtonVisibility(): void {
     if (!btnElement) return;
-    const win = window as unknown as LenisWindow;
-    const currentY = win.lenis?.scroll ?? window.scrollY;
-    const shouldShow = currentY > 400;
+    const shouldShow = window.scrollY > 400;
 
     if (shouldShow !== isVisible) {
       isVisible = shouldShow;
@@ -47,16 +44,7 @@ import { Icon } from 'astro-icon/components';
     e.stopPropagation();
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const win = window as unknown as LenisWindow;
-    if (win.lenis) {
-      win.lenis.scrollTo(0, {
-        duration: prefersReducedMotion ? 0 : 1.4,
-        immediate: prefersReducedMotion,
-        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      });
-    } else {
-      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
-    }
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
   });
 
   // Native window scroll registered once at module evaluation
@@ -72,12 +60,5 @@ import { Icon } from 'astro-icon/components';
     btnElement = document.getElementById('back-to-top');
     isVisible = false;
     updateButtonVisibility();
-
-    // Attach to Lenis singleton exactly once
-    const win = window as unknown as LenisWindow;
-    if (win.lenis && !lenisListenerAttached) {
-      win.lenis.on('scroll', onScroll);
-      lenisListenerAttached = true;
-    }
   });
 </script>

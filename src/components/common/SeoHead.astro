@@ -269,9 +269,10 @@ const safeJsonLdString = JSON.stringify(schemaGraph).replace(/</g, '\\u003c');
   <link rel="manifest" href="/site.webmanifest" />
   <link rel="canonical" href={formattedCanonical} />
 
-  <!-- Critical Above-the-Fold Self-hosted Font Preloads -->
-  <Font cssVariable="--ff-display" preload={[{ weight: 400, style: 'normal' }]} />
+  <!-- Self-hosted font faces with critical preloads -->
+  <Font cssVariable="--ff-display" preload={[{ weight: 400, style: 'italic' }]} />
   <Font cssVariable="--ff-sans" preload={[{ weight: 400, style: 'normal' }]} />
+  <Font cssVariable="--ff-mono" />
 
   <!-- RSS Feed Autodiscovery -->
   <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />

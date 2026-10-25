@@ -18,7 +18,8 @@ const categories = [
 
 <div class="space-y-8" id="project-filter-root">
   <!-- Filter Controls -->
-  <nav
+  <div
+    role="group"
     aria-label="Filter projects"
     class="border-base-300 flex flex-col gap-2.5 border-b pb-4 sm:flex-row sm:items-center"
   >
@@ -33,17 +34,17 @@ const categories = [
           data-filter={cat.id}
           aria-pressed={idx === 0 ? 'true' : 'false'}
           class:list={cn(
-            'filter-btn rounded-md px-3 py-2 sm:py-1.5 min-h-10 shrink-0 font-mono text-xs transition-colors',
+            'btn filter-btn shrink-0 px-3 font-mono text-xs',
             idx === 0
-              ? 'bg-base-content text-base-100 active-filter hover:text-base-100 hover:bg-base-content/90 font-medium'
-              : 'bg-base-200 text-secondary hover:bg-base-300 hover:text-base-content'
+              ? 'btn-primary'
+              : 'btn-ghost bg-base-200 text-secondary hover:bg-base-300 hover:text-base-content'
           )}
         >
           {cat.label}
         </button>
       ))}
     </div>
-  </nav>
+  </div>
 
   <!-- Projects Grid -->
   <ul id="projects-grid">
@@ -83,13 +84,8 @@ const categories = [
         filterBtns.forEach((b) => {
           const isActive = b === btn;
           b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-          b.classList.toggle('bg-base-content', isActive);
-          b.classList.toggle('text-base-100', isActive);
-          b.classList.toggle('font-medium', isActive);
-          b.classList.toggle('active-filter', isActive);
-          b.classList.toggle('hover:text-base-100', isActive);
-          b.classList.toggle('hover:bg-base-content/90', isActive);
-
+          b.classList.toggle('btn-primary', isActive);
+          b.classList.toggle('btn-ghost', !isActive);
           b.classList.toggle('bg-base-200', !isActive);
           b.classList.toggle('text-secondary', !isActive);
           b.classList.toggle('hover:bg-base-300', !isActive);

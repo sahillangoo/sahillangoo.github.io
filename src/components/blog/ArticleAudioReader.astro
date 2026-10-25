@@ -17,7 +17,7 @@ const {
 <!-- In-Article Audio Player Card -->
 <div
   id="article-audio-player"
-  class="border-base-300/80 bg-base-200/50 my-6 flex flex-col gap-3.5 rounded-md border p-4 transition-all duration-200 sm:p-5"
+  class="border-base-300/80 bg-base-200/50 my-6 flex flex-col gap-3.5 rounded-md border p-4 sm:p-5"
   data-target={articleSelector}
   data-title={articleTitle}
   data-reading-time={readingTime}
@@ -29,7 +29,7 @@ const {
       <button
         id="audio-play-btn"
         type="button"
-        class="btn btn-circle btn-accent shadow-none"
+        class="btn btn-circle btn-accent"
         aria-label="Play article audio narration"
         title="Listen to this article"
       >
@@ -83,8 +83,9 @@ const {
       <div class="join border-base-300 bg-base-100/70 rounded-lg border">
         <button
           type="button"
-          class="audio-rate-btn join-item btn btn-xs btn-ghost active-rate bg-base-content text-base-100 font-mono text-xs font-medium"
+          class="audio-rate-btn join-item btn btn-xs btn-primary font-mono text-xs"
           data-rate="1"
+          aria-pressed="true"
         >
           1x
         </button>
@@ -92,6 +93,7 @@ const {
           type="button"
           class="audio-rate-btn join-item btn btn-xs btn-ghost font-mono text-xs"
           data-rate="1.25"
+          aria-pressed="false"
         >
           1.25x
         </button>
@@ -99,6 +101,7 @@ const {
           type="button"
           class="audio-rate-btn join-item btn btn-xs btn-ghost font-mono text-xs"
           data-rate="1.5"
+          aria-pressed="false"
         >
           1.5x
         </button>
@@ -129,7 +132,7 @@ const {
       <!-- Voice Selector Dropdown -->
       <select
         id="audio-voice-select"
-        class="select select-xs border-base-300 bg-base-100/80 text-base-content font-mono text-xs focus:outline-hidden"
+        class="select select-xs border-base-300 bg-base-100/80 text-base-content font-mono text-xs"
         aria-label="Select Narration Voice"
       >
         <option value="auto">Auto (Best Natural)</option>
@@ -177,7 +180,7 @@ const {
     <button
       id="pip-play-btn"
       type="button"
-      class="btn btn-xs btn-circle btn-accent shadow-none"
+      class="btn btn-xs btn-circle btn-accent"
       aria-label="Play/Pause narration"
     >
       <Icon
@@ -767,10 +770,12 @@ const {
         () => {
           const rate = parseFloat(btn.dataset.rate || '1');
           playbackRate = rate;
-          rateBtns.forEach((b) =>
-            b.classList.remove('bg-base-content', 'text-base-100', 'font-bold')
-          );
-          btn.classList.add('bg-base-content', 'text-base-100', 'font-bold');
+          rateBtns.forEach((rateBtn) => {
+            const isSelected = rateBtn === btn;
+            rateBtn.setAttribute('aria-pressed', String(isSelected));
+            rateBtn.classList.toggle('btn-primary', isSelected);
+            rateBtn.classList.toggle('btn-ghost', !isSelected);
+          });
 
           if (isPlaying) {
             safeCancelSynth();

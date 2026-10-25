@@ -5,6 +5,8 @@ import MobileNavigation from '@components/common/MobileNavigation.astro';
 import SiteFooter from '@components/common/SiteFooter.astro';
 import CommandPalette from '@components/common/CommandPalette.astro';
 import BackToTop from '@components/common/BackToTop.astro';
+import SitePointer from '@components/common/SitePointer.astro';
+import ScrollMotion from '@components/common/ScrollMotion.astro';
 import CodeCopyScript from '@components/common/CodeCopyScript.astro';
 import TextQuoteTooltip from '@components/blog/TextQuoteTooltip.astro';
 import CloudflareEmailDecoder from '@components/common/CloudflareEmailDecoder.astro';
@@ -14,7 +16,6 @@ import MicrosoftClarity from '@components/common/MicrosoftClarity.astro';
 import { SITE } from '@const/site.ts';
 import { cn } from '@utils/cn.ts';
 import '@styles/global.css';
-import 'lenis/dist/lenis.css';
 
 export interface Props {
   title?: string;
@@ -93,6 +94,8 @@ const {
     <MobileNavigation />
     <CommandPalette />
     <BackToTop />
+    <SitePointer />
+    <ScrollMotion />
     <CodeCopyScript />
     <TextQuoteTooltip />
     <CloudflareEmailDecoder />
@@ -107,35 +110,11 @@ const {
     {!hideFooter && <SiteFooter />}
 
     <script>
-      import Lenis from 'lenis';
-
-      function getOrCreateLenis(): Lenis {
-        const win = window as unknown as LenisWindow;
-        if (!win.lenis) {
-          win.lenis = new Lenis({
-            autoRaf: true,
-            lerp: 0.055,
-            smoothWheel: true,
-            syncTouch: false,
-            wheelMultiplier: 0.9,
-            touchMultiplier: 1.0,
-            autoResize: true,
-            stopInertiaOnNavigate: true,
-            respectReducedMotion: true,
-          });
-        }
-        return win.lenis;
-      }
-
-      getOrCreateLenis();
-
       function getElementByHash(rawHash: string): HTMLElement | null {
         const cleanId = rawHash.replace(/^#/, '');
         return cleanId ? document.getElementById(cleanId) : null;
       }
 
-      let pageLifecycleController: AbortController | null = null;
-      let revealObserver: IntersectionObserver | null = null;
       let scrollToTopOnLoad = false;
 
       document.addEventListener(
@@ -180,143 +159,30 @@ const {
         true
       );
 
-      function setupHashSmoothScroll(signal: AbortSignal): void {
-        document.addEventListener(
-          'click',
-          (e: MouseEvent): void => {
-            if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-
-            const eventTarget = e.target;
-            const origin =
-              eventTarget instanceof Element
-                ? eventTarget
-                : eventTarget instanceof Node
-                  ? eventTarget.parentElement
-                  : null;
-            const anchor = origin?.closest<HTMLAnchorElement>('a[href*="#"]');
-            if (!anchor) return;
-
-            const rawHref = anchor.getAttribute('href');
-            if (!rawHref) return;
-
-            let targetUrl: URL;
-            try {
-              targetUrl = new URL(rawHref, window.location.href);
-            } catch {
-              return;
-            }
-
-            const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
-            const targetPath = targetUrl.pathname.replace(/\/$/, '') || '/';
-            if (targetUrl.origin !== window.location.origin || currentPath !== targetPath) return;
-
-            const hash = targetUrl.hash;
-            if (!hash || hash === '#') return;
-
-            const targetEl = hash === '#top' ? document.body : getElementByHash(hash);
-            if (!targetEl) return;
-
-            e.preventDefault();
-            e.stopPropagation();
-
-            const lenis = getOrCreateLenis();
-            const prefersReducedMotion = window.matchMedia(
-              '(prefers-reduced-motion: reduce)'
-            ).matches;
-
-            lenis.scrollTo(targetEl, {
-              duration: prefersReducedMotion ? 0 : 1.2,
-              immediate: prefersReducedMotion,
-              force: true,
-              easing: (t) => 1 - Math.pow(1 - t, 3),
-            });
-
-            if (window.location.hash !== hash) {
-              window.history.pushState(null, '', hash);
-            }
-          },
-          { capture: true, signal }
-        );
-      }
-
-      function setupReveals(): void {
-        revealObserver?.disconnect();
-        const nodes = document.querySelectorAll<HTMLElement>('[data-reveal]');
-        if (!nodes.length) return;
-
-        if (!('IntersectionObserver' in window)) {
-          nodes.forEach((node) => {
-            node.dataset.reveal = 'visible';
-          });
-          return;
-        }
-
-        revealObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (!entry.isIntersecting) return;
-              const node = entry.target as HTMLElement;
-              node.dataset.reveal = 'visible';
-              revealObserver?.unobserve(node);
-            });
-          },
-          { rootMargin: '0px 0px -8% 0px', threshold: 0.05 }
-        );
-
-        nodes.forEach((node) => {
-          if (node.dataset.reveal === 'visible') return;
-          revealObserver?.observe(node);
-        });
-      }
-
       document.addEventListener('astro:before-swap', (event) => {
         const incoming = (event as Event & { newDocument?: Document }).newDocument;
         incoming?.documentElement.classList.add('client-nav');
         document.documentElement.classList.add('client-nav');
 
-        pageLifecycleController?.abort();
-        pageLifecycleController = null;
-
-        revealObserver?.disconnect();
-        revealObserver = null;
-
         document.body.style.overflow = '';
-        const win = window as unknown as LenisWindow;
-        win.lenis?.stop();
       });
 
       document.addEventListener('astro:after-swap', () => {
         if (!scrollToTopOnLoad || window.location.hash) return;
         window.scrollTo(0, 0);
-        getOrCreateLenis().scrollTo(0, { immediate: true, force: true });
       });
 
       document.addEventListener('astro:page-load', () => {
-        pageLifecycleController?.abort();
-        pageLifecycleController = new AbortController();
-
-        const lenis = getOrCreateLenis();
-        requestAnimationFrame(() => {
-          lenis.resize();
-        });
-        lenis.start();
-
-        setupHashSmoothScroll(pageLifecycleController.signal);
-        setupReveals();
-
         if (scrollToTopOnLoad && !window.location.hash) {
           scrollToTopOnLoad = false;
-          lenis.scrollTo(0, { immediate: true, force: true });
+          window.scrollTo(0, 0);
         }
 
         if (window.location.hash) {
           requestAnimationFrame(() => {
             const hash = window.location.hash;
-            const cleanId = hash.replace(/^#/, '');
-            const target = hash === '#top' ? 0 : cleanId ? document.getElementById(cleanId) : null;
-            if (target instanceof HTMLElement || target === 0) {
-              lenis.scrollTo(target, { immediate: true });
-            }
+            const target = hash === '#top' ? document.documentElement : getElementByHash(hash);
+            target?.scrollIntoView({ block: 'start', behavior: 'auto' });
           });
         }
       });

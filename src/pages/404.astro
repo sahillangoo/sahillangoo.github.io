@@ -9,12 +9,12 @@ import { Icon } from 'astro-icon/components';
   description={notFoundCopy.seo.description}
   noindex={notFoundCopy.seo.noindex}
 >
-  <section class="animate-rise page-read space-y-6 py-24 text-center">
+  <section data-reveal="hidden" class="animate-rise page-read space-y-6 py-24 text-center">
     <div class="text-numeral text-accent">{notFoundCopy.code}</div>
     <h1 class="text-section">{notFoundCopy.title}</h1>
     <a
       href={notFoundCopy.homeButton.href}
-      class="btn bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 inline-flex mt-2 gap-2 rounded-md border-0 font-mono text-xs tracking-wider uppercase"
+      class="btn btn-primary mt-2 gap-2 font-mono text-xs tracking-wider uppercase"
     >
       {notFoundCopy.homeButton.icon && (
         <Icon name={notFoundCopy.homeButton.icon} class="size-3.5" />

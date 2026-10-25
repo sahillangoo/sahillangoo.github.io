@@ -3,8 +3,7 @@
  * Cloudflare Web Analytics Component for Astro
  *
  * Implements Cloudflare Web Analytics with SPA (Single Page Application)
- * support for Astro View Transitions without blocking the main rendering
- * thread or degrading Lighthouse Performance & Core Web Vitals scores.
+ * support for Astro View Transitions. The beacon loads after interaction or idle.
  *
  * Runs exclusively in production on sahillangoo.in.
  */
@@ -25,7 +24,14 @@ const token = SITE.analytics.cloudflareToken;
     document.head.appendChild(script);
   }
 
-  if (token && window.location.hostname === 'sahillangoo.in' && !window.__cf_beacon_injected) {
+  if (
+    token &&
+    window.location.hostname === 'sahillangoo.in' &&
+    !navigator.webdriver &&
+    navigator.globalPrivacyControl !== true &&
+    navigator.doNotTrack !== '1' &&
+    !window.__cf_beacon_injected
+  ) {
     window.__cf_beacon_injected = true;
 
     const interactionEvents = ['pointerdown', 'scroll', 'keydown', 'touchstart'];

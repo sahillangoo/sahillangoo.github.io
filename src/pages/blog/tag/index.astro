@@ -84,12 +84,12 @@ const breadcrumbs = [
     </header>
 
     <!-- Tags Cloud / Grid -->
-    <ul class="flex flex-wrap gap-2.5">
+    <ul data-reveal="hidden" class="flex flex-wrap gap-2.5">
       {tags.map((tag) => (
         <li>
           <a
             href={`/blog/tag/${tag.slug}/`}
-            class="border-base-300 bg-base-200/40 hover:border-accent hover:bg-base-200/80 group inline-flex items-center gap-2 rounded-md border px-3 py-1.5 font-mono text-xs transition-all"
+            class="border-base-300 bg-base-200/40 hover:border-accent hover:bg-base-200/80 group inline-flex items-center gap-2 rounded-md border px-3 py-1.5 font-mono text-xs transition-colors"
           >
             <span class="text-base-content group-hover:text-accent font-medium transition-colors">
               #{tag.name}

@@ -44,7 +44,7 @@ const breadcrumbs = [
 >
   <div class="page-read space-y-8 py-12 text-center md:py-16">
     <!-- Header -->
-    <header class="animate-rise space-y-3">
+    <header data-reveal="hidden" class="animate-rise space-y-3">
       <div class="bg-base-200 border-base-300 text-accent mx-auto flex size-16 items-center justify-center rounded-full border font-mono text-xl font-medium">
         {linksCopy.header.initials}
       </div>
@@ -59,7 +59,7 @@ const breadcrumbs = [
 
     <!-- Link List -->
     <Fragment set:html="<!--email_off-->" />
-    <nav aria-label="Quick links">
+    <nav data-reveal="hidden" aria-label="Quick links">
       <ul class="space-y-3 text-left">
         {sortedLinks.map((item) => (
           <li>
@@ -68,7 +68,7 @@ const breadcrumbs = [
               target={item.data.url.startsWith('http') ? '_blank' : '_self'}
               rel={item.data.url.startsWith('http') ? 'noopener noreferrer' : ''}
               class:list={cn(
-                'group border-base-300 bg-base-200 hover:border-base-content/30 flex items-center justify-between rounded-md border p-4 transition-all duration-200',
+                'group border-base-300 bg-base-200 hover:border-base-content/30 flex items-center justify-between rounded-md border p-4 transition-colors duration-200',
                 item.data.highlight && 'border-accent/40 bg-base-200/80'
               )}
             >
@@ -76,7 +76,7 @@ const breadcrumbs = [
                 <span class="text-base-content group-hover:text-accent flex items-center gap-2 text-sm font-medium transition-colors">
                   {item.data.title}
                   {item.data.highlight && (
-                    <span class="badge badge-sm bg-accent/15 text-accent border-0 font-mono text-xs font-semibold">
+                    <span class="badge badge-sm badge-soft badge-accent font-mono text-xs font-semibold">
                       Featured
                     </span>
                   )}
@@ -87,7 +87,7 @@ const breadcrumbs = [
               </div>
               <Icon
                 name="ph:arrow-up-right-bold"
-                class="text-base-content/60 group-hover:text-accent ml-2 size-4 shrink-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                class="text-base-content/60 group-hover:text-accent ml-2 size-4 shrink-0 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
             </a>
           </li>
@@ -96,7 +96,7 @@ const breadcrumbs = [
         <li>
           <a
             href={linksCopy.mainSiteCard.href}
-            class="group border-base-300/80 bg-base-200 hover:border-base-300 flex items-center justify-between rounded-md border border-dashed p-4 transition-all duration-200"
+            class="group border-base-300/80 bg-base-200 hover:border-base-300 flex items-center justify-between rounded-md border border-dashed p-4 transition-colors duration-200"
           >
             <div>
               <span class="text-base-content group-hover:text-accent text-sm font-medium transition-colors">

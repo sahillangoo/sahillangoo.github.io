@@ -1,0 +1,661 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+
+<section
+  class="contact-signal w-full border-y border-base-300 bg-elevated"
+  data-contact-signal
+  aria-labelledby="temporal-monitor-title"
+>
+  <header class="flex flex-col gap-3 border-b border-base-300 px-4 py-4 sm:flex-row sm:items-end sm:justify-between sm:px-6">
+    <div>
+      <p class="label-caps text-accent">TVA / Temporal Loom</p>
+      <h2 id="temporal-monitor-title" class="mt-1 text-ui text-base-content">
+        Variant monitor
+      </h2>
+    </div>
+    <p class="meta text-secondary" data-monitor-status aria-live="polite">
+      Monitoring active · Sacred Timeline
+    </p>
+  </header>
+
+  <div class="contact-signal__canvas" data-contact-signal-canvas aria-hidden="true"></div>
+
+  <div class="space-y-4 border-t border-base-300 px-4 py-4 sm:px-6" data-console-controls hidden>
+    <div class="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+      <div
+        class="flex flex-wrap items-center gap-2"
+        role="group"
+        aria-label="Select a timeline branch"
+      >
+        <span class="label-caps mr-1 text-secondary">Branches</span>
+        {Array.from({ length: 5 }, (_, index) => (
+          <button
+            class:list={[
+              'btn btn-ghost btn-sm btn-square border border-base-300 text-secondary hover:border-base-content hover:bg-base-200 hover:text-base-content',
+              index === 0 ? 'border-accent text-accent' : 'border-base-300 text-secondary',
+            ]}
+            type="button"
+            data-branch-select={index}
+            aria-pressed="false"
+            aria-label={`Select branch ${String(index + 1).padStart(2, '0')}`}
+            title={`Select branch ${String(index + 1).padStart(2, '0')}`}
+          >
+            <Icon name="ph:git-branch-bold" class="size-4" aria-hidden="true" />
+          </button>
+        ))}
+      </div>
+      <p class="meta text-secondary">Select a branch to inspect its variant</p>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="label-caps mr-1 text-secondary">Actions</span>
+      <button
+        class="btn btn-ghost btn-sm btn-square border border-base-300 text-base-content hover:border-base-content hover:bg-base-200"
+        type="button"
+        data-branch-action="prune"
+        aria-label="Prune selected branch"
+        title="Prune selected branch"
+      >
+        <Icon name="ph:scissors-bold" class="size-4" aria-hidden="true" />
+      </button>
+      <button
+        class="btn btn-ghost btn-sm btn-square border border-error/50 text-error hover:border-error hover:bg-error/10"
+        type="button"
+        data-branch-action="burn"
+        aria-label="Burn selected branch"
+        title="Burn selected branch"
+      >
+        <Icon name="ph:fire-bold" class="size-4" aria-hidden="true" />
+      </button>
+      <button
+        class="btn btn-ghost btn-sm btn-square border border-base-300 text-base-content hover:border-base-content hover:bg-base-200"
+        type="button"
+        data-branch-action="slip"
+        aria-label="Time-slip selected branch"
+        title="Time-slip selected branch"
+      >
+        <Icon name="ph:clock-counter-clockwise-bold" class="size-4" aria-hidden="true" />
+      </button>
+      <button
+        class="btn btn-ghost btn-sm btn-square border border-base-300 text-secondary hover:border-base-content hover:bg-base-200 hover:text-base-content"
+        type="button"
+        data-branch-action="restore"
+        aria-label="Restore monitor"
+        title="Restore monitor"
+      >
+        <Icon name="ph:arrow-counter-clockwise-bold" class="size-4" aria-hidden="true" />
+      </button>
+      <span class="meta ml-auto text-secondary">Local simulation · no data stored</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  import type * as Three from 'three';
+
+  type ThreeModule = typeof import('three');
+  type BranchAction = 'idle' | 'prune' | 'burn' | 'slip';
+  type BranchVisual = {
+    field: Three.Group;
+    group: Three.Group;
+    material: Three.MeshBasicMaterial;
+    markerMaterial: Three.PointsMaterial;
+    state: BranchAction;
+    startedAt: number;
+    anchorX: number;
+    anchorY: number;
+    offsetX: number;
+    offsetY: number;
+    velocityX: number;
+    velocityY: number;
+  };
+
+  const activeScenes = new Map<HTMLElement, () => void>();
+  const colorCanvas = document.createElement('canvas');
+  colorCanvas.width = 1;
+  colorCanvas.height = 1;
+  const colorContext = colorCanvas.getContext('2d', { willReadFrequently: true });
+
+  function readThemeColor(three: ThreeModule, variable: string): Three.Color {
+    const cssColor = getComputedStyle(document.documentElement).getPropertyValue(variable).trim();
+    if (!colorContext || !cssColor) return new three.Color('#000000');
+
+    colorContext.clearRect(0, 0, 1, 1);
+    colorContext.fillStyle = cssColor;
+    colorContext.fillRect(0, 0, 1, 1);
+    const channels = colorContext.getImageData(0, 0, 1, 1).data;
+    return new three.Color(
+      (channels[0] ?? 0) / 255,
+      (channels[1] ?? 0) / 255,
+      (channels[2] ?? 0) / 255
+    );
+  }
+
+  async function mountScene(root: HTMLElement): Promise<void> {
+    if (activeScenes.has(root)) return;
+    const host = root.querySelector<HTMLElement>('[data-contact-signal-canvas]');
+    if (!host || !root.isConnected) return;
+
+    const THREE = await import('three');
+    if (activeScenes.has(root) || !root.isConnected) return;
+
+    let renderer: Three.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        alpha: true,
+        antialias: true,
+        powerPreference: 'low-power',
+      });
+    } catch {
+      return;
+    }
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(-4.8, 4.8, 1.6, -1.6, -10, 10);
+    camera.position.z = 8;
+
+    const colors = {
+      accent: readThemeColor(THREE, '--color-accent'),
+      ink: readThemeColor(THREE, '--color-base-content'),
+      error: readThemeColor(THREE, '--color-error'),
+    };
+    const timeline = new THREE.Group();
+    scene.add(timeline);
+    const mainGlowMaterial = new THREE.MeshBasicMaterial({
+      color: colors.accent,
+      transparent: true,
+      opacity: 0.14,
+      depthWrite: false,
+    });
+    const mainMaterial = new THREE.MeshBasicMaterial({
+      color: colors.accent,
+      transparent: true,
+      opacity: 0.88,
+      depthWrite: false,
+    });
+    const junctionMaterial = new THREE.PointsMaterial({
+      color: colors.accent,
+      size: 4,
+      sizeAttenuation: false,
+      depthWrite: false,
+    });
+    const tickMaterial = new THREE.LineBasicMaterial({
+      color: colors.ink,
+      transparent: true,
+      opacity: 0.2,
+      depthWrite: false,
+    });
+    const geometries: Three.BufferGeometry[] = [];
+    const branchVisuals: BranchVisual[] = [];
+
+    const createRibbon = (
+      points: Three.Vector3[],
+      width: number,
+      z: number
+    ): Three.BufferGeometry => {
+      const vertices: number[] = [];
+      const indices: number[] = [];
+
+      points.forEach((point, index) => {
+        const previous = points[Math.max(0, index - 1)] ?? point;
+        const next = points[Math.min(points.length - 1, index + 1)] ?? point;
+        const tangentX = next.x - previous.x;
+        const tangentY = next.y - previous.y;
+        const length = Math.hypot(tangentX, tangentY) || 1;
+        const normalX = -tangentY / length;
+        const normalY = tangentX / length;
+        const halfWidth = width / 2;
+        vertices.push(
+          point.x + normalX * halfWidth,
+          point.y + normalY * halfWidth,
+          z,
+          point.x - normalX * halfWidth,
+          point.y - normalY * halfWidth,
+          z
+        );
+
+        if (index < points.length - 1) {
+          const vertex = index * 2;
+          indices.push(vertex, vertex + 1, vertex + 2, vertex + 1, vertex + 3, vertex + 2);
+        }
+      });
+
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+      geometry.setIndex(indices);
+      geometries.push(geometry);
+      return geometry;
+    };
+
+    const mainPath: Three.Vector3[] = [];
+    for (let step = 0; step <= 96; step += 1) {
+      const progress = step / 96;
+      mainPath.push(
+        new THREE.Vector3(-4.45 + progress * 8.9, Math.sin(progress * Math.PI * 2) * 0.035, 0)
+      );
+    }
+    timeline.add(new THREE.Mesh(createRibbon(mainPath, 0.14, -0.005), mainGlowMaterial));
+    timeline.add(new THREE.Mesh(createRibbon(mainPath, 0.052, 0.025), mainMaterial));
+
+    const branches = [
+      { split: -3.35, end: -2.45, height: 0.78, direction: 1 },
+      { split: -2.25, end: -1.05, height: 0.92, direction: -1 },
+      { split: -0.9, end: 0.3, height: 0.74, direction: 1 },
+      { split: 0.65, end: 1.95, height: 0.98, direction: -1 },
+      { split: 2.2, end: 3.45, height: 0.77, direction: 1 },
+    ];
+    const junctions: Three.Vector3[] = [];
+
+    branches.forEach((branch) => {
+      const field = new THREE.Group();
+      timeline.add(field);
+      const branchGroup = new THREE.Group();
+      field.add(branchGroup);
+      const points: Three.Vector3[] = [];
+      const startY = Math.sin(((branch.split + 4.45) / 8.9) * Math.PI * 2) * 0.035;
+      junctions.push(new THREE.Vector3(branch.split, startY, 0.05));
+      for (let step = 0; step <= 32; step += 1) {
+        const progress = step / 32;
+        const eased = progress * progress * (3 - 2 * progress);
+        const x = branch.split + (branch.end - branch.split) * progress;
+        const y = startY + branch.direction * branch.height * eased;
+        points.push(new THREE.Vector3(x, y, 0.01));
+      }
+
+      const geometry = createRibbon(points, 0.052, 0.045);
+      const material = new THREE.MeshBasicMaterial({
+        color: colors.ink,
+        transparent: true,
+        opacity: 0.42,
+        depthWrite: false,
+      });
+      branchGroup.add(new THREE.Mesh(geometry, material));
+
+      const markerPosition = points.at(-1);
+      const anchorX = branch.split + (branch.end - branch.split) / 2;
+      const anchorY = startY + branch.direction * branch.height * 0.5;
+      const markerMaterial = new THREE.PointsMaterial({
+        color: colors.ink,
+        size: 4,
+        sizeAttenuation: false,
+        transparent: true,
+        depthWrite: false,
+      });
+      const markerGeometry = new THREE.BufferGeometry().setFromPoints(
+        markerPosition ? [markerPosition.clone().setZ(0.05)] : []
+      );
+      geometries.push(markerGeometry);
+      branchGroup.add(new THREE.Points(markerGeometry, markerMaterial));
+      if (markerPosition) junctions.push(markerPosition.clone().setZ(0.05));
+      branchVisuals.push({
+        field,
+        group: branchGroup,
+        material,
+        markerMaterial,
+        state: 'idle',
+        startedAt: 0,
+        anchorX,
+        anchorY,
+        offsetX: 0,
+        offsetY: 0,
+        velocityX: 0,
+        velocityY: 0,
+      });
+    });
+
+    const ticks: Three.Vector3[] = [];
+    for (let index = 0; index <= 14; index += 1) {
+      const x = -4.2 + (index / 14) * 8.4;
+      const y = Math.sin(((x + 4.45) / 8.9) * Math.PI * 2) * 0.035;
+      const height = index % 2 === 0 ? 0.15 : 0.08;
+      ticks.push(new THREE.Vector3(x, y - height, 0.02), new THREE.Vector3(x, y + height, 0.02));
+    }
+    const tickGeometry = new THREE.BufferGeometry().setFromPoints(ticks);
+    geometries.push(tickGeometry);
+    timeline.add(new THREE.LineSegments(tickGeometry, tickMaterial));
+
+    const junctionGeometry = new THREE.BufferGeometry().setFromPoints(junctions);
+    geometries.push(junctionGeometry);
+    timeline.add(new THREE.Points(junctionGeometry, junctionMaterial));
+
+    const scanGeometry = new THREE.BufferGeometry();
+    scanGeometry.setAttribute(
+      'position',
+      new THREE.Float32BufferAttribute([-4.45, 0, 0.08, -0.9, 0, 0.08, 2.65, 0, 0.08], 3)
+    );
+    const scanGlowMaterial = new THREE.PointsMaterial({
+      color: colors.accent,
+      size: 14,
+      sizeAttenuation: false,
+      transparent: true,
+      opacity: 0.36,
+      depthWrite: false,
+    });
+    const scanMaterial = new THREE.PointsMaterial({
+      color: colors.ink,
+      size: 4,
+      sizeAttenuation: false,
+      depthWrite: false,
+    });
+    timeline.add(new THREE.Points(scanGeometry, scanGlowMaterial));
+    timeline.add(new THREE.Points(scanGeometry, scanMaterial));
+
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    renderer.setClearColor(0x000000, 0);
+    host.style.display = 'block';
+    host.style.height = 'clamp(10rem, 24vw, 14rem)';
+    host.style.overflow = 'hidden';
+    renderer.domElement.style.display = 'block';
+    renderer.domElement.style.height = '100%';
+    renderer.domElement.style.width = '100%';
+    host.append(renderer.domElement);
+
+    const timer = new THREE.Timer();
+    timer.connect(document);
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const controls = root.querySelector<HTMLElement>('[data-console-controls]');
+    const status = root.querySelector<HTMLElement>('[data-monitor-status]');
+    const branchButtons = Array.from(
+      root.querySelectorAll<HTMLButtonElement>('[data-branch-select]')
+    );
+    const actionButtons = Array.from(
+      root.querySelectorAll<HTMLButtonElement>('[data-branch-action]')
+    );
+    const interactionAbort = new AbortController();
+    let selectedBranchIndex = 0;
+    let pointerActive = false;
+    let pointerTargetX = 0;
+    let pointerTargetY = 0;
+
+    const updatePointerTarget = (event: PointerEvent): void => {
+      const bounds = renderer.domElement.getBoundingClientRect();
+      if (bounds.width === 0 || bounds.height === 0) return;
+      const normalizedX = ((event.clientX - bounds.left) / bounds.width) * 2 - 1;
+      const normalizedY = -(((event.clientY - bounds.top) / bounds.height) * 2 - 1);
+      pointerTargetX = (normalizedX * (camera.right - camera.left)) / (2 * timeline.scale.x);
+      pointerTargetY = (normalizedY * (camera.top - camera.bottom)) / 2;
+      pointerActive = !motionPreference.matches;
+    };
+
+    renderer.domElement.addEventListener('pointermove', updatePointerTarget, {
+      passive: true,
+      signal: interactionAbort.signal,
+    });
+    renderer.domElement.addEventListener('pointerdown', (event) => updatePointerTarget(event), {
+      passive: true,
+      signal: interactionAbort.signal,
+    });
+    renderer.domElement.addEventListener(
+      'pointerup',
+      (event) => {
+        if (event.pointerType !== 'mouse') pointerActive = false;
+      },
+      { passive: true, signal: interactionAbort.signal }
+    );
+    renderer.domElement.addEventListener(
+      'pointerleave',
+      () => {
+        pointerActive = false;
+      },
+      { passive: true, signal: interactionAbort.signal }
+    );
+    renderer.domElement.addEventListener(
+      'pointercancel',
+      () => {
+        pointerActive = false;
+      },
+      { passive: true, signal: interactionAbort.signal }
+    );
+
+    const setStatus = (message: string): void => {
+      if (status) status.textContent = message;
+    };
+    const renderBranchStates = (elapsed: number, reduceMotion: boolean): void => {
+      branchVisuals.forEach((branch, index) => {
+        const active = index === selectedBranchIndex;
+        const duration = branch.state === 'slip' ? 1.05 : 0.58;
+        const progress = reduceMotion
+          ? 1
+          : Math.min(1, Math.max(0, (elapsed - branch.startedAt) / duration));
+        const eased = progress * progress * (3 - 2 * progress);
+
+        if (branch.state === 'prune') {
+          branch.group.scale.set(1, 1 - eased * 0.94, 1);
+          branch.material.opacity = 0.32 - eased * 0.24;
+        } else if (branch.state === 'burn') {
+          branch.group.scale.set(1 - eased * 0.94, 1 - eased * 0.94, 1);
+          branch.material.opacity = 0.6 - eased * 0.48;
+        } else if (branch.state === 'slip') {
+          const strength = reduceMotion ? 0 : (1 - eased) * 0.12;
+          branch.group.position.x = Math.sin(elapsed * 48) * strength;
+          branch.group.position.y = Math.cos(elapsed * 41) * strength * 0.4;
+          branch.material.opacity = reduceMotion ? 0.55 : 0.5 + Math.sin(elapsed * 60) * strength;
+          if (progress >= 1 && !reduceMotion) {
+            branch.state = 'idle';
+            branch.group.position.set(0, 0, 0);
+            branch.material.opacity = active ? 0.72 : 0.32;
+          }
+        } else {
+          branch.group.scale.set(1, 1, 1);
+          branch.group.position.set(0, 0, 0);
+          branch.material.opacity = active ? 0.72 : 0.32;
+        }
+
+        const color = branch.state === 'burn' ? colors.error : active ? colors.accent : colors.ink;
+        branch.material.color.copy(color);
+        branch.markerMaterial.color.copy(color);
+        branch.markerMaterial.opacity =
+          branch.state === 'prune' || branch.state === 'burn' ? 0.35 : 1;
+      });
+    };
+    const updatePointerPhysics = (delta: number, reduceMotion: boolean): void => {
+      if (reduceMotion) {
+        branchVisuals.forEach((branch) => {
+          branch.offsetX = 0;
+          branch.offsetY = 0;
+          branch.velocityX = 0;
+          branch.velocityY = 0;
+          branch.field.position.set(0, 0, 0);
+        });
+        return;
+      }
+
+      const step = Math.min(delta, 0.033);
+      const branchDamping = Math.exp(-13 * step);
+
+      branchVisuals.forEach((branch) => {
+        const dx = branch.anchorX - pointerTargetX;
+        const dy = branch.anchorY - pointerTargetY;
+        const distanceSquared = dx * dx + dy * dy;
+        const distance = Math.sqrt(distanceSquared);
+        const falloff = pointerActive ? Math.exp(-distanceSquared / 2.2) : 0;
+        const force = distance > 0.001 ? (0.24 * falloff) / distance : 0;
+        const targetX = dx * force;
+        const targetY = dy * force;
+        branch.velocityX =
+          (branch.velocityX + (targetX - branch.offsetX) * 58 * step) * branchDamping;
+        branch.velocityY =
+          (branch.velocityY + (targetY - branch.offsetY) * 58 * step) * branchDamping;
+        branch.offsetX += branch.velocityX * step;
+        branch.offsetY += branch.velocityY * step;
+        branch.field.position.set(branch.offsetX, branch.offsetY, 0);
+      });
+    };
+    const renderFrame = (elapsed: number, delta: number, reduceMotion: boolean): void => {
+      if (!reduceMotion) {
+        const scan = scanGeometry.getAttribute('position');
+        for (let index = 0; index < 3; index += 1) {
+          const progress = (elapsed * 0.11 + index * 0.34) % 1;
+          scan.setXYZ(
+            index,
+            -4.45 + progress * 8.9,
+            Math.sin(progress * Math.PI * 2) * 0.035,
+            0.08
+          );
+        }
+        scan.needsUpdate = true;
+        mainMaterial.opacity = 0.8 + Math.sin(elapsed * 2.8) * 0.08;
+        mainGlowMaterial.opacity = 0.12 + (Math.sin(elapsed * 2.8) + 1) * 0.035;
+        scanGlowMaterial.opacity = 0.28 + (Math.sin(elapsed * 3.6) + 1) * 0.08;
+      }
+      updatePointerPhysics(delta, reduceMotion);
+      renderBranchStates(elapsed, reduceMotion);
+      renderer.render(scene, camera);
+    };
+    const selectBranch = (index: number): void => {
+      if (index < 0 || index >= branchVisuals.length) return;
+      selectedBranchIndex = index;
+      branchButtons.forEach((button, buttonIndex) => {
+        const selected = buttonIndex === index;
+        button.setAttribute('aria-pressed', String(selected));
+        button.classList.toggle('border-accent', selected);
+        button.classList.toggle('text-accent', selected);
+        button.classList.toggle('border-base-300', !selected);
+        button.classList.toggle('text-secondary', !selected);
+      });
+      setStatus(`Branch ${String(index + 1).padStart(2, '0')} selected · Nexus Event review`);
+      renderFrame(timer.getElapsed(), 0, motionPreference.matches);
+    };
+
+    branchButtons.forEach((button, index) => {
+      button.addEventListener('click', () => selectBranch(index), {
+        signal: interactionAbort.signal,
+      });
+    });
+    actionButtons.forEach((button) => {
+      button.addEventListener(
+        'click',
+        () => {
+          const action = button.dataset.branchAction;
+          const branch = branchVisuals[selectedBranchIndex];
+          if (!branch) return;
+
+          if (action === 'restore') {
+            branchVisuals.forEach((visual) => {
+              visual.state = 'idle';
+              visual.startedAt = timer.getElapsed();
+              visual.group.scale.set(1, 1, 1);
+              visual.group.position.set(0, 0, 0);
+            });
+            setStatus('Monitor restored · Sacred Timeline in view');
+          } else if (action === 'prune' || action === 'burn' || action === 'slip') {
+            branch.state = action;
+            branch.startedAt = timer.getElapsed();
+            branch.group.scale.set(1, 1, 1);
+            branch.group.position.set(0, 0, 0);
+            const branchLabel = `Branch ${String(selectedBranchIndex + 1).padStart(2, '0')}`;
+            const messages: Record<typeof action, string> = {
+              prune: `${branchLabel} pruning simulation complete`,
+              burn: `${branchLabel} burn simulation complete`,
+              slip: `${branchLabel} time-slip simulation active`,
+            };
+            setStatus(messages[action]);
+          }
+
+          renderFrame(timer.getElapsed(), 0, motionPreference.matches);
+        },
+        { signal: interactionAbort.signal }
+      );
+    });
+    if (controls) controls.hidden = false;
+    selectBranch(0);
+
+    const resizeObserver = new ResizeObserver(() => {
+      const { width, height } = host.getBoundingClientRect();
+      if (width === 0 || height === 0) return;
+      const aspect = width / height;
+      const viewHeight = Math.max(3.2, 9.6 / aspect);
+      const viewWidth = viewHeight * aspect;
+      camera.left = -viewWidth / 2;
+      camera.right = viewWidth / 2;
+      camera.top = viewHeight / 2;
+      camera.bottom = -viewHeight / 2;
+      camera.updateProjectionMatrix();
+      timeline.scale.x = viewWidth / 9.6;
+      pointerActive = false;
+      renderer.setSize(width, height, false);
+      renderFrame(timer.getElapsed(), 0, motionPreference.matches);
+    });
+    const animate = (): void => {
+      timer.update();
+      renderFrame(timer.getElapsed(), timer.getDelta(), false);
+    };
+    const renderForMotionPreference = (): void => {
+      if (motionPreference.matches || document.hidden) {
+        if (motionPreference.matches) pointerActive = false;
+        renderer.setAnimationLoop(null);
+        renderFrame(timer.getElapsed(), 0, motionPreference.matches);
+      } else {
+        renderer.setAnimationLoop(animate);
+      }
+    };
+    const updateTheme = (): void => {
+      colors.accent.copy(readThemeColor(THREE, '--color-accent'));
+      colors.ink.copy(readThemeColor(THREE, '--color-base-content'));
+      colors.error.copy(readThemeColor(THREE, '--color-error'));
+      mainMaterial.color.copy(colors.accent);
+      mainGlowMaterial.color.copy(colors.accent);
+      junctionMaterial.color.copy(colors.accent);
+      scanMaterial.color.copy(colors.ink);
+      scanGlowMaterial.color.copy(colors.accent);
+      tickMaterial.color.copy(colors.ink);
+      renderFrame(timer.getElapsed(), 0, motionPreference.matches);
+    };
+    const cleanup = (): void => {
+      if (!activeScenes.delete(root)) return;
+      renderer.setAnimationLoop(null);
+      timer.dispose();
+      interactionAbort.abort();
+      resizeObserver.disconnect();
+      themeObserver.disconnect();
+      motionPreference.removeEventListener('change', renderForMotionPreference);
+      document.removeEventListener('visibilitychange', renderForMotionPreference);
+      geometries.forEach((geometry) => geometry.dispose());
+      mainMaterial.dispose();
+      mainGlowMaterial.dispose();
+      branchVisuals.forEach((branch) => {
+        branch.material.dispose();
+        branch.markerMaterial.dispose();
+      });
+      tickMaterial.dispose();
+      junctionMaterial.dispose();
+      scanMaterial.dispose();
+      scanGlowMaterial.dispose();
+      renderer.dispose();
+      renderer.domElement.remove();
+      host.removeAttribute('style');
+    };
+    const themeObserver = new MutationObserver(updateTheme);
+
+    resizeObserver.observe(host);
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+    motionPreference.addEventListener('change', renderForMotionPreference);
+    document.addEventListener('visibilitychange', renderForMotionPreference);
+    activeScenes.set(root, cleanup);
+    renderForMotionPreference();
+  }
+
+  function setupScenes(): void {
+    document.querySelectorAll<HTMLElement>('[data-contact-signal]').forEach((root) => {
+      void mountScene(root);
+    });
+  }
+
+  function teardownScenes(): void {
+    activeScenes.forEach((cleanup) => cleanup());
+  }
+
+  setupScenes();
+  document.addEventListener('astro:page-load', setupScenes);
+  document.addEventListener('astro:before-swap', teardownScenes);
+</script>
+
+<style>
+  .contact-signal__canvas {
+    display: none;
+  }
+</style>

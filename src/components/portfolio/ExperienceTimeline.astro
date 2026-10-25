@@ -39,7 +39,7 @@ function detailsLabel(count: number): string {
                 href={data.companyUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="link-underline text-base-content hover:text-accent"
+                class="link decoration-neutral decoration-1 underline-offset-1 text-base-content hover:text-accent hover:decoration-accent"
               >
                 {data.company}
               </a>
@@ -78,7 +78,7 @@ function detailsLabel(count: number): string {
                   {rest.length > 0 && (
                     <ul class="space-y-3">
                       {rest.map((item) => (
-                        <li class="measure-wide grid grid-cols-[1rem_minmax(0,1fr)] text-ui leading-relaxed text-base-content/80">
+                        <li class="measure-wide grid grid-index text-ui leading-relaxed text-base-content/80">
                           <span aria-hidden="true" class="font-mono text-accent">
                             ›
                           </span>

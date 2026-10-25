@@ -36,7 +36,10 @@ const linkClass =
       >
         {navigationCopy.brand.name}
       </a>
-      <p class="font-display mt-3 text-base italic text-base-content sm:text-lg">
+      <p
+        data-reveal="hidden"
+        class="font-display mt-3 text-base italic text-base-content sm:text-lg"
+      >
         {homeCopy.hero.imageQuote}
       </p>
     </div>
@@ -93,7 +96,7 @@ const linkClass =
       </ul>
     </nav>
 
-    <p class="meta border-t border-base-300 pt-6">
+    <p data-reveal="hidden" class="meta border-t border-base-300 pt-6">
       {navigationCopy.footerTelemetry.copyright(currentYear)}
     </p>
   </div>

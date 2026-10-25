@@ -15,7 +15,7 @@ const defaultTrack = getFeaturedTrack(0);
 <div
   data-spotify-widget
   class:list={cn(
-    'spotify-widget-container group border-base-300 bg-base-200/50 hover:bg-base-200/80 inline-flex max-w-full items-center justify-between gap-3 rounded-lg border px-3.5 py-2 text-xs transition-all duration-200 hover:border-success/40',
+    'spotify-widget-container group border-base-300 bg-base-200/50 hover:bg-base-200/80 inline-flex max-w-full items-center justify-between gap-3 rounded-lg border px-3.5 py-2 text-xs transition-colors duration-200 hover:border-success/40',
     variant === 'footer' && 'w-full sm:w-auto',
     className
   )}
@@ -76,7 +76,7 @@ const defaultTrack = getFeaturedTrack(0);
     <button
       data-spotify-skip-btn
       type="button"
-      class="btn btn-ghost btn-sm btn-square text-base-content/60 hover:bg-base-300/50 hover:text-success transition-transform"
+      class="btn btn-ghost btn-sm btn-square text-base-content/60 hover:bg-base-300/50 hover:text-success"
       title="Skip to next curated song"
       aria-label="Skip to next curated song"
     >
@@ -88,7 +88,7 @@ const defaultTrack = getFeaturedTrack(0);
       href={defaultTrack.songUrl}
       target="_blank"
       rel="noopener noreferrer"
-      class="btn btn-ghost btn-sm btn-square text-base-content/60 hover:bg-base-300/50 hover:text-success transition-colors"
+      class="btn btn-ghost btn-sm btn-square text-base-content/60 hover:bg-base-300/50 hover:text-success"
       title="Open in Spotify"
       aria-label="Open track in Spotify"
     >

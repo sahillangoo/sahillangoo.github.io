@@ -1,0 +1,102 @@
+<script>
+  import LocomotiveScroll from 'locomotive-scroll';
+
+  let locomotiveScroll: LocomotiveScroll | null = null;
+  let revealObserver: IntersectionObserver | null = null;
+  let pageInitialized = false;
+  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function getRevealTargets(): HTMLElement[] {
+    const proseHeadings = document.querySelectorAll<HTMLElement>(
+      '[data-scroll-copy] > h2, [data-scroll-copy] > h3, [data-scroll-copy] > h4, [data-scroll-copy] > blockquote, [data-scroll-copy] > pre'
+    );
+    proseHeadings.forEach((node) => {
+      node.dataset.reveal = 'hidden';
+    });
+
+    return Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
+  }
+
+  function showAllReveals(nodes: HTMLElement[]): void {
+    nodes.forEach((node) => {
+      node.dataset.reveal = 'visible';
+    });
+  }
+
+  function setupNativeFallback(nodes: HTMLElement[]): void {
+    if (!('IntersectionObserver' in window)) {
+      showAllReveals(nodes);
+      return;
+    }
+
+    revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const node = entry.target as HTMLElement;
+          node.dataset.reveal = 'visible';
+          revealObserver?.unobserve(node);
+        });
+      },
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.05 }
+    );
+
+    nodes.forEach((node) => revealObserver?.observe(node));
+  }
+
+  function teardownScrollMotion(): void {
+    locomotiveScroll?.destroy();
+    locomotiveScroll = null;
+    revealObserver?.disconnect();
+    revealObserver = null;
+    pageInitialized = false;
+  }
+
+  function setupScrollMotion(): void {
+    if (pageInitialized) return;
+    pageInitialized = true;
+
+    const nodes = getRevealTargets();
+    if (motionPreference.matches) {
+      showAllReveals(nodes);
+      return;
+    }
+
+    if (!nodes.length) return;
+
+    nodes.forEach((node) => {
+      node.dataset.reveal = 'hidden';
+      node.dataset.scroll = '';
+      node.dataset.scrollClass = 'is-inview';
+    });
+
+    if (!('IntersectionObserver' in window)) {
+      showAllReveals(nodes);
+      return;
+    }
+
+    try {
+      locomotiveScroll = new LocomotiveScroll({
+        autoStart: false,
+        triggerRootMargin: '0px 0px -8% 0px',
+        lenisOptions: {
+          wrapper: window,
+          smoothWheel: false,
+          syncTouch: false,
+        },
+      });
+    } catch {
+      setupNativeFallback(nodes);
+    }
+  }
+
+  function updateMotionPreference(): void {
+    teardownScrollMotion();
+    setupScrollMotion();
+  }
+
+  motionPreference.addEventListener('change', updateMotionPreference);
+  document.addEventListener('astro:before-swap', teardownScrollMotion);
+  document.addEventListener('astro:page-load', setupScrollMotion);
+  setupScrollMotion();
+</script>

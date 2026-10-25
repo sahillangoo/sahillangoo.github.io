@@ -20,7 +20,7 @@
   --color-primary-content: oklch(0.19 0.008 65);
   --color-secondary: oklch(0.705 0.014 80);
   --color-secondary-content: oklch(0.19 0.008 65);
-  --color-accent: oklch(0.76 0.11 285);
+  --color-accent: oklch(0.76 0.11 145);
   --color-accent-content: oklch(0.19 0.008 65);
   --color-neutral: oklch(0.405 0.011 70);
   --color-neutral-content: oklch(0.93 0.012 85);
@@ -58,7 +58,7 @@
   --color-primary-content: oklch(0.967 0.012 84);
   --color-secondary: oklch(0.44 0.016 65);
   --color-secondary-content: oklch(0.985 0.008 88);
-  --color-accent: oklch(0.47 0.13 285);
+  --color-accent: oklch(0.47 0.13 145);
   --color-accent-content: oklch(0.985 0.008 88);
   --color-neutral: oklch(0.775 0.016 75);
   --color-neutral-content: oklch(0.235 0.012 60);
@@ -88,8 +88,6 @@
   --font-mono: var(--ff-mono), 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-display: var(--ff-display), 'Instrument Serif', ui-serif, Georgia, serif;
 
-  --color-elevated: var(--color-elevated);
-
   --text-2xs: 0.6875rem;
   --text-2xs--line-height: 1rem;
 
@@ -102,7 +100,11 @@
   --animate-equalizer: equalizer 1.2s ease-in-out infinite;
   --animate-rise: rise 420ms var(--ease-editorial) both;
   --animate-fade: fade 320ms var(--ease-editorial) both;
-  --animate-reveal: reveal 450ms var(--ease-editorial) both;
+  --animate-reveal: reveal 420ms var(--ease-editorial) both;
+}
+
+@theme inline {
+  --color-elevated: var(--color-elevated);
 }
 
 /* Zero layout recalculation: GPU compositor transform instead of height reflow */
@@ -138,12 +140,12 @@
 
 @keyframes reveal {
   from {
+    transform: translateY(8px) scale(0.98);
     opacity: 0;
-    clip-path: inset(0 0 100% 0);
   }
   to {
+    transform: none;
     opacity: 1;
-    clip-path: inset(0 0 0 0);
   }
 }
 
@@ -243,6 +245,7 @@
 }
 
 @utility text-project {
+  font-weight: 400;
   font-size: 2.125rem;
   line-height: 1.08;
   font-family: var(--font-display);
@@ -254,6 +257,7 @@
 }
 
 @utility text-writing {
+  font-weight: 400;
   font-size: 1.75rem;
   line-height: 1.08;
   font-family: var(--font-display);
@@ -274,12 +278,14 @@
 
 @utility text-lead-em {
   font-style: italic;
+  font-weight: 400;
   font-size: 1.12em;
   line-height: 1;
   font-family: var(--font-display);
 }
 
 @utility text-numeral {
+  font-weight: 400;
   font-size: 6rem;
   line-height: 0.78;
   font-family: var(--font-display);
@@ -302,6 +308,7 @@
 }
 
 @utility text-pull {
+  font-weight: 400;
   font-size: 1.875rem;
   line-height: 1.18;
   font-family: var(--font-display);
@@ -404,7 +411,12 @@ li {
 }
 
 .btn {
-  transition: scale 120ms var(--ease-editorial);
+  transition:
+    color 160ms var(--ease-editorial),
+    background-color 160ms var(--ease-editorial),
+    border-color 160ms var(--ease-editorial),
+    opacity 160ms var(--ease-editorial),
+    scale 120ms var(--ease-editorial);
   font-weight: 500;
   letter-spacing: normal;
   text-transform: none;
@@ -465,23 +477,11 @@ pre.astro-code span[style*='color: #6a737d'] {
     transition: transform 200ms var(--ease-editorial);
   }
 
-  .link-arrow:hover svg,
-  .group:hover .link-arrow svg {
-    transform: translate(3px, -3px);
-  }
-
-  .link-underline {
-    transition:
-      text-decoration-color 180ms var(--ease-editorial),
-      color 180ms var(--ease-editorial);
-    text-decoration-line: underline;
-    text-decoration-color: var(--color-neutral);
-    text-decoration-thickness: 1px;
-    text-underline-offset: 5px;
-  }
-
-  .link-underline:hover {
-    text-decoration-color: var(--color-accent);
+  @media (hover: hover) and (pointer: fine) {
+    .link-arrow:hover svg,
+    .group:hover .link-arrow svg {
+      transform: translate(3px, -3px);
+    }
   }
 
   .scroll-progress {
@@ -497,7 +497,9 @@ pre.astro-code span[style*='color: #6a737d'] {
       transform 400ms var(--ease-editorial);
   }
 
-  [data-reveal='visible'] {
+  [data-reveal='visible'],
+  [data-reveal].is-inview,
+  [data-reveal]:focus-within {
     transform: none;
     opacity: 1;
   }

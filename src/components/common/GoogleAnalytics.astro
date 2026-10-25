@@ -1,8 +1,8 @@
 ---
 /**
- * Google Analytics 4 Component via Partytown Web Worker
+ * Google Analytics Component via Partytown Web Worker
  *
- * Runs off the main thread in a background Web Worker to preserve 0ms TBT and 0ms LCP.
+ * Runs third-party analytics code in a background Web Worker to reduce main-thread work.
  * Seamlessly tracks SPA page transitions triggered by Astro ClientRouter.
  *
  * Safeguards:
@@ -19,7 +19,12 @@ const isConfigured = Boolean(
 
 {isConfigured && <script is:inline define:vars={{ gaId }}>
   (function () {
-    if (window.location.hostname !== 'sahillangoo.in' || navigator.webdriver) {
+    if (
+      window.location.hostname !== 'sahillangoo.in' ||
+      navigator.webdriver ||
+      navigator.globalPrivacyControl === true ||
+      navigator.doNotTrack === '1'
+    ) {
       return;
     }
 

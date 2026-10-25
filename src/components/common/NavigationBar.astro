@@ -127,7 +127,6 @@ const links = SITE.nav;
     let progressBar: HTMLElement | null = null;
     let cachedTotalHeight = 0;
     let isTicking = false;
-    let lenisBound = false;
 
     function measureScrollDimensions(): void {
       cachedTotalHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -145,8 +144,7 @@ const links = SITE.nav;
         return;
       }
 
-      const win = window as unknown as LenisWindow;
-      const currentScroll = win.lenis?.scroll ?? window.scrollY;
+      const currentScroll = window.scrollY;
       const progress = Math.min(1, Math.max(0, currentScroll / cachedTotalHeight));
       progressBar.style.transform = `scaleX(${progress})`;
       isTicking = false;
@@ -175,12 +173,6 @@ const links = SITE.nav;
         measureScrollDimensions();
         renderScrollProgress();
       });
-
-      const win = window as unknown as LenisWindow;
-      if (win.lenis && !lenisBound) {
-        win.lenis.on('scroll', onScroll);
-        lenisBound = true;
-      }
     });
   }
 </script>

@@ -89,9 +89,9 @@ const breadcrumbs = [
     </a>
 
     <!-- Project Header -->
-    <header class="border-base-300 space-y-4 border-b pb-8">
+    <header data-reveal="hidden" class="border-base-300 space-y-4 border-b pb-8">
       <div class="text-secondary flex flex-wrap items-center gap-3 font-mono text-xs">
-        <span class="badge badge-sm bg-accent/10 text-accent border-0 font-mono text-xs font-semibold tracking-wider uppercase">
+        <span class="badge badge-sm badge-soft badge-accent font-mono text-xs font-semibold tracking-wider uppercase">
           {data.category.replaceAll('-', ' ')}
         </span>
         <span>•</span>
@@ -123,7 +123,7 @@ const breadcrumbs = [
             href={data.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="btn btn-sm bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 gap-2 rounded-md border-0 font-mono text-xs tracking-wider uppercase"
+            class="btn btn-sm btn-primary gap-2 font-mono text-xs tracking-wider uppercase"
           >
             <Icon name="ph:github-logo-bold" class="size-4" /> Source Code
           </a>
@@ -133,7 +133,7 @@ const breadcrumbs = [
             href={data.liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="btn btn-sm btn-ghost border border-base-300 hover:bg-base-200 hover:text-base-content gap-2 rounded-md font-mono text-xs tracking-wider uppercase"
+            class="btn btn-sm btn-ghost border border-base-300 hover:bg-base-200 hover:text-base-content gap-2 font-mono text-xs tracking-wider uppercase"
           >
             <Icon name="ph:arrow-square-out-bold" class="size-4" /> Live Link
           </a>
@@ -142,7 +142,7 @@ const breadcrumbs = [
     </header>
 
     <!-- Technologies Grid -->
-    <div class="border-base-300 bg-base-200 rounded-md border p-5 sm:p-6">
+    <div data-reveal="hidden" class="border-base-300 bg-base-200 rounded-md border p-5 sm:p-6">
       <h2 class="label-caps text-accent mb-3">Technologies & Tools</h2>
       <ul class="flex flex-wrap gap-2" aria-label="Technologies">
         {data.tags.map((tag) => (
@@ -154,26 +154,27 @@ const breadcrumbs = [
     </div>
 
     <!-- Case Study Body Content -->
-    <div class="prose max-w-none">
+    <div data-scroll-copy class="prose max-w-none">
       <Content />
     </div>
 
     <!-- Adjacent Project Navigation / Slug Pagination -->
     {(prevProject || nextProject) && (
       <nav
+        data-reveal="hidden"
         aria-label="Adjacent Projects Navigation"
         class="border-base-300 grid grid-cols-1 gap-4 border-t pt-8 sm:grid-cols-2"
       >
         {prevProject ? (
           <a
             href={`/projects/${prevProject.id}/`}
-            class="group border-base-300 bg-base-200 hover:border-neutral flex flex-col justify-between rounded-md border p-5 text-left transition-all duration-200"
+            class="group border-base-300 bg-base-200 hover:border-neutral flex flex-col justify-between rounded-md border p-5 text-left transition-colors duration-200"
             rel="prev"
           >
             <span class="text-base-content/60 flex items-center gap-1 font-mono text-xs font-medium tracking-wider uppercase">
               <Icon name="ph:arrow-left-bold" class="h-3.5 w-3.5" /> Previous Project
             </span>
-            <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
+            <span class="text-base-content group-hover:text-accent mt-2 text-sm font-medium transition-colors">
               {prevProject.data.title}
             </span>
           </a>
@@ -184,13 +185,13 @@ const breadcrumbs = [
         {nextProject && (
           <a
             href={`/projects/${nextProject.id}/`}
-            class="group border-base-300 bg-base-200 hover:border-neutral flex flex-col justify-between rounded-md border p-5 text-right transition-all duration-200 sm:col-start-2"
+            class="group border-base-300 bg-base-200 hover:border-neutral flex flex-col justify-between rounded-md border p-5 text-right transition-colors duration-200 sm:col-start-2"
             rel="next"
           >
             <span class="text-base-content/60 flex items-center justify-end gap-1 font-mono text-xs font-medium tracking-wider uppercase">
               Next Project <Icon name="ph:arrow-right-bold" class="h-3.5 w-3.5" />
             </span>
-            <span class="text-base-content group-hover:text-accent mt-2 text-sm font-bold transition-colors">
+            <span class="text-base-content group-hover:text-accent mt-2 text-sm font-medium transition-colors">
               {nextProject.data.title}
             </span>
           </a>
