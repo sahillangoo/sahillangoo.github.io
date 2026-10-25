@@ -76,9 +76,9 @@
 
     // 5. Animation & Runtime Utilities
     {
-      description: 'Group Motion and Lenis smooth scrolling libraries',
-      matchPackageNames: ['/^motion/', '/^lenis/'],
-      groupName: 'animation and runtime utilities',
+      description: 'Group Motion libraries',
+      matchPackageNames: ['/^motion/'],
+      groupName: 'animation utilities',
     },
 
     // 6. GitHub Actions Workflows

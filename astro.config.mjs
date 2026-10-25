@@ -8,8 +8,7 @@ import astroSiteQualityEnforcer from './src/plugins/astro-site-quality.ts';
 import { NON_INDEXABLE_PATHS, SITE } from './src/const/site.ts';
 import { createSitemapSerializer } from './src/utils/sitemap.ts';
 
-const BUILD_TIME = new Date().toISOString();
-const BUILD_DATE = BUILD_TIME.split('T')[0];
+const BUILD_DATE = new Date().toISOString().split('T')[0];
 
 // Pre-compiled sitemap filtering constants
 const SITEMAP_PAGINATION_REGEX = /\/blog\/\d+\/?$/;
@@ -27,11 +26,6 @@ export default defineConfig({
   build: {
     format: 'directory',
     inlineStylesheets: 'auto',
-  },
-  redirects: {
-    '/contact/': '/links/',
-    '/blog/why-go-is-the-definitive-language-for-the-ai-era/':
-      '/blog/why-go-is-the-definitive-language-for-the-ai-agent-era/',
   },
   prefetch: {
     prefetchAll: true,
@@ -53,6 +47,7 @@ export default defineConfig({
   experimental: {
     clientPrerender: true,
     chromeDevtoolsWorkspace: true,
+    incrementalBuild: true,
     svgOptimizer: svgoOptimizer(),
   },
   security: {
@@ -60,10 +55,6 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss()],
-    define: {
-      __BUILD_TIME__: JSON.stringify(BUILD_TIME),
-      __BUILD_DATE__: JSON.stringify(BUILD_DATE),
-    },
     build: {
       target: 'es2023',
       cssCodeSplit: true,
@@ -97,7 +88,17 @@ export default defineConfig({
       cssVariable: '--ff-sans',
       display: 'swap',
       styles: ['normal'],
-      weights: [400, 500, 600, 700],
+      weights: ['400 700'],
+      subsets: ['latin'],
+      fallbacks: ['Arial', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+    },
+    {
+      name: 'Geist',
+      provider: fontProviders.google(),
+      cssVariable: '--ff-sans',
+      display: 'swap',
+      styles: ['italic'],
+      weights: [400],
       subsets: ['latin'],
       fallbacks: ['Arial', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
     },
@@ -107,7 +108,7 @@ export default defineConfig({
       cssVariable: '--ff-mono',
       display: 'swap',
       styles: ['normal'],
-      weights: [400, 500, 600, 700],
+      weights: ['400 700'],
       subsets: ['latin'],
       fallbacks: ['Courier New', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
     },
@@ -136,18 +137,6 @@ export default defineConfig({
     partytown({
       config: {
         forward: ['dataLayer.push'],
-        resolveUrl: (url, location) => {
-          if (
-            location.hostname === 'sahillangoo.in' &&
-            (url.hostname === 'www.googletagmanager.com' ||
-              url.hostname === 'www.google-analytics.com')
-          ) {
-            const proxyUrl = new URL('/proxy/ga', location.origin);
-            proxyUrl.searchParams.append('url', url.href);
-            return proxyUrl;
-          }
-          return url;
-        },
       },
     }),
     astroSiteQualityEnforcer(),

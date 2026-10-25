@@ -27,7 +27,7 @@
 /work       /projects/  301
 /articles   /blog/      301
 /cv         /resume/    301
-# Old /notes/* paths: mapped posts receive 301; unmapped notes return 410 Gone via functions/_middleware.ts
+# Old /notes/* paths: mapped posts receive 301; other paths use the static 404 page.
 /notes/all  /blog/  301
 /notes       /blog/  301
 /notes/      /blog/  301
@@ -39,7 +39,13 @@
 /notes/oklch-color-spaces/                    /blog/daisyui-5-oklch-theming-tailwind-v4/  301
 
 /contact    /links/     301
-/contact/*  /links/     301
+/resumes/Resume-Sahil-Langoo-FullStack.pdf       /resumes/Resume-Sahil-Langoo.pdf 301
+/resumes/Resume-Sahil-2024.pdf                   /resumes/Resume-Sahil-Langoo.pdf 301
+/resumes/Resume-Sahil-2025.pdf                   /resumes/Resume-Sahil-Langoo.pdf 301
+/resumes/Resume-Sahil-Langoo-Frontend.pdf        /resumes/Resume-Sahil-Langoo.pdf 301
+/resumes/Resume-Sahil-Langoo-DevOps.pdf          /resumes/Resume-Sahil-Langoo.pdf 301
+/resumes/Resume-Sahil-Langoo-Forward-Deployed.pdf /resumes/Resume-Sahil-Langoo.pdf 301
+/resumes/Sahil-Resume-W-Pg-1.pdf                 /resumes/Resume-Sahil-Langoo.pdf 301
 /blog/why-go-is-the-definitive-language-for-the-ai-era    /blog/why-go-is-the-definitive-language-for-the-ai-agent-era/  301
 /blog/why-go-is-the-definitive-language-for-the-ai-era/   /blog/why-go-is-the-definitive-language-for-the-ai-agent-era/  301
 
@@ -53,3 +59,6 @@
 /devto      https://dev.to/sahillangoo          302
 /dailydev   https://daily.dev/sahillangoo       302
 /googledev  https://g.dev/sahillangoo           302
+
+# Keep wildcard rules last so exact aliases can be matched without scanning past them.
+/contact/*  /links/     301

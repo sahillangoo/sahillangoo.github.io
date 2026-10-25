@@ -14,9 +14,9 @@ const executablePath = CHROME_PATHS.find((p) => fs.existsSync(p));
 export default {
   site: process.env.UNLIGHTHOUSE_SITE || 'http://127.0.0.1:4322',
   scanner: {
-    device: 'desktop',
+    device: 'mobile',
     samples: 1,
-    throttle: false,
+    throttle: true,
     dynamicSampling: false,
   },
   ci: {
