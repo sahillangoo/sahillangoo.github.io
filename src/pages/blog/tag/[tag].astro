@@ -33,6 +33,7 @@ export async function getStaticPaths() {
         tagSlug,
         posts: tagPosts,
       },
+      cacheKey: [tag, ...tagPosts.map((post) => post.digest)].join(':'),
     };
   });
 }

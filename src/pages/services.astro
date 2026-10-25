@@ -54,15 +54,11 @@ const professionalServiceSchema = {
     name: 'Systems Engineering Offerings',
     itemListElement: servicesCopy.offerings.map((offering) => ({
       '@type': 'Offer',
+      description: offering.pricing,
       itemOffered: {
         '@type': 'Service',
         name: offering.title,
         description: offering.summary,
-      },
-      priceSpecification: {
-        '@type': 'PriceSpecification',
-        priceCurrency: 'USD',
-        description: offering.pricing,
       },
     })),
   },
@@ -138,7 +134,7 @@ const structuredData = [professionalServiceSchema, faqSchema];
     <!-- Core Service Offerings -->
     <section class="space-y-8">
       <div class="flex items-center justify-between">
-        <h2 class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase">
+        <h2 class="text-accent flex items-center gap-2 font-mono text-sm font-medium tracking-wider uppercase">
           <Icon name="ph:stack-bold" class="size-4" />
           Core Service Capabilities
         </h2>
@@ -150,7 +146,7 @@ const structuredData = [professionalServiceSchema, faqSchema];
           <article
             id={offering.id}
             data-reveal="hidden"
-            class="border-base-300 bg-base-200 hover:border-neutral flex flex-col justify-between space-y-6 rounded-md border p-6 transition-all duration-200 sm:p-8"
+            class="border-base-300 flex flex-col justify-between space-y-6 border-t pt-8"
           >
             <!-- Card Header -->
             <div class="space-y-3">
@@ -159,15 +155,13 @@ const structuredData = [professionalServiceSchema, faqSchema];
                   0{idx + 1} -- Capability
                 </span>
                 <div class="flex items-center gap-2 font-mono text-xs">
-                  <span class="border-base-300/80 bg-base-100/70 text-base-content/90 rounded-md border px-2 py-0.5 font-medium">
-                    {offering.pricing}
-                  </span>
+                  <span class="text-base-content font-medium">{offering.pricing}</span>
                   <span class="text-secondary">|</span>
                   <span class="text-secondary">{offering.turnaround}</span>
                 </div>
               </div>
 
-              <h3 class="text-base-content text-xl font-bold tracking-tight">{offering.title}</h3>
+              <h3 class="text-base-content text-xl font-medium tracking-tight">{offering.title}</h3>
 
               <!-- Extractable 40-60 word Answer Block for AI / Voice -->
               <p
@@ -187,15 +181,12 @@ const structuredData = [professionalServiceSchema, faqSchema];
             <!-- Scope & Deliverables Grid -->
             <div class="grid grid-cols-1 gap-6 border-t border-base-300/60 pt-6 sm:grid-cols-2">
               <div class="space-y-3">
-                <h4 class="text-secondary font-mono text-xs font-semibold tracking-wide uppercase">
+                <h4 class="text-secondary font-mono text-xs font-medium tracking-wide uppercase">
                   Scope of Work
                 </h4>
-                <ul class="space-y-2 text-xs text-base-content/80">
+                <ul class="list-disc space-y-2 pl-4 text-sm text-base-content/80 marker:text-accent">
                   {offering.scope.map((item) => (
-                    <li class="flex items-start gap-2">
-                      <span class="text-accent font-mono select-none">›</span>
-                      <span>{item}</span>
-                    </li>
+                    <li>{item}</li>
                   ))}
                 </ul>
               </div>
@@ -204,12 +195,9 @@ const structuredData = [professionalServiceSchema, faqSchema];
                 <h4 class="text-secondary font-mono text-xs font-semibold tracking-wide uppercase">
                   Production Deliverables
                 </h4>
-                <ul class="space-y-2 text-xs text-base-content/80">
+                <ul class="list-disc space-y-2 pl-4 text-sm text-base-content/80 marker:text-accent">
                   {offering.deliverables.map((item) => (
-                    <li class="flex items-start gap-2">
-                      <span class="text-accent font-mono select-none">✓</span>
-                      <span>{item}</span>
-                    </li>
+                    <li>{item}</li>
                   ))}
                 </ul>
               </div>
@@ -222,24 +210,24 @@ const structuredData = [professionalServiceSchema, faqSchema];
     <!-- Frequently Asked Questions (FAQ Section) -->
     <section class="border-base-300 border-t pt-8 space-y-6">
       <div class="flex items-center justify-between">
-        <h2 class="text-accent flex items-center gap-2 font-mono text-sm font-semibold tracking-wider uppercase">
+        <h2 class="text-accent flex items-center gap-2 font-mono text-sm font-medium tracking-wider uppercase">
           <Icon name="ph:question-bold" class="size-4" />
           Frequently Asked Questions
         </h2>
         <span class="label-caps">AEO Structured Data</span>
       </div>
 
-      <div class="divide-base-300/80 divide-y rounded-md border border-base-300 bg-base-200 p-6 sm:p-8">
+      <div class="border-base-300 divide-base-300 divide-y border-y">
         {servicesCopy.faqs.map((faq) => (
-          <details class="group py-4 first:pt-0 last:pb-0" open={false}>
+          <details class="group py-4" open={false}>
             <summary class="flex cursor-pointer list-none items-center justify-between font-medium text-base-content transition-colors group-hover:text-accent">
-              <span class="text-sm font-semibold sm:text-base">{faq.question}</span>
+              <span class="text-sm font-medium sm:text-base">{faq.question}</span>
               <Icon
                 name="ph:caret-down-bold"
                 class="size-4 shrink-0 transition-transform duration-200 group-open:rotate-180 text-secondary group-hover:text-accent"
               />
             </summary>
-            <p class="text-base-content/80 mt-3 text-xs leading-relaxed sm:text-sm">{faq.answer}</p>
+            <p class="text-base-content/80 mt-3 text-sm leading-relaxed">{faq.answer}</p>
           </details>
         ))}
       </div>

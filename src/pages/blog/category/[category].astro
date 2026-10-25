@@ -28,6 +28,7 @@ export async function getStaticPaths() {
         categorySlug,
         posts: categoryPosts,
       },
+      cacheKey: [category, ...categoryPosts.map((post) => post.digest)].join(':'),
     };
   });
 }

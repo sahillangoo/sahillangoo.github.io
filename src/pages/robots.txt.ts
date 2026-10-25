@@ -1,9 +1,7 @@
 import type { APIRoute } from 'astro';
-import { SITE, ROBOTS_DISALLOWED_PATHS } from '@const/site.ts';
+import { SITE } from '@const/site.ts';
 
 export const GET: APIRoute = () => {
-  const disallowDirectives = ROBOTS_DISALLOWED_PATHS.map((path) => `Disallow: ${path}`).join('\n');
-
   const content = `# ==============================================================================
 # Robots.txt for sahillangoo.in
 # Production SEO, AI LLM Citations & Search Crawler Policy (RFC 9309 Compliant)
@@ -18,7 +16,6 @@ export const GET: APIRoute = () => {
 # Global Crawler Directives (Applies to all search, social & general indexing bots)
 User-agent: *
 Allow: /
-${disallowDirectives}
 
 # ------------------------------------------------------------------------------
 # Authorized AI Search, Retrieval & Grounding Crawlers:
@@ -34,51 +31,39 @@ ${disallowDirectives}
 
 User-agent: GPTBot
 Allow: /
-${disallowDirectives}
 
 User-agent: ChatGPT-User
 Allow: /
-${disallowDirectives}
 
 User-agent: OAI-SearchBot
 Allow: /
-${disallowDirectives}
 
 User-agent: PerplexityBot
 Allow: /
-${disallowDirectives}
 
 User-agent: Perplexity-User
 Allow: /
-${disallowDirectives}
 
 User-agent: ClaudeBot
 Allow: /
-${disallowDirectives}
 
 User-agent: Claude-SearchBot
 Allow: /
-${disallowDirectives}
 
 User-agent: Google-Extended
 Allow: /
-${disallowDirectives}
 
 User-agent: Applebot-Extended
 Allow: /
-${disallowDirectives}
 
 User-agent: Meta-ExternalAgent
 Allow: /
-${disallowDirectives}
 
 User-agent: Cohere-ai
 Allow: /
-${disallowDirectives}
 
 User-agent: Amazonbot
 Allow: /
-${disallowDirectives}
 
 # ------------------------------------------------------------------------------
 # Sitemaps

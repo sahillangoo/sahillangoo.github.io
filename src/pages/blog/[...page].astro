@@ -17,7 +17,20 @@ export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
       (a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
     );
 
-  return paginate(publishedArticles, { pageSize: 4 });
+  const categories = [...new Set(publishedArticles.map((article) => article.data.category))].join(
+    '|'
+  );
+
+  return paginate(publishedArticles, { pageSize: 4 }).map((result) =>
+    Object.assign(result, {
+      cacheKey: [
+        result.props.page.currentPage,
+        result.props.page.lastPage,
+        categories,
+        ...result.props.page.data.map((article) => article.digest),
+      ].join(':'),
+    })
+  );
 };
 
 export interface Props {
@@ -115,7 +128,7 @@ const breadcrumbs = [
         <span class="label-caps shrink-0">{blogCopy.header.topicsLabel}</span>
         <a
           href="/blog/category/"
-          class="link-underline text-sm text-base-content hover:text-accent"
+          class="link decoration-neutral decoration-1 underline-offset-1 text-sm text-base-content hover:text-accent hover:decoration-accent"
         >
           All categories
         </a>

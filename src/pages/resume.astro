@@ -89,7 +89,7 @@ const breadcrumbs = [
             href={resumeCopy.header.downloadCta.href}
             target="_blank"
             rel="noopener noreferrer"
-            class="btn btn-sm bg-base-content text-base-100 hover:bg-base-content/90 hover:text-base-100 gap-1.5 rounded-md border-0 font-mono text-xs tracking-wider uppercase"
+            class="btn btn-sm btn-primary font-mono text-xs tracking-wider uppercase"
           >
             {resumeCopy.header.downloadCta.icon && (
               <Icon name={resumeCopy.header.downloadCta.icon} class="size-3.5" />
@@ -99,7 +99,7 @@ const breadcrumbs = [
         )}
         <a
           href={resumeCopy.header.contactCta.href}
-          class="btn btn-sm btn-ghost border border-base-300 hover:bg-base-200 gap-1.5 rounded-md font-mono text-xs tracking-wider uppercase"
+          class="btn btn-sm btn-ghost border border-base-300 hover:bg-base-200 font-mono text-xs tracking-wider uppercase"
         >
           {resumeCopy.header.contactCta.icon && (
             <Icon name={resumeCopy.header.contactCta.icon} class="size-3.5" />
@@ -110,7 +110,7 @@ const breadcrumbs = [
           href={resumeCopy.header.githubCta.href}
           target="_blank"
           rel="noopener noreferrer"
-          class="btn btn-sm btn-ghost border border-base-300 hover:bg-base-200 gap-1.5 rounded-md font-mono text-xs tracking-wider uppercase"
+          class="btn btn-sm btn-ghost border border-base-300 hover:bg-base-200 font-mono text-xs tracking-wider uppercase"
         >
           {resumeCopy.header.githubCta.icon && (
             <Icon name={resumeCopy.header.githubCta.icon} class="size-3.5" />
@@ -119,29 +119,6 @@ const breadcrumbs = [
         </a>
       </div>
     </header>
-
-    <!-- Role-Specific Resume Targets -->
-    {resumeCopy.header.roleResumes && (
-      <div
-        data-reveal="hidden"
-        class="border-base-300 bg-base-200/40 flex flex-col justify-between gap-3 rounded-lg border px-4 py-3 text-xs sm:flex-row sm:items-center print:hidden"
-      >
-        <span class="text-base-content/70 font-mono">Role-Specific Tracks:</span>
-        <div class="flex flex-wrap items-center gap-2">
-          {resumeCopy.header.roleResumes.map((role) => (
-            <a
-              href={role.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="border-base-300 bg-base-100 text-base-content/80 hover:border-accent/50 hover:text-accent inline-flex items-center gap-1.5 rounded border px-2.5 py-1 font-mono transition-colors"
-            >
-              <Icon name="ph:file-pdf-bold" class="size-3 opacity-60" />
-              {role.label}
-            </a>
-          ))}
-        </div>
-      </div>
-    )}
 
     <!-- Summary -->
     <section data-reveal="hidden" class="space-y-3">

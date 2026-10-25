@@ -9,6 +9,7 @@ export async function getStaticPaths() {
   return published.map((post) => ({
     params: { slug: post.id },
     props: { post },
+    cacheKey: post.digest,
   }));
 }
 

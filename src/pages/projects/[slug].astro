@@ -8,14 +8,16 @@ export async function getStaticPaths() {
   const projects = await getCollection('projects');
   const sorted = [...projects].sort((a, b) => a.data.order - b.data.order);
 
-  return sorted.map((project, index) => ({
-    params: { slug: project.id },
-    props: {
-      project,
-      prevProject: index > 0 ? sorted[index - 1] : null,
-      nextProject: index < sorted.length - 1 ? sorted[index + 1] : null,
-    },
-  }));
+  return sorted.map((project, index) => {
+    const prevProject = index > 0 ? sorted[index - 1] : null;
+    const nextProject = index < sorted.length - 1 ? sorted[index + 1] : null;
+
+    return {
+      params: { slug: project.id },
+      props: { project, prevProject, nextProject },
+      cacheKey: [project.digest, prevProject?.digest, nextProject?.digest].join(':'),
+    };
+  });
 }
 
 const { project, prevProject, nextProject } = Astro.props;

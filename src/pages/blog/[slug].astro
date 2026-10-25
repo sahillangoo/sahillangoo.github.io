@@ -16,14 +16,16 @@ export async function getStaticPaths() {
       (a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
     );
 
-  return sorted.map((post, index) => ({
-    params: { slug: post.id },
-    props: {
-      post,
-      prevPost: index < sorted.length - 1 ? sorted[index + 1] : null,
-      nextPost: index > 0 ? sorted[index - 1] : null,
-    },
-  }));
+  return sorted.map((post, index) => {
+    const prevPost = index < sorted.length - 1 ? sorted[index + 1] : null;
+    const nextPost = index > 0 ? sorted[index - 1] : null;
+
+    return {
+      params: { slug: post.id },
+      props: { post, prevPost, nextPost },
+      cacheKey: [post.digest, prevPost?.digest, nextPost?.digest].join(':'),
+    };
+  });
 }
 
 const { post, prevPost, nextPost } = Astro.props;
@@ -281,7 +283,7 @@ const breadcrumbs = [
       <Content />
     </div>
 
-    <!-- FAQ Accordion (daisyUI 5) -->
+    <!-- FAQ Accordion (daisyUI) -->
     {data.faqs && data.faqs.length > 0 && (
       <section
         data-reveal="hidden"
