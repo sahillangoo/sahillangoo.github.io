@@ -65,7 +65,7 @@
     "eslint-plugin-lockfile": "^2.1.0",
     "eslint-plugin-oxlint": "^1.89.0",
     "globals": "^17.13.0",
-    "knip": "^6.42.1",
+    "knip": "^6.43.0",
     "linkinator": "^8.1.0",
     "oxlint": "^1.89.0",
     "prettier": "^3.9.10",

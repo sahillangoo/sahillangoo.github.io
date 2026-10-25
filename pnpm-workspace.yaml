@@ -61,5 +61,3 @@ allowBuilds:
   vue-demi: true
   workerd: true
   wrangler: true
-patchedDependencies:
-  '@qwik.dev/partytown@1.0.2': patches/@qwik.dev__partytown@1.0.2.patch
